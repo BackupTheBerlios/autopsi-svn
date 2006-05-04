@@ -3,6 +3,11 @@
 	<property name="basedir" value="."/>
 	<property name="build" value="class"/>
 	<property name="src" value="src"/>
+	<property name="hsqldb_data" value="data"/>
+	
+	<property name="jdbc.username" value="RUDOLF"/>
+	<property name="jdbc.password" value="abcdefg"/>
+	<property name="jdbc.url" value="jdbc:hsqldb:file:${hsqldb_data}/database"/>
 	
 	<path id="classpath">
 		<pathelement location="${build}"/>
@@ -20,12 +25,24 @@
 		<mkdir dir="${build}"/>
 	</target>
 	
-	<target name="compile">
+	<target name="compile" depends="init">
 		<javac srcdir="${src}" destdir="${build}" classpathref="classpath"/>
 	</target>
 	
 	<target name="run">
-		<java classpathref="classpath" classname="Test" fork="true"/> 
+		<java classpathref="classpath" classname="Main" fork="true"/> 
+	</target>
+	
+	<target name="runDBMan">
+        <java 
+            classpathref="classpath"
+            classname="org.hsqldb.util.DatabaseManagerSwing"
+            fork="true"
+        >
+        	<arg line="-url ${jdbc.url}"/>
+            <arg line="-user ${jdbc.username}" />
+            <arg line="-password ${jdbc.password}" />
+        </java>
 	</target>
 	
 </project>
