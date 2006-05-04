@@ -1,0 +1,31 @@
+<project name="GenericDAO" default="compile" basedir=".">
+
+	<property name="basedir" value="."/>
+	<property name="build" value="class"/>
+	<property name="src" value="src"/>
+	
+	<path id="classpath">
+		<pathelement location="${build}"/>
+		<fileset dir="${basedir}/lib" id="lib">
+			<include name="*.jar"/>
+		</fileset>
+		
+	</path>
+	
+	<target name="clean">
+		<delete dir="${build}"/>
+	</target>
+		
+	<target name="init">
+		<mkdir dir="${build}"/>
+	</target>
+	
+	<target name="compile">
+		<javac srcdir="${src}" destdir="${build}" classpathref="classpath"/>
+	</target>
+	
+	<target name="run">
+		<java classpathref="classpath" classname="" fork="true"/> 
+	</target>
+	
+</project>
