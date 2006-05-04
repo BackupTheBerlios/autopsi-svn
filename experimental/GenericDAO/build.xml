@@ -1,8 +1,10 @@
 <project name="GenericDAO" default="compile" basedir=".">
 
+	<property name="project_name" value="autoPSI"/>
 	<property name="basedir" value="."/>
 	<property name="build" value="class"/>
 	<property name="src" value="src"/>
+	<property name="doc" value="doc"/>
 	<property name="hsqldb_data" value="data"/>
 	
 	<property name="jdbc.username" value="RUDOLF"/>
@@ -31,6 +33,20 @@
 	
 	<target name="run">
 		<java classpathref="classpath" classname="Main" fork="true"/> 
+	</target>
+	
+	<target name="javadoc">
+        <javadoc 
+            destdir="${doc}/api"
+            use="true"
+            author="true" version="true"
+            doctitle="${project_name}"
+            classpathref="classpath"
+        >
+            <packageset dir="${src}" defaultexcludes="yes">
+                <include name="autopsi/**"/>
+            </packageset>
+        </javadoc>
 	</target>
 	
 	<target name="runDBMan">
