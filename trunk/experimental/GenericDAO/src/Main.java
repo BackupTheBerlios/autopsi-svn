@@ -9,7 +9,7 @@
 public class Main {
 
 	public static void main(String[] args){
-		System.out.println("GenericDAO testing application");
+		System.out.println("GenericDAO testing application is ok!");
 	}
 	
 }
