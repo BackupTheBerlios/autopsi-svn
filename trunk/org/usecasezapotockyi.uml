@@ -1,0 +1,3000 @@
+<?xml version = "1.0" encoding = "UTF-8" ?>
+<uml version="4">
+  <argo version="4">
+    <documentation>
+      <authorname></authorname>
+      <version>0.20</version>
+      <description>
+        
+      </description>
+    </documentation>
+    <searchpath href="PROJECT_DIR" />
+    <member type="xmi" />
+    <member type="pgml" />
+    <member type="pgml" />
+    <member type="pgml" />
+    <member type="todo" />
+    <historyfile name="" />
+  </argo>
+    <XMI xmi.version = '1.2' xmlns:UML = 'org.omg.xmi.namespace.UML' timestamp = 'Sun May 14 18:20:43 CEST 2006'>
+      <XMI.header>  <XMI.header>
+        <XMI.documentation>
+          <XMI.exporter>ArgoUML (using Netbeans XMI Writer version 1.0)</XMI.exporter>
+          <XMI.exporterVersion>0.20.x</XMI.exporterVersion>
+        </XMI.documentation>
+        <XMI.metamodel xmi.name="UML" xmi.version="1.4"/>  </XMI.header>
+    </XMI.header>
+      <XMI.content>
+        <UML:Model xmi.id = '.:00000000000007CA' name = 'untitledModel' isSpecification = 'false'
+          isRoot = 'false' isLeaf = 'false' isAbstract = 'false'>
+          <UML:Namespace.ownedElement>
+            <UML:Actor xmi.id = '.:00000000000007CB' name = 'Benutzer' isSpecification = 'false'
+              isRoot = 'false' isLeaf = 'false' isAbstract = 'false'/>
+            <UML:UseCase xmi.id = '.:00000000000007CC' name = 'Rechtsklick auf Termin im Kalenderfenster'
+              isSpecification = 'false' isRoot = 'false' isLeaf = 'false' isAbstract = 'false'>
+              <UML:UseCase.extensionPoint>
+                <UML:ExtensionPoint xmi.id = '.:00000000000007D5' name = 'newEP' isSpecification = 'false'
+                  location = 'loc'/>
+              </UML:UseCase.extensionPoint>
+            </UML:UseCase>
+            <UML:Association xmi.id = '.:00000000000007CD' name = '' isSpecification = 'false'
+              isRoot = 'false' isLeaf = 'false' isAbstract = 'false'>
+              <UML:Association.connection>
+                <UML:AssociationEnd xmi.id = '.:00000000000007CE' visibility = 'public'
+                  isSpecification = 'false' isNavigable = 'true' ordering = 'unordered' aggregation = 'none'
+                  targetScope = 'instance' changeability = 'changeable'>
+                  <UML:AssociationEnd.multiplicity>
+                    <UML:Multiplicity xmi.id = '.:00000000000007CF'>
+                      <UML:Multiplicity.range>
+                        <UML:MultiplicityRange xmi.id = '.:00000000000007D0' lower = '1' upper = '1'/>
+                      </UML:Multiplicity.range>
+                    </UML:Multiplicity>
+                  </UML:AssociationEnd.multiplicity>
+                  <UML:AssociationEnd.participant>
+                    <UML:Actor xmi.idref = '.:00000000000007CB'/>
+                  </UML:AssociationEnd.participant>
+                </UML:AssociationEnd>
+                <UML:AssociationEnd xmi.id = '.:00000000000007D1' visibility = 'public'
+                  isSpecification = 'false' isNavigable = 'true' ordering = 'unordered' aggregation = 'none'
+                  targetScope = 'instance' changeability = 'changeable'>
+                  <UML:AssociationEnd.multiplicity>
+                    <UML:Multiplicity xmi.id = '.:00000000000007D2'>
+                      <UML:Multiplicity.range>
+                        <UML:MultiplicityRange xmi.id = '.:00000000000007D3' lower = '1' upper = '1'/>
+                      </UML:Multiplicity.range>
+                    </UML:Multiplicity>
+                  </UML:AssociationEnd.multiplicity>
+                  <UML:AssociationEnd.participant>
+                    <UML:UseCase xmi.idref = '.:00000000000007CC'/>
+                  </UML:AssociationEnd.participant>
+                </UML:AssociationEnd>
+              </UML:Association.connection>
+            </UML:Association>
+            <UML:UseCase xmi.id = '.:00000000000007D4' name = 'Auswahl &quot;Termin bearbeiten&quot; im Kontextmenü - öffnet Bearbeitungsfenster'
+              isSpecification = 'false' isRoot = 'false' isLeaf = 'false' isAbstract = 'false'>
+              <UML:ModelElement.comment>
+                <UML:Comment xmi.idref = '.:0000000000000800'/>
+                <UML:Comment xmi.idref = '.:0000000000000801'/>
+              </UML:ModelElement.comment>
+              <UML:UseCase.extend>
+                <UML:Extend xmi.idref = '.:00000000000007D6'/>
+              </UML:UseCase.extend>
+              <UML:UseCase.extensionPoint>
+                <UML:ExtensionPoint xmi.id = '.:00000000000007E3' name = 'newEP' isSpecification = 'false'
+                  location = 'loc'/>
+                <UML:ExtensionPoint xmi.id = '.:00000000000007EC' name = 'newEP' isSpecification = 'false'
+                  location = 'loc'/>
+              </UML:UseCase.extensionPoint>
+            </UML:UseCase>
+            <UML:Extend xmi.id = '.:00000000000007D6' isSpecification = 'false'>
+              <UML:ModelElement.comment>
+                <UML:Comment xmi.idref = '.:00000000000007E8'/>
+              </UML:ModelElement.comment>
+              <UML:Extend.base>
+                <UML:UseCase xmi.idref = '.:00000000000007CC'/>
+              </UML:Extend.base>
+              <UML:Extend.extension>
+                <UML:UseCase xmi.idref = '.:00000000000007D4'/>
+              </UML:Extend.extension>
+              <UML:Extend.extensionPoint>
+                <UML:ExtensionPoint xmi.idref = '.:00000000000007D5'/>
+              </UML:Extend.extensionPoint>
+            </UML:Extend>
+            <UML:UseCase xmi.id = '.:00000000000007D7' name = 'Button &quot;Edit&quot; klicken - öffnet Bearbeitungsfenster'
+              isSpecification = 'false' isRoot = 'false' isLeaf = 'false' isAbstract = 'false'>
+              <UML:UseCase.extend>
+                <UML:Extend xmi.idref = '.:00000000000007DA'/>
+              </UML:UseCase.extend>
+              <UML:UseCase.extensionPoint>
+                <UML:ExtensionPoint xmi.id = '.:00000000000007E5' name = 'newEP' isSpecification = 'false'
+                  location = 'loc'/>
+                <UML:ExtensionPoint xmi.id = '.:00000000000007EE' name = 'newEP' isSpecification = 'false'
+                  location = 'loc'/>
+              </UML:UseCase.extensionPoint>
+            </UML:UseCase>
+            <UML:UseCase xmi.id = '.:00000000000007D8' name = 'Klick auf Termin im Kalenderfenster'
+              isSpecification = 'false' isRoot = 'false' isLeaf = 'false' isAbstract = 'false'>
+              <UML:UseCase.extensionPoint>
+                <UML:ExtensionPoint xmi.id = '.:00000000000007D9' name = 'newEP' isSpecification = 'false'
+                  location = 'loc'/>
+              </UML:UseCase.extensionPoint>
+            </UML:UseCase>
+            <UML:Extend xmi.id = '.:00000000000007DA' isSpecification = 'false'>
+              <UML:Extend.base>
+                <UML:UseCase xmi.idref = '.:00000000000007D8'/>
+              </UML:Extend.base>
+              <UML:Extend.extension>
+                <UML:UseCase xmi.idref = '.:00000000000007D7'/>
+              </UML:Extend.extension>
+              <UML:Extend.extensionPoint>
+                <UML:ExtensionPoint xmi.idref = '.:00000000000007D9'/>
+              </UML:Extend.extensionPoint>
+            </UML:Extend>
+            <UML:Association xmi.id = '.:00000000000007DB' name = '' isSpecification = 'false'
+              isRoot = 'false' isLeaf = 'false' isAbstract = 'false'>
+              <UML:Association.connection>
+                <UML:AssociationEnd xmi.id = '.:00000000000007DC' visibility = 'public'
+                  isSpecification = 'false' isNavigable = 'true' ordering = 'unordered' aggregation = 'none'
+                  targetScope = 'instance' changeability = 'changeable'>
+                  <UML:AssociationEnd.multiplicity>
+                    <UML:Multiplicity xmi.id = '.:00000000000007DD'>
+                      <UML:Multiplicity.range>
+                        <UML:MultiplicityRange xmi.id = '.:00000000000007DE' lower = '1' upper = '1'/>
+                      </UML:Multiplicity.range>
+                    </UML:Multiplicity>
+                  </UML:AssociationEnd.multiplicity>
+                  <UML:AssociationEnd.participant>
+                    <UML:Actor xmi.idref = '.:00000000000007CB'/>
+                  </UML:AssociationEnd.participant>
+                </UML:AssociationEnd>
+                <UML:AssociationEnd xmi.id = '.:00000000000007DF' visibility = 'public'
+                  isSpecification = 'false' isNavigable = 'true' ordering = 'unordered' aggregation = 'none'
+                  targetScope = 'instance' changeability = 'changeable'>
+                  <UML:AssociationEnd.multiplicity>
+                    <UML:Multiplicity xmi.id = '.:00000000000007E0'>
+                      <UML:Multiplicity.range>
+                        <UML:MultiplicityRange xmi.id = '.:00000000000007E1' lower = '1' upper = '1'/>
+                      </UML:Multiplicity.range>
+                    </UML:Multiplicity>
+                  </UML:AssociationEnd.multiplicity>
+                  <UML:AssociationEnd.participant>
+                    <UML:UseCase xmi.idref = '.:00000000000007D8'/>
+                  </UML:AssociationEnd.participant>
+                </UML:AssociationEnd>
+              </UML:Association.connection>
+            </UML:Association>
+            <UML:UseCase xmi.id = '.:00000000000007E2' name = 'Abbrechen' isSpecification = 'false'
+              isRoot = 'false' isLeaf = 'false' isAbstract = 'false'>
+              <UML:UseCase.extend>
+                <UML:Extend xmi.idref = '.:00000000000007E4'/>
+                <UML:Extend xmi.idref = '.:00000000000007E6'/>
+                <UML:Extend xmi.idref = '.:00000000000007EB'/>
+              </UML:UseCase.extend>
+            </UML:UseCase>
+            <UML:Extend xmi.id = '.:00000000000007E4' isSpecification = 'false'>
+              <UML:Extend.base>
+                <UML:UseCase xmi.idref = '.:00000000000007D4'/>
+              </UML:Extend.base>
+              <UML:Extend.extension>
+                <UML:UseCase xmi.idref = '.:00000000000007E2'/>
+              </UML:Extend.extension>
+              <UML:Extend.extensionPoint>
+                <UML:ExtensionPoint xmi.idref = '.:00000000000007E3'/>
+              </UML:Extend.extensionPoint>
+            </UML:Extend>
+            <UML:Extend xmi.id = '.:00000000000007E6' isSpecification = 'false'>
+              <UML:Extend.base>
+                <UML:UseCase xmi.idref = '.:00000000000007D7'/>
+              </UML:Extend.base>
+              <UML:Extend.extension>
+                <UML:UseCase xmi.idref = '.:00000000000007E2'/>
+              </UML:Extend.extension>
+              <UML:Extend.extensionPoint>
+                <UML:ExtensionPoint xmi.idref = '.:00000000000007E5'/>
+              </UML:Extend.extensionPoint>
+            </UML:Extend>
+            <UML:Comment xmi.id = '.:00000000000007E8' isSpecification = 'false' body = 'öffnet Kontextmenü'>
+              <UML:Comment.annotatedElement>
+                <UML:Extend xmi.idref = '.:00000000000007D6'/>
+              </UML:Comment.annotatedElement>
+            </UML:Comment>
+            <UML:UseCase xmi.id = '.:00000000000007E9' name = 'Daten ändern' isSpecification = 'false'
+              isRoot = 'false' isLeaf = 'false' isAbstract = 'false'>
+              <UML:UseCase.extend>
+                <UML:Extend xmi.idref = '.:00000000000007ED'/>
+                <UML:Extend xmi.idref = '.:00000000000007EF'/>
+              </UML:UseCase.extend>
+              <UML:UseCase.extensionPoint>
+                <UML:ExtensionPoint xmi.id = '.:00000000000007EA' name = 'newEP' isSpecification = 'false'
+                  location = 'loc'/>
+                <UML:ExtensionPoint xmi.id = '.:00000000000007F1' name = 'newEP' isSpecification = 'false'
+                  location = 'loc'/>
+              </UML:UseCase.extensionPoint>
+            </UML:UseCase>
+            <UML:Extend xmi.id = '.:00000000000007EB' isSpecification = 'false'>
+              <UML:Extend.base>
+                <UML:UseCase xmi.idref = '.:00000000000007E9'/>
+              </UML:Extend.base>
+              <UML:Extend.extension>
+                <UML:UseCase xmi.idref = '.:00000000000007E2'/>
+              </UML:Extend.extension>
+              <UML:Extend.extensionPoint>
+                <UML:ExtensionPoint xmi.idref = '.:00000000000007EA'/>
+              </UML:Extend.extensionPoint>
+            </UML:Extend>
+            <UML:Extend xmi.id = '.:00000000000007ED' isSpecification = 'false'>
+              <UML:Extend.base>
+                <UML:UseCase xmi.idref = '.:00000000000007D4'/>
+              </UML:Extend.base>
+              <UML:Extend.extension>
+                <UML:UseCase xmi.idref = '.:00000000000007E9'/>
+              </UML:Extend.extension>
+              <UML:Extend.extensionPoint>
+                <UML:ExtensionPoint xmi.idref = '.:00000000000007EC'/>
+              </UML:Extend.extensionPoint>
+            </UML:Extend>
+            <UML:Extend xmi.id = '.:00000000000007EF' isSpecification = 'false'>
+              <UML:Extend.base>
+                <UML:UseCase xmi.idref = '.:00000000000007D7'/>
+              </UML:Extend.base>
+              <UML:Extend.extension>
+                <UML:UseCase xmi.idref = '.:00000000000007E9'/>
+              </UML:Extend.extension>
+              <UML:Extend.extensionPoint>
+                <UML:ExtensionPoint xmi.idref = '.:00000000000007EE'/>
+              </UML:Extend.extensionPoint>
+            </UML:Extend>
+            <UML:UseCase xmi.id = '.:00000000000007F0' name = 'Speichern' isSpecification = 'false'
+              isRoot = 'false' isLeaf = 'false' isAbstract = 'false'>
+              <UML:UseCase.extend>
+                <UML:Extend xmi.idref = '.:00000000000007F2'/>
+              </UML:UseCase.extend>
+            </UML:UseCase>
+            <UML:Extend xmi.id = '.:00000000000007F2' isSpecification = 'false'>
+              <UML:Extend.base>
+                <UML:UseCase xmi.idref = '.:00000000000007E9'/>
+              </UML:Extend.base>
+              <UML:Extend.extension>
+                <UML:UseCase xmi.idref = '.:00000000000007F0'/>
+              </UML:Extend.extension>
+              <UML:Extend.extensionPoint>
+                <UML:ExtensionPoint xmi.idref = '.:00000000000007F1'/>
+              </UML:Extend.extensionPoint>
+            </UML:Extend>
+            <UML:Actor xmi.id = '.:00000000000007F3' name = 'Benutzer' isSpecification = 'false'
+              isRoot = 'false' isLeaf = 'false' isAbstract = 'false'/>
+            <UML:UseCase xmi.id = '.:00000000000007F4' name = 'Rechtsklick auf Zeitpunkt im Kalenderfenster'
+              isSpecification = 'false' isRoot = 'false' isLeaf = 'false' isAbstract = 'false'>
+              <UML:UseCase.extensionPoint>
+                <UML:ExtensionPoint xmi.id = '.:00000000000007FD' name = 'newEP' isSpecification = 'false'
+                  location = 'loc'/>
+              </UML:UseCase.extensionPoint>
+            </UML:UseCase>
+            <UML:Association xmi.id = '.:00000000000007F5' name = '' isSpecification = 'false'
+              isRoot = 'false' isLeaf = 'false' isAbstract = 'false'>
+              <UML:Association.connection>
+                <UML:AssociationEnd xmi.id = '.:00000000000007F6' visibility = 'public'
+                  isSpecification = 'false' isNavigable = 'true' ordering = 'unordered' aggregation = 'none'
+                  targetScope = 'instance' changeability = 'changeable'>
+                  <UML:AssociationEnd.multiplicity>
+                    <UML:Multiplicity xmi.id = '.:00000000000007F7'>
+                      <UML:Multiplicity.range>
+                        <UML:MultiplicityRange xmi.id = '.:00000000000007F8' lower = '1' upper = '1'/>
+                      </UML:Multiplicity.range>
+                    </UML:Multiplicity>
+                  </UML:AssociationEnd.multiplicity>
+                  <UML:AssociationEnd.participant>
+                    <UML:Actor xmi.idref = '.:00000000000007F3'/>
+                  </UML:AssociationEnd.participant>
+                </UML:AssociationEnd>
+                <UML:AssociationEnd xmi.id = '.:00000000000007F9' visibility = 'public'
+                  isSpecification = 'false' isNavigable = 'true' ordering = 'unordered' aggregation = 'none'
+                  targetScope = 'instance' changeability = 'changeable'>
+                  <UML:AssociationEnd.multiplicity>
+                    <UML:Multiplicity xmi.id = '.:00000000000007FA'>
+                      <UML:Multiplicity.range>
+                        <UML:MultiplicityRange xmi.id = '.:00000000000007FB' lower = '1' upper = '1'/>
+                      </UML:Multiplicity.range>
+                    </UML:Multiplicity>
+                  </UML:AssociationEnd.multiplicity>
+                  <UML:AssociationEnd.participant>
+                    <UML:UseCase xmi.idref = '.:00000000000007F4'/>
+                  </UML:AssociationEnd.participant>
+                </UML:AssociationEnd>
+              </UML:Association.connection>
+            </UML:Association>
+            <UML:UseCase xmi.id = '.:00000000000007FC' name = 'Auswahl &quot;Zeitpunkt bearbeiten&quot; im Kontextmenü - öffnet Bearbeitungsfenster'
+              isSpecification = 'false' isRoot = 'false' isLeaf = 'false' isAbstract = 'false'>
+              <UML:UseCase.extend>
+                <UML:Extend xmi.idref = '.:00000000000007FE'/>
+              </UML:UseCase.extend>
+              <UML:UseCase.extensionPoint>
+                <UML:ExtensionPoint xmi.id = '.:000000000000080E' name = 'newEP' isSpecification = 'false'
+                  location = 'loc'/>
+                <UML:ExtensionPoint xmi.id = '.:0000000000000818' name = 'newEP' isSpecification = 'false'
+                  location = 'loc'/>
+              </UML:UseCase.extensionPoint>
+            </UML:UseCase>
+            <UML:Extend xmi.id = '.:00000000000007FE' isSpecification = 'false'>
+              <UML:ModelElement.comment>
+                <UML:Comment xmi.idref = '.:00000000000007FF'/>
+              </UML:ModelElement.comment>
+              <UML:Extend.base>
+                <UML:UseCase xmi.idref = '.:00000000000007F4'/>
+              </UML:Extend.base>
+              <UML:Extend.extension>
+                <UML:UseCase xmi.idref = '.:00000000000007FC'/>
+              </UML:Extend.extension>
+              <UML:Extend.extensionPoint>
+                <UML:ExtensionPoint xmi.idref = '.:00000000000007FD'/>
+              </UML:Extend.extensionPoint>
+            </UML:Extend>
+            <UML:Comment xmi.id = '.:00000000000007FF' isSpecification = 'false' body = 'öffnet Kontextmenü&#10;'>
+              <UML:Comment.annotatedElement>
+                <UML:Extend xmi.idref = '.:00000000000007FE'/>
+              </UML:Comment.annotatedElement>
+            </UML:Comment>
+            <UML:Comment xmi.id = '.:0000000000000800' isSpecification = 'false'>
+              <UML:Comment.annotatedElement>
+                <UML:UseCase xmi.idref = '.:00000000000007D4'/>
+              </UML:Comment.annotatedElement>
+            </UML:Comment>
+            <UML:Comment xmi.id = '.:0000000000000801' isSpecification = 'false'>
+              <UML:Comment.annotatedElement>
+                <UML:UseCase xmi.idref = '.:00000000000007D4'/>
+              </UML:Comment.annotatedElement>
+            </UML:Comment>
+            <UML:UseCase xmi.id = '.:0000000000000802' name = 'Klick auf Zeitpunkt im Kalenderfenster'
+              isSpecification = 'false' isRoot = 'false' isLeaf = 'false' isAbstract = 'false'>
+              <UML:UseCase.extensionPoint>
+                <UML:ExtensionPoint xmi.id = '.:000000000000080B' name = 'newEP' isSpecification = 'false'
+                  location = 'loc'/>
+              </UML:UseCase.extensionPoint>
+            </UML:UseCase>
+            <UML:Association xmi.id = '.:0000000000000803' name = '' isSpecification = 'false'
+              isRoot = 'false' isLeaf = 'false' isAbstract = 'false'>
+              <UML:Association.connection>
+                <UML:AssociationEnd xmi.id = '.:0000000000000804' visibility = 'public'
+                  isSpecification = 'false' isNavigable = 'true' ordering = 'unordered' aggregation = 'none'
+                  targetScope = 'instance' changeability = 'changeable'>
+                  <UML:AssociationEnd.multiplicity>
+                    <UML:Multiplicity xmi.id = '.:0000000000000805'>
+                      <UML:Multiplicity.range>
+                        <UML:MultiplicityRange xmi.id = '.:0000000000000806' lower = '1' upper = '1'/>
+                      </UML:Multiplicity.range>
+                    </UML:Multiplicity>
+                  </UML:AssociationEnd.multiplicity>
+                  <UML:AssociationEnd.participant>
+                    <UML:Actor xmi.idref = '.:00000000000007F3'/>
+                  </UML:AssociationEnd.participant>
+                </UML:AssociationEnd>
+                <UML:AssociationEnd xmi.id = '.:0000000000000807' visibility = 'public'
+                  isSpecification = 'false' isNavigable = 'true' ordering = 'unordered' aggregation = 'none'
+                  targetScope = 'instance' changeability = 'changeable'>
+                  <UML:AssociationEnd.multiplicity>
+                    <UML:Multiplicity xmi.id = '.:0000000000000808'>
+                      <UML:Multiplicity.range>
+                        <UML:MultiplicityRange xmi.id = '.:0000000000000809' lower = '1' upper = '1'/>
+                      </UML:Multiplicity.range>
+                    </UML:Multiplicity>
+                  </UML:AssociationEnd.multiplicity>
+                  <UML:AssociationEnd.participant>
+                    <UML:UseCase xmi.idref = '.:0000000000000802'/>
+                  </UML:AssociationEnd.participant>
+                </UML:AssociationEnd>
+              </UML:Association.connection>
+            </UML:Association>
+            <UML:UseCase xmi.id = '.:000000000000080A' name = 'Button &quot;Edit&quot; klicken - öffnet Bearbeitungsfenster'
+              isSpecification = 'false' isRoot = 'false' isLeaf = 'false' isAbstract = 'false'>
+              <UML:UseCase.extend>
+                <UML:Extend xmi.idref = '.:000000000000080C'/>
+              </UML:UseCase.extend>
+              <UML:UseCase.extensionPoint>
+                <UML:ExtensionPoint xmi.id = '.:0000000000000810' name = 'newEP' isSpecification = 'false'
+                  location = 'loc'/>
+                <UML:ExtensionPoint xmi.id = '.:000000000000081A' name = 'newEP' isSpecification = 'false'
+                  location = 'loc'/>
+              </UML:UseCase.extensionPoint>
+            </UML:UseCase>
+            <UML:Extend xmi.id = '.:000000000000080C' isSpecification = 'false'>
+              <UML:Extend.base>
+                <UML:UseCase xmi.idref = '.:0000000000000802'/>
+              </UML:Extend.base>
+              <UML:Extend.extension>
+                <UML:UseCase xmi.idref = '.:000000000000080A'/>
+              </UML:Extend.extension>
+              <UML:Extend.extensionPoint>
+                <UML:ExtensionPoint xmi.idref = '.:000000000000080B'/>
+              </UML:Extend.extensionPoint>
+            </UML:Extend>
+            <UML:UseCase xmi.id = '.:000000000000080D' name = 'Abbrechen' isSpecification = 'false'
+              isRoot = 'false' isLeaf = 'false' isAbstract = 'false'>
+              <UML:UseCase.extend>
+                <UML:Extend xmi.idref = '.:000000000000080F'/>
+                <UML:Extend xmi.idref = '.:0000000000000811'/>
+                <UML:Extend xmi.idref = '.:0000000000000814'/>
+              </UML:UseCase.extend>
+            </UML:UseCase>
+            <UML:Extend xmi.id = '.:000000000000080F' isSpecification = 'false'>
+              <UML:Extend.base>
+                <UML:UseCase xmi.idref = '.:00000000000007FC'/>
+              </UML:Extend.base>
+              <UML:Extend.extension>
+                <UML:UseCase xmi.idref = '.:000000000000080D'/>
+              </UML:Extend.extension>
+              <UML:Extend.extensionPoint>
+                <UML:ExtensionPoint xmi.idref = '.:000000000000080E'/>
+              </UML:Extend.extensionPoint>
+            </UML:Extend>
+            <UML:Extend xmi.id = '.:0000000000000811' isSpecification = 'false'>
+              <UML:Extend.base>
+                <UML:UseCase xmi.idref = '.:000000000000080A'/>
+              </UML:Extend.base>
+              <UML:Extend.extension>
+                <UML:UseCase xmi.idref = '.:000000000000080D'/>
+              </UML:Extend.extension>
+              <UML:Extend.extensionPoint>
+                <UML:ExtensionPoint xmi.idref = '.:0000000000000810'/>
+              </UML:Extend.extensionPoint>
+            </UML:Extend>
+            <UML:UseCase xmi.id = '.:0000000000000812' name = 'Daten ändern' isSpecification = 'false'
+              isRoot = 'false' isLeaf = 'false' isAbstract = 'false'>
+              <UML:UseCase.extend>
+                <UML:Extend xmi.idref = '.:0000000000000819'/>
+                <UML:Extend xmi.idref = '.:000000000000081B'/>
+              </UML:UseCase.extend>
+              <UML:UseCase.extensionPoint>
+                <UML:ExtensionPoint xmi.id = '.:0000000000000813' name = 'newEP' isSpecification = 'false'
+                  location = 'loc'/>
+                <UML:ExtensionPoint xmi.id = '.:0000000000000816' name = 'newEP' isSpecification = 'false'
+                  location = 'loc'/>
+              </UML:UseCase.extensionPoint>
+            </UML:UseCase>
+            <UML:Extend xmi.id = '.:0000000000000814' isSpecification = 'false'>
+              <UML:Extend.base>
+                <UML:UseCase xmi.idref = '.:0000000000000812'/>
+              </UML:Extend.base>
+              <UML:Extend.extension>
+                <UML:UseCase xmi.idref = '.:000000000000080D'/>
+              </UML:Extend.extension>
+              <UML:Extend.extensionPoint>
+                <UML:ExtensionPoint xmi.idref = '.:0000000000000813'/>
+              </UML:Extend.extensionPoint>
+            </UML:Extend>
+            <UML:UseCase xmi.id = '.:0000000000000815' name = 'Speichern' isSpecification = 'false'
+              isRoot = 'false' isLeaf = 'false' isAbstract = 'false'>
+              <UML:UseCase.extend>
+                <UML:Extend xmi.idref = '.:0000000000000817'/>
+              </UML:UseCase.extend>
+            </UML:UseCase>
+            <UML:Extend xmi.id = '.:0000000000000817' isSpecification = 'false'>
+              <UML:Extend.base>
+                <UML:UseCase xmi.idref = '.:0000000000000812'/>
+              </UML:Extend.base>
+              <UML:Extend.extension>
+                <UML:UseCase xmi.idref = '.:0000000000000815'/>
+              </UML:Extend.extension>
+              <UML:Extend.extensionPoint>
+                <UML:ExtensionPoint xmi.idref = '.:0000000000000816'/>
+              </UML:Extend.extensionPoint>
+            </UML:Extend>
+            <UML:Extend xmi.id = '.:0000000000000819' isSpecification = 'false'>
+              <UML:Extend.base>
+                <UML:UseCase xmi.idref = '.:00000000000007FC'/>
+              </UML:Extend.base>
+              <UML:Extend.extension>
+                <UML:UseCase xmi.idref = '.:0000000000000812'/>
+              </UML:Extend.extension>
+              <UML:Extend.extensionPoint>
+                <UML:ExtensionPoint xmi.idref = '.:0000000000000818'/>
+              </UML:Extend.extensionPoint>
+            </UML:Extend>
+            <UML:Extend xmi.id = '.:000000000000081B' isSpecification = 'false'>
+              <UML:Extend.base>
+                <UML:UseCase xmi.idref = '.:000000000000080A'/>
+              </UML:Extend.base>
+              <UML:Extend.extension>
+                <UML:UseCase xmi.idref = '.:0000000000000812'/>
+              </UML:Extend.extension>
+              <UML:Extend.extensionPoint>
+                <UML:ExtensionPoint xmi.idref = '.:000000000000081A'/>
+              </UML:Extend.extensionPoint>
+            </UML:Extend>
+          </UML:Namespace.ownedElement>
+        </UML:Model>
+      </XMI.content>
+    </XMI>
+    <pgml description="org.argouml.uml.diagram.static_structure.ui.UMLClassDiagram|.:00000000000007CA"
+          name="Klassendiagramm 1"
+    >
+    </pgml>
+    <pgml description="org.argouml.uml.diagram.use_case.ui.UMLUseCaseDiagram|.:00000000000007CA"
+          name="Termin bearbeiten"
+    >
+      <rectangle name="Fig0"
+        x="240"
+        y="24"
+        width="949"
+        height="450"
+        fill="1"
+        fillcolor="white"
+        stroke="1"
+        strokecolor="black"
+      />
+      <group name="Fig1"
+           description="org.argouml.uml.diagram.use_case.ui.FigActor[128, 48, 50, 65]pathVisible=false;"
+           href=".:00000000000007CB"
+           fill="1"
+           fillcolor="white"
+           stroke="1"
+           strokecolor="black"
+      >
+        <private>
+        </private>
+        
+        <rectangle name="Fig1.0"
+          x="146"
+          y="48"
+          width="15"
+          height="60"
+          fill="0"
+          fillcolor="white"
+          stroke="0"
+          strokecolor="black"
+        />
+        <text name="Fig1.1"
+          x="128"
+          y="92"
+          fill="0"
+          fillcolor="white"
+          stroke="0"
+          strokecolor="black"
+          font="Dialog"
+          textsize="10"
+        >Benutzer</text>
+        <ellipse name="Fig1.2"
+          x="153"
+          y="55"
+          rx="7"
+          ry="7"
+          fill="1"
+          fillcolor="white"
+          stroke="1"
+          strokecolor="black"
+        />
+        <path name="Fig1.3"
+          description="org.tigris.gef.presentation.FigLine"
+          fill="1"
+          fillcolor="white"
+          stroke="1"
+          strokecolor="black"
+        >
+          <moveto x="153"
+                  y="63" />
+          <lineto x="153"
+                  y="78" />
+        </path>
+        <path name="Fig1.4"
+          description="org.tigris.gef.presentation.FigLine"
+          fill="1"
+          fillcolor="white"
+          stroke="1"
+          strokecolor="black"
+        >
+          <moveto x="143"
+                  y="68" />
+          <lineto x="163"
+                  y="68" />
+        </path>
+        <path name="Fig1.5"
+          description="org.tigris.gef.presentation.FigLine"
+          fill="1"
+          fillcolor="white"
+          stroke="1"
+          strokecolor="black"
+        >
+          <moveto x="153"
+                  y="78" />
+          <lineto x="148"
+                  y="93" />
+        </path>
+        <path name="Fig1.6"
+          description="org.tigris.gef.presentation.FigLine"
+          fill="1"
+          fillcolor="white"
+          stroke="1"
+          strokecolor="black"
+        >
+          <moveto x="153"
+                  y="78" />
+          <lineto x="158"
+                  y="93" />
+        </path>
+        <group name="Fig1.7"
+             description="org.argouml.uml.diagram.ui.FigStereotypesCompartment[153, 78, 0, 0]"
+             fill="0"
+             fillcolor="white"
+             stroke="0"
+             strokecolor="black"
+        >
+          <private>
+          </private>
+          
+          <rectangle name="Fig1.7.0"
+            x="153"
+            y="78"
+            width="0"
+            height="0"
+            fill="0"
+            fillcolor="white"
+            stroke="0"
+            strokecolor="black"
+          />
+        </group>
+      </group>
+      <group name="Fig2"
+           description="org.argouml.uml.diagram.use_case.ui.FigUseCase[264, 40, 302, 60]pathVisible=false;extensionPointVisible=false"
+           href=".:00000000000007CC"
+           fill="1"
+           fillcolor="white"
+           stroke="1"
+           strokecolor="black"
+      >
+        <private>
+        </private>
+        
+        <ellipse name="Fig2.0"
+          x="415"
+          y="70"
+          rx="151"
+          ry="30"
+          fill="1"
+          fillcolor="white"
+          stroke="1"
+          strokecolor="black"
+        />
+        <ellipse name="Fig2.1"
+          x="415"
+          y="70"
+          rx="151"
+          ry="30"
+          fill="1"
+          fillcolor="white"
+          stroke="1"
+          strokecolor="black"
+        />
+        <text name="Fig2.2"
+          x="311"
+          y="59"
+          fill="0"
+          fillcolor="white"
+          stroke="0"
+          strokecolor="black"
+          font="Dialog"
+          textsize="10"
+        >Rechtsklick auf Termin im Kalenderfenster</text>
+        <group name="Fig2.3"
+             description="org.argouml.uml.diagram.ui.FigStereotypesCompartment[0, 0, 0, 0]"
+             fill="0"
+             fillcolor="white"
+             stroke="0"
+             strokecolor="black"
+        >
+          <private>
+          </private>
+          
+          <rectangle name="Fig2.3.0"
+            x="0"
+            y="0"
+            width="0"
+            height="0"
+            fill="0"
+            fillcolor="white"
+            stroke="0"
+            strokecolor="black"
+          />
+        </group>
+        <path name="Fig2.4"
+          description="org.tigris.gef.presentation.FigLine"
+          fill="1"
+          fillcolor="white"
+          stroke="1"
+          strokecolor="black"
+        >
+          <moveto x="264"
+                  y="70" />
+          <lineto x="370"
+                  y="70" />
+        </path>
+        <group name="Fig2.5"
+             description="org.tigris.gef.presentation.FigGroup[]"
+             fill="0"
+             fillcolor="white"
+             stroke="0"
+             strokecolor="black"
+        >
+          <private>
+          </private>
+          
+          <rectangle name="Fig2.5.0"
+            x="315"
+            y="73"
+            width="4"
+            height="4"
+            fill="0"
+            fillcolor="white"
+            stroke="0"
+            strokecolor="black"
+          />
+          <text name="Fig2.5.1"
+            x="315"
+            y="73"
+            fill="0"
+            fillcolor="white"
+            stroke="0"
+            strokecolor="black"
+            font="Dialog"
+            textsize="10"
+          >newEP: loc</text>
+        </group>
+      </group>
+      <group name="Fig4"
+           description="org.argouml.uml.diagram.use_case.ui.FigUseCase[648, 40, 522, 60]pathVisible=false;extensionPointVisible=false"
+           href=".:00000000000007D4"
+           fill="1"
+           fillcolor="white"
+           stroke="1"
+           strokecolor="black"
+      >
+        <private>
+        </private>
+        
+        <ellipse name="Fig4.0"
+          x="909"
+          y="70"
+          rx="261"
+          ry="30"
+          fill="1"
+          fillcolor="white"
+          stroke="1"
+          strokecolor="black"
+        />
+        <ellipse name="Fig4.1"
+          x="909"
+          y="70"
+          rx="261"
+          ry="30"
+          fill="1"
+          fillcolor="white"
+          stroke="1"
+          strokecolor="black"
+        />
+        <text name="Fig4.2"
+          x="729"
+          y="59"
+          fill="0"
+          fillcolor="white"
+          stroke="0"
+          strokecolor="black"
+          font="Dialog"
+          textsize="10"
+        >Auswahl &quot;Termin bearbeiten&quot; im Kontextmen� - �ffnet Bearbeitungsfenster</text>
+        <group name="Fig4.3"
+             description="org.argouml.uml.diagram.ui.FigStereotypesCompartment[0, 0, 0, 0]"
+             fill="0"
+             fillcolor="white"
+             stroke="0"
+             strokecolor="black"
+        >
+          <private>
+          </private>
+          
+          <rectangle name="Fig4.3.0"
+            x="0"
+            y="0"
+            width="0"
+            height="0"
+            fill="0"
+            fillcolor="white"
+            stroke="0"
+            strokecolor="black"
+          />
+        </group>
+        <path name="Fig4.4"
+          description="org.tigris.gef.presentation.FigLine"
+          fill="1"
+          fillcolor="white"
+          stroke="1"
+          strokecolor="black"
+        >
+          <moveto x="648"
+                  y="70" />
+          <lineto x="754"
+                  y="70" />
+        </path>
+        <group name="Fig4.5"
+             description="org.tigris.gef.presentation.FigGroup[]"
+             fill="0"
+             fillcolor="white"
+             stroke="0"
+             strokecolor="black"
+        >
+          <private>
+          </private>
+          
+          <rectangle name="Fig4.5.0"
+            x="699"
+            y="73"
+            width="4"
+            height="4"
+            fill="0"
+            fillcolor="white"
+            stroke="0"
+            strokecolor="black"
+          />
+          <text name="Fig4.5.1"
+            x="699"
+            y="73"
+            fill="0"
+            fillcolor="white"
+            stroke="0"
+            strokecolor="black"
+            font="Dialog"
+            textsize="10"
+          >newEP: loc</text>
+          <text name="Fig4.5.2"
+            x="699"
+            y="90"
+            fill="0"
+            fillcolor="white"
+            stroke="0"
+            strokecolor="black"
+            font="Dialog"
+            textsize="10"
+          >newEP: loc</text>
+        </group>
+      </group>
+      <group name="Fig6"
+           description="org.argouml.uml.diagram.use_case.ui.FigUseCase[736, 392, 344, 60]pathVisible=false;extensionPointVisible=false"
+           href=".:00000000000007D7"
+           fill="1"
+           fillcolor="white"
+           stroke="1"
+           strokecolor="black"
+      >
+        <private>
+        </private>
+        
+        <ellipse name="Fig6.0"
+          x="908"
+          y="422"
+          rx="172"
+          ry="30"
+          fill="1"
+          fillcolor="white"
+          stroke="1"
+          strokecolor="black"
+        />
+        <ellipse name="Fig6.1"
+          x="908"
+          y="422"
+          rx="172"
+          ry="30"
+          fill="1"
+          fillcolor="white"
+          stroke="1"
+          strokecolor="black"
+        />
+        <text name="Fig6.2"
+          x="790"
+          y="411"
+          fill="0"
+          fillcolor="white"
+          stroke="0"
+          strokecolor="black"
+          font="Dialog"
+          textsize="10"
+        >Button &quot;Edit&quot; klicken - �ffnet Bearbeitungsfenster</text>
+        <group name="Fig6.3"
+             description="org.argouml.uml.diagram.ui.FigStereotypesCompartment[0, 0, 0, 0]"
+             fill="0"
+             fillcolor="white"
+             stroke="0"
+             strokecolor="black"
+        >
+          <private>
+          </private>
+          
+          <rectangle name="Fig6.3.0"
+            x="0"
+            y="0"
+            width="0"
+            height="0"
+            fill="0"
+            fillcolor="white"
+            stroke="0"
+            strokecolor="black"
+          />
+        </group>
+        <path name="Fig6.4"
+          description="org.tigris.gef.presentation.FigLine"
+          fill="1"
+          fillcolor="white"
+          stroke="1"
+          strokecolor="black"
+        >
+          <moveto x="736"
+                  y="422" />
+          <lineto x="842"
+                  y="422" />
+        </path>
+        <group name="Fig6.5"
+             description="org.tigris.gef.presentation.FigGroup[]"
+             fill="0"
+             fillcolor="white"
+             stroke="0"
+             strokecolor="black"
+        >
+          <private>
+          </private>
+          
+          <rectangle name="Fig6.5.0"
+            x="787"
+            y="425"
+            width="4"
+            height="4"
+            fill="0"
+            fillcolor="white"
+            stroke="0"
+            strokecolor="black"
+          />
+          <text name="Fig6.5.1"
+            x="787"
+            y="425"
+            fill="0"
+            fillcolor="white"
+            stroke="0"
+            strokecolor="black"
+            font="Dialog"
+            textsize="10"
+          >newEP: loc</text>
+          <text name="Fig6.5.2"
+            x="787"
+            y="442"
+            fill="0"
+            fillcolor="white"
+            stroke="0"
+            strokecolor="black"
+            font="Dialog"
+            textsize="10"
+          >newEP: loc</text>
+        </group>
+      </group>
+      <group name="Fig7"
+           description="org.argouml.uml.diagram.use_case.ui.FigUseCase[264, 392, 272, 60]pathVisible=false;extensionPointVisible=false"
+           href=".:00000000000007D8"
+           fill="1"
+           fillcolor="white"
+           stroke="1"
+           strokecolor="black"
+      >
+        <private>
+        </private>
+        
+        <ellipse name="Fig7.0"
+          x="400"
+          y="422"
+          rx="136"
+          ry="30"
+          fill="1"
+          fillcolor="white"
+          stroke="1"
+          strokecolor="black"
+        />
+        <ellipse name="Fig7.1"
+          x="400"
+          y="422"
+          rx="136"
+          ry="30"
+          fill="1"
+          fillcolor="white"
+          stroke="1"
+          strokecolor="black"
+        />
+        <text name="Fig7.2"
+          x="311"
+          y="411"
+          fill="0"
+          fillcolor="white"
+          stroke="0"
+          strokecolor="black"
+          font="Dialog"
+          textsize="10"
+        >Klick auf Termin im Kalenderfenster</text>
+        <group name="Fig7.3"
+             description="org.argouml.uml.diagram.ui.FigStereotypesCompartment[0, 0, 0, 0]"
+             fill="0"
+             fillcolor="white"
+             stroke="0"
+             strokecolor="black"
+        >
+          <private>
+          </private>
+          
+          <rectangle name="Fig7.3.0"
+            x="0"
+            y="0"
+            width="0"
+            height="0"
+            fill="0"
+            fillcolor="white"
+            stroke="0"
+            strokecolor="black"
+          />
+        </group>
+        <path name="Fig7.4"
+          description="org.tigris.gef.presentation.FigLine"
+          fill="1"
+          fillcolor="white"
+          stroke="1"
+          strokecolor="black"
+        >
+          <moveto x="264"
+                  y="422" />
+          <lineto x="370"
+                  y="422" />
+        </path>
+        <group name="Fig7.5"
+             description="org.tigris.gef.presentation.FigGroup[]"
+             fill="0"
+             fillcolor="white"
+             stroke="0"
+             strokecolor="black"
+        >
+          <private>
+          </private>
+          
+          <rectangle name="Fig7.5.0"
+            x="315"
+            y="425"
+            width="4"
+            height="4"
+            fill="0"
+            fillcolor="white"
+            stroke="0"
+            strokecolor="black"
+          />
+          <text name="Fig7.5.1"
+            x="315"
+            y="425"
+            fill="0"
+            fillcolor="white"
+            stroke="0"
+            strokecolor="black"
+            font="Dialog"
+            textsize="10"
+          >newEP: loc</text>
+        </group>
+      </group>
+      <group name="Fig10"
+           description="org.argouml.uml.diagram.use_case.ui.FigUseCase[416, 224, 106, 60]pathVisible=false;extensionPointVisible=false"
+           href=".:00000000000007E2"
+           fill="1"
+           fillcolor="white"
+           stroke="1"
+           strokecolor="black"
+      >
+        <private>
+        </private>
+        
+        <ellipse name="Fig10.0"
+          x="469"
+          y="254"
+          rx="53"
+          ry="30"
+          fill="1"
+          fillcolor="white"
+          stroke="1"
+          strokecolor="black"
+        />
+        <ellipse name="Fig10.1"
+          x="469"
+          y="254"
+          rx="53"
+          ry="30"
+          fill="1"
+          fillcolor="white"
+          stroke="1"
+          strokecolor="black"
+        />
+        <text name="Fig10.2"
+          x="439"
+          y="243"
+          fill="0"
+          fillcolor="white"
+          stroke="0"
+          strokecolor="black"
+          font="Dialog"
+          textsize="10"
+        >Abbrechen</text>
+        <group name="Fig10.3"
+             description="org.argouml.uml.diagram.ui.FigStereotypesCompartment[0, 0, 0, 0]"
+             fill="0"
+             fillcolor="white"
+             stroke="0"
+             strokecolor="black"
+        >
+          <private>
+          </private>
+          
+          <rectangle name="Fig10.3.0"
+            x="0"
+            y="0"
+            width="0"
+            height="0"
+            fill="0"
+            fillcolor="white"
+            stroke="0"
+            strokecolor="black"
+          />
+        </group>
+        <path name="Fig10.4"
+          description="org.tigris.gef.presentation.FigLine"
+          fill="1"
+          fillcolor="white"
+          stroke="1"
+          strokecolor="black"
+        >
+          <moveto x="416"
+                  y="254" />
+          <lineto x="522"
+                  y="254" />
+        </path>
+        <group name="Fig10.5"
+             description="org.tigris.gef.presentation.FigGroup[]"
+             fill="0"
+             fillcolor="white"
+             stroke="0"
+             strokecolor="black"
+        >
+          <private>
+          </private>
+          
+          <rectangle name="Fig10.5.0"
+            x="467"
+            y="257"
+            width="4"
+            height="4"
+            fill="0"
+            fillcolor="white"
+            stroke="0"
+            strokecolor="black"
+          />
+        </group>
+      </group>
+      <group name="Fig13"
+           description="org.argouml.uml.diagram.static_structure.ui.FigComment[560, 104, 102, 24]pathVisible=false;"
+           href=".:00000000000007E8"
+           fill="1"
+           fillcolor="white"
+           stroke="1"
+           strokecolor="black"
+      >
+        <private>
+        </private>
+        
+        <rectangle name="Fig13.0"
+          x="560"
+          y="104"
+          width="102"
+          height="24"
+          fill="0"
+          fillcolor="white"
+          stroke="0"
+          strokecolor="black"
+        />
+        <path name="Fig13.1"
+          description="org.tigris.gef.presentation.FigPoly"
+          fill="1"
+          fillcolor="white"
+          stroke="1"
+          strokecolor="black"
+        >
+          <moveto x="560"
+                  y="104" />
+          <lineto x="651"
+                  y="104" />
+          <lineto x="661"
+                  y="114" />
+          <lineto x="661"
+                  y="127" />
+          <lineto x="560"
+                  y="127" />
+          <lineto x="560"
+                  y="104" />
+        </path>
+        <path name="Fig13.2"
+          description="org.tigris.gef.presentation.FigPoly"
+          fill="1"
+          fillcolor="178 178 178"
+          stroke="1"
+          strokecolor="black"
+        >
+          <moveto x="651"
+                  y="104" />
+          <lineto x="661"
+                  y="114" />
+          <lineto x="651"
+                  y="114" />
+          <lineto x="651"
+                  y="104" />
+        </path>
+        <group name="Fig13.3"
+             description="org.argouml.uml.diagram.ui.FigStereotypesCompartment[]"
+             fill="0"
+             fillcolor="white"
+             stroke="0"
+             strokecolor="black"
+        >
+          <private>
+          </private>
+          
+          <rectangle name="Fig13.3.0"
+            x="562"
+            y="106"
+            width="88"
+            height="2"
+            fill="0"
+            fillcolor="white"
+            stroke="0"
+            strokecolor="black"
+          />
+        </group>
+        <text name="Fig13.4"
+          x="562"
+          y="106"
+          fill="0"
+          fillcolor="white"
+          stroke="0"
+          strokecolor="black"
+          font="Dialog"
+          textsize="10"
+        >�ffnet Kontextmen�</text>
+      </group>
+      <group name="Fig15"
+           description="org.argouml.uml.diagram.use_case.ui.FigUseCase[856, 224, 106, 60]pathVisible=false;extensionPointVisible=false"
+           href=".:00000000000007E9"
+           fill="1"
+           fillcolor="white"
+           stroke="1"
+           strokecolor="black"
+      >
+        <private>
+        </private>
+        
+        <ellipse name="Fig15.0"
+          x="909"
+          y="254"
+          rx="53"
+          ry="30"
+          fill="1"
+          fillcolor="white"
+          stroke="1"
+          strokecolor="black"
+        />
+        <ellipse name="Fig15.1"
+          x="909"
+          y="254"
+          rx="53"
+          ry="30"
+          fill="1"
+          fillcolor="white"
+          stroke="1"
+          strokecolor="black"
+        />
+        <text name="Fig15.2"
+          x="873"
+          y="243"
+          fill="0"
+          fillcolor="white"
+          stroke="0"
+          strokecolor="black"
+          font="Dialog"
+          textsize="10"
+        >Daten �ndern</text>
+        <group name="Fig15.3"
+             description="org.argouml.uml.diagram.ui.FigStereotypesCompartment[0, 0, 0, 0]"
+             fill="0"
+             fillcolor="white"
+             stroke="0"
+             strokecolor="black"
+        >
+          <private>
+          </private>
+          
+          <rectangle name="Fig15.3.0"
+            x="0"
+            y="0"
+            width="0"
+            height="0"
+            fill="0"
+            fillcolor="white"
+            stroke="0"
+            strokecolor="black"
+          />
+        </group>
+        <path name="Fig15.4"
+          description="org.tigris.gef.presentation.FigLine"
+          fill="1"
+          fillcolor="white"
+          stroke="1"
+          strokecolor="black"
+        >
+          <moveto x="856"
+                  y="254" />
+          <lineto x="962"
+                  y="254" />
+        </path>
+        <group name="Fig15.5"
+             description="org.tigris.gef.presentation.FigGroup[]"
+             fill="0"
+             fillcolor="white"
+             stroke="0"
+             strokecolor="black"
+        >
+          <private>
+          </private>
+          
+          <rectangle name="Fig15.5.0"
+            x="907"
+            y="257"
+            width="4"
+            height="4"
+            fill="0"
+            fillcolor="white"
+            stroke="0"
+            strokecolor="black"
+          />
+          <text name="Fig15.5.1"
+            x="907"
+            y="257"
+            fill="0"
+            fillcolor="white"
+            stroke="0"
+            strokecolor="black"
+            font="Dialog"
+            textsize="10"
+          >newEP: loc</text>
+          <text name="Fig15.5.2"
+            x="907"
+            y="274"
+            fill="0"
+            fillcolor="white"
+            stroke="0"
+            strokecolor="black"
+            font="Dialog"
+            textsize="10"
+          >newEP: loc</text>
+        </group>
+      </group>
+      <group name="Fig19"
+           description="org.argouml.uml.diagram.use_case.ui.FigUseCase[1056, 224, 106, 60]pathVisible=false;extensionPointVisible=false"
+           href=".:00000000000007F0"
+           fill="1"
+           fillcolor="white"
+           stroke="1"
+           strokecolor="black"
+      >
+        <private>
+        </private>
+        
+        <ellipse name="Fig19.0"
+          x="1109"
+          y="254"
+          rx="53"
+          ry="30"
+          fill="1"
+          fillcolor="white"
+          stroke="1"
+          strokecolor="black"
+        />
+        <ellipse name="Fig19.1"
+          x="1109"
+          y="254"
+          rx="53"
+          ry="30"
+          fill="1"
+          fillcolor="white"
+          stroke="1"
+          strokecolor="black"
+        />
+        <text name="Fig19.2"
+          x="1080"
+          y="243"
+          fill="0"
+          fillcolor="white"
+          stroke="0"
+          strokecolor="black"
+          font="Dialog"
+          textsize="10"
+        >Speichern</text>
+        <group name="Fig19.3"
+             description="org.argouml.uml.diagram.ui.FigStereotypesCompartment[0, 0, 0, 0]"
+             fill="0"
+             fillcolor="white"
+             stroke="0"
+             strokecolor="black"
+        >
+          <private>
+          </private>
+          
+          <rectangle name="Fig19.3.0"
+            x="0"
+            y="0"
+            width="0"
+            height="0"
+            fill="0"
+            fillcolor="white"
+            stroke="0"
+            strokecolor="black"
+          />
+        </group>
+        <path name="Fig19.4"
+          description="org.tigris.gef.presentation.FigLine"
+          fill="1"
+          fillcolor="white"
+          stroke="1"
+          strokecolor="black"
+        >
+          <moveto x="1056"
+                  y="254" />
+          <lineto x="1162"
+                  y="254" />
+        </path>
+        <group name="Fig19.5"
+             description="org.tigris.gef.presentation.FigGroup[]"
+             fill="0"
+             fillcolor="white"
+             stroke="0"
+             strokecolor="black"
+        >
+          <private>
+          </private>
+          
+          <rectangle name="Fig19.5.0"
+            x="1107"
+            y="257"
+            width="4"
+            height="4"
+            fill="0"
+            fillcolor="white"
+            stroke="0"
+            strokecolor="black"
+          />
+        </group>
+      </group>
+      <group name="Fig3"
+           description="org.argouml.uml.diagram.ui.FigAssociation"
+           href=".:00000000000007CD"
+           stroke="1"
+           strokecolor="black"
+      >
+        <private>
+          sourcePortFig="Fig1"
+          destPortFig="Fig2"
+          sourceFigNode="Fig1"
+          destFigNode="Fig2"
+        </private>
+        <path name="Fig3.0"
+          description="org.tigris.gef.presentation.FigPoly"
+          fill="0"
+          fillcolor="white"
+          stroke="1"
+          strokecolor="black"
+        >
+          <moveto x="163"
+                  y="68" />
+          <lineto x="263"
+                  y="70" />
+        </path>
+      </group>
+      <group name="Fig5"
+           description="org.argouml.uml.diagram.use_case.ui.FigExtend"
+           href=".:00000000000007D6"
+           stroke="1"
+           strokecolor="black"
+      >
+        <private>
+          sourcePortFig="Fig4.0"
+          destPortFig="Fig2.0"
+          sourceFigNode="Fig4"
+          destFigNode="Fig2"
+        </private>
+        <path name="Fig5.0"
+          description="org.tigris.gef.presentation.FigPoly"
+          fill="0"
+          fillcolor="white"
+          stroke="1"
+          strokecolor="black"
+        >
+          <moveto x="648"
+                  y="68" />
+          <lineto x="565"
+                  y="68" />
+        </path>
+      </group>
+      <group name="Fig8"
+           description="org.argouml.uml.diagram.use_case.ui.FigExtend"
+           href=".:00000000000007DA"
+           stroke="1"
+           strokecolor="black"
+      >
+        <private>
+          sourcePortFig="Fig6.0"
+          destPortFig="Fig7.0"
+          sourceFigNode="Fig6"
+          destFigNode="Fig7"
+        </private>
+        <path name="Fig8.0"
+          description="org.tigris.gef.presentation.FigPoly"
+          fill="0"
+          fillcolor="white"
+          stroke="1"
+          strokecolor="black"
+        >
+          <moveto x="736"
+                  y="422" />
+          <lineto x="536"
+                  y="422" />
+        </path>
+      </group>
+      <group name="Fig9"
+           description="org.argouml.uml.diagram.ui.FigAssociation"
+           href=".:00000000000007DB"
+           stroke="1"
+           strokecolor="black"
+      >
+        <private>
+          sourcePortFig="Fig1"
+          destPortFig="Fig7"
+          sourceFigNode="Fig1"
+          destFigNode="Fig7"
+        </private>
+        <path name="Fig9.0"
+          description="org.tigris.gef.presentation.FigPoly"
+          fill="0"
+          fillcolor="white"
+          stroke="1"
+          strokecolor="black"
+        >
+          <moveto x="158"
+                  y="93" />
+          <lineto x="289"
+                  y="403" />
+        </path>
+      </group>
+      <group name="Fig11"
+           description="org.argouml.uml.diagram.use_case.ui.FigExtend"
+           href=".:00000000000007E4"
+           stroke="1"
+           strokecolor="black"
+      >
+        <private>
+          sourcePortFig="Fig10.0"
+          destPortFig="Fig4.0"
+          sourceFigNode="Fig10"
+          destFigNode="Fig4"
+        </private>
+        <path name="Fig11.0"
+          description="org.tigris.gef.presentation.FigPoly"
+          fill="0"
+          fillcolor="white"
+          stroke="1"
+          strokecolor="black"
+        >
+          <moveto x="511"
+                  y="236" />
+          <lineto x="839"
+                  y="98" />
+        </path>
+      </group>
+      <group name="Fig12"
+           description="org.argouml.uml.diagram.use_case.ui.FigExtend"
+           href=".:00000000000007E6"
+           stroke="1"
+           strokecolor="black"
+      >
+        <private>
+          sourcePortFig="Fig10.0"
+          destPortFig="Fig6.0"
+          sourceFigNode="Fig10"
+          destFigNode="Fig6"
+        </private>
+        <path name="Fig12.0"
+          description="org.tigris.gef.presentation.FigPoly"
+          fill="0"
+          fillcolor="white"
+          stroke="1"
+          strokecolor="black"
+        >
+          <moveto x="512"
+                  y="270" />
+          <lineto x="836"
+                  y="394" />
+        </path>
+      </group>
+      <group name="Fig14"
+           description="org.argouml.uml.diagram.static_structure.ui.FigEdgeNote"
+           href="81--39-1-92--611c2990:10b3387f79d:-7ffd"
+           stroke="1"
+           strokecolor="black"
+      >
+        <private>
+          sourcePortFig="Fig13"
+          destPortFig="Fig5.2"
+          sourceFigNode="Fig13"
+          destFigNode="Fig5.2"
+        </private>
+        <path name="Fig14.0"
+          description="org.tigris.gef.presentation.FigPoly"
+          fill="0"
+          fillcolor="white"
+          stroke="1"
+          strokecolor="black"
+        >
+          <moveto x="602"
+                  y="104" />
+          <lineto x="602"
+                  y="73" />
+        </path>
+      </group>
+      <group name="Fig16"
+           description="org.argouml.uml.diagram.use_case.ui.FigExtend"
+           href=".:00000000000007EB"
+           stroke="1"
+           strokecolor="black"
+      >
+        <private>
+          sourcePortFig="Fig10.0"
+          destPortFig="Fig15.0"
+          sourceFigNode="Fig10"
+          destFigNode="Fig15"
+        </private>
+        <path name="Fig16.0"
+          description="org.tigris.gef.presentation.FigPoly"
+          fill="0"
+          fillcolor="white"
+          stroke="1"
+          strokecolor="black"
+        >
+          <moveto x="521"
+                  y="253" />
+          <lineto x="856"
+                  y="253" />
+        </path>
+      </group>
+      <group name="Fig17"
+           description="org.argouml.uml.diagram.use_case.ui.FigExtend"
+           href=".:00000000000007ED"
+           stroke="1"
+           strokecolor="black"
+      >
+        <private>
+          sourcePortFig="Fig15.0"
+          destPortFig="Fig4.0"
+          sourceFigNode="Fig15"
+          destFigNode="Fig4"
+        </private>
+        <path name="Fig17.0"
+          description="org.tigris.gef.presentation.FigPoly"
+          fill="0"
+          fillcolor="white"
+          stroke="1"
+          strokecolor="black"
+        >
+          <moveto x="909"
+                  y="224" />
+          <lineto x="909"
+                  y="100" />
+        </path>
+      </group>
+      <group name="Fig18"
+           description="org.argouml.uml.diagram.use_case.ui.FigExtend"
+           href=".:00000000000007EF"
+           stroke="1"
+           strokecolor="black"
+      >
+        <private>
+          sourcePortFig="Fig15.0"
+          destPortFig="Fig6.0"
+          sourceFigNode="Fig15"
+          destFigNode="Fig6"
+        </private>
+        <path name="Fig18.0"
+          description="org.tigris.gef.presentation.FigPoly"
+          fill="0"
+          fillcolor="white"
+          stroke="1"
+          strokecolor="black"
+        >
+          <moveto x="908"
+                  y="283" />
+          <lineto x="908"
+                  y="392" />
+        </path>
+      </group>
+      <group name="Fig20"
+           description="org.argouml.uml.diagram.use_case.ui.FigExtend"
+           href=".:00000000000007F2"
+           stroke="1"
+           strokecolor="black"
+      >
+        <private>
+          sourcePortFig="Fig19.0"
+          destPortFig="Fig15.0"
+          sourceFigNode="Fig19"
+          destFigNode="Fig15"
+        </private>
+        <path name="Fig20.0"
+          description="org.tigris.gef.presentation.FigPoly"
+          fill="0"
+          fillcolor="white"
+          stroke="1"
+          strokecolor="black"
+        >
+          <moveto x="1056"
+                  y="254" />
+          <lineto x="962"
+                  y="254" />
+        </path>
+      </group>
+    </pgml>
+    <pgml description="org.argouml.uml.diagram.use_case.ui.UMLUseCaseDiagram|.:00000000000007CA"
+          name="Zeitpunkt bearbeiten"
+    >
+      <group name="Fig0"
+           description="org.argouml.uml.diagram.use_case.ui.FigActor[56, 58, 50, 65]pathVisible=false;"
+           href=".:00000000000007F3"
+           fill="1"
+           fillcolor="white"
+           stroke="1"
+           strokecolor="black"
+      >
+        <private>
+        </private>
+        
+        <rectangle name="Fig0.0"
+          x="74"
+          y="58"
+          width="15"
+          height="60"
+          fill="0"
+          fillcolor="white"
+          stroke="0"
+          strokecolor="black"
+        />
+        <text name="Fig0.1"
+          x="56"
+          y="102"
+          fill="0"
+          fillcolor="white"
+          stroke="0"
+          strokecolor="black"
+          font="Dialog"
+          textsize="10"
+        >Benutzer</text>
+        <ellipse name="Fig0.2"
+          x="81"
+          y="65"
+          rx="7"
+          ry="7"
+          fill="1"
+          fillcolor="white"
+          stroke="1"
+          strokecolor="black"
+        />
+        <path name="Fig0.3"
+          description="org.tigris.gef.presentation.FigLine"
+          fill="1"
+          fillcolor="white"
+          stroke="1"
+          strokecolor="black"
+        >
+          <moveto x="81"
+                  y="73" />
+          <lineto x="81"
+                  y="88" />
+        </path>
+        <path name="Fig0.4"
+          description="org.tigris.gef.presentation.FigLine"
+          fill="1"
+          fillcolor="white"
+          stroke="1"
+          strokecolor="black"
+        >
+          <moveto x="71"
+                  y="78" />
+          <lineto x="91"
+                  y="78" />
+        </path>
+        <path name="Fig0.5"
+          description="org.tigris.gef.presentation.FigLine"
+          fill="1"
+          fillcolor="white"
+          stroke="1"
+          strokecolor="black"
+        >
+          <moveto x="81"
+                  y="88" />
+          <lineto x="76"
+                  y="103" />
+        </path>
+        <path name="Fig0.6"
+          description="org.tigris.gef.presentation.FigLine"
+          fill="1"
+          fillcolor="white"
+          stroke="1"
+          strokecolor="black"
+        >
+          <moveto x="81"
+                  y="88" />
+          <lineto x="86"
+                  y="103" />
+        </path>
+        <group name="Fig0.7"
+             description="org.argouml.uml.diagram.ui.FigStereotypesCompartment[81, 88, 0, 0]"
+             fill="0"
+             fillcolor="white"
+             stroke="0"
+             strokecolor="black"
+        >
+          <private>
+          </private>
+          
+          <rectangle name="Fig0.7.0"
+            x="81"
+            y="88"
+            width="0"
+            height="0"
+            fill="0"
+            fillcolor="white"
+            stroke="0"
+            strokecolor="black"
+          />
+        </group>
+      </group>
+      <rectangle name="Fig1"
+        x="154"
+        y="30"
+        width="1037"
+        height="388"
+        fill="1"
+        fillcolor="white"
+        stroke="1"
+        strokecolor="black"
+      />
+      <group name="Fig2"
+           description="org.argouml.uml.diagram.use_case.ui.FigUseCase[200, 48, 314, 60]pathVisible=false;extensionPointVisible=false"
+           href=".:00000000000007F4"
+           fill="1"
+           fillcolor="white"
+           stroke="1"
+           strokecolor="black"
+      >
+        <private>
+        </private>
+        
+        <ellipse name="Fig2.0"
+          x="357"
+          y="78"
+          rx="157"
+          ry="30"
+          fill="1"
+          fillcolor="white"
+          stroke="1"
+          strokecolor="black"
+        />
+        <ellipse name="Fig2.1"
+          x="357"
+          y="78"
+          rx="157"
+          ry="30"
+          fill="1"
+          fillcolor="white"
+          stroke="1"
+          strokecolor="black"
+        />
+        <text name="Fig2.2"
+          x="249"
+          y="67"
+          fill="0"
+          fillcolor="white"
+          stroke="0"
+          strokecolor="black"
+          font="Dialog"
+          textsize="10"
+        >Rechtsklick auf Zeitpunkt im Kalenderfenster</text>
+        <group name="Fig2.3"
+             description="org.argouml.uml.diagram.ui.FigStereotypesCompartment[0, 0, 0, 0]"
+             fill="0"
+             fillcolor="white"
+             stroke="0"
+             strokecolor="black"
+        >
+          <private>
+          </private>
+          
+          <rectangle name="Fig2.3.0"
+            x="0"
+            y="0"
+            width="0"
+            height="0"
+            fill="0"
+            fillcolor="white"
+            stroke="0"
+            strokecolor="black"
+          />
+        </group>
+        <path name="Fig2.4"
+          description="org.tigris.gef.presentation.FigLine"
+          fill="1"
+          fillcolor="white"
+          stroke="1"
+          strokecolor="black"
+        >
+          <moveto x="200"
+                  y="78" />
+          <lineto x="306"
+                  y="78" />
+        </path>
+        <group name="Fig2.5"
+             description="org.tigris.gef.presentation.FigGroup[]"
+             fill="0"
+             fillcolor="white"
+             stroke="0"
+             strokecolor="black"
+        >
+          <private>
+          </private>
+          
+          <rectangle name="Fig2.5.0"
+            x="251"
+            y="81"
+            width="4"
+            height="4"
+            fill="0"
+            fillcolor="white"
+            stroke="0"
+            strokecolor="black"
+          />
+          <text name="Fig2.5.1"
+            x="251"
+            y="81"
+            fill="0"
+            fillcolor="white"
+            stroke="0"
+            strokecolor="black"
+            font="Dialog"
+            textsize="10"
+          >newEP: loc</text>
+        </group>
+      </group>
+      <group name="Fig4"
+           description="org.argouml.uml.diagram.use_case.ui.FigUseCase[624, 48, 534, 60]pathVisible=false;extensionPointVisible=false"
+           href=".:00000000000007FC"
+           fill="1"
+           fillcolor="white"
+           stroke="1"
+           strokecolor="black"
+      >
+        <private>
+        </private>
+        
+        <ellipse name="Fig4.0"
+          x="891"
+          y="78"
+          rx="267"
+          ry="30"
+          fill="1"
+          fillcolor="white"
+          stroke="1"
+          strokecolor="black"
+        />
+        <ellipse name="Fig4.1"
+          x="891"
+          y="78"
+          rx="267"
+          ry="30"
+          fill="1"
+          fillcolor="white"
+          stroke="1"
+          strokecolor="black"
+        />
+        <text name="Fig4.2"
+          x="717"
+          y="67"
+          fill="0"
+          fillcolor="white"
+          stroke="0"
+          strokecolor="black"
+          font="Dialog"
+          textsize="10"
+        >Auswahl &quot;Zeitpunkt bearbeiten&quot; im Kontextmen� - �ffnet Bearbeitungsfenster</text>
+        <group name="Fig4.3"
+             description="org.argouml.uml.diagram.ui.FigStereotypesCompartment[0, 0, 0, 0]"
+             fill="0"
+             fillcolor="white"
+             stroke="0"
+             strokecolor="black"
+        >
+          <private>
+          </private>
+          
+          <rectangle name="Fig4.3.0"
+            x="0"
+            y="0"
+            width="0"
+            height="0"
+            fill="0"
+            fillcolor="white"
+            stroke="0"
+            strokecolor="black"
+          />
+        </group>
+        <path name="Fig4.4"
+          description="org.tigris.gef.presentation.FigLine"
+          fill="1"
+          fillcolor="white"
+          stroke="1"
+          strokecolor="black"
+        >
+          <moveto x="624"
+                  y="78" />
+          <lineto x="730"
+                  y="78" />
+        </path>
+        <group name="Fig4.5"
+             description="org.tigris.gef.presentation.FigGroup[]"
+             fill="0"
+             fillcolor="white"
+             stroke="0"
+             strokecolor="black"
+        >
+          <private>
+          </private>
+          
+          <rectangle name="Fig4.5.0"
+            x="675"
+            y="81"
+            width="4"
+            height="4"
+            fill="0"
+            fillcolor="white"
+            stroke="0"
+            strokecolor="black"
+          />
+          <text name="Fig4.5.1"
+            x="675"
+            y="81"
+            fill="0"
+            fillcolor="white"
+            stroke="0"
+            strokecolor="black"
+            font="Dialog"
+            textsize="10"
+          >newEP: loc</text>
+          <text name="Fig4.5.2"
+            x="675"
+            y="98"
+            fill="0"
+            fillcolor="white"
+            stroke="0"
+            strokecolor="black"
+            font="Dialog"
+            textsize="10"
+          >newEP: loc</text>
+        </group>
+      </group>
+      <group name="Fig6"
+           description="org.argouml.uml.diagram.static_structure.ui.FigComment[488, 112, 101, 32]pathVisible=false;"
+           href=".:00000000000007FF"
+           fill="1"
+           fillcolor="white"
+           stroke="1"
+           strokecolor="black"
+      >
+        <private>
+        </private>
+        
+        <rectangle name="Fig6.0"
+          x="488"
+          y="112"
+          width="101"
+          height="32"
+          fill="0"
+          fillcolor="white"
+          stroke="0"
+          strokecolor="black"
+        />
+        <path name="Fig6.1"
+          description="org.tigris.gef.presentation.FigPoly"
+          fill="1"
+          fillcolor="white"
+          stroke="1"
+          strokecolor="black"
+        >
+          <moveto x="488"
+                  y="112" />
+          <lineto x="578"
+                  y="112" />
+          <lineto x="588"
+                  y="122" />
+          <lineto x="588"
+                  y="143" />
+          <lineto x="488"
+                  y="143" />
+          <lineto x="488"
+                  y="112" />
+        </path>
+        <path name="Fig6.2"
+          description="org.tigris.gef.presentation.FigPoly"
+          fill="1"
+          fillcolor="178 178 178"
+          stroke="1"
+          strokecolor="black"
+        >
+          <moveto x="578"
+                  y="112" />
+          <lineto x="588"
+                  y="122" />
+          <lineto x="578"
+                  y="122" />
+          <lineto x="578"
+                  y="112" />
+        </path>
+        <group name="Fig6.3"
+             description="org.argouml.uml.diagram.ui.FigStereotypesCompartment[]"
+             fill="0"
+             fillcolor="white"
+             stroke="0"
+             strokecolor="black"
+        >
+          <private>
+          </private>
+          
+          <rectangle name="Fig6.3.0"
+            x="490"
+            y="114"
+            width="87"
+            height="2"
+            fill="0"
+            fillcolor="white"
+            stroke="0"
+            strokecolor="black"
+          />
+        </group>
+        <text name="Fig6.4"
+          x="490"
+          y="114"
+          fill="0"
+          fillcolor="white"
+          stroke="0"
+          strokecolor="black"
+          font="Dialog"
+          textsize="10"
+        >�ffnet Kontextmen�
+    </text>
+      </group>
+      <group name="Fig8"
+           description="org.argouml.uml.diagram.use_case.ui.FigUseCase[208, 336, 272, 60]pathVisible=false;extensionPointVisible=false"
+           href=".:0000000000000802"
+           fill="1"
+           fillcolor="white"
+           stroke="1"
+           strokecolor="black"
+      >
+        <private>
+        </private>
+        
+        <ellipse name="Fig8.0"
+          x="344"
+          y="366"
+          rx="136"
+          ry="30"
+          fill="1"
+          fillcolor="white"
+          stroke="1"
+          strokecolor="black"
+        />
+        <ellipse name="Fig8.1"
+          x="344"
+          y="366"
+          rx="136"
+          ry="30"
+          fill="1"
+          fillcolor="white"
+          stroke="1"
+          strokecolor="black"
+        />
+        <text name="Fig8.2"
+          x="250"
+          y="355"
+          fill="0"
+          fillcolor="white"
+          stroke="0"
+          strokecolor="black"
+          font="Dialog"
+          textsize="10"
+        >Klick auf Zeitpunkt im Kalenderfenster</text>
+        <group name="Fig8.3"
+             description="org.argouml.uml.diagram.ui.FigStereotypesCompartment[8, -168, 0, 0]"
+             fill="0"
+             fillcolor="white"
+             stroke="0"
+             strokecolor="black"
+        >
+          <private>
+          </private>
+          
+          <rectangle name="Fig8.3.0"
+            x="8"
+            y="-168"
+            width="0"
+            height="0"
+            fill="0"
+            fillcolor="white"
+            stroke="0"
+            strokecolor="black"
+          />
+        </group>
+        <path name="Fig8.4"
+          description="org.tigris.gef.presentation.FigLine"
+          fill="1"
+          fillcolor="white"
+          stroke="1"
+          strokecolor="black"
+        >
+          <moveto x="208"
+                  y="366" />
+          <lineto x="314"
+                  y="366" />
+        </path>
+        <group name="Fig8.5"
+             description="org.tigris.gef.presentation.FigGroup[]"
+             fill="0"
+             fillcolor="white"
+             stroke="0"
+             strokecolor="black"
+        >
+          <private>
+          </private>
+          
+          <rectangle name="Fig8.5.0"
+            x="259"
+            y="369"
+            width="4"
+            height="4"
+            fill="0"
+            fillcolor="white"
+            stroke="0"
+            strokecolor="black"
+          />
+          <text name="Fig8.5.1"
+            x="259"
+            y="369"
+            fill="0"
+            fillcolor="white"
+            stroke="0"
+            strokecolor="black"
+            font="Dialog"
+            textsize="10"
+          >newEP: loc</text>
+        </group>
+      </group>
+      <group name="Fig10"
+           description="org.argouml.uml.diagram.use_case.ui.FigUseCase[720, 337, 344, 60]pathVisible=false;extensionPointVisible=false"
+           href=".:000000000000080A"
+           fill="1"
+           fillcolor="white"
+           stroke="1"
+           strokecolor="black"
+      >
+        <private>
+        </private>
+        
+        <ellipse name="Fig10.0"
+          x="892"
+          y="367"
+          rx="172"
+          ry="30"
+          fill="1"
+          fillcolor="white"
+          stroke="1"
+          strokecolor="black"
+        />
+        <ellipse name="Fig10.1"
+          x="892"
+          y="367"
+          rx="172"
+          ry="30"
+          fill="1"
+          fillcolor="white"
+          stroke="1"
+          strokecolor="black"
+        />
+        <text name="Fig10.2"
+          x="780"
+          y="356"
+          fill="0"
+          fillcolor="white"
+          stroke="0"
+          strokecolor="black"
+          font="Dialog"
+          textsize="10"
+        >Button &quot;Edit&quot; klicken - �ffnet Bearbeitungsfenster</text>
+        <group name="Fig10.3"
+             description="org.argouml.uml.diagram.ui.FigStereotypesCompartment[-48, -167, 0, 0]"
+             fill="0"
+             fillcolor="white"
+             stroke="0"
+             strokecolor="black"
+        >
+          <private>
+          </private>
+          
+          <rectangle name="Fig10.3.0"
+            x="-48"
+            y="-167"
+            width="0"
+            height="0"
+            fill="0"
+            fillcolor="white"
+            stroke="0"
+            strokecolor="black"
+          />
+        </group>
+        <path name="Fig10.4"
+          description="org.tigris.gef.presentation.FigLine"
+          fill="1"
+          fillcolor="white"
+          stroke="1"
+          strokecolor="black"
+        >
+          <moveto x="720"
+                  y="367" />
+          <lineto x="826"
+                  y="367" />
+        </path>
+        <group name="Fig10.5"
+             description="org.tigris.gef.presentation.FigGroup[]"
+             fill="0"
+             fillcolor="white"
+             stroke="0"
+             strokecolor="black"
+        >
+          <private>
+          </private>
+          
+          <rectangle name="Fig10.5.0"
+            x="771"
+            y="370"
+            width="4"
+            height="4"
+            fill="0"
+            fillcolor="white"
+            stroke="0"
+            strokecolor="black"
+          />
+          <text name="Fig10.5.1"
+            x="771"
+            y="370"
+            fill="0"
+            fillcolor="white"
+            stroke="0"
+            strokecolor="black"
+            font="Dialog"
+            textsize="10"
+          >newEP: loc</text>
+          <text name="Fig10.5.2"
+            x="771"
+            y="387"
+            fill="0"
+            fillcolor="white"
+            stroke="0"
+            strokecolor="black"
+            font="Dialog"
+            textsize="10"
+          >newEP: loc</text>
+        </group>
+      </group>
+      <group name="Fig12"
+           description="org.argouml.uml.diagram.use_case.ui.FigUseCase[408, 208, 106, 60]pathVisible=false;extensionPointVisible=false"
+           href=".:000000000000080D"
+           fill="1"
+           fillcolor="white"
+           stroke="1"
+           strokecolor="black"
+      >
+        <private>
+        </private>
+        
+        <ellipse name="Fig12.0"
+          x="461"
+          y="238"
+          rx="53"
+          ry="30"
+          fill="1"
+          fillcolor="white"
+          stroke="1"
+          strokecolor="black"
+        />
+        <ellipse name="Fig12.1"
+          x="461"
+          y="238"
+          rx="53"
+          ry="30"
+          fill="1"
+          fillcolor="white"
+          stroke="1"
+          strokecolor="black"
+        />
+        <text name="Fig12.2"
+          x="431"
+          y="227"
+          fill="0"
+          fillcolor="white"
+          stroke="0"
+          strokecolor="black"
+          font="Dialog"
+          textsize="10"
+        >Abbrechen</text>
+        <group name="Fig12.3"
+             description="org.argouml.uml.diagram.ui.FigStereotypesCompartment[8, -72, 0, 0]"
+             fill="0"
+             fillcolor="white"
+             stroke="0"
+             strokecolor="black"
+        >
+          <private>
+          </private>
+          
+          <rectangle name="Fig12.3.0"
+            x="8"
+            y="-72"
+            width="0"
+            height="0"
+            fill="0"
+            fillcolor="white"
+            stroke="0"
+            strokecolor="black"
+          />
+        </group>
+        <path name="Fig12.4"
+          description="org.tigris.gef.presentation.FigLine"
+          fill="1"
+          fillcolor="white"
+          stroke="1"
+          strokecolor="black"
+        >
+          <moveto x="408"
+                  y="238" />
+          <lineto x="514"
+                  y="238" />
+        </path>
+        <group name="Fig12.5"
+             description="org.tigris.gef.presentation.FigGroup[]"
+             fill="0"
+             fillcolor="white"
+             stroke="0"
+             strokecolor="black"
+        >
+          <private>
+          </private>
+          
+          <rectangle name="Fig12.5.0"
+            x="459"
+            y="241"
+            width="4"
+            height="4"
+            fill="0"
+            fillcolor="white"
+            stroke="0"
+            strokecolor="black"
+          />
+        </group>
+      </group>
+      <group name="Fig15"
+           description="org.argouml.uml.diagram.use_case.ui.FigUseCase[839, 208, 106, 60]pathVisible=false;extensionPointVisible=false"
+           href=".:0000000000000812"
+           fill="1"
+           fillcolor="white"
+           stroke="1"
+           strokecolor="black"
+      >
+        <private>
+        </private>
+        
+        <ellipse name="Fig15.0"
+          x="892"
+          y="238"
+          rx="53"
+          ry="30"
+          fill="1"
+          fillcolor="white"
+          stroke="1"
+          strokecolor="black"
+        />
+        <ellipse name="Fig15.1"
+          x="892"
+          y="238"
+          rx="53"
+          ry="30"
+          fill="1"
+          fillcolor="white"
+          stroke="1"
+          strokecolor="black"
+        />
+        <text name="Fig15.2"
+          x="857"
+          y="227"
+          fill="0"
+          fillcolor="white"
+          stroke="0"
+          strokecolor="black"
+          font="Dialog"
+          textsize="10"
+        >Daten �ndern</text>
+        <group name="Fig15.3"
+             description="org.argouml.uml.diagram.ui.FigStereotypesCompartment[-33, -104, 0, 0]"
+             fill="0"
+             fillcolor="white"
+             stroke="0"
+             strokecolor="black"
+        >
+          <private>
+          </private>
+          
+          <rectangle name="Fig15.3.0"
+            x="-33"
+            y="-104"
+            width="0"
+            height="0"
+            fill="0"
+            fillcolor="white"
+            stroke="0"
+            strokecolor="black"
+          />
+        </group>
+        <path name="Fig15.4"
+          description="org.tigris.gef.presentation.FigLine"
+          fill="1"
+          fillcolor="white"
+          stroke="1"
+          strokecolor="black"
+        >
+          <moveto x="839"
+                  y="238" />
+          <lineto x="945"
+                  y="238" />
+        </path>
+        <group name="Fig15.5"
+             description="org.tigris.gef.presentation.FigGroup[]"
+             fill="0"
+             fillcolor="white"
+             stroke="0"
+             strokecolor="black"
+        >
+          <private>
+          </private>
+          
+          <rectangle name="Fig15.5.0"
+            x="890"
+            y="241"
+            width="4"
+            height="4"
+            fill="0"
+            fillcolor="white"
+            stroke="0"
+            strokecolor="black"
+          />
+          <text name="Fig15.5.1"
+            x="890"
+            y="241"
+            fill="0"
+            fillcolor="white"
+            stroke="0"
+            strokecolor="black"
+            font="Dialog"
+            textsize="10"
+          >newEP: loc</text>
+          <text name="Fig15.5.2"
+            x="890"
+            y="258"
+            fill="0"
+            fillcolor="white"
+            stroke="0"
+            strokecolor="black"
+            font="Dialog"
+            textsize="10"
+          >newEP: loc</text>
+        </group>
+      </group>
+      <group name="Fig17"
+           description="org.argouml.uml.diagram.use_case.ui.FigUseCase[1056, 208, 106, 60]pathVisible=false;extensionPointVisible=false"
+           href=".:0000000000000815"
+           fill="1"
+           fillcolor="white"
+           stroke="1"
+           strokecolor="black"
+      >
+        <private>
+        </private>
+        
+        <ellipse name="Fig17.0"
+          x="1109"
+          y="238"
+          rx="53"
+          ry="30"
+          fill="1"
+          fillcolor="white"
+          stroke="1"
+          strokecolor="black"
+        />
+        <ellipse name="Fig17.1"
+          x="1109"
+          y="238"
+          rx="53"
+          ry="30"
+          fill="1"
+          fillcolor="white"
+          stroke="1"
+          strokecolor="black"
+        />
+        <text name="Fig17.2"
+          x="1080"
+          y="227"
+          fill="0"
+          fillcolor="white"
+          stroke="0"
+          strokecolor="black"
+          font="Dialog"
+          textsize="10"
+        >Speichern</text>
+        <group name="Fig17.3"
+             description="org.argouml.uml.diagram.ui.FigStereotypesCompartment[1056, 208, 0, 0]"
+             fill="0"
+             fillcolor="white"
+             stroke="0"
+             strokecolor="black"
+        >
+          <private>
+          </private>
+          
+          <rectangle name="Fig17.3.0"
+            x="1056"
+            y="208"
+            width="0"
+            height="0"
+            fill="0"
+            fillcolor="white"
+            stroke="0"
+            strokecolor="black"
+          />
+        </group>
+        <path name="Fig17.4"
+          description="org.tigris.gef.presentation.FigLine"
+          fill="1"
+          fillcolor="white"
+          stroke="1"
+          strokecolor="black"
+        >
+          <moveto x="1056"
+                  y="238" />
+          <lineto x="1162"
+                  y="238" />
+        </path>
+        <group name="Fig17.5"
+             description="org.tigris.gef.presentation.FigGroup[]"
+             fill="0"
+             fillcolor="white"
+             stroke="0"
+             strokecolor="black"
+        >
+          <private>
+          </private>
+          
+          <rectangle name="Fig17.5.0"
+            x="1107"
+            y="241"
+            width="4"
+            height="4"
+            fill="0"
+            fillcolor="white"
+            stroke="0"
+            strokecolor="black"
+          />
+        </group>
+      </group>
+      <group name="Fig3"
+           description="org.argouml.uml.diagram.ui.FigAssociation"
+           href=".:00000000000007F5"
+           stroke="1"
+           strokecolor="black"
+      >
+        <private>
+          sourcePortFig="Fig0"
+          destPortFig="Fig2"
+          sourceFigNode="Fig0"
+          destFigNode="Fig2"
+        </private>
+        <path name="Fig3.0"
+          description="org.tigris.gef.presentation.FigPoly"
+          fill="0"
+          fillcolor="white"
+          stroke="1"
+          strokecolor="black"
+        >
+          <moveto x="91"
+                  y="78" />
+          <lineto x="199"
+                  y="78" />
+        </path>
+      </group>
+      <group name="Fig5"
+           description="org.argouml.uml.diagram.use_case.ui.FigExtend"
+           href=".:00000000000007FE"
+           stroke="1"
+           strokecolor="black"
+      >
+        <private>
+          sourcePortFig="Fig4.0"
+          destPortFig="Fig2.0"
+          sourceFigNode="Fig4"
+          destFigNode="Fig2"
+        </private>
+        <path name="Fig5.0"
+          description="org.tigris.gef.presentation.FigPoly"
+          fill="0"
+          fillcolor="white"
+          stroke="1"
+          strokecolor="black"
+        >
+          <moveto x="624"
+                  y="78" />
+          <lineto x="514"
+                  y="78" />
+        </path>
+      </group>
+      <group name="Fig7"
+           description="org.argouml.uml.diagram.static_structure.ui.FigEdgeNote"
+           href="81--39-1-92--611c2990:10b3387f79d:-7ff4"
+           stroke="1"
+           strokecolor="black"
+      >
+        <private>
+          sourcePortFig="Fig6"
+          destPortFig="Fig5.2"
+          sourceFigNode="Fig6"
+          destFigNode="Fig5.2"
+        </private>
+        <path name="Fig7.0"
+          description="org.tigris.gef.presentation.FigPoly"
+          fill="0"
+          fillcolor="white"
+          stroke="1"
+          strokecolor="black"
+        >
+          <moveto x="564"
+                  y="112" />
+          <lineto x="564"
+                  y="83" />
+        </path>
+      </group>
+      <group name="Fig9"
+           description="org.argouml.uml.diagram.ui.FigAssociation"
+           href=".:0000000000000803"
+           stroke="1"
+           strokecolor="black"
+      >
+        <private>
+          sourcePortFig="Fig0"
+          destPortFig="Fig8"
+          sourceFigNode="Fig0"
+          destFigNode="Fig8"
+        </private>
+        <path name="Fig9.0"
+          description="org.tigris.gef.presentation.FigPoly"
+          fill="0"
+          fillcolor="white"
+          stroke="1"
+          strokecolor="black"
+        >
+          <moveto x="86"
+                  y="103" />
+          <lineto x="218"
+                  y="353" />
+        </path>
+      </group>
+      <group name="Fig11"
+           description="org.argouml.uml.diagram.use_case.ui.FigExtend"
+           href=".:000000000000080C"
+           stroke="1"
+           strokecolor="black"
+      >
+        <private>
+          sourcePortFig="Fig10.0"
+          destPortFig="Fig8.0"
+          sourceFigNode="Fig10"
+          destFigNode="Fig8"
+        </private>
+        <path name="Fig11.0"
+          description="org.tigris.gef.presentation.FigPoly"
+          fill="0"
+          fillcolor="white"
+          stroke="1"
+          strokecolor="black"
+        >
+          <moveto x="720"
+                  y="366" />
+          <lineto x="480"
+                  y="366" />
+        </path>
+      </group>
+      <group name="Fig13"
+           description="org.argouml.uml.diagram.use_case.ui.FigExtend"
+           href=".:000000000000080F"
+           stroke="1"
+           strokecolor="black"
+      >
+        <private>
+          sourcePortFig="Fig12.0"
+          destPortFig="Fig4.0"
+          sourceFigNode="Fig12"
+          destFigNode="Fig4"
+        </private>
+        <path name="Fig13.0"
+          description="org.tigris.gef.presentation.FigPoly"
+          fill="0"
+          fillcolor="white"
+          stroke="1"
+          strokecolor="black"
+        >
+          <moveto x="505"
+                  y="221" />
+          <lineto x="813"
+                  y="106" />
+        </path>
+      </group>
+      <group name="Fig14"
+           description="org.argouml.uml.diagram.use_case.ui.FigExtend"
+           href=".:0000000000000811"
+           stroke="1"
+           strokecolor="black"
+      >
+        <private>
+          sourcePortFig="Fig12.0"
+          destPortFig="Fig10.0"
+          sourceFigNode="Fig12"
+          destFigNode="Fig10"
+        </private>
+        <path name="Fig14.0"
+          description="org.tigris.gef.presentation.FigPoly"
+          fill="0"
+          fillcolor="white"
+          stroke="1"
+          strokecolor="black"
+        >
+          <moveto x="507"
+                  y="252" />
+          <lineto x="805"
+                  y="341" />
+        </path>
+      </group>
+      <group name="Fig16"
+           description="org.argouml.uml.diagram.use_case.ui.FigExtend"
+           href=".:0000000000000814"
+           stroke="1"
+           strokecolor="black"
+      >
+        <private>
+          sourcePortFig="Fig12.0"
+          destPortFig="Fig15.0"
+          sourceFigNode="Fig12"
+          destFigNode="Fig15"
+        </private>
+        <path name="Fig16.0"
+          description="org.tigris.gef.presentation.FigPoly"
+          fill="0"
+          fillcolor="white"
+          stroke="1"
+          strokecolor="black"
+        >
+          <moveto x="514"
+                  y="238" />
+          <lineto x="839"
+                  y="238" />
+        </path>
+      </group>
+      <group name="Fig18"
+           description="org.argouml.uml.diagram.use_case.ui.FigExtend"
+           href=".:0000000000000817"
+           stroke="1"
+           strokecolor="black"
+      >
+        <private>
+          sourcePortFig="Fig17.0"
+          destPortFig="Fig15.0"
+          sourceFigNode="Fig17"
+          destFigNode="Fig15"
+        </private>
+        <path name="Fig18.0"
+          description="org.tigris.gef.presentation.FigPoly"
+          fill="0"
+          fillcolor="white"
+          stroke="1"
+          strokecolor="black"
+        >
+          <moveto x="1056"
+                  y="238" />
+          <lineto x="945"
+                  y="238" />
+        </path>
+      </group>
+      <group name="Fig19"
+           description="org.argouml.uml.diagram.use_case.ui.FigExtend"
+           href=".:0000000000000819"
+           stroke="1"
+           strokecolor="black"
+      >
+        <private>
+          sourcePortFig="Fig15.0"
+          destPortFig="Fig4.0"
+          sourceFigNode="Fig15"
+          destFigNode="Fig4"
+        </private>
+        <path name="Fig19.0"
+          description="org.tigris.gef.presentation.FigPoly"
+          fill="0"
+          fillcolor="white"
+          stroke="1"
+          strokecolor="black"
+        >
+          <moveto x="891"
+                  y="208" />
+          <lineto x="891"
+                  y="108" />
+        </path>
+      </group>
+      <group name="Fig20"
+           description="org.argouml.uml.diagram.use_case.ui.FigExtend"
+           href=".:000000000000081B"
+           stroke="1"
+           strokecolor="black"
+      >
+        <private>
+          sourcePortFig="Fig15.0"
+          destPortFig="Fig10.0"
+          sourceFigNode="Fig15"
+          destFigNode="Fig10"
+        </private>
+        <path name="Fig20.0"
+          description="org.tigris.gef.presentation.FigPoly"
+          fill="0"
+          fillcolor="white"
+          stroke="1"
+          strokecolor="black"
+        >
+          <moveto x="891"
+                  y="267" />
+          <lineto x="891"
+                  y="337" />
+        </path>
+      </group>
+    </pgml>
+    <todo>
+    <todolist>
+    </todolist>
+    <resolvedcritics>
+    </resolvedcritics>
+    </todo>
+</uml>
