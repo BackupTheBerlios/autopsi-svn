@@ -1,8 +1,7 @@
-/*
+/**
  * filename: Main.java
  * description: testing application for the experimental GenericDAO
- * author: Rudolf Mildner
- * 
+ * @author: Rudolf Mildner
  */
 
 
