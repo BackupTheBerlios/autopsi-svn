@@ -8,7 +8,7 @@
 package autopsi.database.dao;
 
 import autopsi.database.GenericDataObject;
-import autopsi.database.attributes.GenericDataAttribute;
+import autopsi.database.attribute.GenericDataAttribute;
 
 import java.sql.Connection;
 import java.sql.DriverManager;

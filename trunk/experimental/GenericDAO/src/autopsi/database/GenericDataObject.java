@@ -9,7 +9,7 @@ package autopsi.database;
 import java.util.List;
 import java.util.ArrayList;
 
-import autopsi.database.attributes.GenericDataAttribute;
+import autopsi.database.attribute.GenericDataAttribute;
 import autopsi.AutopsiException;
 
 public class GenericDataObject {
