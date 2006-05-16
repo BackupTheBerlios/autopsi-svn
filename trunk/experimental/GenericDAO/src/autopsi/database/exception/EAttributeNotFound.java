@@ -1,5 +1,5 @@
 package autopsi.database.exception;
 
-public class EAttributeNotFound extends EGenericDatabase{
+public class EAttributeNotFound extends EDatabase{
 
 }
