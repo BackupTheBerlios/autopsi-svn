@@ -32,7 +32,7 @@
             <task id="1" name="Projektauftrag erstellen" color="#8cb6ce" meeting="false" start="2006-04-06" duration="18" complete="0" priority="1" expand="true">
             </task>
         </task>
-        <task id="2" name="Analyse" color="#8cb6ce" meeting="false" start="2006-05-02" duration="15" complete="0" priority="1" expand="true">
+        <task id="2" name="Analyse" color="#8cb6ce" meeting="false" start="2006-05-02" duration="15" complete="0" priority="1" expand="false">
             <depend id="5" type="2" difference="0" hardness="Rubber"/>
             <task id="21" name="Evaluierung" color="#8cb6ce" meeting="false" start="2006-05-02" duration="15" complete="0" priority="1" expand="true">
             </task>
@@ -47,7 +47,7 @@
             <task id="24" name="grobe Programmstruktur finden" color="#8cb6ce" meeting="false" start="2006-05-02" duration="15" complete="0" priority="1" expand="true">
             </task>
         </task>
-        <task id="5" name="Design" color="#8cb6ce" meeting="false" start="2006-05-23" duration="11" complete="0" priority="1" expand="false">
+        <task id="5" name="Design" color="#8cb6ce" meeting="false" start="2006-05-23" duration="11" complete="0" priority="1" expand="true">
             <depend id="37" type="2" difference="0" hardness="Rubber"/>
             <task id="6" name="Designdokumente" color="#8cb6ce" meeting="false" start="2006-05-23" duration="11" complete="0" priority="1" expand="true">
                 <task id="36" name="Architekturdokument" color="#8cb6ce" meeting="false" start="2006-05-23" duration="11" complete="0" priority="1" expand="true">
