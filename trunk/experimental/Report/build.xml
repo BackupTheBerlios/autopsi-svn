@@ -1,0 +1,50 @@
+<project name="Report" default="dist" basedir="./">
+
+	<property file="build.properties"/> <!-- Cool, man kann auch nur das start tag schreiben!!-->
+	
+	<path id="classpath">
+		<fileset dir="${basecp}/lib/" id="lib">
+			<include name="*.jar"/>
+		</fileset>
+		<pathelement location="${build}"/>
+	</path>
+	
+	
+	<target name="clean">
+		<delete dir="${build}"/>
+		<delete dir="${dist}"/>
+		<delete dir="${doc}"/>
+	</target>
+	
+	<target name="init">
+		<tstamp/>
+		<mkdir dir="${build}"/>
+		<mkdir dir="${dist}/${projname}"/>
+		<mkdir dir="${doc}"/>
+	</target>
+	
+	<target name="compile" depends="init">
+		<javac srcdir="${src}" destdir="${build}" classpathref="classpath" debug="off">
+			
+		</javac>
+	</target>
+	
+	<target name="dist" depends="clean,init, compile">
+	</target>
+	
+	<target name="run">
+		<java classpathref="classpath" classname="rm.report.base.Report" fork="true">
+		</java>
+	</target>
+	
+	<target name="runDBMan">
+		<java classpathref="classpath" classname="org.hsqldb.util.DatabaseManagerSwing" fork="true">
+        	<arg line="-url ${jdbc.url}"/>
+            <arg line="-user ${jdbc.username}" />
+            <arg line="-password ${jdbc.password}" />
+		
+		</java>
+	</target>
+	
+	
+</project>
