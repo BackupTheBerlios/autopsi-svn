@@ -17,5 +17,5 @@ INSERT INTO REDAKTEUR VALUES(62,'Albert','M\u00fcller',0,'Normaler Redakteur','a
 INSERT INTO REDAKTEUR VALUES(63,'Elfriede','Meier',0,'Normale Redakteurin','em',123.45E0)
 INSERT INTO REDAKTEUR VALUES(71,'','',0,'','',0.0E0)
 INSERT INTO ARTIKEL VALUES(28,'Oho!','Interessante Gedankenexperimente','','1234-01-01',FALSE,'Wissenschaft','Bratislava',56)
-INSERT INTO ARTIKEL VALUES(32,'Mathematischer Atlas','Die neuesten Methoden der Mathematik','','1888-12-01',TRUE,'Mathematik','Florenz',57)
+INSERT INTO ARTIKEL VALUES(32,'Mathematischer Atlas','Die neuesten Methoden der Mathematik','','1889-12-01',TRUE,'Mathematik','Florenz',57)
 INSERT INTO ARTIKEL VALUES(34,'Gastronomischer Gasthauser','Die beste K\u00fcche','','1970-01-01',FALSE,'Essen','Paris',61)

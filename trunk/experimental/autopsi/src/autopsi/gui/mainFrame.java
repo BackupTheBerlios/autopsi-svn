@@ -1,10 +1,12 @@
 package autopsi.gui;
 import java.awt.event.MouseEvent;
-
+import java.util.*;
 import javax.swing.BorderFactory;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.*;
+import java.awt.*;
 
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
@@ -19,6 +21,7 @@ import javax.swing.JToolBar;
 import javax.swing.WindowConstants;
 import javax.swing.border.BevelBorder;
 import javax.swing.border.LineBorder;
+import javax.swing.border.SoftBevelBorder;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 
@@ -54,16 +57,18 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 	private JButton viewButton2;
 	private JButton viewButton1;
 	private JTable table;
+	private JButton jButton1;
 	private JTabbedPane tab2;
 	private JTabbedPane tab1;
 	private JTabbedPane tab;
 	private JLabel jLabel1;
-	private JPanel infopanel;
 	private JMenuItem zeigeTermine;
 	private JMenuItem neuerZeitpunkt;
 	private JToolBar toolbar;
 	private JMenu menu2;
 	private JMenuBar mainMenu;
+	Date datum = new Date();
+	
 
 	/**
 	* Auto-generated main method to display this JFrame
@@ -90,7 +95,7 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 				toolbar = new JToolBar();
 				getContentPane().add(toolbar);
 				toolbar.setBounds(0, 0, 896, 28);
-				toolbar.setBackground(new java.awt.Color(229,229,229));
+				toolbar.setBackground(new java.awt.Color(255,255,255));
 				{
 					viewLabel = new JLabel();
 					toolbar.add(viewLabel);
@@ -115,26 +120,22 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 					viewButton2.setPreferredSize(new java.awt.Dimension(76, 19));
 				}
 			}
-			{
-				TableModel tableModel = new DefaultTableModel(new String[][] {
-						{ "One", "Two" }, { "Three", "Four" } }, new String[] {
-						"Column 1", "Column 2" });
+			{ 
+				int[][] hallo = new int[][] {{1,2,3,4,5,6,7},{6,7,8,9,10,11,12}};
+				TableModel tableModel = new DefaultTableModel(hallo, new int[] {
+						1,2,3,4,5,6,7});
 				table = new JTable();
 				getContentPane().add(table);
 				table.setModel(tableModel);
-				table.setBounds(203, 35, 686, 476);
+				table.setBounds(203, 49, 686, 476);
 				table.setBorder(new LineBorder(new java.awt.Color(0,0,0), 1, false));
-				table.setShowHorizontalLines(false);
 				table.setRowSelectionAllowed(false);
 				table.setSelectionForeground(new java.awt.Color(255,255,255));
 				table.setSelectionBackground(new java.awt.Color(0,0,160));
-			}
-			{
-				infopanel = new JPanel();
-				getContentPane().add(infopanel);
-				infopanel.setBounds(7, 35, 189, 224);
-				infopanel.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, new java.awt.Color(0,0,0)));
-				infopanel.setBackground(new java.awt.Color(255,255,255));
+				table.setDefaultEditor(Integer.class,new DayCellEditor());
+				table.setRowHeight(80);
+				table.setCellSelectionEnabled(true);
+				table.setVerifyInputWhenFocusTarget(false);
 			}
 			{
 				jLabel1 = new JLabel();
@@ -148,15 +149,24 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 			{
 				tab = new JTabbedPane();
 				getContentPane().add(tab);
-				tab.setBounds(7, 266, 189, 245);
+				tab.setBounds(7, 35, 189, 476);
 				{
 					tab1 = new JTabbedPane();
-					tab.addTab("Objekte", null, tab1, null);
+					tab.addTab("Übersicht", null, tab1, null);
+					tab1.setPreferredSize(new java.awt.Dimension(184, 343));
 				}
 				{
 					tab2 = new JTabbedPane();
-					tab.addTab("alle Termine", null, tab2, null);
+					tab.addTab("Angehängte Objekte", null, tab2, null);
 					tab2.setBackground(new java.awt.Color(241,243,248));
+					{
+						ImageIcon icon1 = new ImageIcon("src/autopsi/herzl.gif");
+						jButton1 = new JButton(icon1);
+						tab2.addTab("jButton1", null, jButton1, null);
+						jButton1.setText("Email");
+						jButton1.setBounds(231, 126, 161, 21);
+
+					}
 				}
 			}
 			{
@@ -206,7 +216,7 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 	public void mouseEntered(MouseEvent arg0) {
 		// TODO Auto-generated method stub
 		if(arg0.getSource().equals(viewButton1)){
-			jLabel1.setText("Dieser Button ändert die Ansicht");
+			jLabel1.setText(datum.toString());
 		}
 	}
 
