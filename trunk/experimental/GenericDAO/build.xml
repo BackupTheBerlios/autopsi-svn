@@ -61,5 +61,8 @@
             <arg line="-password ${jdbc.password}" />
         </java>
 	</target>
+		
+	<target name="compile_and_run" depends="compile,run">
+	</target>
 	
 </project>
