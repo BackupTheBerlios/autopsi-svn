@@ -8,7 +8,7 @@
 package autopsi.database.dao;
 
 /**
- * GenericDataObject is the object that one hast to implement if he wants to get data from a table; 
+ * GenericDataObject is the object that one has to implement if he wants to get data from a table; 
  * the GenericDataObject itself should hold only attributes and methods directly related to the date
  * from the database table. Attributes can be private; the GenericDAO is able to access them anyway
  * (this isn' t considered harmful because
