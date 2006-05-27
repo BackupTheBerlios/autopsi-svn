@@ -5,9 +5,8 @@
  */
 
 
-import autopsi.database.dataobject.*;
-import autopsi.database.attribute.*;
 import autopsi.database.dao.*;
+import autopsi.database.sql.*;
 import autopsi.database.exception.*;
 
 import java.lang.reflect.Field;
@@ -18,10 +17,47 @@ public class Main {
 	
 	public static void main(String[] args){
 		System.out.println("GenericDAO testing application is ok!");
+				
 		IGenericDAO gdo = new GenericDAO();
-		gdo.setCurrentTable("testtable");
+		gdo.setCurrentTable("testdatatable");
+		
+		//adding an object to the database
+		try{
+			TestData obj = new TestData();
+			obj.name = "eingefügtes Objekt";
+			obj.name2 = "ich bin das erste per GenericDAO eingefügte Objekt; ich hab sogar Umlaute!!!!";
+			obj.dval = 999.9;
+			gdo.addDataObject(obj);
+		}
+		catch (Exception e){
+			System.out.println("Exception beim Einfügen=="+e.toString());
+		}
+
+		//updating an object in the database
+		try{
+			TestData lookup = new TestData(), updateData = new TestData();
+			lookup.dval = 999.9;
+			updateData.dval = 33.3;
+			updateData.name = "Juhuu! Damit bin ich auch das erste upgedatete Objekt!";
+			gdo.updDataObjects(lookup, updateData);
+		}
+		catch (Exception e){
+			System.out.println("Exception beim Updaten=="+e.toString());
+		}
+		
+		//removing an object from the database
+		try{
+			TestData obj = new TestData();
+			obj.dval = 33.3;
+			gdo.delDataObjects(obj);
+		}
+		catch (Exception e){
+			System.out.println("Exception beim Löschen=="+e.toString());
+		}
+		
+		
+		//get objects from the database
 		List<GenericDataObject> list = null;
-		((GenericDAO)gdo).getWhere(new TestData());
 		try{
 			list = gdo.getDataObjects(new TestData());
 		}
@@ -33,5 +69,6 @@ public class Main {
 			System.out.println( ((TestData)list.get(i)).dval);
 		}
 	}
+
 	
 }

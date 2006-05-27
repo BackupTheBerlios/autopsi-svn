@@ -8,8 +8,8 @@
 	<property name="hsqldb_data" value="data"/>
 	
 
-	<property name="jdbc.username" value="RUDOLF"/>
-	<property name="jdbc.password" value="abcdefg"/>
+	<property name="jdbc.username" value="SA"/>
+	<property name="jdbc.password" value="ab"/>
 	<property name="jdbc.url" value="jdbc:hsqldb:file:${hsqldb_data}/database"/>
 	
 	<path id="classpath">
