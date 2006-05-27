@@ -2,8 +2,8 @@ package autopsi.database.sql;
 
 public class SQLDelete implements SQLStatement {
 
-	private SQLTable table = null;
-	private SQLFields fields = null;
+	protected SQLTable table = null;
+	protected SQLFields fields = null;
 	
 	
 	public SQLDelete(SQLTable table, SQLFields fields){

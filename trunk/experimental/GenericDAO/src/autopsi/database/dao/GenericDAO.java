@@ -22,8 +22,6 @@ import java.lang.reflect.Field;
 
 public class GenericDAO implements IGenericDAO{
 
-	private final static String SQL_SELECT1 = "SELECT * FROM ";
-	private final static String SQL_INSERT1 = "INSERT INTO ";
 	
 	private Connection dbCon= null;
 	private String currentTable;
@@ -57,7 +55,7 @@ public class GenericDAO implements IGenericDAO{
 		return currentTable;
 	}
 	
-	private boolean columnInTable(ResultSetMetaData tableInformation, String columnName){
+	protected boolean columnInTable(ResultSetMetaData tableInformation, String columnName){
 		boolean inColumn = false;
 		try{
 			for (int k=1;k<tableInformation.getColumnCount()+1;k++){
@@ -74,7 +72,7 @@ public class GenericDAO implements IGenericDAO{
 	}
 	
 	
-	private SQLFields getSQLFields(GenericDataObject obj) throws EAttributeNotFound{
+	protected SQLFields getSQLFields(GenericDataObject obj) throws EAttributeNotFound{
 		SQLFields fields = new SQLFields();
 		Field[] fd = obj.getClass().getDeclaredFields();
 		AccessibleObject.setAccessible(fd, true);
@@ -105,55 +103,13 @@ public class GenericDAO implements IGenericDAO{
 		return fields;
 	}
 	
-	private void checkAttributes(ResultSetMetaData metaData, GenericDataObject obj) throws EAttributeNotFound{
+	protected void checkAttributes(ResultSetMetaData metaData, GenericDataObject obj) throws EAttributeNotFound{
 		Field[] fd = obj.getClass().getDeclaredFields();
 		AccessibleObject.setAccessible(fd, true);
 		for (int i=0;i<fd.length;i++){
 			if (!columnInTable(metaData, fd[i].getName()))
 				throw new EAttributeNotFound();
 		}
-	}
-	
-	/**
-	 * getWhere durchsucht liefert einen String, welcher der WHERE-Klausen einer SQL-Abfrage entspricht. 
-	 * @param lookupObj 
-	 * @return 
-	 */
-	private String getWhere(GenericDataObject lookupObj, ResultSetMetaData tableInformation) throws EAttributeNotFound{
-		String ret = "";
-		Field[] fd = lookupObj.getClass().getDeclaredFields();
-		AccessibleObject.setAccessible(fd, true);
-		try{
-			boolean seperate = false;
-			for (int i=0;i<fd.length;i++){
-				//if field of lookupObject is null that means that this value is unknown
-				if (fd[i].get(lookupObj) == null)
-					continue;
-				
-				//if field has no equivalent in the current table, simply skip it
-				if (!columnInTable(tableInformation, fd[i].getName()))
-					throw new EAttributeNotFound();
-				
-				if (seperate)
-					ret=ret+" AND ";
-				else {
-					ret=ret+" WHERE ";
-					seperate = true;
-				}
-				ret=ret+fd[i].getName()+"=";
-				System.out.println(fd[i].getName());
-				if ( fd[i].getType().equals(String.class) ){
-					ret=ret+"'"+fd[i].get(lookupObj).toString()+"'";
-					continue;
-				}
-				ret=ret+fd[i].get(lookupObj).toString();
-			}
-		}
-		catch (Exception e){
-			System.out.println("exception@getWhere;"+e.toString());
-		}
-		System.out.println("WHERE_IS=="+ret);
-		return ret;
 	}
 	
 	public List<GenericDataObject> getDataObjects(GenericDataObject lookupObj) throws EDatabase, EDatabaseConnection, EAttributeNotFound{

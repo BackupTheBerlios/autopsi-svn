@@ -2,9 +2,9 @@ package autopsi.database.sql;
 
 public class SQLUpdate implements SQLStatement {
 
-	private SQLTable table = null;
-	private SQLFields whereFields = null;
-	private SQLFields setFields = null;
+	protected SQLTable table = null;
+	protected SQLFields whereFields = null;
+	protected SQLFields setFields = null;
 	
 	
 	public SQLUpdate(SQLTable table, SQLFields whereFields, SQLFields setFields){

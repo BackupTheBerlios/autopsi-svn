@@ -3,8 +3,8 @@ package autopsi.database.sql;
 public class SQLField{
 
 
-	private String name = null;
-	private String value = null;
+	protected String name = null;
+	protected String value = null;
 	
 	public SQLField(String fieldName, String value){
 		this.name = fieldName;

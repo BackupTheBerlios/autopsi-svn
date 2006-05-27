@@ -2,8 +2,8 @@ package autopsi.database.sql;
 
 public class SQLInsert implements SQLStatement {
 
-	private SQLTable table = null;
-	private SQLFields fields = null;
+	protected SQLTable table = null;
+	protected SQLFields fields = null;
 	
 	
 	public SQLInsert(SQLTable table, SQLFields fields){

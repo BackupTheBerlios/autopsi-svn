@@ -2,8 +2,8 @@ package autopsi.database.sql;
 
 public class SQLSelect implements SQLStatement {
 
-	private SQLTable table;
-	private SQLFields fields;
+	protected SQLTable table;
+	protected SQLFields fields;
 	
 	
 	public SQLSelect(SQLTable table, SQLFields fields){

@@ -6,10 +6,10 @@ import java.util.Iterator;
 
 public class SQLFields{
 
-	private List<SQLField> fields = null;
-	private Iterator<SQLField> iter = null;
-	private SQLField current = null;
-	private boolean traversal = false;
+	protected List<SQLField> fields = null;
+	protected Iterator<SQLField> iter = null;
+	protected SQLField current = null;
+	protected boolean traversal = false;
 	
 	public SQLFields(){
 		fields = new ArrayList<SQLField>();
