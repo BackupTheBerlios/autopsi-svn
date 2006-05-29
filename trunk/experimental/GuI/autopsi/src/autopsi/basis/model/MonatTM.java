@@ -1,7 +1,7 @@
 package autopsi.basis.model;
 
 import javax.swing.table.AbstractTableModel;
-
+import javax.swing.*;
 public class MonatTM extends AbstractTableModel {
 	private static final long serialVersionUID = 1L;
 	
@@ -15,6 +15,10 @@ public class MonatTM extends AbstractTableModel {
 		
 	}
 	
+	public Object getColumnClass()
+	{
+		return JLabel.class;
+	}
 	public int getRowCount()
 	{
 		return 5; //Zeilenanzahl zurückgeben
@@ -37,14 +41,18 @@ public class MonatTM extends AbstractTableModel {
 
 	public Object getValueAt(int row, int col)  //Werte aus den Spalten zurückgeben
 	{
+	String [] hallo = {"blabla","huhuhu"};
 		try
 		{	
-			if(row<20)
+			if(row<5)
 			{
-				if(col<20)
+				if(col<7)
 				{
-					String ret = ""+row+" "+col+"";
-					return ret;
+					if(col<4)
+					{
+						return hallo[1];
+					}
+					return hallo[0];
 				}
 			}
 			return null;

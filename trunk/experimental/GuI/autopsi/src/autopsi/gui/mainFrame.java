@@ -91,7 +91,6 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 	private JMenuBar mainMenu;
 	private JLabel jLabel1;
 	boolean mouseEntered = false;
-	private JComboBox combo;
 	Date datum = new Date();
 	
 
@@ -164,17 +163,18 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 			{ 
 				
 				table = new JTable();
-				getContentPane().add(table);
+				
 				MonatTM tableModel = new MonatTM();
-			table.setDefaultRenderer(String.class, new MonthRenderer());
+			
+				
 				table.setBounds(245, 35, 644, 490);
 				table.setBorder(new LineBorder(new java.awt.Color(0,0,0), 1, false));
 				table.setRowSelectionAllowed(false);
 				table.setSelectionForeground(new java.awt.Color(0,0,0));
 				table.setSelectionBackground(new java.awt.Color(255,255,255));
+				table.setCellEditor(new MonthRenderer());
 				
 				table.setRowHeight(98);
-				table.setVerifyInputWhenFocusTarget(false);
 				table.addMouseListener(this);
 				table.addMouseMotionListener(this);
 				
@@ -187,9 +187,7 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 				}
 				table.setColumnModel(cm);
 				table.setModel(tableModel);
-				table.setDefaultRenderer(String.class,new MonthRenderer());
-				
-			
+				this.getContentPane().add(table);
 			}
 			{
 				jLabel1 = new JLabel();
@@ -392,7 +390,7 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 				}
 			}
 			pack();
-			this.setSize(900, 600);
+			this.setSize(897, 632);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -480,7 +478,7 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 		// TODO Auto-generated method stub
 		if(arg0.getSource().equals(table)){
 			jLabel1.setText(table.rowAtPoint(table.getMousePosition().getLocation())+"");	
-			jLabel1.setText(table.getDefaultRenderer(String.class).toString());
+			jLabel1.setText(table.getDefaultEditor(String.class).toString());
 			
 //			 TableZoom Engine (c) 2006 by Stephe ;-) ---------------------------
 			
