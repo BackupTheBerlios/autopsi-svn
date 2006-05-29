@@ -1,23 +1,24 @@
 package autopsi.basis.model;
 
+import java.util.*;
 import javax.swing.table.AbstractTableModel;
-import javax.swing.*;
+import autopsi.gui.*;
 public class MonatTM extends AbstractTableModel {
 	private static final long serialVersionUID = 1L;
 	
 	private final String [] columnName = {"Montag", "Dienstag", "Mittwoch", "Donnerstag", "Freitag", "Samstag", "Sonntag"};
-	//private String [][] termine = {{"9.00 Mathe VO","10.00 Grundzüge der Informatik VU"},{"9.00 Mathe VO","11.00 UI Design VU"}};
+	Date datum = new Date();
+	
 
 	//Konstruktor mit Suchtext, Suchkriterium und Sortierungsattribut
 	public MonatTM()
 	{
 		super();
-		
 	}
 	
-	public Object getColumnClass()
+	public Class getColumnClass(int c)
 	{
-		return JLabel.class;
+		return String[].class;
 	}
 	public int getRowCount()
 	{
@@ -41,18 +42,21 @@ public class MonatTM extends AbstractTableModel {
 
 	public Object getValueAt(int row, int col)  //Werte aus den Spalten zurückgeben
 	{
-	String [] hallo = {"blabla","huhuhu"};
+		DateConverter converter = new DateConverter();
+	
+		datum.setMonth(4);
+		datum.setDate(7*(row)+col+1);
+		String dat = converter.toDay(datum).substring(0,2) + ", " +datum.getDate() + ". "+ converter.toMonth(datum);
+		
+	String [] hallo = {dat,"Spalte: "+ col};
 		try
 		{	
 			if(row<5)
 			{
 				if(col<7)
 				{
-					if(col<4)
-					{
-						return hallo[1];
-					}
-					return hallo[0];
+					
+					return hallo;
 				}
 			}
 			return null;

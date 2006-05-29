@@ -11,7 +11,7 @@ public class Basis {
 		mainFrame frame = new mainFrame(); //Ein neues Mainframe (Liste der Patienten) starten
 	
 	frame.setLocation(290,100); //Startposition
-	frame.setSize(900,600); //Fenstergröße
+	frame.setSize(900,618); //Fenstergröße
 	frame.setTitle("autoPSI"); //Titel setzen
 	
 	frame.setVisible(true); //Frame anzeigen

@@ -64,7 +64,17 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 	private JPanel tab2;
 	private JTextPane lblBeschreibung;
 	private JTabbedPane infobar;
+	private JLabel lblStatus;
 	private JLabel jLabel4;
+	private JLabel status;
+	private JMenuItem newTC;
+	private JMenu menu;
+	private JSeparator jSeparator2;
+	private JButton monthNext;
+	private JButton weekNext;
+	private JButton weekBack;
+	private JButton monthBack;
+	private JLabel lblMonth;
 	private JButton deleteTermin;
 	private JButton editTermin;
 	private JButton neuerTermin;
@@ -92,6 +102,7 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 	private JLabel jLabel1;
 	boolean mouseEntered = false;
 	Date datum = new Date();
+	int x = 0;
 	
 
 	/**
@@ -112,9 +123,9 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 			setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 			getContentPane().setLayout(null);
 			getContentPane().setBackground(new java.awt.Color(233,233,233));
-			this.setMaximumSize(new java.awt.Dimension(900, 600));
+			this.setMaximumSize(new java.awt.Dimension(900, 653));
 			this.setResizable(false);
-			this.setTitle("autoPSI [GUI Prototyp]");
+			this.setTitle("Stephe @ autoPSI - Mai 2006");
 			{
 				toolbar = new JToolBar();
 				getContentPane().add(toolbar);
@@ -123,17 +134,70 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 				toolbar.setFloatable(false);
 				toolbar.setBorder(BorderFactory.createEtchedBorder(BevelBorder.LOWERED));
 				{
+					status = new JLabel();
+					toolbar.add(status);
+					status.setText("Online-Status: ");
+					status.setVisible(false);
+				}
+				{
+					lblStatus = new JLabel();
+					toolbar.add(lblStatus);
+					lblStatus.setText("verbunden mit autoSpace");
+					lblStatus.setForeground(new java.awt.Color(0,166,0));
+					lblStatus.setVisible(false);
+				}
+				{
 					jSeparator1 = new JSeparator();
 					toolbar.add(jSeparator1);
 					jSeparator1.setPreferredSize(new java.awt.Dimension(673, 24));
+					jSeparator1.setOrientation(SwingConstants.VERTICAL);
 				}
 				{
+					monthBack = new JButton();
+					toolbar.add(monthBack);
+					monthBack.setBounds(245, 42, 42, 28);
+					monthBack
+						.setIcon(new ImageIcon("src/images/monthBack.GIF"));
+				}
+				{
+					weekBack = new JButton();
+					toolbar.add(weekBack);
+					weekBack.setBounds(287, 42, 42, 28);
+					weekBack.setIcon(new ImageIcon("src/images/weekBack.GIF"));
+				}
+				{
+					lblMonth = new JLabel();
+					toolbar.add(lblMonth);
+					lblMonth.setText("Mai 2006");
+					lblMonth.setBounds(357, 39, 182, 28);
+					lblMonth.setFont(new java.awt.Font("Tahoma",1,18));
+				}
+				{
+					weekNext = new JButton();
+					toolbar.add(weekNext);
+					weekNext.setBounds(609, 42, 42, 28);
+					weekNext.setIcon(new ImageIcon("src/images/weekNext.GIF"));
+				}
+				{
+					monthNext = new JButton();
+					toolbar.add(monthNext);
+					monthNext.setBounds(651, 42, 42, 28);
+					monthNext
+						.setIcon(new ImageIcon("src/images/monthNext.GIF"));
+				}
+				{
+					jSeparator2 = new JSeparator();
+					toolbar.add(jSeparator2);
+					jSeparator2.setPreferredSize(new java.awt.Dimension(40, 31));
+					jSeparator2.setOrientation(SwingConstants.VERTICAL);
+
 					zoomBox = new JCheckBox();
 					toolbar.add(zoomBox);
 					zoomBox.setText("Kalender-Zoom");
 					zoomBox.setBounds(133, 21, 63, 28);
 					zoomBox.setPreferredSize(new java.awt.Dimension(102, 13));
 					zoomBox.setOpaque(false);
+					zoomBox.addMouseListener(this);
 				}
 				{
 					ImageIcon icon2 = new ImageIcon("src/images/monatsansicht.gif");
@@ -152,6 +216,7 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 					viewButton2 = new JButton(icon3);
 					toolbar.add(viewButton2);
 					viewButton2.addMouseListener(this);
+					viewButton2.addMouseMotionListener(this);
 					viewButton2.setText("Wochenansicht");
 					viewButton2.setBorder(BorderFactory
 						.createEtchedBorder(BevelBorder.LOWERED));
@@ -159,24 +224,23 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 					viewButton2.setSize(104, 19);
 					viewButton2.setBackground(new java.awt.Color(255,255,255));
 				}
+
 			}
 			{ 
 				
-				table = new JTable();
-				
-				MonatTM tableModel = new MonatTM();
-			
-				
-				table.setBounds(245, 35, 644, 490);
+				table = new JTable();	
+				MonatTM tableModel = new MonatTM();			
+				table.setBounds(252, 35, 637, 497);
 				table.setBorder(new LineBorder(new java.awt.Color(0,0,0), 1, false));
 				table.setRowSelectionAllowed(false);
 				table.setSelectionForeground(new java.awt.Color(0,0,0));
 				table.setSelectionBackground(new java.awt.Color(255,255,255));
-				table.setCellEditor(new MonthRenderer());
-				
+				table.setDefaultRenderer(String[].class, new MonthRenderer(false));	
+				//table.setDefaultEditor(String[].class,new MonthEditor());
 				table.setRowHeight(98);
 				table.addMouseListener(this);
 				table.addMouseMotionListener(this);
+				
 				
 				DefaultTableColumnModel cm = new DefaultTableColumnModel();
 				for (int i=0;i<7;i++)
@@ -188,13 +252,19 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 				table.setColumnModel(cm);
 				table.setModel(tableModel);
 				this.getContentPane().add(table);
+				table.setCellSelectionEnabled(true);
+				table.setGridColor(new java.awt.Color(0,0,0));
+				table.setShowHorizontalLines(false);
+				table.setShowVerticalLines(false);
+				table.setIntercellSpacing(new java.awt.Dimension(2, 2));
 			}
 			{
 				jLabel1 = new JLabel();
 				getContentPane().add(jLabel1);
-				jLabel1.setBounds(1, 525, 889, 21);
-				jLabel1.setBackground(new java.awt.Color(234,234,234));
-				jLabel1.setOpaque(true);
+				jLabel1.setBounds(7, 539, 882, 21);
+				jLabel1.setBackground(new java.awt.Color(192,192,192));
+				jLabel1.setIcon(new ImageIcon("src/images/info.GIF"));
+				jLabel1.setBorder(BorderFactory.createTitledBorder(""));
 			}
 			{
 				infobar = new JTabbedPane();
@@ -223,7 +293,6 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 						tab1.add(txtSuche);
 						txtSuche.setBounds(70, 7, 154, 21);
 						txtSuche.setBorder(new LineBorder(new java.awt.Color(0,0,0), 1, false));
-						txtSuche.setText(" test");
 					}
 					{
 						jLabel2 = new JLabel();
@@ -234,7 +303,7 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 					}
 					{
 						ListModel listTModel = new DefaultComboBoxModel(
-							new String[] { "Item One", "Item Two","bla","bla","bla","bla","bla" });
+							new String[] { "Folien_vo1.pdf", "record_vo1.mp3","Mitschrift_vo1.doc" });
 						listT = new JList();
 						tab1.add(listT);
 						listT.setModel(listTModel);
@@ -244,18 +313,18 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 					{
 						jLabel3 = new JLabel();
 						tab1.add(jLabel3);
-						jLabel3.setText("An den Termin angehängte Objekte");
+						jLabel3.setText("An diesen Termin angehängte Objekte");
 						jLabel3.setBounds(7, 39, 189, 14);
 					}
 					{
 						jLabel4 = new JLabel();
 						tab1.add(jLabel4);
 						jLabel4.setText("An den Termincontainer angehängte Objekte");
-						jLabel4.setBounds(7, 195, 217, 14);
+						jLabel4.setBounds(7, 198, 217, 14);
 					}
 					{
 						ListModel listTCModel = new DefaultComboBoxModel(
-							new String[] { "Item One", "Item Two" });
+							new String[] { "Notiz: TR mitnehmen", "Prüfung_11-04-05.pdf" });
 						listTC = new JList();
 						tab1.add(listTC);
 						listTC.setModel(listTCModel);
@@ -270,7 +339,8 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 					{
 						txtSuche2 = new JTextField();
 						tab2.add(txtSuche2);
-						txtSuche2.setBounds(42, 4, 182, 21);
+						txtSuche2.setBounds(70, 7, 154, 21);
+						txtSuche2.setBorder(new LineBorder(new java.awt.Color(0,0,0), 1, false));
 					}
 					{
 						jLabel5 = new JLabel();
@@ -282,11 +352,13 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 						jLabel6 = new JLabel();
 						tab2.add(jLabel6);
 						jLabel6.setText("Suche");
-						jLabel6.setBounds(7, 7, 35, 14);
+						jLabel6.setBounds(7, 7, 63, 21);
+						jLabel6.setIcon(new ImageIcon("src/images/suche.GIF"));
+						
 					}
 					{
 						ListModel listT2Model = new DefaultComboBoxModel(
-							new String[] { "Item One", "Item Two" });
+							new String[] { "9.00 VO Mathe I", "10.00 VU GDI","13.00 AU Eprog","18.00 Sport" });
 						listT2 = new JList();
 						tab2.add(listT2);
 						listT2.setModel(listT2Model);
@@ -301,7 +373,7 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 					}
 					{
 						ListModel listTC2Model = new DefaultComboBoxModel(
-							new String[] { "Item One", "Item Two" });
+							new String[] {"VO Mathe I am 8. Mai 2006","VO Mathe I am 15. Mai 2006","VO Mathe I am 22. Mai 2006","VO Mathe I am 29. Mai 2006" });
 						listTC2 = new JList();
 						tab2.add(listTC2);
 						listTC2.setModel(listTC2Model);
@@ -351,6 +423,7 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 				getContentPane().add(neuerTermin);
 				neuerTermin.setBounds(0, 497, 42, 28);
 				neuerTermin.setIcon(new ImageIcon("src/images/newTermin.GIF"));
+				neuerTermin.setOpaque(false);
 				neuerTermin.addMouseListener(this);
 			}
 			{
@@ -358,6 +431,7 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 				getContentPane().add(editTermin);
 				editTermin.setBounds(42, 497, 42, 28);
 				editTermin.setIcon(new ImageIcon("src/images/editTermin.GIF"));
+				editTermin.setOpaque(false);
 				editTermin.addMouseListener(this);
 			}
 			{
@@ -365,22 +439,33 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 				getContentPane().add(deleteTermin);
 				deleteTermin.setBounds(84, 497, 42, 28);
 				deleteTermin.setIcon(new ImageIcon("src/images/deleteTermin.GIF"));
+				deleteTermin.setOpaque(false);
 				deleteTermin.addMouseListener(this);
 			}
 			{
 				mainMenu = new JMenuBar();
 				setJMenuBar(mainMenu);
 				mainMenu.setPreferredSize(new java.awt.Dimension(892, 24));
+				{
+					menu = new JMenu();
+					mainMenu.add(menu);
+					menu.setText("Termincontainer");
+					{
+						newTC = new JMenuItem();
+						menu.add(newTC);
+						newTC.setText("neuer Termincontainer ...");
+					}
+				}
 				
 				{
 					menu2 = new JMenu();
 					mainMenu.add(menu2);
-					menu2.setText("Zeitpunkt");
+					menu2.setText("Termin");
 					menu2.setBorderPainted(true);
 					{
 						neuerZeitpunkt = new JMenuItem();
 						menu2.add(neuerZeitpunkt);
-						neuerZeitpunkt.setText("neuer Zeitpunkt");
+						neuerZeitpunkt.setText("neuer Termin");
 					}
 					{
 						zeigeTermine = new JMenuItem();
@@ -390,7 +475,7 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 				}
 			}
 			pack();
-			this.setSize(897, 632);
+			this.setSize(897, 611);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -400,7 +485,38 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 		// TODO Auto-generated method stub
 		if(arg0.getSource().equals(viewButton1))
 		{
+			table.setRowHeight(98);
+			zoomBox.setEnabled(true);
+		}
+		if(arg0.getSource().equals(viewButton2))
+		{
+			table.setRowHeight(497);
+			zoomBox.setSelected(false);
+			zoomBox.setEnabled(false);
 			
+		}
+		if(arg0.getSource().equals(table))
+		{
+			
+			x++;
+			if (x==2)
+			{
+				DayFrame tag = new DayFrame();
+				tag.setLocation(this.getMousePosition().x,this.getMousePosition().y);
+				tag.setSize(169,254);
+				try
+				{	
+					String[] value = (String[])table.getValueAt(table.getSelectedRow(),table.getSelectedColumn());
+					tag.setTitle(value[0]);
+				}
+				catch(Exception ex)
+				{
+					
+				}
+
+				tag.setVisible(true);
+				x=0;
+			}
 		}
 	}
 
@@ -422,8 +538,7 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 		if(arg0.getSource().equals(viewButton2)){
 			jLabel1.setText("Wechselt das Kalenderlayout auf die Wochenansicht");
 		}
-		if(arg0.getSource().equals(table)){
-			jLabel1.setText(table.rowAtPoint(table.getMousePosition())+"");			
+		if(arg0.getSource().equals(table)){		
 			mouseEntered = true;
 		}
 		if(arg0.getSource().equals(neuerTermin)){
@@ -434,6 +549,9 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 		}
 		if(arg0.getSource().equals(deleteTermin)){
 			jLabel1.setText("Löscht den gerade gewählten Termin.");	
+		}
+		if(arg0.getSource().equals(zoomBox)){
+			jLabel1.setText("Aktiviert/Deaktiviert die automatische Vergrößerung eines Tages in der Monatsansicht wenn der Mauszeiger darübergeführt wird.");	
 		}
 	}
 
@@ -467,6 +585,9 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 		if(arg0.getSource().equals(deleteTermin)){
 			jLabel1.setText("");	
 		}
+		if(arg0.getSource().equals(zoomBox)){
+			jLabel1.setText("");	
+		}
 	}
 
 	public void mouseDragged(MouseEvent arg0) {
@@ -477,38 +598,42 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 	public void mouseMoved(MouseEvent arg0) {
 		// TODO Auto-generated method stub
 		if(arg0.getSource().equals(table)){
-			jLabel1.setText(table.rowAtPoint(table.getMousePosition().getLocation())+"");	
-			jLabel1.setText(table.getDefaultEditor(String.class).toString());
-			
-//			 TableZoom Engine (c) 2006 by Stephe ;-) ---------------------------
-			
-			if(mouseEntered && zoomBox.getSelectedObjects()!= null)
-			{
-				int i,j,k = 0;
-				j=table.rowAtPoint(table.getMousePosition()); 
-				
-				for (i=0;i<5;i++)
-				{ 
-					if(i==j) { k=186; } //Reihe j ist die Reihe, über die gerade "gehovert" wird
-					else { k = 76; } //Die anderen Reihen werden verkleinert
-					table.setRowHeight(i,k); //Reihe i wird mit Höhe k versehen
-				}
-				DefaultTableColumnModel cm = new DefaultTableColumnModel();
-				
-				j = table.columnAtPoint(table.getMousePosition());
-				for (i=0;i<7;i++)
-				{
-					if (i==j){ k = 200; } //Spalte j ist die Spalte, über die gerade "gehovert" wird
-					else {k = 92; } //Die anderen Spalten werden verkleinert
-					
-					TableColumn col = new TableColumn(i, k);
-					cm.addColumn(col);
-				}
-				table.setColumnModel(cm); //Spaltenlayout auf die Tabelle bringen
-			}
-			
-//			 ------------------------------------------------------------------
+			x=0;
+				tableZoom();
 		}
+	}
+	
+	private void tableZoom()
+	{
+//		 TableZoom Engine (c) 2006 by Stephe ;-) ---------------------------
+		
+		if(mouseEntered && zoomBox.getSelectedObjects()!= null)
+		{
+			int i,j,k = 0;
+			j=table.rowAtPoint(table.getMousePosition()); 
+			
+			for (i=0;i<5;i++)
+			{ 
+				if(i==j) { k=186; } //Reihe j ist die Reihe, über die gerade "gehovert" wird
+				else { k = 76; } //Die anderen Reihen werden verkleinert
+				table.setRowHeight(i,k); //Reihe i wird mit Höhe k versehen
+			}
+			DefaultTableColumnModel cm = new DefaultTableColumnModel();
+			
+			j = table.columnAtPoint(table.getMousePosition());
+			for (i=0;i<7;i++)
+			{
+				if (i==j){ k = 200; } //Spalte j ist die Spalte, über die gerade "gehovert" wird
+				else {k = 92; } //Die anderen Spalten werden verkleinert
+				
+				TableColumn col = new TableColumn(i, k);
+				cm.addColumn(col);
+			}
+			table.setColumnModel(cm); //Spaltenlayout auf die Tabelle bringen
+		}
+		//table.setDefaultEditor(String.class, new MonthRenderer());
+		
+//		 ------------------------------------------------------------------
 	}
 
 }

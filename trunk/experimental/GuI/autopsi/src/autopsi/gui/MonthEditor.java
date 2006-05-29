@@ -6,21 +6,10 @@ import javax.swing.*;
 import java.awt.Color;
 import java.awt.Component;
 
-public class MonthRenderer extends DayCell implements TableCellRenderer
+public class MonthEditor extends AbstractCellEditor implements TableCellEditor
 {
-
-    public MonthRenderer(boolean scroll) {
-		super(scroll);
-		// TODO Auto-generated constructor stub
-	}
-
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
-	private JList liste = new JList();
-    private JPanel panel = new JPanel();
-  
+    private JList liste = new JList();
+    private DayCell cell = new DayCell(true);
    
     public Object getCellEditorValue()
     {
@@ -28,25 +17,17 @@ public class MonthRenderer extends DayCell implements TableCellRenderer
         return blabla;
     }
 
-	public Component getTableCellRendererComponent(JTable arg0, Object arg1, boolean arg2, boolean arg3, int arg4, int arg5) {
+/*	public Component getTableCellRendererComponent(JTable arg0, Object arg1, boolean arg2, boolean arg3, int arg4, int arg5) {
 		if(arg1 instanceof String[])
     	{
-    		String[] termine = (String[])arg1;
-    		DayCell cell = new DayCell(false);
-    		cell.setTab(termine[0]);
-    		if (termine[0].substring(0,2).equals("Sa")||termine[0].substring(0,2).equals("So") )
-    				{
-    			cell.setBackColor();
-    				}
-    		cell.setVisible(true);
+    		//String[] termine = (String[])value;
+    		
     		//for (int i = 0;i<termine.length;i++)
         	//{
         		JLabel item = new JLabel("nummer");
         		liste.add(item);
         	//}
-        		return cell;
     	}
-		return null;
 		//ListModel listTModel = new DefaultComboBoxModel(
 			//	new String[] { "Item One", "Item Two","bla","bla","bla","bla","bla" });
 		//liste.setModel(listTModel);
@@ -57,7 +38,12 @@ public class MonthRenderer extends DayCell implements TableCellRenderer
     	//panel.add(label2);
     	//panel.add(liste);
     	//panel.setLayout(new BoxLayout(panel,BoxLayout.PAGE_AXIS));
-        
+  
+	}*/
+
+	public Component getTableCellEditorComponent(JTable arg0, Object arg1, boolean arg2, int arg3, int arg4) {
+		cell.setVisible(true);
+		return cell;
 	}
 
 	
