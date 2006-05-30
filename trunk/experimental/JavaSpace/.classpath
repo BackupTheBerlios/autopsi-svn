@@ -2,5 +2,11 @@
 <classpath>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry exported="true" kind="con" path="org.eclipse.jdt.USER_LIBRARY/jini"/>
+	<classpathentry kind="lib" path="D:/Programme/Java/jini2_1/lib-ext/jsk-policy.jar"/>
+	<classpathentry kind="var" path="JINI-CORE"/>
+	<classpathentry kind="var" path="JINI-EXT"/>
+	<classpathentry kind="var" path="SUN-UTIL"/>
+	<classpathentry kind="var" path="SERVICEUI"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

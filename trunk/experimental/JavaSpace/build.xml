@@ -7,19 +7,24 @@
 	<property name="doc" value="doc"/>
 	<property name="hsqldb_data" value="data"/>
 	
-	<property name="jini_path" value="D:/Programme/jini2_1/lib"/>
-	
+	<property name="jini_path" value="D:/Programme/jini2_1/lib/"/>
+	<property name="jini_core" value="C:/Dokumente und Einstellungen/Rudolf/.incax/eclipse-ce/lib/jini-core.jar" />
+	<property name="jini_core" value="C:/Dokumente und Einstellungen/Rudolf/.incax/eclipse-ce/lib/jini-ext.jar" />
+	<property name="jini_core" value="C:/Dokumente und Einstellungen/Rudolf/.incax/eclipse-ce/lib/serviceui.jar" />
+	<property name="jini_core" value="C:/Dokumente und Einstellungen/Rudolf/.incax/eclipse-ce/lib/sun-util.jar" />
+	<property name="jini_all" value="C:/Dokumente und Einstellungen/Rudolf/.incax/eclipse-ce/lib/"/>
 	
 	<path id="classpath">
 		<pathelement location="${build}"/>
+		<pathelement location="${jini_all}"/>
 		<fileset dir="${basedir}/lib" id="lib">
 			<include name="*.jar"/>
 		</fileset>
 		<fileset dir="${jini_path}" id="lib">
 			<include name="*.jar"/>
 		</fileset>	
-		
 	</path>
+
 	
 	<target name="clean">
 		<delete dir="${build}"/>
@@ -34,7 +39,9 @@
 	</target>
 	
 	<target name="run">
-		<java classpathref="classpath" classname="Main" fork="true"/> 
+		<java classpathref="classpath" classname="SpaceTest" fork="true">
+			<jvmarg value="-Djava.security.policy=policy.all"/>
+		</java>
 	</target>
 	
 	<target name="jini_startup">
