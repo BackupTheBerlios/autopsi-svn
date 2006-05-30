@@ -6,6 +6,9 @@
 
 
 
+import net.jini.discovery.LookupDiscovery;
+import net.jini.discovery.DiscoveryListener;
+import net.jini.discovery.DiscoveryEvent;
 import net.jini.core.lookup.*;
 import net.jini.space.*;
 import net.jini.discovery.LookupDiscoveryManager;
@@ -25,50 +28,74 @@ import net.jini.core.transaction.server.TransactionManager;
 
 import java.rmi.*;
 
-public class SpaceTest {
+public class SpaceTest implements DiscoveryListener {
 
 	
-	protected static ServiceTemplate template;
-	protected static JavaSpace space = null;
+	private ServiceTemplate template;
+	private Object lock = new Object();
+	private Object proxy = null;
 	
-	public static JavaSpace getSpace(String spaceName){
-		try{
-		JavaSpace space = null;
+	
+	public Object internalGetService(Class serviceClass, String serviceName, long waitTime) throws InterruptedException{
+		if (System.getSecurityManager() == null)
+			System.setSecurityManager(new SecurityManager());
 		
-		Entry[] attr = new Entry[1];
-		attr[0] = new Name(spaceName);
-		Class[] types = new Class[1];
-		types[0] = JavaSpace.class;
-		template = new ServiceTemplate(null, types, null);
+		LookupDiscovery discovery = null;
 		
-			if (System.getSecurityManager() == null){
-				System.setSecurityManager(new SecurityManager());
-			}
-		
-		try{
-			System.out.println("hier simma");
-			LookupDiscoveryManager ldm = new LookupDiscoveryManager(new String[] {""}, null, null);
-			System.out.println("ldm ok");
-			ServiceDiscoveryManager sdm = new ServiceDiscoveryManager(ldm, null);
-			System.out.println("hier auch noch");
-			ServiceItem o = sdm.lookup(template, null, 20000);
-			if (o==null){
-				System.out.println("o==null; Service not found");
-			}
-			else{
-				System.out.println("Service found");
-			}
-			System.out.println("hier nicht mehr");
-			space = ((JavaSpace)o.service);
+		Class[] types = new Class[] {serviceClass};
+		Entry[] entry=null;
+		if (serviceName != null){
+			entry = new Entry[] { new Name(serviceName) };
 		}
-		catch(Exception e){
-			System.out.println("Error beim Finden des JavaSpaces");
-		}
+		template = new ServiceTemplate(null, types, entry);
+		
+		
+		try{
+			discovery = new LookupDiscovery(LookupDiscovery.ALL_GROUPS);
 		}
 		catch (Exception e){
-			System.out.println("Exception@getSpace=="+e.toString());
+			System.out.println("Couldn' t create a LookupDiscovery");
 		}
-		return space;
+		discovery.addDiscoveryListener(this);
+		synchronized(lock){
+			lock.wait(waitTime);
+		}
+		discovery.terminate();
+		if (proxy==null){
+			System.out.println("Couldn' t find service you were looking for!");
+			throw new InterruptedException();
+		}
+		return proxy;
+	}
+		
+	public void discovered(DiscoveryEvent e){
+		ServiceRegistrar[] registrars = e.getRegistrars();
+		for (int i=0;i<registrars.length;i++){
+			findService(registrars[i]);
+		}
+	}
+	
+	public void findService(ServiceRegistrar lookupService){
+		try{
+			synchronized(lock){
+				proxy = lookupService.lookup(template);
+				if (proxy != null)
+					lock.notifyAll();
+			}
+		}
+		catch (Exception e){
+			System.out.println("Tried to find the service at the lookup Service; error :: "+e.toString());
+		}
+	}
+	
+	public void discarded(DiscoveryEvent e){
+		
+	}
+	
+	
+	public static Object getService(Class serviceClass, String serviceName, long waitTime) throws InterruptedException{
+		SpaceTest st = new SpaceTest();
+		return st.internalGetService(serviceClass, serviceName, waitTime);
 	}
 	
 	/**
@@ -77,14 +104,15 @@ public class SpaceTest {
 	public static void main(String[] args) {
 		System.out.println("autoPSI JavaSpace experimental Project testing\n");
 		try{
-			JavaSpace space = (JavaSpace)ServiceLocator.getService(JavaSpace.class, 10000);
+			JavaSpace space = (JavaSpace)getService(JavaSpace.class, null, 3000);
+		//JavaSpace space = (JavaSpace)ServiceLocator.getService(JavaSpace.class, 10000);
 			System.out.println("writing something into space");
-			for (int i=0;i<18;i++){
-				space.take(new HelloWorldMessage(), null, Lease.FOREVER);
+			for (int i=0;i<29;i++){
+				space.write(new HelloWorldMessage(), null, Lease.FOREVER);
 			}
 		}
 		catch (Exception e){
-			System.out.println("Error!=="+e.toString());
+			System.out.println("Error@main :: "+e.toString());
 		}
 	}
 
