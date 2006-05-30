@@ -1,0 +1,31 @@
+<project name="GenericEditFrame" default="compile_and_run" basedir=".">
+
+	<property name="project_name" value="autoPSI"/>
+	<property name="basedir" value="."/>
+	<property name="build" value="class"/>
+	<property name="src" value="src"/>
+	
+	<path id="classpath">
+		<pathelement location="${build}"/>
+	</path>
+	
+	<target name="clean">
+		<delete dir="${build}"/>
+	</target>
+		
+	<target name="init">
+		<mkdir dir="${build}"/>
+	</target>
+	
+	<target name="compile" depends="init">
+		<javac srcdir="src" destdir="${build}" classpathref="classpath"/>
+	</target>
+	
+	<target name="run">
+		<java classpathref="classpath" classname="Test" fork="true"/> 
+	</target>
+
+	<target name="compile_and_run" depends="compile,run">
+	</target>
+	
+</project>
