@@ -7,11 +7,17 @@
 	<property name="doc" value="doc"/>
 	<property name="hsqldb_data" value="data"/>
 	
+	<property name="jini_path" value="D:/Programme/jini2_1/lib"/>
+	
+	
 	<path id="classpath">
 		<pathelement location="${build}"/>
 		<fileset dir="${basedir}/lib" id="lib">
 			<include name="*.jar"/>
 		</fileset>
+		<fileset dir="${jini_path}" id="lib">
+			<include name="*.jar"/>
+		</fileset>	
 		
 	</path>
 	
@@ -29,6 +35,26 @@
 	
 	<target name="run">
 		<java classpathref="classpath" classname="Main" fork="true"/> 
+	</target>
+	
+	<target name="jini_startup">
+		<java 
+			jar="${jini_path}\classserver.jar" 
+			dir="D:\Programme\jini2_1\lib"
+			fork="true"
+		></java>
+		<java 
+			jar="${jini_path}\start.jar" 
+			dir="D:\Programme\jini2_1\lib"
+			fork="true"
+		>
+			<arg value="-Djava.security.manager= "/>
+			<arg value="-Djava.security.policy=config\ssl-reggie.policy "/>
+			<arg value="-Djava.security.auth.login.config=config\ssl-reggie.login"/>
+			<arg value="-Djava.security.properties=config\dynamic-policy.security-properties"/>
+			<arg value=" -Djavax.net.ssl.trustStore=prebuiltkeys\truststore"/>
+			<arg value="-Djava.protocol.handler.pkgs=net.jini.url"/>
+		</java>
 	</target>
 	
 	<target name="javadoc">
