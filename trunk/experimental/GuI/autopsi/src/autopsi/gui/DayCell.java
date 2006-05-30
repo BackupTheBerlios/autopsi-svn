@@ -1,4 +1,6 @@
 package autopsi.gui;
+import java.awt.BorderLayout;
+import java.awt.CardLayout;
 
 import java.awt.Dimension;
 import java.awt.FlowLayout;
@@ -24,8 +26,9 @@ import java.awt.Color;
 public class DayCell extends javax.swing.JPanel {
 	private boolean scroll;
 	private String date;
-	private JPanel jPanel1;
-	private JTabbedPane jTabbedPane1;
+	private JLabel title = new JLabel();
+	private JList list;
+	private JScrollPane jScrollPane1;
 
 	{
 		//Set Look & Feel
@@ -46,6 +49,7 @@ public class DayCell extends javax.swing.JPanel {
 		frame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 		frame.pack();
 		frame.setVisible(true);
+		
 	}
 	
 	public DayCell(boolean scroll) {
@@ -56,11 +60,11 @@ public class DayCell extends javax.swing.JPanel {
 	}
 	public void setBackColor()
 	{
-		jPanel1.setBackground(Color.LIGHT_GRAY);
+		
 	}
-	public void setTab(String title)
+	public void setTab(String title2)
 	{
-		jTabbedPane1.setTitleAt(0,title);
+	title.setText(title2);
 	}
 	
 	private void initGUI() {
@@ -73,21 +77,34 @@ public class DayCell extends javax.swing.JPanel {
 			}
 			BoxLayout thisLayout = new BoxLayout(
 				this,
-				javax.swing.BoxLayout.X_AXIS);
+				javax.swing.BoxLayout.Y_AXIS);
 			this.setLayout(thisLayout);
 			this.setPreferredSize(new java.awt.Dimension(155, 116));
 			this.setSize(92,76);
-			this.setBackground(new java.awt.Color(255,255,255));
+			this.setBackground(new java.awt.Color(0,0,64));
 			{
-				jTabbedPane1 = new JTabbedPane();
-				this.add(jTabbedPane1);
-				jTabbedPane1.setFont(new java.awt.Font("Tahoma",0,9));
-	
-				jPanel1 = new JPanel();
-				jPanel1.setBackground(Color.white);
-				jTabbedPane1.addTab("bla", null, jPanel1, null);			
+
+				title.setLayout(null);
+				this.add(title);
+				title.setText("Datum2");
+				title.setBackground(new java.awt.Color(0,0,64));
+				title.setOpaque(true);
+				title.setForeground(new java.awt.Color(255,255,255));
+				{
+					jScrollPane1 = new JScrollPane();
+					this.add(jScrollPane1);
+					{
+						ListModel listModel = new DefaultComboBoxModel(
+							new String[] { "Item One", "Item Two" });
+						list = new JList();
+						jScrollPane1.setViewportView(list);
+						list.setModel(listModel);
+					}
+				}
+				title.setPreferredSize(new java.awt.Dimension(this.getSize().width, 14));
+				
 			}
-			
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
