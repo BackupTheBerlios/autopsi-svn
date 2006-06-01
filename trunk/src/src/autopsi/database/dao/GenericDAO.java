@@ -56,7 +56,12 @@ public class GenericDAO implements IGenericDAO{
 	}
 	
 	
-	protected void finalize(){
+	protected void finalize() throws Throwable{
+		closeDBCon();
+	}
+	
+	public void closeDBCon() {
+		System.out.println("closing DBCon");
 		if (dbCon != null){
 			PreparedStatement ps = null;
 			try{
@@ -67,8 +72,7 @@ public class GenericDAO implements IGenericDAO{
 			catch (SQLException e){
 				System.out.println("Couldn' t close DBConnection!!");
 			}
-			
-		}
+		}	
 	}
 	
 	public void setCurrentTable(String tableName){
