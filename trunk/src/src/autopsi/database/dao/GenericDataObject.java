@@ -21,7 +21,7 @@ package autopsi.database.dao;
  * @author Rudolf
  *
  */
-public abstract class GenericDataObject{
+public interface GenericDataObject{
 
 }
 
