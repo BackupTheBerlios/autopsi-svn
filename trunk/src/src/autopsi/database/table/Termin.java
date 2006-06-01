@@ -10,7 +10,7 @@ import java.util.Locale;
 public class Termin implements GenericDataObject{
 
 	private Integer id = null;
-	private String secundary_title = null;
+	private String secondary_title = null;
 	private String description = null;
 	private Date date = null;
 	private Integer duration = null;
@@ -23,8 +23,8 @@ public class Termin implements GenericDataObject{
 	
 	public String getSetSecundaryTitle(boolean set, String newSecTitle){
 		if (set)
-			this.secundary_title = newSecTitle;
-		return this.secundary_title;
+			this.secondary_title = newSecTitle;
+		return this.secondary_title;
 	}
 	
 	public String getSetDescription(boolean set, String newDescription){
