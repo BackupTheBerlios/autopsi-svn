@@ -26,6 +26,22 @@ public class Basis {
 			System.out.println("Error=="+e.toString());
 		}
 		
+		
+		
+		IGenericDAO db2 = new GenericDAO();
+		List<GenericDataObject> list = null;
+		TerminContainer tc = new TerminContainer();
+		tc.getSetTitle(true, "VU Grundzüge der Informatik");
+		db2.setCurrentTable("Termincontainer");
+		try{
+			list = db2.getDataObjects(tc);
+		}
+		catch (Exception e){
+			System.out.println("Exception::"+e.toString());
+		}
+		for (int i=0;i<list.size();i++)
+			System.out.println("Element Nr."+i+"hat Titel '"+((TerminContainer)list.get(i)).getSetTitle(false,null)+"'");
+		
 		mainFrame frame = new mainFrame(); //Ein neues Mainframe (Liste der Patienten) starten
 
 		frame.setLocation(290,100); //Startposition
