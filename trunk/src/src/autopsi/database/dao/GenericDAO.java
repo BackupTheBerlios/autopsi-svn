@@ -25,7 +25,7 @@ public class GenericDAO implements IGenericDAO{
 	
 	private Connection dbCon= null;
 	private String currentTable;
-	private String username = "sa";
+	private String username = "SA";
 	private String password = "ab";
 	
 	
