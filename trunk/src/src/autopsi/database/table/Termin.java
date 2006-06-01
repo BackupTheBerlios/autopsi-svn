@@ -1,7 +1,7 @@
 package autopsi.database.table;
 
 
-import java.sql.Date;
+import java.sql.Timestamp;
 import autopsi.database.dao.GenericDataObject;
 
 
@@ -10,7 +10,7 @@ public class Termin implements GenericDataObject{
 	private Integer id = null;
 	private String secondary_title = null;
 	private String description = null;
-	private Date date = null;
+	private Timestamp date = null;
 	private Integer duration = null;
 	
 	public Integer getSetId(boolean set, Integer newId){
@@ -31,7 +31,7 @@ public class Termin implements GenericDataObject{
 		return this.description;
 	}
 	
-	public Date getSetDate(boolean set, Date newDate){
+	public Timestamp getSetDate(boolean set, Timestamp newDate){
 		if (set)
 			this.date = newDate;
 		return this.date;

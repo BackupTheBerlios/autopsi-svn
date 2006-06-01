@@ -14,7 +14,6 @@ public class Basis {
 
 	public static void main (String[] args)
 	{	
-		
 		IGenericDAO database = new GenericDAO();
 		database.setCurrentTable("Termincontainer");
 		try{
