@@ -61,13 +61,13 @@ public class GenericDAO implements IGenericDAO{
 			PreparedStatement ps = null;
 			try{
 				ps = dbCon.prepareStatement("SHUTDOWN");
+				if (!ps.execute())
+					System.out.println("Couldn't close DBConnection!!");
 			}
 			catch (SQLException e){
 				System.out.println("Couldn' t close DBConnection!!");
 			}
 			
-			if (!ps.execute())
-				System.out.println("Couldn't close DBConnection!!");
 		}
 	}
 	
