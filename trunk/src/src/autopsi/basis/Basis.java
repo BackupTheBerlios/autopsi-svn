@@ -15,12 +15,14 @@ public class Basis {
 	public static void main (String[] args)
 	{	
 		
-		//Database.setCurrentTable("Termincontainer");
 		IGenericDAO database = new GenericDAO();
-		database.setCurrentTable("Termincontainer");
+		IGenericDAO db = new GenericDAO();
+		database.setCurrentTable("Termin");
 		try{
-		List<GenericDataObject> l = database.getDataObjects(new TerminContainer());
-		System.out.println("Datensatz0=="+ ((TerminContainer)(l.get(0))).getSetTitle(false, null) );
+		List<GenericDataObject> l = database.getDataObjects(new Termin());
+		List<GenericDataObject> l2 = db.getDataObjects(new TerminContainer());
+		System.out.println("Datensatz0=="+ ((Termin)(l.get(0))).getSetDescription(false, null) );
+		System.out.println("Datensatz1=="+ ((TerminContainer)(l2.get(0))).getSetTitle(false, null) );
 		}
 		catch (Exception e){
 			System.out.println("Error=="+e.toString());
