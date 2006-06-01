@@ -1,19 +1,36 @@
 package autopsi.basis.model;
 
 import java.util.*;
+
 import javax.swing.table.AbstractTableModel;
-import autopsi.gui.*;
+import autopsi.database.dao.*;
+import autopsi.database.table.*;
+
+
 public class MonatTM extends AbstractTableModel {
 	private static final long serialVersionUID = 1L;
 	
 	private final String [] columnName = {"Montag", "Dienstag", "Mittwoch", "Donnerstag", "Freitag", "Samstag", "Sonntag"};
 	Date datum = new Date();
+	private IGenericDAO igdao = new GenericDAO();
+	List<GenericDataObject> termine;
 	
 
 	//Konstruktor mit Suchtext, Suchkriterium und Sortierungsattribut
 	public MonatTM()
 	{
 		super();
+		Termin tc = new Termin();
+		
+		igdao.setCurrentTable("Termin");
+		try
+		{
+			termine = igdao.getDataObjects(tc);
+		}
+		catch(Exception ex)
+		{
+			System.out.println(ex.toString());
+		}		
 	}
 	
 	public Class getColumnClass(int c)
@@ -43,7 +60,7 @@ public class MonatTM extends AbstractTableModel {
 	public Object getValueAt(int row, int col)  //Werte aus den Spalten zurückgeben
 	{
 	
-		datum.setMonth(4);
+	/*	datum.setMonth(4);
 		datum.setDate(7*(row)+col+1);
 		String dat = datum.toString();
 		
@@ -65,6 +82,8 @@ public class MonatTM extends AbstractTableModel {
 		{
 			return null;
 		}
+		*/
+		return null;
 		
 		
 	}
