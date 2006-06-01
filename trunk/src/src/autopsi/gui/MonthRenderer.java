@@ -3,9 +3,7 @@ package autopsi.gui;
 import javax.swing.table.*;
 import javax.swing.*;
 
-import java.awt.Color;
 import java.awt.Component;
-import java.util.*;
 public class MonthRenderer extends DayCell implements TableCellRenderer
 {
 	DateConverter converter = new DateConverter();
@@ -20,8 +18,6 @@ public class MonthRenderer extends DayCell implements TableCellRenderer
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private JList liste = new JList();
-    private JPanel panel = new JPanel();
   
    
     public Object getCellEditorValue()

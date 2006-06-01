@@ -7,6 +7,7 @@ import java.awt.Component;
 public class MonthEditor extends AbstractCellEditor implements TableCellEditor
 {
 	private static final long serialVersionUID = 1L;
+	DateConverter converter = new DateConverter();
 
 	public Object getCellEditorValue()
     {
@@ -19,7 +20,8 @@ public class MonthEditor extends AbstractCellEditor implements TableCellEditor
     	{
     		String[] termine = (String[])arg1;
     		DayCell cell = new DayCell(false);
-    		cell.setTab(termine[0]);
+    		String title = converter.toShort(termine[0]);
+    		cell.setTab(title);
     		if (termine[0].substring(0,2).equals("Sa")||termine[0].substring(0,2).equals("So") )
     				{
     			cell.setBackColor();

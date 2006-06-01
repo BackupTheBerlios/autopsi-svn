@@ -149,7 +149,7 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 				table.setSelectionForeground(new java.awt.Color(0,0,0));
 				table.setSelectionBackground(new java.awt.Color(255,255,255));
 				table.setDefaultRenderer(String[].class, new MonthRenderer(false));	
-				//table.setDefaultEditor(String[].class,new MonthEditor());
+				table.setDefaultEditor(String[].class,new MonthEditor());
 				table.setRowHeight(98);
 				table.addMouseListener(this);
 				table.addMouseMotionListener(this);
@@ -665,6 +665,8 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 		}
 		if(arg0.getSource().equals(table))
 		{ //zeigt den angeklickten Tag in der Infobar an
+			if(zoomBox.getSelectedObjects()!=null) tableZoom();
+
 			try
 			{
 				Object bla = (table.getValueAt(table.rowAtPoint(table.getMousePosition()),table.columnAtPoint(table.getMousePosition())));
@@ -813,7 +815,6 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 		// TODO Auto-generated method stub
 		if(arg0.getSource().equals(table)){
 			
-			x=0;
 			if(zoomBox.getSelectedObjects()!=null) tableZoom();		
 		}
 	}
@@ -824,43 +825,46 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 		
 		if(mouseEntered && zoomBox.getSelectedObjects()!= null)
 		{
-			int i,j,k = 0;
-			j=0;
-			if(viewMonth)
-			{
-				try
+			try{
+				int i,j,k = 0;
+				j=0;
+				if(viewMonth)
 				{
-					j=table.rowAtPoint(table.getMousePosition()); 
-				}
-				catch(Exception ex)
-				{
+					try
+					{
+						j=table.rowAtPoint(table.getMousePosition()); 
+					}
+					catch(Exception ex)
+					{
+						
+					}
+					
+					for (i=0;i<5;i++)
+					{ 
+						if(i==j) { k=186; } //Reihe j ist die Reihe, über die gerade "gehovert" wird
+						else { k = 76; } //Die anderen Reihen werden verkleinert
+						table.setRowHeight(i,k); //Reihe i wird mit Höhe k versehen
+					}
 					
 				}
+				DefaultTableColumnModel cm = new DefaultTableColumnModel();
 				
-				for (i=0;i<5;i++)
-				{ 
-					if(i==j) { k=186; } //Reihe j ist die Reihe, über die gerade "gehovert" wird
-					else { k = 76; } //Die anderen Reihen werden verkleinert
-					table.setRowHeight(i,k); //Reihe i wird mit Höhe k versehen
+				j = table.columnAtPoint(table.getMousePosition());
+				for (i=0;i<7;i++)
+				{
+					if (i==j){ k = 200; } //Spalte j ist die Spalte, über die gerade "gehovert" wird
+					else {k = 92; } //Die anderen Spalten werden verkleinert
+					
+					TableColumn col = new TableColumn(i, k);
+					cm.addColumn(col);
 				}
-				
+				table.setColumnModel(cm); //Spaltenlayout auf die Tabelle bringen
 			}
-			DefaultTableColumnModel cm = new DefaultTableColumnModel();
-			
-			j = table.columnAtPoint(table.getMousePosition());
-			for (i=0;i<7;i++)
-			{
-				if (i==j){ k = 200; } //Spalte j ist die Spalte, über die gerade "gehovert" wird
-				else {k = 92; } //Die anderen Spalten werden verkleinert
-				
-				TableColumn col = new TableColumn(i, k);
-				cm.addColumn(col);
-			}
-			table.setColumnModel(cm); //Spaltenlayout auf die Tabelle bringen
-		}
-			
 		
-//		 ------------------------------------------------------------------
+			catch(Exception ex)
+			{	
+			}
+		}	
 	}
 
 }
