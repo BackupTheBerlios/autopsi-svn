@@ -1,0 +1,68 @@
+<project name="autoPSI" default="compile" basedir=".">
+
+	<property name="project_name" value="autoPSI"/>
+	<property name="basedir" value="."/>
+	<property name="build" value="class"/>
+	<property name="src" value="src"/>
+	<property name="doc" value="doc"/>
+	<property name="hsqldb_data" value="data"/>
+	
+
+	<property name="jdbc.username" value="SA"/>
+	<property name="jdbc.password" value="ab"/>
+	<property name="jdbc.url" value="jdbc:hsqldb:file:${hsqldb_data}/database"/>
+	
+	<path id="classpath">
+		<pathelement location="${build}"/>
+		<fileset dir="${basedir}/lib" id="lib">
+			<include name="*.jar"/>
+		</fileset>
+		
+	</path>
+	
+	<target name="clean">
+		<delete dir="${build}"/>
+	</target>
+		
+	<target name="init">
+		<mkdir dir="${build}"/>
+	</target>
+	
+	<target name="compile" depends="init">
+		<javac srcdir="${src}" destdir="${build}" classpathref="classpath"/>
+	</target>
+	
+	<target name="run">
+		<java classpathref="classpath" classname="Main" fork="true"/> 
+	</target>
+	
+	<target name="javadoc">
+        <javadoc 
+            destdir="${doc}/api"
+            use="true"
+            author="true" version="true"
+            doctitle="${project_name}"
+            classpathref="classpath"
+        >
+            <packageset dir="${src}" defaultexcludes="yes">
+                <include name="autopsi/**"/>
+            </packageset>
+        </javadoc>
+	</target>
+	
+	<target name="runDBMan">
+        <java 
+            classpathref="classpath"
+            classname="org.hsqldb.util.DatabaseManagerSwing"
+            fork="true"
+        >
+        	<arg line="-url ${jdbc.url}"/>
+            <arg line="-user ${jdbc.username}" />
+            <arg line="-password ${jdbc.password}" />
+        </java>
+	</target>
+		
+	<target name="compile_and_run" depends="compile,run">
+	</target>
+	
+</project>
