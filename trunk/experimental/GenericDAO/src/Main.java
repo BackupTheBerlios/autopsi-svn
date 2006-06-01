@@ -21,7 +21,7 @@ public class Main {
 		IGenericDAO gdo = new GenericDAO();
 		gdo.setCurrentTable("testdatatable");
 		
-		//adding an object to the database
+/*		//adding an object to the database
 		try{
 			TestData obj = new TestData();
 			obj.name = "eingefügtes Objekt";
@@ -31,7 +31,7 @@ public class Main {
 		}
 		catch (Exception e){
 			System.out.println("Exception beim Einfügen=="+e.toString());
-		}
+		}*/
 
 		//updating an object in the database
 		try{
@@ -45,7 +45,7 @@ public class Main {
 			System.out.println("Exception beim Updaten=="+e.toString());
 		}
 		
-		//removing an object from the database
+/*		//removing an object from the database
 		try{
 			TestData obj = new TestData();
 			obj.dval = 33.3;
@@ -55,7 +55,7 @@ public class Main {
 			System.out.println("Exception beim Löschen=="+e.toString());
 		}
 		
-		
+		*/
 		//get objects from the database
 		List<GenericDataObject> list = null;
 		try{

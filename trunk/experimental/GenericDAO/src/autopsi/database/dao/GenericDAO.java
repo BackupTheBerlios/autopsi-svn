@@ -25,13 +25,21 @@ public class GenericDAO implements IGenericDAO{
 	
 	private Connection dbCon= null;
 	private String currentTable;
+	private String username = "sa";
+	private String password = "ab";
+	
+	
+	public void setDbUser(String userName, String userPassword){
+		this.username = userName;
+		this.password = userPassword;
+	}
 	
 	
 	protected Connection connect(){
 		try{
 			if ((dbCon == null) || (dbCon.isClosed())){
 				Class.forName("org.hsqldb.jdbcDriver");
-				dbCon = DriverManager.getConnection("jdbc:hsqldb:data/Database", "sa", "ab");
+				dbCon = DriverManager.getConnection("jdbc:hsqldb:data/Database", username, password);
 				dbCon.setAutoCommit(false);
 			}
 		}

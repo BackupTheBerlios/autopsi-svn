@@ -22,7 +22,7 @@ package autopsi.database.dao;
  *
  */
 public abstract class GenericDataObject{
-	
+
 }
 
 

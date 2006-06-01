@@ -15,6 +15,9 @@ import java.util.ArrayList;
 
 public interface IGenericDAO {
 	
+	
+	public void setDbUser(String userName, String userPassword);
+	
 	/**
 	 * sets the table in which the GenericDAO will operate
 	 * @param name the name of the table
