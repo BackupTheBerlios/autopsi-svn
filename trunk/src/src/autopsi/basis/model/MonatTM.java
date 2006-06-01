@@ -40,6 +40,7 @@ public class MonatTM extends AbstractTableModel {
 		}		
 	}
 	
+	
 	public void setTimeSpace(Timestamp begin, Timestamp end){
 		this.begin = begin;
 		this.end = end;
@@ -66,50 +67,33 @@ public class MonatTM extends AbstractTableModel {
 
 	public boolean isCellEditable(int arg0, int arg1) 
 	{
-		return true; //Zellen sind nicht editierbar
+		return false; //Zellen sind nicht editierbar
 	}
 
 	public Object getValueAt(int row, int col)  //Werte aus den Spalten zurückgeben
 	{
+		
 		Date d = new Date(begin.getTime());
 		Calendar c = new GregorianCalendar();
 		c.setTime(d);
 		Timestamp ts = new Timestamp(c.getTimeInMillis());
-		c.set(Calendar.DAY_OF_MONTH, c.get(Calendar.DAY_OF_MONTH)+ ((7*row)+col+1 ));
+		c.set(Calendar.DAY_OF_MONTH, c.get(Calendar.DAY_OF_MONTH)+ ((7*row)+col ));
 		Iterator iter = termine.iterator();
-		while(iter.hasNext()){
-			Termin t = (Termin)iter.next();
-			if (t.getSetDate(false, null) compareTo(c.getTime()) == 0){	
-				return t.getSetSecondaryTitle(false, null);
-			}
-		}
 		
-	/*	datum.setMonth(4);
-		datum.setDate(7*(row)+col+1);
-		String dat = datum.toString();
+		String ret = "";
 		
-	String [] hallo = {dat,"Spalte: "+ col};
-		try
-		{	
-			if(row<5)
-			{
-				if(col<7)
-				{
-					
-					return hallo;
-				}
-			}
-			return null;
-				
-		}
-		catch (Exception ex)
+		for (int i = 0;i<termine.size();i++)
 		{
-			return null;
+			Timestamp stamp = new Timestamp(c.getTimeInMillis());
+			//System.out.println("termin: "+((Termin)termine.get(i)).getSetDate(false, null).toString().substring(0,10));
+			//System.out.println("aktuell: "+ stamp.toString().substring(0,10));
+			if (((Termin)termine.get(i)).getSetDate(false, null).toString().substring(0,10).equals(stamp.toString().substring(0,10))){	
+				 ret = ((Termin)termine.get(i)).getSetSecondaryTitle(false, null);
+			}
 		}
-		*/
-		return null;
-		
-		
+			return ret;
+			
+
 	}
 
 }
