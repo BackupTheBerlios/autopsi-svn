@@ -16,13 +16,11 @@ public class Basis {
 	{	
 		
 		IGenericDAO database = new GenericDAO();
-		IGenericDAO db = new GenericDAO();
-		database.setCurrentTable("Termin");
+		database.setCurrentTable("Termincontainer");
 		try{
-		List<GenericDataObject> l = database.getDataObjects(new Termin());
-		List<GenericDataObject> l2 = db.getDataObjects(new TerminContainer());
-		System.out.println("Datensatz0=="+ ((Termin)(l.get(0))).getSetDescription(false, null) );
-		System.out.println("Datensatz1=="+ ((TerminContainer)(l2.get(0))).getSetTitle(false, null) );
+		List<GenericDataObject> l = database.getDataObjects(new TerminContainer());
+		System.out.println("size=="+l.size());
+		System.out.println("Datensatz0=="+ ((TerminContainer)(l.get(1))).getSetTitle(false, null) );
 		}
 		catch (Exception e){
 			System.out.println("Error=="+e.toString());

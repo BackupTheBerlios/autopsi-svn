@@ -44,11 +44,12 @@ public class GenericDAO implements IGenericDAO{
 			}
 		}
 		catch (SQLException e){
-			System.out.println("Couldn't open database connection");
+			System.out.println("Couldn't open database connection\nException says ::"+e.toString());
+			System.out.println();
 			return null;
 		}
 		catch (ClassNotFoundException e){
-			System.out.println("Database Driver not found");
+			System.out.println("Database Driver not found\nException says ::"+e.toString());
 			return null;
 		}
 		return dbCon;
