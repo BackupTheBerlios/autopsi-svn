@@ -15,11 +15,11 @@ public class Basis {
 	public static void main (String[] args)
 	{	
 		IGenericDAO database = new GenericDAO();
-		database.setCurrentTable("Termincontainer");
+		database.setCurrentTable("Termin");
 		try{
-		List<GenericDataObject> l = database.getDataObjects(new TerminContainer());
+		List<GenericDataObject> l = database.getDataObjects(new Termin());
 		System.out.println("size=="+l.size());
-		System.out.println("Datensatz0=="+ ((TerminContainer)(l.get(1))).getSetTitle(false, null) );
+		System.out.println("Datensatz0=="+ ((Termin)(l.get(1))).getSetDate(false, null).toLocaleString() );
 		}
 		catch (Exception e){
 			System.out.println("Error=="+e.toString());

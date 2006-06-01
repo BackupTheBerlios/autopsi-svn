@@ -24,6 +24,10 @@ import javax.swing.table.*;
 
 import autopsi.basis.model.MonatTM;
 import autopsi.gui.MonthRenderer;
+import java.util.Date;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
+import java.sql.Timestamp;
 
 /**
 * This code was edited or generated using CloudGarden's Jigloo
@@ -142,7 +146,13 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 			{ 
 				
 				table = new JTable();	
-				MonatTM tableModel = new MonatTM();			
+				Calendar cal = new GregorianCalendar();
+				Timestamp tsBegin = new Timestamp(cal.getTimeInMillis());
+				System.out.println("tsBegin=="+tsBegin.toString());
+				cal.set(Calendar.DAY_OF_MONTH, cal.get(Calendar.DAY_OF_MONTH)+35);
+				Timestamp tsEnd = new Timestamp(cal.getTimeInMillis());
+				System.out.println("tsEnd=="+tsEnd.toString());
+				MonatTM tableModel = new MonatTM(tsBegin, tsEnd);			
 				table.setBounds(253, 28, 637, 497);
 				table.setBorder(new LineBorder(new java.awt.Color(0,0,0), 1, false));
 				table.setRowSelectionAllowed(false);
