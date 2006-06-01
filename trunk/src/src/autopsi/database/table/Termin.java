@@ -3,8 +3,6 @@ package autopsi.database.table;
 
 import java.sql.Date;
 import autopsi.database.dao.GenericDataObject;
-import java.text.DateFormat;
-import java.util.Locale;
 
 
 public class Termin implements GenericDataObject{
@@ -21,7 +19,7 @@ public class Termin implements GenericDataObject{
 		return this.id;
 	}
 	
-	public String getSetSecundaryTitle(boolean set, String newSecTitle){
+	public String getSetSecondaryTitle(boolean set, String newSecTitle){
 		if (set)
 			this.secondary_title = newSecTitle;
 		return this.secondary_title;
