@@ -55,6 +55,22 @@ public class GenericDAO implements IGenericDAO{
 		return dbCon;
 	}
 	
+	
+	protected void finalize(){
+		if (dbCon != null){
+			PreparedStatement ps = null;
+			try{
+				ps = dbCon.prepareStatement("SHUTDOWN");
+			}
+			catch (SQLException e){
+				System.out.println("Couldn' t close DBConnection!!");
+			}
+			
+			if (!ps.execute())
+				System.out.println("Couldn't close DBConnection!!");
+		}
+	}
+	
 	public void setCurrentTable(String tableName){
 		//set current table to tableName
 		currentTable = tableName;
