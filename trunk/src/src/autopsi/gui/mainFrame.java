@@ -120,6 +120,8 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 	int row1,row2,col1,col2 = 0;
 	DateConverter converter = new DateConverter();
 	boolean viewMonth = true;
+	Timestamp tsBegin;
+	Timestamp tsEnd;
 	
 
 	/**
@@ -147,11 +149,13 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 				
 				table = new JTable();	
 				Calendar cal = new GregorianCalendar();
-				Timestamp tsBegin = new Timestamp(cal.getTimeInMillis());
+				tsBegin = new Timestamp(cal.getTimeInMillis());
 				System.out.println("tsBegin=="+tsBegin.toString());
 				cal.set(Calendar.DAY_OF_MONTH, cal.get(Calendar.DAY_OF_MONTH)+35);
-				Timestamp tsEnd = new Timestamp(cal.getTimeInMillis());
+				tsEnd = new Timestamp(cal.getTimeInMillis());
 				System.out.println("tsEnd=="+tsEnd.toString());
+				
+				
 				MonatTM tableModel = new MonatTM(tsBegin, tsEnd);			
 				table.setBounds(253, 28, 637, 497);
 				table.setBorder(new LineBorder(new java.awt.Color(0,0,0), 1, false));
@@ -285,8 +289,8 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 				}
 				{
 					lblMonth = new JLabel();
+					lblMonth.setText(tsBegin.toString());
 					toolbar.add(lblMonth);
-					lblMonth.setText("Mai 2006");
 					lblMonth.setFont(new java.awt.Font("Tahoma", 1, 18));
 					lblMonth.setBounds(399, 0, 161, 28);
 					lblMonth.setBorder(BorderFactory
