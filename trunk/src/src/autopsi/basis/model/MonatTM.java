@@ -6,6 +6,8 @@ import javax.swing.table.AbstractTableModel;
 import autopsi.database.dao.*;
 import autopsi.database.table.*;
 import java.sql.Timestamp;
+import java.util.List;
+import java.util.Iterator;
 
 
 public class MonatTM extends AbstractTableModel {
@@ -69,7 +71,19 @@ public class MonatTM extends AbstractTableModel {
 
 	public Object getValueAt(int row, int col)  //Werte aus den Spalten zurückgeben
 	{
-	
+		Date d = new Date(begin.getTime());
+		Calendar c = new GregorianCalendar();
+		c.setTime(d);
+		Timestamp ts = new Timestamp(c.getTimeInMillis());
+		c.set(Calendar.DAY_OF_MONTH, c.get(Calendar.DAY_OF_MONTH)+ ((7*row)+col+1 ));
+		Iterator iter = termine.iterator();
+		while(iter.hasNext()){
+			Termin t = (Termin)iter.next();
+			if (t.getSetDate(false, null) compareTo(c.getTime()) == 0){	
+				return t.getSetSecondaryTitle(false, null);
+			}
+		}
+		
 	/*	datum.setMonth(4);
 		datum.setDate(7*(row)+col+1);
 		String dat = datum.toString();

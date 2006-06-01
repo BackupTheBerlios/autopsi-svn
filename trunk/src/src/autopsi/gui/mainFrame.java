@@ -29,6 +29,8 @@ import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.sql.Timestamp;
 
+import java.text.DateFormat;
+
 /**
 * This code was edited or generated using CloudGarden's Jigloo
 * SWT/Swing GUI Builder, which is free for non-commercial
@@ -162,8 +164,8 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 				table.setRowSelectionAllowed(false);
 				table.setSelectionForeground(new java.awt.Color(0,0,0));
 				table.setSelectionBackground(new java.awt.Color(255,255,255));
-				table.setDefaultRenderer(String[].class, new MonthRenderer(false));	
-				table.setDefaultEditor(String[].class,new MonthEditor());
+//				table.setDefaultRenderer(String[].class, new MonthRenderer(false));	
+//				table.setDefaultEditor(String[].class,new MonthEditor());
 				table.setRowHeight(98);
 				table.addMouseListener(this);
 				table.addMouseMotionListener(this);
@@ -289,7 +291,6 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 				}
 				{
 					lblMonth = new JLabel();
-					lblMonth.setText(tsBegin.toString());
 					toolbar.add(lblMonth);
 					lblMonth.setFont(new java.awt.Font("Tahoma", 1, 18));
 					lblMonth.setBounds(399, 0, 161, 28);
