@@ -5,21 +5,26 @@ import java.util.*;
 import javax.swing.table.AbstractTableModel;
 import autopsi.database.dao.*;
 import autopsi.database.table.*;
+import java.sql.Timestamp;
 
 
 public class MonatTM extends AbstractTableModel {
 	private static final long serialVersionUID = 1L;
 	
-	private final String [] columnName = {"Montag", "Dienstag", "Mittwoch", "Donnerstag", "Freitag", "Samstag", "Sonntag"};
+	protected final String [] columnName = {"Montag", "Dienstag", "Mittwoch", "Donnerstag", "Freitag", "Samstag", "Sonntag"};
 	Date datum = new Date();
-	private IGenericDAO igdao = new GenericDAO();
-	List<GenericDataObject> termine;
+	protected IGenericDAO igdao = new GenericDAO();
+	protected List<GenericDataObject> termine;
+	protected Timestamp begin = null;
+	protected Timestamp end = null;
+	
 	
 
 	//Konstruktor mit Suchtext, Suchkriterium und Sortierungsattribut
-	public MonatTM()
+	public MonatTM(Timestamp begin, Timestamp end)
 	{
 		super();
+		this.setTimeSpace(begin, end);
 		Termin tc = new Termin();
 		
 		igdao.setCurrentTable("Termin");
@@ -31,6 +36,11 @@ public class MonatTM extends AbstractTableModel {
 		{
 			System.out.println(ex.toString());
 		}		
+	}
+	
+	public void setTimeSpace(Timestamp begin, Timestamp end){
+		this.begin = begin;
+		this.end = end;
 	}
 	
 	public Class getColumnClass(int c)
