@@ -312,7 +312,7 @@ public class EditTCFrame extends javax.swing.JFrame implements java.awt.event.Mo
 
 	public void mouseEntered(MouseEvent arg0) {
 		if(arg0.getSource().equals(jButton2)){
-			jLabel7.setText("Übernimmt Änderungen");
+			jLabel7.setText("Änderungen übernehmen");
 		}
 		if(arg0.getSource().equals(jButton1)){
 			jLabel7.setText("Abbrechen");

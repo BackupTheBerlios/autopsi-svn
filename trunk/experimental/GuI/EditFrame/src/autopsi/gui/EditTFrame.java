@@ -222,7 +222,7 @@ public class EditTFrame extends javax.swing.JFrame implements java.awt.event.Mou
 
 	public void mouseEntered(MouseEvent arg0) {
 		if(arg0.getSource().equals(jButton2)){
-			jLabel5.setText("Übernimmt Änderungen");
+			jLabel5.setText("Änderungen übernehmen");
 		}
 		if(arg0.getSource().equals(jButton1)){
 			jLabel5.setText("Abbrechen");
