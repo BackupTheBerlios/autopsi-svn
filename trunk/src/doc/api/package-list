@@ -1,8 +1,0 @@
-autopsi.basis
-autopsi.basis.model
-autopsi.database
-autopsi.database.dao
-autopsi.database.exception
-autopsi.database.sql
-autopsi.database.table
-autopsi.gui
