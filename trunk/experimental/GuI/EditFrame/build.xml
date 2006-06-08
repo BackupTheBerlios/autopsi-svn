@@ -1,4 +1,4 @@
-<project name="GenericEditFrame" default="compile_and_run" basedir=".">
+<project name="EditFrame" default="compile_and_run" basedir=".">
 
 	<property name="project_name" value="autoPSI"/>
 	<property name="basedir" value="."/>
