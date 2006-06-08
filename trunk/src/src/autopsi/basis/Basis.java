@@ -1,14 +1,14 @@
 package autopsi.basis;
 
-import autopsi.gui.mainFrame;
-import autopsi.gui.editFrame;
+
+import autopsi.gui.*;
 import autopsi.database.table.Termin;
 import autopsi.database.table.TerminContainer;
 import autopsi.database.Database;
 import autopsi.database.dao.*;
 import java.util.List;
 import autopsi.database.dao.GenericDataObject;
-
+import java.util.GregorianCalendar;
 
 public class Basis {
 
@@ -44,9 +44,9 @@ public class Basis {
 		mainFrame frame = new mainFrame(); //Ein neues Mainframe (Liste der Patienten) starten
 
 		frame.setLocation(290,100); //Startposition
-		frame.setSize(897,604); //Fenstergröße
-		frame.setTitle("autoPSI"); //Titel setzen
+		frame.setSize(950,604); //Fenstergröße
 		frame.setVisible(true); //Frame anzeigen
+		
 		
 	}
 }

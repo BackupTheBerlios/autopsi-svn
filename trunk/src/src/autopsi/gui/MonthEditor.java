@@ -3,6 +3,7 @@ package autopsi.gui;
 import javax.swing.table.*;
 import javax.swing.*;
 import java.awt.Component;
+import java.awt.Color;
 
 public class MonthEditor extends AbstractCellEditor implements TableCellEditor
 {
@@ -19,12 +20,12 @@ public class MonthEditor extends AbstractCellEditor implements TableCellEditor
 		if(arg1 instanceof String[])
     	{
     		String[] termine = (String[])arg1;
-    		DayCell cell = new DayCell(false);
+    		DayCell cell = new DayCell();
     		String title = converter.toShort(termine[0]);
     		cell.setTab(title);
     		if (termine[0].substring(0,2).equals("Sa")||termine[0].substring(0,2).equals("So") )
     				{
-    			cell.setBackColor();
+   			cell.setBackColor(new Color(255,0,0));
     				}
     		
     		cell.setVisible(true);

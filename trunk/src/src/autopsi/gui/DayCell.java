@@ -1,5 +1,4 @@
 package autopsi.gui;
-import java.awt.BorderLayout;
 import java.awt.*;
 
 
@@ -10,6 +9,7 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.WindowConstants;
 import javax.swing.border.LineBorder;
 import javax.swing.*;
+import java.util.*;
 
 /**
 * This code was edited or generated using CloudGarden's Jigloo
@@ -24,12 +24,11 @@ import javax.swing.*;
 * LEGALLY FOR ANY CORPORATE OR COMMERCIAL PURPOSE.
 */
 public class DayCell extends javax.swing.JPanel {
-	private boolean scroll;
 	private String date;
 	private JLabel title = new JLabel();
 	private JList list;
 	private JScrollPane jScrollPane1;
-
+private ArrayList<String> data;
 	{
 		//Set Look & Feel
 		try {
@@ -45,7 +44,7 @@ public class DayCell extends javax.swing.JPanel {
 	*/
 	public static void main(String[] args) {
 		JFrame frame = new JFrame();
-		frame.getContentPane().add(new DayCell(true));
+		frame.getContentPane().add(new DayCell());
 		frame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 		frame.pack();
 		frame.setVisible(true);
@@ -53,15 +52,23 @@ public class DayCell extends javax.swing.JPanel {
 		
 	}
 	
-	public DayCell(boolean scroll) {
+	public DayCell() {
 		super();
-		this.scroll = scroll;
 		initGUI();
-		
+	
 	}
-	public void setBackColor()
+	public void fillList(String[] data)
 	{
-		list.setBackground(new Color(200,200,200));
+		if(data.length>0)
+		{
+			list.setModel(new DefaultComboBoxModel(data));
+		}
+		if(data.length>5) title.setIcon(new ImageIcon("src/images/longlist.GIF"));
+			
+	}
+	public void setBackColor(Color col)
+	{
+		list.setBackground(col);
 		
 	}
 	public void setTab(String title2)
@@ -75,9 +82,6 @@ public class DayCell extends javax.swing.JPanel {
 			{
 				this.setPreferredSize(new java.awt.Dimension(103, 97));
 			}
-			{
-				this.setPreferredSize(new java.awt.Dimension(103, 97));
-			}
 			BoxLayout thisLayout = new BoxLayout(
 				this,
 				javax.swing.BoxLayout.Y_AXIS);
@@ -87,13 +91,15 @@ public class DayCell extends javax.swing.JPanel {
 			this.setBackground(new java.awt.Color(0,0,64));
 			this.setBorder(new LineBorder(new java.awt.Color(0,0,0), 1, false));
 			{
-
-				title.setLayout(null);
-				this.add(title);
-				title.setText("Datum2");
-				title.setBackground(new java.awt.Color(0,0,64));
-				title.setForeground(new java.awt.Color(255,255,255));
-				title.setIcon(new ImageIcon("src/images/tag.GIF"));
+				
+					title.setLayout(null);
+					this.add(title);
+					title.setText("Datum2");
+					title.setBackground(new java.awt.Color(0,0,64));
+					title.setForeground(new java.awt.Color(255,255,255));
+					title.setIcon(new ImageIcon("src/images/tag.GIF"));
+				
+				
 				{
 					jScrollPane1 = new JScrollPane();
 					this.add(jScrollPane1);
@@ -102,12 +108,9 @@ public class DayCell extends javax.swing.JPanel {
 					jScrollPane1.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_NEVER);
 					jScrollPane1.setBackground(new java.awt.Color(255,255,255));
 					{
-						ListModel listModel = new DefaultComboBoxModel(
-							new String[] { "09.00  VO Mathe I", "10.00  VU GDI",
-									"13.00  AU Eprog", "16.00  VO IUG 1" });
 						list = new JList();
+						
 						jScrollPane1.setViewportView(list);
-						list.setModel(listModel);
 						list.setBackground(new java.awt.Color(255,255,255));
 						list.setFont(new java.awt.Font("Tahoma",0,10));
 					}

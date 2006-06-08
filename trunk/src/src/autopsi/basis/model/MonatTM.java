@@ -7,7 +7,6 @@ import autopsi.database.dao.*;
 import autopsi.database.table.*;
 import java.sql.Timestamp;
 import java.util.List;
-import java.util.Iterator;
 
 
 public class MonatTM extends AbstractTableModel {
@@ -76,24 +75,27 @@ public class MonatTM extends AbstractTableModel {
 		Date d = new Date(begin.getTime());
 		Calendar c = new GregorianCalendar();
 		c.setTime(d);
-		Timestamp ts = new Timestamp(c.getTimeInMillis());
 		c.set(Calendar.DAY_OF_MONTH, c.get(Calendar.DAY_OF_MONTH)+ ((7*row)+col ));
-		Iterator iter = termine.iterator();
 		
-		String ret = "";
+		Timestamp stamp = new Timestamp(c.getTimeInMillis());
+		
+		List<String> ret = new ArrayList();
+		ret.add(stamp.toString().substring(0,10));
 		
 		for (int i = 0;i<termine.size();i++)
 		{
-			Timestamp stamp = new Timestamp(c.getTimeInMillis());
-			//System.out.println("termin: "+((Termin)termine.get(i)).getSetDate(false, null).toString().substring(0,10));
-			//System.out.println("aktuell: "+ stamp.toString().substring(0,10));
 			if (((Termin)termine.get(i)).getSetDate(false, null).toString().substring(0,10).equals(stamp.toString().substring(0,10))){	
-				 ret = ((Termin)termine.get(i)).getSetSecondaryTitle(false, null);
+				 ret.add(((Termin)termine.get(i)).getSetDate(false, null).toString().substring(11,16)+" "+((Termin)termine.get(i)).getSetSecondaryTitle(false, null));
 			}
 		}
-			return ret;
-			
-
+		String [] data = new String[ret.size()];
+		for(int j = 0;j<ret.size();j++)
+		{
+		data[j]=ret.get(j);	
+		}
+		
+		
+			return data;
 	}
 
 }

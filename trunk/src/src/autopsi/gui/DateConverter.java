@@ -50,7 +50,7 @@ public class DateConverter {
 	
 	public String toShort(String datum)
 	{
-		String shortD = toDay(datum).substring(0,2) + ", " + datum.substring(8,10) + ". "+ toMonth(datum);
+		String shortD = toDay(datum).substring(0,2) + ", " + datum.substring(8,10) + ". "+ toMonth(datum) + " ";
 		return shortD;
 	}
 	
@@ -58,5 +58,11 @@ public class DateConverter {
 	{
 		String longD = toDay(datum) + ", " + datum.substring(8,10) + ". "+ toMonth(datum) + " " + toYear(datum);
 		return longD;
+	}
+	
+	public String toShortYear(String datum)
+	{
+		String shortD = toDay(datum).substring(0,2) + ", " + datum.substring(8,10) + ". "+ toMonth(datum) + " " + toYear(datum);
+		return shortD;
 	}
 }
