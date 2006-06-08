@@ -1,16 +1,16 @@
 package gui;
 
 import java.util.List;
-
 import javax.swing.table.AbstractTableModel;
+//import model.Kontakt;
 
 
-public class KontaktTablemodel  extends AbstractTableModel {
-	private static final long serialVersionUID = 8737097129189851737L;
-	public List<Kontakt> Kontakte;
+public class KontaktTablemodel  {
+/*extends AbstractTableModel 	private static final long serialVersionUID = 8737097129189851737L;
+	//public List<Kontakt> Kontakte;
 	
 	public Object getValueAt (int row, int col) {
-		Sytem.out.println("Row: " + row + ", Col: "+col)
+		System.out.println("Row: " + row + ", Col: "+col);
 		switch (col) {
 			case 1: return ""; break;
 			case 2: return ""; break;
@@ -21,7 +21,7 @@ public class KontaktTablemodel  extends AbstractTableModel {
 			case 7: return ""; break;
 		}
 	}
-	
+	*/
 	
 
 }

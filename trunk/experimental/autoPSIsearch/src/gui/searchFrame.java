@@ -8,6 +8,7 @@ import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.WindowConstants;
+import javax.swing.plaf.metal.MetalTheme;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import javax.swing.JFrame;
@@ -31,37 +32,24 @@ import javax.swing.JTextField;
 * THIS MACHINE, SO JIGLOO OR THIS CODE CANNOT BE USED
 * LEGALLY FOR ANY CORPORATE OR COMMERCIAL PURPOSE.
 */
-public class seachFrame extends javax.swing.JPanel {
+public class searchFrame extends javax.swing.JPanel {
 	static final long serialVersionUID = 18310810238219L;
-	{
-		//Set Look & Feel
-		try {
-			javax.swing.UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
-		} catch(Exception e) {
-			e.printStackTrace();
-		}
-	}
 
 	private JTabbedPane jTabbedSearchPane;
+	
 	private JPanel jkontaktSuchePanel;
-
 	private JPanel jLVASuchePanel;
+	private JPanel jTerminSuchePanel;
 	
 	private JScrollPane jKontaktScrollPane;
 	private JScrollPane jLVAScrollPane;
-	
-	
-	private JTextField jVornameField;
-	private JTextField jNachnameField;
-	private JTextField jGeburtsdatumField;
-	private JTextField jTelefonnummerField;
-	private JTextField jEmailField;
-	private JTextField jAdresseField;
-	private JTextField jPlzField;
-	private JTextField jOrtField;
-	private JTextField jTitelField;
-	private JTextField jLVANummerField;
-	private JTextField jBeschreibungField;
+	private JScrollPane jTerminScrollPane;
+		
+	private JTextField jVornameField, jNachnameField, jGeburtsdatumField;
+	private JTextField jTelefonnummerField, jEmailField;
+	private JTextField jAdresseField, jPlzField, jOrtField;
+	private JTextField jTitelField, jLVANummerField, jBeschreibungField;
+	private JTextField jTerminTitelField, jTerminBeschreibungField, jDatumField;
 
 	private JLabel jVornameLabel;
 	private JLabel jNachnameLabel;
@@ -76,39 +64,44 @@ public class seachFrame extends javax.swing.JPanel {
 	private JLabel jNummerLabel;
 	private JLabel jBeschreibungLabel;
 	private JLabel jTypeLabel;
+	private JLabel jDatumLabel;
 	
 	private JCheckBox jKontaktSpaceSucheCheckBox;
 	private JCheckBox jKontaktLokalSucheCheckBox;
-	private JCheckBox jLVASpaceSucheCheckBox;
-	private JCheckBox jLVALokalSucheCheckBox;
+	private JCheckBox jLVASpaceSucheCheckBox, jLVALokalSucheCheckBox;
+	private JCheckBox jTerminSpaceSucheCheckBox, jTerminLokalSucheCheckBox;
+	private JCheckBox jTerminCheckBox, jTerminContainerCheckBox;
 	
-	private JTable jKontaktTable;
-	private JTable jLVATable;
+	private JTable jKontaktTable, jLVATable, jTerminTable;
 	
 	private JButton jKontaktSuchenButton;
 	private JButton jLVASuchenButton;
+	private JButton jTerminSuchenButton;
 	
 	private JSeparator jSeparator1;
 	private JSeparator jSeparator2;
+	private JSeparator jSeparator3;
 	
 	
 	private JComboBox jLVAKatComboBox;
 	private JComboBox jLVATypeComboBox;
+	private JComboBox jTerminTypeComboBox;
+	
 	/**
 	* Auto-generated main method to display this 
 	* JPanel inside a new JFrame.
 	*/
-	public static void main(String[] args) {
-		JFrame frame = new JFrame("Suche");
-		frame.getContentPane().add(new seachFrame());
+	
+	public searchFrame() {
+		super();
+		initGUI();
+		
+		JFrame frame = new JFrame("Suchen");
+		frame.getContentPane().add(this);
 		frame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 		frame.pack();
 		frame.setVisible(true);
-	}
-	
-	public seachFrame() {
-		super();
-		initGUI();
+		
 	}
 	
 	private void initGUI() {
@@ -197,7 +190,7 @@ public class seachFrame extends javax.swing.JPanel {
 						{
 							jSeparator1 = new JSeparator();
 							jkontaktSuchePanel.add(jSeparator1);
-							jSeparator1.setBounds(7, 137, 658, 7);
+							jSeparator1.setBounds(7, 140, 679, 7);
 						}
 						{
 							jKontaktSuchenButton = new JButton();
@@ -273,12 +266,12 @@ public class seachFrame extends javax.swing.JPanel {
 						jKategorieLabel = new JLabel();
 						jLVASuchePanel.add(jKategorieLabel);
 						jKategorieLabel.setText("Kategorie:");
-						jKategorieLabel.setBounds(364, 14, 56, 14);
+						jKategorieLabel.setBounds(364, 13, 56, 14);
 
 						jTypeLabel = new JLabel();
 						jLVASuchePanel.add(jTypeLabel);
 						jTypeLabel.setText("Type:");
-						jTypeLabel.setBounds(372, 34, 49, 14);
+						jTypeLabel.setBounds(385, 35, 28, 14);
 
 	
 						
@@ -293,11 +286,7 @@ public class seachFrame extends javax.swing.JPanel {
 
 						jBeschreibungField = new JTextField();
 						jLVASuchePanel.add(jBeschreibungField);
-						jBeschreibungField.setBounds(105, 53, 210, 21);
-
-
-						//jAdresseField.setBounds(420, 30, 210, 21);
-						
+						jBeschreibungField.setBounds(105, 53, 210, 21);		
 						
 						ComboBoxModel jLVAKatComboBoxModel = new DefaultComboBoxModel(
 							new String[] { "Item One", "Item Two" });
@@ -307,7 +296,7 @@ public class seachFrame extends javax.swing.JPanel {
 						jLVAKatComboBox.setBounds(420, 7, 210, 21);
 						
 						ComboBoxModel jLVATypeComboBoxModel = new DefaultComboBoxModel(
-							new String[] { "Item One", "Item Two" });
+							new String[] { "VO", "LU" });
 						jLVATypeComboBox = new JComboBox();
 						jLVASuchePanel.add(jLVATypeComboBox);
 						jLVATypeComboBox.setModel(jLVATypeComboBoxModel);
@@ -316,7 +305,7 @@ public class seachFrame extends javax.swing.JPanel {
 						{
 							jSeparator2 = new JSeparator();
 							jLVASuchePanel.add(jSeparator2);
-							jSeparator2.setBounds(7, 137, 658, 7);
+							jSeparator2.setBounds(7, 140, 679, 7);
 						}
 						{
 							jLVASuchenButton = new JButton();
@@ -345,6 +334,31 @@ public class seachFrame extends javax.swing.JPanel {
 							{
 								TableModel jLVATableModel = new DefaultTableModel(
 									new String[][] { { "One", "Two" },
+											{ "Three", "Four" },
+											{ "Three", "Four" },
+											{ "Three", "Four" },
+											{ "Three", "Four" },
+											{ "Three", "Four" },
+											{ "Three", "Four" },
+											{ "Three", "Four" },
+											{ "Three", "Four" },
+											{ "Three", "Four" },
+											{ "Three", "Four" },
+											{ "Three", "Four" },
+											{ "Three", "Four" },
+											{ "Three", "Four" },
+											{ "Three", "Four" },
+											{ "Three", "Four" },
+											{ "Three", "Four" },
+											{ "Three", "Four" },
+											{ "Three", "Four" },
+											{ "Three", "Four" },
+											{ "Three", "Four" },
+											{ "Three", "Four" },
+											{ "Three", "Four" },
+											{ "Three", "Four" },
+											{ "Three", "Four" },
+											{ "Three", "Four" },
 											{ "Three", "Four" } },
 									new String[] { "Column 1", "Column 2" });
 								jLVATable = new JTable();
@@ -361,6 +375,108 @@ public class seachFrame extends javax.swing.JPanel {
 
 					}
 					
+// #####################################################################
+					
+					jTerminSuchePanel = new JPanel();
+					jTabbedSearchPane.addTab("Termin Suche", null, jTerminSuchePanel, null);
+					jTerminSuchePanel.setPreferredSize(new java.awt.Dimension(671, 357));
+					jTerminSuchePanel.setLayout(null);
+					{
+						jTitelLabel = new JLabel();
+						jTerminSuchePanel.add(jTitelLabel);
+						jTitelLabel.setText("Titel:");
+						jTitelLabel.setBounds(74, 12, 28, 14);
+
+						jBeschreibungLabel = new JLabel();
+						jTerminSuchePanel.add(jBeschreibungLabel);
+						jBeschreibungLabel.setText("Beschreibung:");
+						jBeschreibungLabel.setBounds(30, 35, 70, 14);
+
+						jDatumLabel = new JLabel();
+						jTerminSuchePanel.add(jDatumLabel);
+						jDatumLabel.setText("Datum:");
+						jDatumLabel.setBounds(377, 13, 35, 14);
+
+						jTypeLabel = new JLabel();
+						jTerminSuchePanel.add(jTypeLabel);
+						jTypeLabel.setText("Type:");
+						jTypeLabel.setBounds(385, 35, 28, 14);
+
+	
+						
+						jTerminTitelField = new JTextField();
+						jTerminSuchePanel.add(jTerminTitelField);
+						jTerminTitelField.setBounds(105, 7, 210, 21);
+
+
+						jTerminBeschreibungField = new JTextField();
+						jTerminSuchePanel.add(jTerminBeschreibungField);
+						jTerminBeschreibungField.setBounds(105, 30, 210, 21);
+
+												
+						jDatumField = new JTextField();
+						jTerminSuchePanel.add(jDatumField);
+						jDatumField.setBounds(420, 7, 210, 21);
+						
+						ComboBoxModel jTerminTypeComboBoxModel = new DefaultComboBoxModel(
+							new String[] { "LVA", "Prüfung" });
+						jTerminTypeComboBox = new JComboBox();
+						jTerminSuchePanel.add(jTerminTypeComboBox);
+						jTerminTypeComboBox.setModel(jTerminTypeComboBoxModel);
+						jTerminTypeComboBox.setBounds(420, 30, 210, 21);
+
+						{
+							jSeparator3 = new JSeparator();
+							jTerminSuchePanel.add(jSeparator3);
+							jSeparator3.setBounds(7, 140, 679, 7);
+						}
+							jTerminSuchenButton = new JButton();
+							jTerminSuchePanel.add(jTerminSuchenButton);
+							jTerminSuchenButton.setText("Termin Suchen");
+							jTerminSuchenButton.setBounds(182, 105, 154, 28);
+
+							jTerminCheckBox = new JCheckBox();
+							jTerminSuchePanel.add(jTerminCheckBox);
+							jTerminCheckBox.setText("Termin Suchen");
+							jTerminCheckBox.setBounds(183, 77, 98, 14);
+	
+							jTerminLokalSucheCheckBox = new JCheckBox();
+							jTerminSuchePanel.add(jTerminLokalSucheCheckBox);
+							jTerminLokalSucheCheckBox.setText("Lokal Suchen");
+							jTerminLokalSucheCheckBox.setBounds(350, 105, 98, 14);
+
+							jTerminSpaceSucheCheckBox = new JCheckBox();
+							jTerminSuchePanel.add(jTerminSpaceSucheCheckBox);
+							jTerminSpaceSucheCheckBox.setText("Online Suchen");
+							jTerminSpaceSucheCheckBox.setBounds(350, 119, 98, 14);
+
+							jTerminContainerCheckBox = new JCheckBox();
+							jTerminSuchePanel.add(jTerminContainerCheckBox);
+							jTerminContainerCheckBox.setText("Termincontainer Suchen");
+							jTerminContainerCheckBox.setBounds(306, 77, 140, 14);
+
+						{
+							jTerminScrollPane = new JScrollPane();
+							jTerminSuchePanel.add(jTerminScrollPane);
+							jTerminScrollPane.setBounds(18, 147, 658, 203);
+							jTerminScrollPane.setWheelScrollingEnabled(true);
+							{
+								TableModel jTerminTableModel = new DefaultTableModel(
+									new String[][] { { "One", "Two" },
+											{ "Three", "Four" } },
+									new String[] { "Column 1", "Column 2" });
+								jTerminTable = new JTable();
+								jTerminScrollPane.setViewportView(jTerminTable);
+								jTerminTable.setModel(jTerminTableModel);
+								jTerminTable.setBounds(7, 252, 644, 56);
+								jTerminTable.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
+								jTerminTable.setShowGrid(true);
+								jTerminTable.setGridColor(Color.LIGHT_GRAY);
+							}
+						}
+						
+
+					}
 					
 					
 				}

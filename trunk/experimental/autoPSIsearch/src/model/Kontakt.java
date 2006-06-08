@@ -4,6 +4,7 @@ package model;
 public class Kontakt {
 	public static final int ALLGEMEIN = 1;
 	public static final int PRIVATE = 2;
+	public static final int GESCHAEFTLICH = 3;
 	
 	private Integer kategorie_id;
 	private String prename;
@@ -18,6 +19,8 @@ public class Kontakt {
 	public Integer getKategorieID() {
 		return kategorie_id;
 	}
+	
+	
 
 	
 	public String toString() {
