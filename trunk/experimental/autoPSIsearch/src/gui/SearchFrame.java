@@ -1,19 +1,22 @@
 package gui;
 import java.awt.Color;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.BorderFactory;
+import javax.swing.ButtonGroup;
 import javax.swing.ComboBoxModel;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.WindowConstants;
-import javax.swing.plaf.metal.MetalTheme;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.JSeparator;
 import javax.swing.JTabbedPane;
@@ -32,7 +35,7 @@ import javax.swing.JTextField;
 * THIS MACHINE, SO JIGLOO OR THIS CODE CANNOT BE USED
 * LEGALLY FOR ANY CORPORATE OR COMMERCIAL PURPOSE.
 */
-public class SearchFrame extends javax.swing.JPanel {
+public class SearchFrame extends javax.swing.JPanel implements ActionListener {
 
 	{
 		//Set Look & Feel
@@ -75,18 +78,18 @@ public class SearchFrame extends javax.swing.JPanel {
 	private JLabel jBeschreibungLabel;
 	private JLabel jTypeLabel;
 	private JLabel jDatumLabel;
-	
-	private JCheckBox jKontaktSpaceSucheCheckBox;
-	private JCheckBox jKontaktLokalSucheCheckBox;
-	private JCheckBox jLVASpaceSucheCheckBox, jLVALokalSucheCheckBox;
+
 	private JCheckBox jTerminSpaceSucheCheckBox, jTerminLokalSucheCheckBox;
 	private JCheckBox jTerminCheckBox, jTerminContainerCheckBox;
 	
 	private JTable jKontaktTable, jLVATable, jTerminTable;
 	
-	private JButton jKontaktSuchenButton;
-	private JButton jLVASuchenButton;
-	private JButton jTerminSuchenButton;
+	private JButton jKontaktSuchenButton, jTerminSuchenButton, jLVASuchenButton;
+	private ButtonGroup jKontaktSucheGroup,jLVASucheGroup, jTerminSucheGroup;
+	private JRadioButton jKontaktOnlineSuchenRadioButton, jKontaktLokalSuchenRadioButton;
+	private JRadioButton jLVAOnlineSuchenRadioButton, jLVALokalSuchenRadioButton;
+	private JRadioButton jTerminOnlineSuchenRadioButton, jTerminLokalSuchenRadioButton;
+	
 	
 	private JSeparator jSeparator1;
 	private JSeparator jSeparator2;
@@ -207,18 +210,23 @@ public class SearchFrame extends javax.swing.JPanel {
 							jkontaktSuchePanel.add(jKontaktSuchenButton);
 							jKontaktSuchenButton.setText("Kontakt Suchen");
 							jKontaktSuchenButton.setBounds(182, 105, 154, 28);
+							jKontaktSuchenButton.addActionListener(this);
 						}
 						{
-							jKontaktLokalSucheCheckBox = new JCheckBox();
-							jkontaktSuchePanel.add(jKontaktLokalSucheCheckBox);
-							jKontaktLokalSucheCheckBox.setText("Lokal Suchen");
-							jKontaktLokalSucheCheckBox.setBounds(350, 105, 98, 14);
-						}
-						{
-							jKontaktSpaceSucheCheckBox = new JCheckBox();
-							jkontaktSuchePanel.add(jKontaktSpaceSucheCheckBox);
-							jKontaktSpaceSucheCheckBox.setText("Online Suchen");
-							jKontaktSpaceSucheCheckBox.setBounds(350, 119, 98, 14);
+							jKontaktLokalSuchenRadioButton = new JRadioButton();
+							jkontaktSuchePanel.add(jKontaktLokalSuchenRadioButton);
+							jKontaktLokalSuchenRadioButton.setText("Lokal Suchen");
+							jKontaktLokalSuchenRadioButton.setBounds(343, 103, 91, 14);
+	
+							jKontaktOnlineSuchenRadioButton = new JRadioButton();
+							jkontaktSuchePanel.add(jKontaktOnlineSuchenRadioButton);
+							jKontaktOnlineSuchenRadioButton.setText("Online Suchen");
+							jKontaktOnlineSuchenRadioButton.setBounds(343, 119, 105, 14);
+							
+							jKontaktLokalSuchenRadioButton.setSelected(true);
+							jKontaktSucheGroup = new ButtonGroup();
+							jKontaktSucheGroup.add(jKontaktLokalSuchenRadioButton);
+							jKontaktSucheGroup.add(jKontaktOnlineSuchenRadioButton);				
 						}
 
 						{
@@ -247,6 +255,7 @@ public class SearchFrame extends javax.swing.JPanel {
 							jEmailLabel.setText("Email:");
 							jEmailLabel.setBounds(386, 12, 35, 14);
 						}
+						
 
 					}
 					
@@ -322,18 +331,23 @@ public class SearchFrame extends javax.swing.JPanel {
 							jLVASuchePanel.add(jLVASuchenButton);
 							jLVASuchenButton.setText("LVA Suchen");
 							jLVASuchenButton.setBounds(182, 105, 154, 28);
+							jLVASuchenButton.addActionListener(this);
 						}
 						{
-							jLVALokalSucheCheckBox = new JCheckBox();
-							jLVASuchePanel.add(jLVALokalSucheCheckBox);
-							jLVALokalSucheCheckBox.setText("Lokal Suchen");
-							jLVALokalSucheCheckBox.setBounds(350, 105, 98, 14);
-						}
-						{
-							jLVASpaceSucheCheckBox = new JCheckBox();
-							jLVASuchePanel.add(jLVASpaceSucheCheckBox);
-							jLVASpaceSucheCheckBox.setText("Online Suchen");
-							jLVASpaceSucheCheckBox.setBounds(350, 119, 98, 14);
+							jLVALokalSuchenRadioButton = new JRadioButton();
+							jLVASuchePanel.add(jLVALokalSuchenRadioButton);
+							jLVALokalSuchenRadioButton.setText("Lokal Suchen");
+							jLVALokalSuchenRadioButton.setBounds(343, 103, 91, 14);
+	
+							jLVAOnlineSuchenRadioButton = new JRadioButton();
+							jLVASuchePanel.add(jLVAOnlineSuchenRadioButton);
+							jLVAOnlineSuchenRadioButton.setText("Online Suchen");
+							jLVAOnlineSuchenRadioButton.setBounds(343, 119, 105, 14);
+							
+							jLVALokalSuchenRadioButton.setSelected(true);
+							jLVASucheGroup = new ButtonGroup();
+							jLVASucheGroup.add(jLVALokalSuchenRadioButton);
+							jLVASucheGroup.add(jLVAOnlineSuchenRadioButton);				
 						}
 
 						{
@@ -444,26 +458,35 @@ public class SearchFrame extends javax.swing.JPanel {
 							jTerminSuchePanel.add(jTerminSuchenButton);
 							jTerminSuchenButton.setText("Termin Suchen");
 							jTerminSuchenButton.setBounds(182, 105, 154, 28);
+							jTerminSuchenButton.addActionListener(this);
 
 							jTerminCheckBox = new JCheckBox();
 							jTerminSuchePanel.add(jTerminCheckBox);
 							jTerminCheckBox.setText("Termin Suchen");
 							jTerminCheckBox.setBounds(183, 77, 98, 14);
-	
-							jTerminLokalSucheCheckBox = new JCheckBox();
-							jTerminSuchePanel.add(jTerminLokalSucheCheckBox);
-							jTerminLokalSucheCheckBox.setText("Lokal Suchen");
-							jTerminLokalSucheCheckBox.setBounds(350, 105, 98, 14);
-
-							jTerminSpaceSucheCheckBox = new JCheckBox();
-							jTerminSuchePanel.add(jTerminSpaceSucheCheckBox);
-							jTerminSpaceSucheCheckBox.setText("Online Suchen");
-							jTerminSpaceSucheCheckBox.setBounds(350, 119, 98, 14);
 
 							jTerminContainerCheckBox = new JCheckBox();
 							jTerminSuchePanel.add(jTerminContainerCheckBox);
 							jTerminContainerCheckBox.setText("Termincontainer Suchen");
 							jTerminContainerCheckBox.setBounds(306, 77, 140, 14);
+							
+							{
+								jTerminLokalSuchenRadioButton = new JRadioButton();
+								jTerminSuchePanel.add(jTerminLokalSuchenRadioButton);
+								jTerminLokalSuchenRadioButton.setText("Lokal Suchen");
+								jTerminLokalSuchenRadioButton.setBounds(343, 103, 91, 14);
+		
+								jTerminOnlineSuchenRadioButton = new JRadioButton();
+								jTerminSuchePanel.add(jTerminOnlineSuchenRadioButton);
+								jTerminOnlineSuchenRadioButton.setText("Online Suchen");
+								jTerminOnlineSuchenRadioButton.setBounds(343, 119, 105, 14);
+								
+								jTerminLokalSuchenRadioButton.setSelected(true);
+								jTerminSucheGroup = new ButtonGroup();
+								jTerminSucheGroup.add(jTerminLokalSuchenRadioButton);
+								jTerminSucheGroup.add(jTerminOnlineSuchenRadioButton);				
+							}
+							
 
 						{
 							jTerminScrollPane = new JScrollPane();
@@ -493,6 +516,31 @@ public class SearchFrame extends javax.swing.JPanel {
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
+		}
+	}
+	
+	
+	public void actionPerformed(ActionEvent ae) {
+		String cmd = ae.getActionCommand();
+		//System.out.println( "e.getActionCommand() = " + cmd );
+		if (cmd.equals("Kontakt Suchen")) {
+			if (jKontaktLokalSuchenRadioButton.isSelected()){
+				System.out.println("Kontakt wird lokal gesucht...");
+			} else if (jKontaktOnlineSuchenRadioButton.isSelected()) {
+				System.out.println("Kontakt wird online gesucht...");
+			}
+		} else if(cmd.equals("LVA Suchen")) {
+			if (jLVALokalSuchenRadioButton.isSelected()){
+				System.out.println("LVA wird lokal gesucht...");
+			} else if (jLVAOnlineSuchenRadioButton.isSelected()) {
+				System.out.println("LVA wird online gesucht...");
+			}
+		} else if(cmd.equals("Termin Suchen")) {
+			if (jTerminLokalSuchenRadioButton.isSelected()){
+				System.out.println("Termin wird lokal gesucht...");
+			} else if (jTerminOnlineSuchenRadioButton.isSelected()) {
+				System.out.println("Termint wird online gesucht...");
+			}
 		}
 	}
 
