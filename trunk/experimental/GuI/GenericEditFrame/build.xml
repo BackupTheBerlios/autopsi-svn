@@ -4,9 +4,11 @@
 	<property name="basedir" value="."/>
 	<property name="build" value="class"/>
 	<property name="src" value="src"/>
+	<property name="GenericDAO" value="E:/Uni/ss06/se1_ue/workspace/GenericDAO"/>
 	
 	<path id="classpath">
 		<pathelement location="${build}"/>
+		<pathelement location="${GenericDAO}/class"/>
 	</path>
 	
 	<target name="clean">
