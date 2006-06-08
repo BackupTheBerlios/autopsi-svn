@@ -1,12 +1,12 @@
 package basis;
 
 
-import gui.searchFrame;
+import gui.SearchFrame;
 
 public class Basis {
 	
 	public static void main(String[] args) {
-		searchFrame frame = new searchFrame();
+		SearchFrame frame = new SearchFrame();
 	}
 	
 
