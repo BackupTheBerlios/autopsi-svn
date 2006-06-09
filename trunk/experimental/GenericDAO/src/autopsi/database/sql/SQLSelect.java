@@ -4,11 +4,16 @@ public class SQLSelect implements SQLStatement {
 
 	protected SQLTable table;
 	protected SQLFields fields;
-	
+	protected SQLWhere where;
 	
 	public SQLSelect(SQLTable table, SQLFields fields){
 		this.table = table;
 		this.fields = fields;
+	}
+	
+	public SQLSelect(SQLTable table, SQLFields fields, SQLWhere where){
+		this.SQLSelect(table, fields);
+		this.where = where;
 	}
 	
 	public String getQuery() {
