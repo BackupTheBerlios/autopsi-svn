@@ -1,4 +1,8 @@
 package autopsi.gui;
+
+
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 import java.awt.event.MouseEvent;
 import javax.swing.BorderFactory;
 
@@ -16,6 +20,9 @@ import javax.swing.WindowConstants;
 import javax.swing.border.BevelBorder;
 import javax.swing.border.LineBorder;
 import javax.swing.border.SoftBevelBorder;
+
+import autopsi.database.dao.GenericDAO;
+import autopsi.database.dao.IGenericDAO;
 
 /**
 * This code was edited or generated using CloudGarden's Jigloo
@@ -75,6 +82,8 @@ public class EditTCFrame extends javax.swing.JFrame implements java.awt.event.Mo
 	private JPanel jPanel2;
 	private JButton jButton3;
 	private JButton jButton1;
+	private String title = "";
+	private String desc = "";
 
 	/**
 	* Auto-generated main method to display this JFrame
@@ -112,10 +121,24 @@ public class EditTCFrame extends javax.swing.JFrame implements java.awt.event.Mo
 						jLabel1.setBounds(7, 10, 35, 28);
 					}
 					{
+						
 						jTextField1 = new JTextField();
 						jPanel1.add(jTextField1);
 						jTextField1.setBounds(91, 14, 322, 21);
 						jTextField1.setBorder(new LineBorder(new java.awt.Color(0,0,0), 1, false));
+						jTextField1.addFocusListener(new FocusListener(){
+
+							public void focusGained(FocusEvent arg0) {
+								// TODO Auto-generated method stub
+								
+							}
+
+							public void focusLost(FocusEvent arg0) {
+								title = ((JTextField)arg0.getSource()).getText();
+								
+							}
+							
+						});
 					}
 					{
 						jLabel2 = new JLabel();
@@ -128,6 +151,19 @@ public class EditTCFrame extends javax.swing.JFrame implements java.awt.event.Mo
 						jPanel1.add(jTextArea1);
 						jTextArea1.setBounds(91, 42, 322, 217);
 						jTextArea1.setBorder(new LineBorder(new java.awt.Color(0,0,0), 1, false));
+						jTextArea1.addFocusListener(new FocusListener(){
+
+							public void focusGained(FocusEvent arg0) {
+								// TODO Auto-generated method stub
+								
+							}
+
+							public void focusLost(FocusEvent arg0) {
+								desc = ((JTextArea)arg0.getSource()).getText();
+								
+							}
+							
+						});
 					}
 				}
 				{
@@ -286,8 +322,16 @@ public class EditTCFrame extends javax.swing.JFrame implements java.awt.event.Mo
 				jLabel7.setBounds(7, 329, 574, 21);
 				jLabel7.setBorder(BorderFactory.createTitledBorder(""));
 			}
+			
+			
+			
+			
+			
+			
+			
 			pack();
 			this.setSize(589, 389);
+			this.setResizable(false);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -296,6 +340,38 @@ public class EditTCFrame extends javax.swing.JFrame implements java.awt.event.Mo
 	public void mouseClicked(MouseEvent arg0) {
 		if(arg0.getSource().equals(jButton1)){
 			this.dispose();
+		}
+		if(arg0.getSource().equals(jButton3)){
+			IGenericDAO gdo = new GenericDAO();
+			gdo.setCurrentTable("tcdatatable");
+			try{
+				TCData lookup = new TCData(), updateData = new TCData();
+				lookup.id = 1;
+				updateData.id = 1;
+				updateData.title = title;
+				updateData.description = desc;
+				gdo.updDataObjects(lookup, updateData);
+				dispose();
+			}
+			catch (Exception e){
+				System.out.println("Exception beim Updaten=="+e.toString());
+			}
+		}
+		if(arg0.getSource().equals(jButton2)){
+			IGenericDAO gdo = new GenericDAO();
+			gdo.setCurrentTable("tcdatatable");
+			try{
+				TCData lookup = new TCData(), updateData = new TCData();
+				lookup.id = 1;
+				updateData.id = 1;
+				updateData.title = title;
+				updateData.description = desc;
+				gdo.updDataObjects(lookup, updateData);
+				
+			}
+			catch (Exception e){
+				System.out.println("Exception beim Updaten=="+e.toString());
+			}
 		}
 		
 	}

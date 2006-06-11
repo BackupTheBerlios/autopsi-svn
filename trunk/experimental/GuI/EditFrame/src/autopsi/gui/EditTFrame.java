@@ -1,6 +1,10 @@
 package autopsi.gui;
 
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 import java.awt.event.MouseEvent;
+import java.sql.Date;
+
 import javax.swing.BorderFactory;
 
 import javax.swing.DefaultComboBoxModel;
@@ -14,6 +18,9 @@ import javax.swing.JTextField;
 import javax.swing.ListModel;
 import javax.swing.WindowConstants;
 import javax.swing.border.LineBorder;
+
+import autopsi.database.dao.GenericDAO;
+import autopsi.database.dao.IGenericDAO;
 
 
 /**
@@ -45,6 +52,12 @@ public class EditTFrame extends javax.swing.JFrame implements java.awt.event.Mou
 
 	private JTabbedPane jTabbedPane1;
 	private JButton jButton2;
+	private JLabel jLabel4;
+	private JLabel jLabel7;
+	private JLabel jLabel6;
+	private JTextField jTextField5;
+	private JTextField jTextField4;
+	private JTextField jTextField3;
 	private JLabel jLabel5;
 	private JLabel jLabel3;
 	private JButton jButton6;
@@ -60,6 +73,13 @@ public class EditTFrame extends javax.swing.JFrame implements java.awt.event.Mou
 	private JPanel jPanel3;
 	private JButton jButton3;
 	private JButton jButton1;
+	
+	private String sec_title = "";
+	private String date;
+	private int duration;
+	private String desc = "";
+	private Date upd_date;
+	
 
 	/**
 	* Auto-generated main method to display this JFrame
@@ -104,14 +124,105 @@ public class EditTFrame extends javax.swing.JFrame implements java.awt.event.Mou
 					{
 						jLabel2 = new JLabel();
 						jPanel1.add(jLabel2);
-						jLabel2.setText("Beschreibung");
-						jLabel2.setBounds(5, 39, 84, 28);
+						jLabel2.setText("Beschreibung:");
+						jLabel2.setBounds(7, 112, 84, 28);
 					}
 					{
 						jTextArea1 = new JTextArea();
 						jPanel1.add(jTextArea1);
-						jTextArea1.setBounds(91, 42, 322, 217);
+						jTextArea1.setBounds(91, 112, 322, 84);
 						jTextArea1.setBorder(new LineBorder(new java.awt.Color(0,0,0), 1, false));
+						jTextArea1.addFocusListener(new FocusListener(){
+
+							public void focusGained(FocusEvent arg0) {
+								// TODO Auto-generated method stub
+								
+							}
+
+							public void focusLost(FocusEvent arg0) {
+								desc = ((JTextArea)arg0.getSource()).getText();
+								
+							}
+							
+						});
+					}
+					{
+						jTextField3 = new JTextField();
+						jPanel1.add(jTextField3);
+						jTextField3.setBounds(91, 42, 322, 21);
+						jTextField3.setBorder(new LineBorder(new java.awt.Color(0,0,0), 1, false));
+						jTextField3.addFocusListener(new FocusListener(){
+
+							public void focusGained(FocusEvent arg0) {
+								// TODO Auto-generated method stub
+								
+							}
+
+							public void focusLost(FocusEvent arg0) {
+								sec_title = ((JTextField)arg0.getSource()).getText();
+								
+							}
+							
+						});
+					}
+					{
+						jLabel4 = new JLabel();
+						jPanel1.add(jLabel4);
+						jLabel4.setText("Sekundär Titel:");
+						jLabel4.setBounds(7, 42, 77, 21);
+					}
+					{
+						jTextField4 = new JTextField();
+						jPanel1.add(jTextField4);
+						jTextField4.setBounds(91, 77, 98, 21);
+						jTextField4.setBorder(new LineBorder(new java.awt.Color(0,0,0), 1, false));
+						jTextField4.addFocusListener(new FocusListener(){
+
+							public void focusGained(FocusEvent arg0) {
+								// TODO Auto-generated method stub
+								
+							}
+
+							public void focusLost(FocusEvent arg0) {
+								date = ((JTextField)arg0.getSource()).getText();
+								
+							}
+							
+						});
+					}
+					{
+						jTextField5 = new JTextField();
+						jPanel1.add(jTextField5);
+						jTextField5.setBounds(294, 77, 84, 21);
+						jTextField5.setBorder(new LineBorder(new java.awt.Color(0,0,0), 1, false));
+						jTextField5.addFocusListener(new FocusListener(){
+
+							public void focusGained(FocusEvent arg0) {
+								// TODO Auto-generated method stub
+								
+							}
+
+							public void focusLost(FocusEvent arg0) {
+								try{
+								duration = Integer.parseInt(((JTextField)arg0.getSource()).getText());
+								}catch(Exception e){
+									System.out.println("Fehler mit der Dauer");
+								}
+							}
+							
+						});
+					}
+					{
+						jLabel6 = new JLabel();
+						jPanel1.add(jLabel6);
+						jLabel6.setText("Datum:");
+						jLabel6.setBounds(7, 77, 56, 21);
+					}
+					{
+						jLabel7 = new JLabel();
+						jPanel1.add(jLabel7);
+						jLabel7.setText("Dauer:");
+						jLabel7.setBounds(238, 77, 42, 21);
 					}
 				}
 				{
@@ -196,7 +307,7 @@ public class EditTFrame extends javax.swing.JFrame implements java.awt.event.Mou
 
 			this.setSize(589, 403);
 			this.setPreferredSize(new java.awt.Dimension(589, 403));
-
+			this.setResizable(false);
 			pack();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -212,6 +323,46 @@ public class EditTFrame extends javax.swing.JFrame implements java.awt.event.Mou
 		if(arg0.getSource().equals(jButton1)){
 			this.dispose();
 		}
+		if(arg0.getSource().equals(jButton3)){
+			IGenericDAO gdo = new GenericDAO();
+			gdo.setCurrentTable("tcdatatable");
+			try{
+				TCData lookup = new TCData(), updateData = new TCData();
+				lookup.id = 1;
+				updateData.id = 1;
+				updateData.title = title;
+				updateData.description = desc;
+				gdo.updDataObjects(lookup, updateData);
+				dispose();
+			}
+			catch (Exception e){
+				System.out.println("Exception beim Updaten=="+e.toString());
+			}
+		}
+		if(arg0.getSource().equals(jButton2)){
+			IGenericDAO gdo = new GenericDAO();
+			gdo.setCurrentTable("tdatatable");
+			try{
+				TData lookup = new TData(), updateData = new TData();
+				lookup.id = 1;
+				updateData.id = 1;
+				updateData.sec_title = sec_title;
+				updateData.description = desc;
+				updateData.duration = duration;
+				try{
+					//Hier muss noch der Date umgewandelt werden
+					
+					updateData.date = upd_date;
+				}catch(Exception e){
+					System.out.println("Fehler mit dem Datum");
+				}
+				
+				gdo.updDataObjects(lookup, updateData);
+				
+			}
+			catch (Exception e){
+				System.out.println("Exception beim Updaten=="+e.toString());
+			}}
 		
 	}
 
