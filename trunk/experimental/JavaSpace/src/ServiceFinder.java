@@ -28,7 +28,7 @@ import net.jini.core.transaction.server.TransactionManager;
 
 import java.rmi.*;
 
-public class SpaceTest implements DiscoveryListener {
+public class ServiceFinder implements DiscoveryListener {
 
 	
 	private ServiceTemplate template;
@@ -94,26 +94,24 @@ public class SpaceTest implements DiscoveryListener {
 	
 	
 	public static Object getService(Class serviceClass, String serviceName, long waitTime) throws InterruptedException{
-		SpaceTest st = new SpaceTest();
+		ServiceFinder st = new ServiceFinder();
 		return st.internalGetService(serviceClass, serviceName, waitTime);
 	}
 	
-	/**
-	 * @param args
-	 */
-	public static void main(String[] args) {
+
+/*	public static void main(String[] args) {
 		System.out.println("autoPSI JavaSpace experimental Project testing\n");
 		try{
 			JavaSpace space = (JavaSpace)getService(JavaSpace.class, null, 3000);
 		//JavaSpace space = (JavaSpace)ServiceLocator.getService(JavaSpace.class, 10000);
 			System.out.println("writing something into space");
-			for (int i=0;i<29;i++){
-				space.write(new HelloWorldMessage(), null, Lease.FOREVER);
+			for (int i=0;i<12;i++){
+				space.take(new HelloWorldMessage(), null, 500);
 			}
 		}
 		catch (Exception e){
 			System.out.println("Error@main :: "+e.toString());
 		}
-	}
+	}*/
 
 }

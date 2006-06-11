@@ -39,7 +39,7 @@
 	</target>
 	
 	<target name="run">
-		<java classpathref="classpath" classname="SpaceTest" fork="true">
+		<java classpathref="classpath" classname="Main" fork="true">
 			<jvmarg value="-Djava.security.policy=policy.all"/>
 		</java>
 	</target>
