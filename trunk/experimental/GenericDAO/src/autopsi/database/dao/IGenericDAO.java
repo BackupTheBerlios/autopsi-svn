@@ -10,6 +10,7 @@ import autopsi.database.exception.EAttributeNotFound;
 import autopsi.database.exception.EDatabaseConnection;
 import autopsi.database.exception.EDatabase;
 import autopsi.database.dao.IGenericDAO;
+import autopsi.database.sql.SQLStatement;
 import java.util.List;
 import java.util.ArrayList;
 
@@ -41,4 +42,7 @@ public interface IGenericDAO {
 	
 	
 	public void updDataObjects(GenericDataObject lookupObj, GenericDataObject newObj) throws EDatabaseConnection, EAttributeNotFound, EDatabase;
+
+	public List<GenericDataObject> complexQuery(SQLStatement stm, GenericDataObject dataObjectTemplate) throws EDatabaseConnection, EDatabase, EAttributeNotFound;
+	
 }

@@ -39,7 +39,7 @@ public class GenericDAO implements IGenericDAO{
 		try{
 			if ((dbCon == null) || (dbCon.isClosed())){
 				Class.forName("org.hsqldb.jdbcDriver");
-				dbCon = DriverManager.getConnection("jdbc:hsqldb:data/Database", username, password);
+				dbCon = DriverManager.getConnection("jdbc:hsqldb:data/Database;shutdown=true", username, password);
 				dbCon.setAutoCommit(false);
 			}
 		}
@@ -81,13 +81,12 @@ public class GenericDAO implements IGenericDAO{
 	}
 	
 	
-	protected SQLFields getSQLFields(GenericDataObject obj) throws EAttributeNotFound{
+	public SQLFields getSQLFields(GenericDataObject obj) throws EAttributeNotFound{
 		SQLFields fields = new SQLFields();
 		Field[] fd = obj.getClass().getDeclaredFields();
 		AccessibleObject.setAccessible(fd, true);
 		try{
 			for(int i=0;i<fd.length;i++){
-				
 				if(fd[i].get(obj) == null)
 					continue;
 				
@@ -95,13 +94,7 @@ public class GenericDAO implements IGenericDAO{
 					throw new EAttributeNotFound();
 		*/		
 				SQLField field = null;
-				if ( fd[i].getType().equals(String.class) ){
-					field = new SQLField(fd[i].getName(), "'"+fd[i].get(obj).toString()+"'");
-					fields.add(field);
-					continue;
-				}
-				
-				field = new SQLField(fd[i].getName(),fd[i].get(obj).toString());
+				field = new SQLField(fd[i].getName(), fd[i].get(obj).toString());
 				fields.add(field);
 			}
 		}
@@ -127,8 +120,13 @@ public class GenericDAO implements IGenericDAO{
 		
 		SQLTable sqlTable = new SQLTable(currentTable);
 		SQLFields sqlFields = getSQLFields(lookupObj);
+		sqlFields.beginTraversal();
+		while(sqlFields.next())
+			System.out.println("next=="+sqlFields.getCurrentName()+";"+sqlFields.getCurrentValue());
+	
 		SQLStatement sqlSelect = new SQLSelect(sqlTable, sqlFields);
 		String query = sqlSelect.getQuery();
+		System.out.println("Q=="+query);
 		List<GenericDataObject> res = null;
 		try{
 			
@@ -290,6 +288,76 @@ public class GenericDAO implements IGenericDAO{
 		catch (SQLException e){
 			System.out.println("Exception@GenericDAO.updDataObjects=="+e.toString());
 			throw new EDatabase();
+		}
+	}
+	
+	public List<GenericDataObject> complexQuery(SQLStatement stm, GenericDataObject dataObjectTemplate) throws EDatabaseConnection, EDatabase, EAttributeNotFound {
+		if (connect() == null)
+			throw new EDatabaseConnection();
+		
+		List<GenericDataObject> res = null;
+		String query = stm.getQuery();
+			
+			PreparedStatement ps = null;
+			try{
+				try{
+					ps = dbCon.prepareStatement(query);
+				}
+				catch (SQLException e){
+					ps = dbCon.prepareStatement("SELECT * FROM "+currentTable);
+					
+					if (ps ==null)
+						throw new EDatabase();
+					
+					this.checkAttributes(ps.getMetaData(), dataObjectTemplate);
+					throw new EDatabase();
+				}
+				
+				if (!ps.execute())
+					throw new EDatabase();
+				
+				ResultSet rs = ps.getResultSet();
+				res = new ArrayList<GenericDataObject>();
+				while (rs.next()){
+					GenericDataObject obj = dataObjectTemplate.getClass().newInstance();
+					Field[] fd = obj.getClass().getDeclaredFields();
+					AccessibleObject.setAccessible(fd, true);
+					for(int i=0;i<fd.length;i++){
+						Object dbObj = null;
+						dbObj = rs.getObject(fd[i].getName());	
+						fd[i].set(obj, dbObj);
+					}
+					res.add(obj);
+				}
+			}
+			catch (SQLException e){
+				System.out.println("Exception;"+e.toString());
+				throw new EDatabase();
+			}
+			catch (InstantiationException e){
+				System.out.println("Exception;"+e.toString());
+				throw new EDatabase();
+			}
+			catch (IllegalArgumentException e){
+				System.out.println("Exception;"+e.toString());
+				throw new EDatabase();
+			}
+			catch (IllegalAccessException e){
+				System.out.println("Exception;"+e.toString());
+				throw new EDatabase();
+			}
+			return res;
+	}
+	
+	protected void shutdownDB() throws Throwable{
+		try{
+			System.out.println("closung DB Connection with SHUTDOWN");
+			PreparedStatement pshut = dbCon.prepareStatement("SHUTDOWN IMMEDIATELY");
+			pshut.execute();
+			dbCon.commit();
+		}
+		catch (Exception e){
+			System.out.println("Couldn' t close DB");
 		}
 	}
 	

@@ -3,7 +3,7 @@ package autopsi.database.sql;
 public class SQLInsert implements SQLStatement {
 
 	protected SQLTable table = null;
-	protected SQLFields fields = null;
+	SQLFields fields = null;
 	
 	
 	public SQLInsert(SQLTable table, SQLFields fields){
@@ -21,7 +21,7 @@ public class SQLInsert implements SQLStatement {
 			else
 				isFirst = false;
 			
-			ret=ret+fields.getCurrentValue();
+			ret=ret+"'"+fields.getCurrentValue()+"'";
 		}
 		ret=ret+")";
 		return ret;
