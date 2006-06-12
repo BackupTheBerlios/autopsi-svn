@@ -349,6 +349,64 @@ public class GenericDAO implements IGenericDAO{
 			return res;
 	}
 	
+	public List<GenericDataObject> unsafeQuery(String query, GenericDataObject prototype)  throws EDatabase, EDatabaseConnection, EAttributeNotFound{
+		if (connect() == null)
+			throw new EDatabaseConnection();
+		
+		List<GenericDataObject> res = null;
+		try{
+			
+			PreparedStatement ps = null;
+			try{
+				ps = dbCon.prepareStatement(query);
+			}
+			catch (SQLException e){
+				ps = dbCon.prepareStatement("SELECT * FROM "+currentTable);
+				
+				if (ps ==null)
+					throw new EDatabase();
+				
+				this.checkAttributes(ps.getMetaData(), prototype);
+				throw new EDatabase();
+			}
+			
+			if (!ps.execute())
+				throw new EDatabase();
+			
+			ResultSet rs = ps.getResultSet();
+			res = new ArrayList<GenericDataObject>();
+			while (rs.next()){
+				GenericDataObject obj = prototype.getClass().newInstance();
+				Field[] fd = obj.getClass().getDeclaredFields();
+				AccessibleObject.setAccessible(fd, true);
+				for(int i=0;i<fd.length;i++){
+					Object dbObj = null;
+					dbObj = rs.getObject(fd[i].getName());	
+					fd[i].set(obj, dbObj);
+				}
+				res.add(obj);
+			}
+		}
+		catch (SQLException e){
+			System.out.println("Exception;"+e.toString());
+			throw new EDatabase();
+		}
+		catch (InstantiationException e){
+			System.out.println("Exception;"+e.toString());
+			throw new EDatabase();
+		}
+		catch (IllegalArgumentException e){
+			System.out.println("Exception;"+e.toString());
+			throw new EDatabase();
+		}
+		catch (IllegalAccessException e){
+			System.out.println("Exception;"+e.toString());
+			throw new EDatabase();
+		}
+		return res;
+			
+	}
+	
 	protected void shutdownDB() throws Throwable{
 		try{
 			System.out.println("closung DB Connection with SHUTDOWN");

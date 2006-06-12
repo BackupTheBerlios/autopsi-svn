@@ -45,4 +45,6 @@ public interface IGenericDAO {
 
 	public List<GenericDataObject> complexQuery(SQLStatement stm, GenericDataObject dataObjectTemplate) throws EDatabaseConnection, EDatabase, EAttributeNotFound;
 	
+	public List<GenericDataObject> unsafeQuery(String query, GenericDataObject prototype)  throws EDatabase, EDatabaseConnection, EAttributeNotFound;
+	
 }

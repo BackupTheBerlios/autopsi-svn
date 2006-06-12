@@ -38,7 +38,18 @@ public class Main {
 		
 		
 
-		List<GenericDataObject> objs = null;
+		List<GenericDataObject> list = null;
+		
+		try{
+			list = gdo.unsafeQuery("SELECT * FROM testdatatable WHERE name LIKE 'bla%'", new TestData());
+		}
+		catch (Exception e){
+			System.out.println("error::"+e.toString());
+		}
+		
+		System.out.println("size of unchecked list=="+list.size());
+		for(int i=0;i<list.size();i++){
+			System.out.println( ((TestData)list.get(i)).dval);
 
 		
 		/*try{
@@ -52,7 +63,7 @@ public class Main {
 		}
 		*/
 		
-		//adding an object to the database
+/*		//adding an object to the database
 		try{
 			TestData obj = new TestData();
 			obj.name = "eingefügtes Objekt";
@@ -63,21 +74,21 @@ public class Main {
 		catch (Exception e){
 			System.out.println("Exception beim Einfügen=="+e.toString());
 		}
-
-		//updating an object in the database
+*/
+/*		//updating an object in the database
 		try{
 			TestData lookup = new TestData();
 			TestData updateData = new TestData();
 			lookup.dval = 999.9;
 			updateData.dval = 33.3;
-			updateData.name = "Juhuu! Damit bin ich auch das erste upgedatete Objekt!";
+			updateData.name = "blablablabla";
 			gdo.updDataObjects(lookup, updateData);
 		}
 		catch (Exception e){
 			System.out.println("Exception beim Updaten=="+e.toString());
 		}
-		
-		//removing an object from the database
+*/		
+/*		//removing an object from the database
 		try{
 			TestData obj = new TestData();
 			obj.dval = 33.3;
@@ -86,9 +97,9 @@ public class Main {
 		catch (Exception e){
 			System.out.println("Exception beim Löschen=="+e.toString());
 		}
+*/		
 		
-		
-		//get objects from the database
+/*		//get objects from the database
 		List<GenericDataObject> list = null;
 		try{
 			list = gdo.getDataObjects(new TestData());
@@ -99,6 +110,7 @@ public class Main {
 		System.out.println("size of list=="+list.size());
 		for(int i=0;i<list.size();i++){
 			System.out.println( ((TestData)list.get(i)).dval);
+		}*/
 		}
 	}
 
