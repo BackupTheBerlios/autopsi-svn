@@ -28,4 +28,16 @@
 	<target name="compile_and_run" depends="compile,run">
 	</target>
 	
+	<target name="runDBMan">
+        <java 
+            classpathref="classpath"
+            classname="org.hsqldb.util.DatabaseManagerSwing"
+            fork="true"
+        >
+        	<arg line="-url ${jdbc.url}"/>
+            <arg line="-user ${jdbc.username}" />
+            <arg line="-password ${jdbc.password}" />
+        </java>
+	</target>
+	
 </project>
