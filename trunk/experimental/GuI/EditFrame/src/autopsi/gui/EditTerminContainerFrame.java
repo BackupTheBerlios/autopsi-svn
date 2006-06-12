@@ -1,11 +1,9 @@
 package autopsi.gui;
 
+
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.awt.event.MouseEvent;
-import java.sql.Date;
-import java.util.List;
-
 import javax.swing.BorderFactory;
 
 import javax.swing.DefaultComboBoxModel;
@@ -17,16 +15,14 @@ import javax.swing.JTabbedPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.ListModel;
+
 import javax.swing.WindowConstants;
+import javax.swing.border.BevelBorder;
 import javax.swing.border.LineBorder;
+import javax.swing.border.SoftBevelBorder;
 
 import autopsi.database.dao.GenericDAO;
-import autopsi.database.dao.GenericDataObject;
 import autopsi.database.dao.IGenericDAO;
-import autopsi.database.exception.EAttributeNotFound;
-import autopsi.database.exception.EDatabase;
-import autopsi.database.exception.EDatabaseConnection;
-
 
 /**
 * This code was edited or generated using CloudGarden's Jigloo
@@ -40,7 +36,7 @@ import autopsi.database.exception.EDatabaseConnection;
 * THIS MACHINE, SO JIGLOO OR THIS CODE CANNOT BE USED
 * LEGALLY FOR ANY CORPORATE OR COMMERCIAL PURPOSE.
 */
-public class EditTFrame extends javax.swing.JFrame implements java.awt.event.MouseListener{
+public class EditTerminContainerFrame extends javax.swing.JFrame implements java.awt.event.MouseListener{
 
 	/**	 * 
 	 */
@@ -59,12 +55,19 @@ public class EditTFrame extends javax.swing.JFrame implements java.awt.event.Mou
 	private JButton jButton2;
 	private JLabel jLabel4;
 	private JLabel jLabel7;
-	private JLabel jLabel6;
-	private JTextField jTextField5;
-	private JTextField jTextField4;
-	private JTextField jTextField3;
-	private JLabel jLabel5;
 	private JLabel jLabel3;
+
+	private JButton jButton10;
+	private JButton jButton9;
+	private JButton jButton8;
+	private JButton jButton7;
+	private JList jList2;
+	private JTextField jTextField5;
+	private JLabel jLabel6;
+	private JTextField jTextField4;
+	private JLabel jLabel5;
+	private JTextField jTextField3;
+
 	private JButton jButton6;
 	private JButton jButton5;
 	private JButton jButton4;
@@ -76,53 +79,36 @@ public class EditTFrame extends javax.swing.JFrame implements java.awt.event.Mou
 	private JTextField jTextField1;
 	private JLabel jLabel1;
 	private JPanel jPanel3;
+	private JPanel jPanel2;
 	private JButton jButton3;
 	private JButton jButton1;
-	
-	private String sec_title = "";
-	private String date;
-	private int duration;
+	private String title = "";
 	private String desc = "";
-	private Date upd_date;
-	private IGenericDAO gdo; 
 
 	/**
 	* Auto-generated main method to display this JFrame
 	*/
 	public static void main(String[] args) {
-		
-		EditTFrame inst = new EditTFrame();
+		EditTerminContainerFrame inst = new EditTerminContainerFrame();
 		inst.setVisible(true);
 	}
 	
-	public EditTFrame() {
+	public EditTerminContainerFrame() {
 		super();
-		gdo = new GenericDAO();
-		gdo.setCurrentTable("termin");
 		initGUI();
-	}
-	
-	private void readData(Integer id) throws EDatabaseConnection, EAttributeNotFound, EDatabase{
-		TData lookup = new TData();
-		lookup.id = 1;
-		List<GenericDataObject> list = null;
-		list = gdo.getDataObjects(lookup);
-		sec_title = ((TData)list.get(1)).secondary_title;
-		duration = ((TData)list.get(1)).duration;
-		desc = ((TData)list.get(1)).description;
-		
 	}
 	
 	private void initGUI() {
 		try {
 			setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-			this.setTitle("Termin bearbeiten");
+			this.setTitle("Termincontainer bearbeiten");
 			getContentPane().setLayout(null);
 			{
 				jTabbedPane1 = new JTabbedPane();
 				getContentPane().add(jTabbedPane1);
 				jTabbedPane1.setBounds(7, 14, 567, 280);
 				jTabbedPane1.setTabPlacement(JTabbedPane.LEFT);
+				jTabbedPane1.setFocusable(false);
 				{
 					jPanel1 = new JPanel();
 					jTabbedPane1.addTab("allgemeine Informationen", null, jPanel1, null);
@@ -135,21 +121,35 @@ public class EditTFrame extends javax.swing.JFrame implements java.awt.event.Mou
 						jLabel1.setBounds(7, 10, 35, 28);
 					}
 					{
+						
 						jTextField1 = new JTextField();
 						jPanel1.add(jTextField1);
 						jTextField1.setBounds(91, 14, 322, 21);
 						jTextField1.setBorder(new LineBorder(new java.awt.Color(0,0,0), 1, false));
+						jTextField1.addFocusListener(new FocusListener(){
+
+							public void focusGained(FocusEvent arg0) {
+								// TODO Auto-generated method stub
+								
+							}
+
+							public void focusLost(FocusEvent arg0) {
+								title = ((JTextField)arg0.getSource()).getText();
+								
+							}
+							
+						});
 					}
 					{
 						jLabel2 = new JLabel();
 						jPanel1.add(jLabel2);
-						jLabel2.setText("Beschreibung:");
-						jLabel2.setBounds(7, 112, 84, 28);
+						jLabel2.setText("Beschreibung");
+						jLabel2.setBounds(5, 39, 84, 28);
 					}
 					{
 						jTextArea1 = new JTextArea();
 						jPanel1.add(jTextArea1);
-						jTextArea1.setBounds(91, 112, 322, 84);
+						jTextArea1.setBounds(91, 42, 322, 217);
 						jTextArea1.setBorder(new LineBorder(new java.awt.Color(0,0,0), 1, false));
 						jTextArea1.addFocusListener(new FocusListener(){
 
@@ -165,85 +165,6 @@ public class EditTFrame extends javax.swing.JFrame implements java.awt.event.Mou
 							
 						});
 					}
-					{
-						jTextField3 = new JTextField();
-						jPanel1.add(jTextField3);
-						jTextField3.setBounds(91, 42, 322, 21);
-						jTextField3.setBorder(new LineBorder(new java.awt.Color(0,0,0), 1, false));
-						jTextField3.addFocusListener(new FocusListener(){
-
-							public void focusGained(FocusEvent arg0) {
-								// TODO Auto-generated method stub
-								
-							}
-
-							public void focusLost(FocusEvent arg0) {
-								sec_title = ((JTextField)arg0.getSource()).getText();
-								System.out.println(sec_title);
-								
-							}
-							
-						});
-					}
-					{
-						jLabel4 = new JLabel();
-						jPanel1.add(jLabel4);
-						jLabel4.setText("Sekundär Titel:");
-						jLabel4.setBounds(7, 42, 77, 21);
-					}
-					{
-						jTextField4 = new JTextField();
-						jPanel1.add(jTextField4);
-						jTextField4.setBounds(91, 77, 98, 21);
-						jTextField4.setBorder(new LineBorder(new java.awt.Color(0,0,0), 1, false));
-						jTextField4.addFocusListener(new FocusListener(){
-
-							public void focusGained(FocusEvent arg0) {
-								// TODO Auto-generated method stub
-								
-							}
-
-							public void focusLost(FocusEvent arg0) {
-								date = ((JTextField)arg0.getSource()).getText();
-								
-							}
-							
-						});
-					}
-					{
-						jTextField5 = new JTextField();
-						jPanel1.add(jTextField5);
-						jTextField5.setBounds(294, 77, 84, 21);
-						jTextField5.setBorder(new LineBorder(new java.awt.Color(0,0,0), 1, false));
-						jTextField5.addFocusListener(new FocusListener(){
-
-							public void focusGained(FocusEvent arg0) {
-								// TODO Auto-generated method stub
-								
-							}
-
-							public void focusLost(FocusEvent arg0) {
-								try{
-								duration = Integer.parseInt(((JTextField)arg0.getSource()).getText());
-								}catch(Exception e){
-									System.out.println("Fehler mit der Dauer");
-								}
-							}
-							
-						});
-					}
-					{
-						jLabel6 = new JLabel();
-						jPanel1.add(jLabel6);
-						jLabel6.setText("Datum:");
-						jLabel6.setBounds(7, 77, 56, 21);
-					}
-					{
-						jLabel7 = new JLabel();
-						jPanel1.add(jLabel7);
-						jLabel7.setText("Dauer:");
-						jLabel7.setBounds(238, 77, 42, 21);
-					}
 				}
 				{
 					jPanel3 = new JPanel();
@@ -252,7 +173,7 @@ public class EditTFrame extends javax.swing.JFrame implements java.awt.event.Mou
 						null,
 						jPanel3,
 						null);
-					jPanel3.setBackground(new java.awt.Color(255,255,255));
+					jPanel3.setBackground(new java.awt.Color(233,233,233));
 					jPanel3.setLayout(null);
 					{
 						ListModel jList1Model = new DefaultComboBoxModel(
@@ -289,12 +210,88 @@ public class EditTFrame extends javax.swing.JFrame implements java.awt.event.Mou
 						jButton6.setBounds(21, 238, 70, 21);
 					}
 					{
-						jLabel3 = new JLabel();
-						jPanel3.add(jLabel3);
-						jLabel3.setText("Suchen:");
-						jLabel3.setBounds(11, 5, 49, 28);
+						jLabel4 = new JLabel();
+						jPanel3.add(jLabel4);
+						jLabel4.setText("Suchen:");
+						jLabel4.setBounds(14, 5, 49, 28);
 					}
 
+				}
+				{
+					jPanel2 = new JPanel();
+					jTabbedPane1.addTab("Termine", null, jPanel2, null);
+					jPanel2.setBackground(new java.awt.Color(233,233,233));
+					jPanel2.setLayout(null);
+				
+					{
+						jTextField3 = new JTextField();
+						jPanel2.add(jTextField3);
+						jTextField3.setBounds(56, 7, 357, 21);
+						jTextField3.setBorder(new LineBorder(new java.awt.Color(0,0,0), 1, false));
+					}
+					{
+						jLabel5 = new JLabel();
+						jPanel2.add(jLabel5);
+						jLabel5.setText("Datum eingrenzen von (DD-MM-YYYY)");
+						jLabel5.setBounds(7, 32, 196, 28);
+					}
+					{
+						jTextField4 = new JTextField();
+						jPanel2.add(jTextField4);
+						jTextField4.setBounds(196, 35, 84, 21);
+						jTextField4.setBorder(new LineBorder(new java.awt.Color(0,0,0), 1, false));
+					}
+					{
+						jLabel6 = new JLabel();
+						jPanel2.add(jLabel6);
+						jLabel6.setText("bis");
+						jLabel6.setBounds(288, 32, 14, 28);
+					}
+					{
+						jTextField5 = new JTextField();
+						jPanel2.add(jTextField5);
+						jTextField5.setBounds(308, 35, 84, 21);
+						jTextField5.setBorder(new LineBorder(new java.awt.Color(0,0,0), 1, false));
+					}
+					{
+						ListModel jList2Model = new DefaultComboBoxModel(
+							new String[] { "Item One", "Item Two" });
+						jList2 = new JList();
+						jPanel2.add(jList2);
+						jList2.setModel(jList2Model);
+						jList2.setBounds(7, 63, 406, 147);
+						jList2.setBorder(new SoftBevelBorder(BevelBorder.LOWERED, null, null, null, null));
+					}
+					{
+						jButton7 = new JButton();
+						jPanel2.add(jButton7);
+						jButton7.setText("neuer Termin");
+						jButton7.setBounds(231, 217, 98, 21);
+					}
+					{
+						jButton8 = new JButton();
+						jPanel2.add(jButton8);
+						jButton8.setText("Termin aus Liste entfernen");
+						jButton8.setBounds(231, 245, 182, 21);
+					}
+					{
+						jButton9 = new JButton();
+						jPanel2.add(jButton9);
+						jButton9.setText("Bearbeiten");
+						jButton9.setBounds(329, 217, 84, 21);
+					}
+					{
+						jButton10 = new JButton();
+						jPanel2.add(jButton10);
+						jButton10.setText("Gehe zu Termin");
+						jButton10.setBounds(7, 217, 112, 21);
+					}
+					{
+						jLabel3 = new JLabel();
+						jPanel2.add(jLabel3);
+						jLabel3.setText("Suchen:");
+						jLabel3.setBounds(7, 5, 49, 28);
+					}
 				}
 			}
 			{
@@ -319,37 +316,39 @@ public class EditTFrame extends javax.swing.JFrame implements java.awt.event.Mou
 				jButton3.addMouseListener(this);
 			}
 			{
-				jLabel5 = new JLabel("- Zeigt Informationen an -");
-				this.add(jLabel5);
-				jLabel5.setBounds(0, 343, 588, 21);
-				jLabel5.setBorder(BorderFactory.createTitledBorder(""));
+				jLabel7 = new JLabel();
+				getContentPane().add(jLabel7);
+				jLabel7.setText("- Zeigt Informationen an -");
+				jLabel7.setBounds(7, 329, 574, 21);
+				jLabel7.setBorder(BorderFactory.createTitledBorder(""));
 			}
-
-			this.setSize(589, 403);
-			this.setPreferredSize(new java.awt.Dimension(589, 403));
-			this.setResizable(false);
+			
+			
+			
+			
+			
+			
+			
 			pack();
+			this.setSize(589, 389);
+			this.setResizable(false);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
 
 	public void mouseClicked(MouseEvent arg0) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	public void mousePressed(MouseEvent arg0) {
 		if(arg0.getSource().equals(jButton1)){
 			this.dispose();
 		}
 		if(arg0.getSource().equals(jButton3)){
-			
+			IGenericDAO gdo = new GenericDAO();
+			gdo.setCurrentTable("tcdatatable");
 			try{
-				TData lookup = new TData(), updateData = new TData();
+				TCData lookup = new TCData(), updateData = new TCData();
 				lookup.id = 1;
 				updateData.id = 1;
-				updateData.secondary_title = this.sec_title;
+				updateData.title = title;
 				updateData.description = desc;
 				gdo.updDataObjects(lookup, updateData);
 				dispose();
@@ -359,29 +358,26 @@ public class EditTFrame extends javax.swing.JFrame implements java.awt.event.Mou
 			}
 		}
 		if(arg0.getSource().equals(jButton2)){
-			
+			IGenericDAO gdo = new GenericDAO();
+			gdo.setCurrentTable("tcdatatable");
 			try{
-				TData lookup = new TData(), updateData = new TData();
+				TCData lookup = new TCData(), updateData = new TCData();
 				lookup.id = 1;
 				updateData.id = 1;
-				System.out.println("here:" + sec_title);
-				updateData.secondary_title = sec_title;
+				updateData.title = title;
 				updateData.description = desc;
-				updateData.duration = duration;
-				try{
-					//Hier muss noch der Date umgewandelt werden
-					
-					updateData.date = upd_date;
-				}catch(Exception e){
-					System.out.println("Fehler mit dem Datum");
-				}
-				
 				gdo.updDataObjects(lookup, updateData);
 				
 			}
 			catch (Exception e){
 				System.out.println("Exception beim Updaten=="+e.toString());
-			}}
+			}
+		}
+		
+	}
+
+	public void mousePressed(MouseEvent arg0) {
+		// TODO Auto-generated method stub
 		
 	}
 
@@ -392,29 +388,29 @@ public class EditTFrame extends javax.swing.JFrame implements java.awt.event.Mou
 
 	public void mouseEntered(MouseEvent arg0) {
 		if(arg0.getSource().equals(jButton2)){
-			jLabel5.setText("Änderungen übernehmen");
+			jLabel7.setText("Änderungen übernehmen");
 		}
 		if(arg0.getSource().equals(jButton1)){
-			jLabel5.setText("Abbrechen");
+			jLabel7.setText("Abbrechen");
 		}
 		if(arg0.getSource().equals(jButton3)){
-			jLabel5.setText("OK");
+			jLabel7.setText("OK");
 		}
+		
 	}
 
 	public void mouseExited(MouseEvent arg0) {
 		if(arg0.getSource().equals(jButton2)){
-			jLabel5.setText("");
+			jLabel7.setText("");
 		}
 		if(arg0.getSource().equals(jButton1)){
-			jLabel5.setText("");
+			jLabel7.setText("");
 		}
 		if(arg0.getSource().equals(jButton3)){
-			jLabel5.setText("");
+			jLabel7.setText("");
 		}
 		
 	}
 
 }
-
 
