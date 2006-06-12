@@ -7,6 +7,7 @@
 
 
 import net.jini.discovery.LookupDiscovery;
+import net.jini.core.discovery.LookupLocator;
 import net.jini.discovery.DiscoveryListener;
 import net.jini.discovery.DiscoveryEvent;
 import net.jini.core.lookup.*;
@@ -24,6 +25,7 @@ import net.jini.core.entry.Entry;
 import net.jini.core.transaction.Transaction;
 import net.jini.core.transaction.TransactionFactory;
 import net.jini.core.transaction.server.TransactionManager;
+import java.net.MalformedURLException;
 
 
 import java.rmi.*;
@@ -36,25 +38,28 @@ public class ServiceFinder implements DiscoveryListener {
 	private Object proxy = null;
 	
 	
-	public Object internalGetService(Class serviceClass, String serviceName, long waitTime) throws InterruptedException{
-		if (System.getSecurityManager() == null)
-			System.setSecurityManager(new SecurityManager());
-		
-		LookupDiscovery discovery = null;
-		
+	public void createServiceTemplate(Class serviceClass, String serviceName){
 		Class[] types = new Class[] {serviceClass};
 		Entry[] entry=null;
 		if (serviceName != null){
 			entry = new Entry[] { new Name(serviceName) };
 		}
 		template = new ServiceTemplate(null, types, entry);
+	}
+	
+	public Object internalGetService(Class serviceClass, String serviceName, long waitTime) throws InterruptedException{
+		if (System.getSecurityManager() == null)
+			System.setSecurityManager(new SecurityManager());
 		
+		LookupDiscovery discovery = null;
+		
+		createServiceTemplate(serviceClass, serviceName);
 		
 		try{
 			discovery = new LookupDiscovery(LookupDiscovery.ALL_GROUPS);
 		}
 		catch (Exception e){
-			System.out.println("Couldn' t create a LookupDiscovery");
+			System.out.println("Couldn' t create a LookupDiscovery,Exception::"+e.toString());
 		}
 		discovery.addDiscoveryListener(this);
 		synchronized(lock){
@@ -68,6 +73,37 @@ public class ServiceFinder implements DiscoveryListener {
 		return proxy;
 	}
 		
+	public Object internalGetService(Class serviceClass, String serviceName, long waitTime, String adress){
+		LookupLocator lup = null;
+		ServiceRegistrar reg = null;
+		
+		createServiceTemplate(serviceClass, serviceName);
+		
+		try{
+			lup = new LookupLocator(adress);
+		}
+		catch (MalformedURLException e){
+			System.out.println("Malformed URL for Unicast Discovery::"+e.toString());
+		}
+		
+		try{
+			reg = lup.getRegistrar();
+		}
+		catch (Exception e){
+			System.out.println("Exception when trying to getRegistrar()::"+e.toString());
+		}
+		
+		try{
+			proxy = reg.lookup(template);
+		}
+		catch (Exception e){
+			System.out.println("errror on reg.lookup()"+e.toString());
+		}
+		if (proxy== null)
+			System.out.println("couldn't find service you were looking for");
+		return proxy;
+	}
+	
 	public void discovered(DiscoveryEvent e){
 		ServiceRegistrar[] registrars = e.getRegistrars();
 		for (int i=0;i<registrars.length;i++){
@@ -96,6 +132,11 @@ public class ServiceFinder implements DiscoveryListener {
 	public static Object getService(Class serviceClass, String serviceName, long waitTime) throws InterruptedException{
 		ServiceFinder st = new ServiceFinder();
 		return st.internalGetService(serviceClass, serviceName, waitTime);
+	}
+	
+	public static Object getServiceFrom(Class serviceClass, String serviceName, long waitTime, String adress){
+		ServiceFinder st = new ServiceFinder();
+		return st.internalGetService(serviceClass, serviceName, waitTime, adress);
 	}
 	
 
