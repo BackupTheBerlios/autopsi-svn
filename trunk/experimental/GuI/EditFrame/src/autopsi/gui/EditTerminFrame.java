@@ -103,20 +103,21 @@ public class EditTerminFrame extends javax.swing.JFrame implements java.awt.even
 	}
 	
 	private void readData(Integer id) throws EDatabaseConnection, EAttributeNotFound, EDatabase{
+		
 		Termin lookup = new Termin();
 		lookup.getSetId(true,id);
 		List<GenericDataObject> list = null;
 		list = gdo.getDataObjects(lookup);
-		sec_title = ((Termin)list.get(id-1)).getSetSecondaryTitle(false,null);
+		sec_title = ((Termin)list.get(0)).getSetSecondaryTitle(false,null);
 		sec_titlefield.setText(sec_title);
-		duration = ((Termin)list.get(id-1)).getSetDuration(false,null);
+		duration = ((Termin)list.get(0)).getSetDuration(false,null);
 		String duration_string = "" + duration;
 		duration_field.setText(duration_string);
-		desc = ((Termin)list.get(id-1)).getSetDescription(false,null);
+		desc = ((Termin)list.get(0)).getSetDescription(false,null);
 		desc_area.setText(desc);
-		place = ((Termin)list.get(id-1)).getSetPlace(false,null);
+		place = ((Termin)list.get(0)).getSetPlace(false,null);
 		place_field.setText(place);
-		date = ((Termin)list.get(id-1)).getSetDate(false,null).toString();
+		date = ((Termin)list.get(0)).getSetDate(false,null).toString();
 		date_field.setText(date.substring(0,10));
 		time_field.setText(date.substring(11,16));
 		

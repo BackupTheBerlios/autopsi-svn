@@ -21,6 +21,12 @@ public class TerminContainer implements GenericDataObject{
 		return this.title;
 	}
 	
+	public String getSetDescription(boolean set, String newDesc){
+		if (set)
+			this.description = newDesc;
+		return this.description;
+	}
+	
 	
 	
 }

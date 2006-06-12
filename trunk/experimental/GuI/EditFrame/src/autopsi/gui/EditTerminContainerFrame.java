@@ -4,6 +4,8 @@ package autopsi.gui;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.awt.event.MouseEvent;
+import java.util.List;
+
 import javax.swing.BorderFactory;
 
 import javax.swing.DefaultComboBoxModel;
@@ -22,7 +24,11 @@ import javax.swing.border.LineBorder;
 import javax.swing.border.SoftBevelBorder;
 
 import autopsi.database.dao.GenericDAO;
+import autopsi.database.dao.GenericDataObject;
 import autopsi.database.dao.IGenericDAO;
+import autopsi.database.exception.EAttributeNotFound;
+import autopsi.database.exception.EDatabase;
+import autopsi.database.exception.EDatabaseConnection;
 
 /**
 * This code was edited or generated using CloudGarden's Jigloo
@@ -52,7 +58,7 @@ public class EditTerminContainerFrame extends javax.swing.JFrame implements java
 	}
 
 	private JTabbedPane jTabbedPane1;
-	private JButton jButton2;
+	private JButton apply_button;
 	private JLabel jLabel4;
 	private JLabel jLabel7;
 	private JLabel jLabel3;
@@ -74,27 +80,60 @@ public class EditTerminContainerFrame extends javax.swing.JFrame implements java
 	private JTextField jTextField2;
 	private JList jList1;
 	private JPanel jPanel1;
-	private JTextArea jTextArea1;
+	private JTextArea desc_area;
 	private JLabel jLabel2;
-	private JTextField jTextField1;
+	private JTextField title_field;
 	private JLabel jLabel1;
 	private JPanel jPanel3;
 	private JPanel jPanel2;
-	private JButton jButton3;
-	private JButton jButton1;
+	private JButton ok_button;
+	private JButton abort_button;
 	private String title = "";
 	private String desc = "";
-
-	/**
-	* Auto-generated main method to display this JFrame
-	*/
-	public static void main(String[] args) {
-		EditTerminContainerFrame inst = new EditTerminContainerFrame();
-		inst.setVisible(true);
-	}
+	private IGenericDAO gdo; 
+	private int ID;
 	
-	public EditTerminContainerFrame() {
+	
+	
+	private void readData(Integer id) throws EDatabaseConnection, EAttributeNotFound, EDatabase{
+		
+		TerminContainer lookup = new TerminContainer();
+		lookup.getSetId(true,id);
+		List<GenericDataObject> list = null;
+		list = gdo.getDataObjects(lookup);
+		title = ((TerminContainer)list.get(0)).getSetTitle(false,null);
+		title_field.setText(title);
+		desc = ((TerminContainer)list.get(0)).getSetDescription(false,null);
+		desc_area.setText(desc);
+	
+		
+		
+		
+	}
+	private void update(){
+		try{
+			title = title_field.getText();
+			desc = desc_area.getText();
+					
+			
+			
+			TerminContainer lookup = new TerminContainer(), updateData = new TerminContainer();
+			lookup.getSetId(true,ID);
+			updateData.getSetId(true,ID);
+			updateData.getSetTitle(true,title);
+			updateData.getSetDescription(true,desc);
+			gdo.updDataObjects(lookup, updateData);
+			
+		}
+		catch (Exception e){
+			System.out.println("Exception beim Updaten=="+e.toString());
+		}
+	}
+	public EditTerminContainerFrame(int id) {
 		super();
+		this.ID = id;
+		gdo = new GenericDAO();
+		gdo.setCurrentTable("termincontainer");
 		initGUI();
 	}
 	
@@ -122,23 +161,11 @@ public class EditTerminContainerFrame extends javax.swing.JFrame implements java
 					}
 					{
 						
-						jTextField1 = new JTextField();
-						jPanel1.add(jTextField1);
-						jTextField1.setBounds(91, 14, 322, 21);
-						jTextField1.setBorder(new LineBorder(new java.awt.Color(0,0,0), 1, false));
-						jTextField1.addFocusListener(new FocusListener(){
-
-							public void focusGained(FocusEvent arg0) {
-								// TODO Auto-generated method stub
-								
-							}
-
-							public void focusLost(FocusEvent arg0) {
-								title = ((JTextField)arg0.getSource()).getText();
-								
-							}
-							
-						});
+						title_field = new JTextField();
+						jPanel1.add(title_field);
+						title_field.setBounds(91, 14, 322, 21);
+						title_field.setBorder(new LineBorder(new java.awt.Color(0,0,0), 1, false));
+						
 					}
 					{
 						jLabel2 = new JLabel();
@@ -147,23 +174,11 @@ public class EditTerminContainerFrame extends javax.swing.JFrame implements java
 						jLabel2.setBounds(5, 39, 84, 28);
 					}
 					{
-						jTextArea1 = new JTextArea();
-						jPanel1.add(jTextArea1);
-						jTextArea1.setBounds(91, 42, 322, 217);
-						jTextArea1.setBorder(new LineBorder(new java.awt.Color(0,0,0), 1, false));
-						jTextArea1.addFocusListener(new FocusListener(){
-
-							public void focusGained(FocusEvent arg0) {
-								// TODO Auto-generated method stub
-								
-							}
-
-							public void focusLost(FocusEvent arg0) {
-								desc = ((JTextArea)arg0.getSource()).getText();
-								
-							}
-							
-						});
+						desc_area = new JTextArea();
+						jPanel1.add(desc_area);
+						desc_area.setBounds(91, 42, 322, 217);
+						desc_area.setBorder(new LineBorder(new java.awt.Color(0,0,0), 1, false));
+						
 					}
 				}
 				{
@@ -295,25 +310,25 @@ public class EditTerminContainerFrame extends javax.swing.JFrame implements java
 				}
 			}
 			{
-				jButton1 = new JButton();
-				getContentPane().add(jButton1);
-				jButton1.setText("Abbrechen");
-				jButton1.setBounds(294, 301, 105, 21);
-				jButton1.addMouseListener(this);
+				abort_button = new JButton();
+				getContentPane().add(abort_button);
+				abort_button.setText("Abbrechen");
+				abort_button.setBounds(294, 301, 105, 21);
+				abort_button.addMouseListener(this);
 			}
 			{
-				jButton2 = new JButton();
-				getContentPane().add(jButton2);
-				jButton2.setText("Übernehmen");
-				jButton2.setBounds(406, 301, 112, 21);
-				jButton2.addMouseListener(this);
+				apply_button = new JButton();
+				getContentPane().add(apply_button);
+				apply_button.setText("Übernehmen");
+				apply_button.setBounds(406, 301, 112, 21);
+				apply_button.addMouseListener(this);
 			}
 			{
-				jButton3 = new JButton();
-				getContentPane().add(jButton3);
-				jButton3.setText("OK");
-				jButton3.setBounds(525, 301, 49, 21);
-				jButton3.addMouseListener(this);
+				ok_button = new JButton();
+				getContentPane().add(ok_button);
+				ok_button.setText("OK");
+				ok_button.setBounds(525, 301, 49, 21);
+				ok_button.addMouseListener(this);
 			}
 			{
 				jLabel7 = new JLabel();
@@ -328,7 +343,7 @@ public class EditTerminContainerFrame extends javax.swing.JFrame implements java
 			
 			
 			
-			
+			readData(ID);
 			pack();
 			this.setSize(589, 389);
 			this.setResizable(false);
@@ -338,40 +353,15 @@ public class EditTerminContainerFrame extends javax.swing.JFrame implements java
 	}
 
 	public void mouseClicked(MouseEvent arg0) {
-		if(arg0.getSource().equals(jButton1)){
+		if(arg0.getSource().equals(abort_button)){
 			this.dispose();
 		}
-		if(arg0.getSource().equals(jButton3)){
-			IGenericDAO gdo = new GenericDAO();
-			gdo.setCurrentTable("tcdatatable");
-			try{
-				TCData lookup = new TCData(), updateData = new TCData();
-				lookup.id = 1;
-				updateData.id = 1;
-				updateData.title = title;
-				updateData.description = desc;
-				gdo.updDataObjects(lookup, updateData);
-				dispose();
-			}
-			catch (Exception e){
-				System.out.println("Exception beim Updaten=="+e.toString());
-			}
+		if(arg0.getSource().equals(ok_button)){
+			update();
+			dispose();
 		}
-		if(arg0.getSource().equals(jButton2)){
-			IGenericDAO gdo = new GenericDAO();
-			gdo.setCurrentTable("tcdatatable");
-			try{
-				TCData lookup = new TCData(), updateData = new TCData();
-				lookup.id = 1;
-				updateData.id = 1;
-				updateData.title = title;
-				updateData.description = desc;
-				gdo.updDataObjects(lookup, updateData);
-				
-			}
-			catch (Exception e){
-				System.out.println("Exception beim Updaten=="+e.toString());
-			}
+		if(arg0.getSource().equals(apply_button)){
+			update();
 		}
 		
 	}
@@ -387,26 +377,26 @@ public class EditTerminContainerFrame extends javax.swing.JFrame implements java
 	}
 
 	public void mouseEntered(MouseEvent arg0) {
-		if(arg0.getSource().equals(jButton2)){
+		if(arg0.getSource().equals(apply_button)){
 			jLabel7.setText("Änderungen übernehmen");
 		}
-		if(arg0.getSource().equals(jButton1)){
+		if(arg0.getSource().equals(abort_button)){
 			jLabel7.setText("Abbrechen");
 		}
-		if(arg0.getSource().equals(jButton3)){
+		if(arg0.getSource().equals(ok_button)){
 			jLabel7.setText("OK");
 		}
 		
 	}
 
 	public void mouseExited(MouseEvent arg0) {
-		if(arg0.getSource().equals(jButton2)){
+		if(arg0.getSource().equals(apply_button)){
 			jLabel7.setText("");
 		}
-		if(arg0.getSource().equals(jButton1)){
+		if(arg0.getSource().equals(abort_button)){
 			jLabel7.setText("");
 		}
-		if(arg0.getSource().equals(jButton3)){
+		if(arg0.getSource().equals(ok_button)){
 			jLabel7.setText("");
 		}
 		

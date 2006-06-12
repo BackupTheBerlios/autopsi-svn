@@ -7,7 +7,7 @@ CREATE USER SA PASSWORD "AB"
 GRANT DBA TO SA
 SET WRITE_DELAY 0 MILLIS
 SET SCHEMA PUBLIC
-INSERT INTO TERMINCONTAINER VALUES(0,'VU Grundz\u00fcge der Informatik','Vorlesungs\u00fcbung mit Prof. Obermeier')
+INSERT INTO TERMINCONTAINER VALUES(0,'VU Grundz\u00fcge der Informatik','Vorlesungs\u00fcbung mit Prof. Obermacker')
 INSERT INTO TERMINCONTAINER VALUES(2,'AU EPROG','Labor\u00fcbung f\u00fcr Programmieren in Java')
 INSERT INTO TERMINCONTAINER VALUES(3,'VO Informatik und Gesellschaft I','Sozial- und gesellschaftliche Aspekte und Geschichte der Informatik')
 INSERT INTO TERMINCONTAINER VALUES(4,'PS Grundlagen wissenschaftlichen Arbeitens','Proseminar zum wissenschaftlichen Arbeiten, mit Pr\u00e4sentation')
