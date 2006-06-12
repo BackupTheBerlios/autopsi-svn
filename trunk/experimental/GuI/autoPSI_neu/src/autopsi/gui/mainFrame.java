@@ -71,11 +71,7 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 	private JPanel tab2;
 	private JTextPane lblBeschreibung;
 	private JTabbedPane infobar;
-	private JLabel jLabel8;
-	private JLabel jLabel5;
-	private JLabel jLabel4;
-	private JLabel jLabel3;
-	private JPanel jPanel1;
+	private JTable timetable;
 	private JMenuItem view_dayNext;
 	private JMenuItem view_weekNext;
 	private JMenuItem view_monthNext;
@@ -152,13 +148,6 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 	GregorianCalendar c_marker = new GregorianCalendar();
 	
 	ListModel listTC2Model = new DefaultComboBoxModel(); //Listmodel für verwandte Termine
-	/**
-	* Auto-generated main method to display this JFrame
-	*/
-	public static void main(String[] args) {
-		mainFrame inst = new mainFrame();
-		inst.setVisible(true);
-	}
 	
 	public mainFrame() {
 		super();
@@ -258,6 +247,7 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 					{
 						
 						todayList = new JList();
+						todayList.addMouseListener(this);
 						todayScrollPane.setViewportView(todayList);
 					}
 				}
@@ -732,35 +722,14 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 				}
 			}
 			{
-				jPanel1 = new JPanel();
-				getContentPane().add(jPanel1);
-				jPanel1.setBounds(252, 35, 35, 483);
-				jPanel1.setLayout(null);
-				jPanel1.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
-				{
-					jLabel3 = new JLabel();
-					jPanel1.add(jLabel3);
-					jLabel3.setText("7:00");
-					jLabel3.setBounds(7, 14, 28, 14);
-				}
-				{
-					jLabel4 = new JLabel();
-					jPanel1.add(jLabel4);
-					jLabel4.setText("8:00");
-					jLabel4.setBounds(7, 44, 28, 14);
-				}
-				{
-					jLabel5 = new JLabel();
-					jPanel1.add(jLabel5);
-					jLabel5.setText("9:00");
-					jLabel5.setBounds(7, 74, 28, 14);
-				}
-				{
-					jLabel8 = new JLabel();
-					jPanel1.add(jLabel8);
-					jLabel8.setText("10:00");
-					jLabel8.setBounds(1, 106, 28, 14);
-				}
+				TableModel timetableModel = new DefaultTableModel(
+					new String[][] {{ "Zeit"},{"7.00-"},{"8.00-"},{"9.00-"} },
+					new String[] { "Column 1"});
+				timetable = new JTable();
+				getContentPane().add(timetable);
+				timetable.setModel(timetableModel);
+				timetable.setBounds(253, 35, 35, 483);
+				timetable.setBorder(new LineBorder(new java.awt.Color(0,0,0), 1, false));
 			}
 			{
 				mainMenu = new JMenuBar();
@@ -955,6 +924,9 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 		if(arg0.getSource().equals(jJumpToToday)) {
 			setTimeSpace(new GregorianCalendar());
 		}
+		if(arg0.getSource().equals(todayList)) {
+			loadTerminData();
+		}
 	}
 
 	public void mousePressed(MouseEvent arg0)
@@ -1065,7 +1037,9 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 		if(arg0.getSource().equals(jJumpToToday)) {
 			statusBar.setText("Setzt den Kalender auf das heutige Datum.");
 		}
-		
+		if(arg0.getSource().equals(todayList)) {
+			statusBar.setText("Klick auf einen Termin öffnet dessen Details");
+		}
 	}
 
 	public void mouseExited(MouseEvent arg0) {
@@ -1117,6 +1091,9 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 			statusBar.setText("");
 		}
 		if(arg0.getSource().equals(jJumpToToday)) {
+			statusBar.setText("");
+		}
+		if(arg0.getSource().equals(todayList)) {
 			statusBar.setText("");
 		}
 	}
@@ -1353,5 +1330,10 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 			table.setRowHeight(98);
 			setTimeSpace(calStart);
 		}
+	}
+	
+	private void loadTerminData()
+	{
+		
 	}
 }
