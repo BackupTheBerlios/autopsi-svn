@@ -12,6 +12,7 @@ public class Termin implements GenericDataObject{
 	private String description = null;
 	private Timestamp date = null;
 	private Integer duration = null;
+	private String place = null;
 	
 	public Integer getSetId(boolean set, Integer newId){
 		if (set)
@@ -41,6 +42,12 @@ public class Termin implements GenericDataObject{
 		if (set)
 			this.duration = newDuration;
 		return this.duration;
+	}
+	
+	public String getSetPlace(boolean set, String newPlace){
+		if (set)
+			this.place = newPlace;
+		return this.place;
 	}
 	
 }
