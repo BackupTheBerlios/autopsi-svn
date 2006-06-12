@@ -21,10 +21,15 @@ import javax.swing.border.LineBorder;
 import javax.swing.table.*;
 
 import autopsi.basis.model.*;
+import autopsi.database.dao.GenericDAO;
+import autopsi.database.dao.GenericDataObject;
+import autopsi.database.dao.IGenericDAO;
+import autopsi.database.table.*;
 import autopsi.gui.MonthRenderer;
 import java.util.Date;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
+import java.util.List;
 import java.sql.Timestamp;
 
 import java.text.DateFormat;
@@ -63,6 +68,7 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 	private JButton viewButton2;
 	private JButton viewButton1;
 	private JTable table;
+	private JLabel lblZeit;
 	private JButton jJumpToToday;
 	private JButton newTerminContainer;
 	private JPanel tab0;
@@ -100,13 +106,11 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 	private JButton deleteTC;
 	private JButton editTC;
 	private JPanel jPanel2;
-	private JSeparator jSeparator1;
 	private JCheckBox showTCObjects;
 	private JCheckBox showTObjects;
 	private JList objectList;
 	private JScrollPane objectScroller;
 	private JScrollPane TCterminScroller;
-	private JLabel jLabel9;
 	private JList todayList;
 	private JScrollPane todayScrollPane;
 	private JLabel lblToday;
@@ -146,6 +150,7 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 	GregorianCalendar calEnd= new GregorianCalendar(); //Das Enddatum
 	GregorianCalendar c = new GregorianCalendar();
 	GregorianCalendar c_marker = new GregorianCalendar();
+	ArrayList<String> terminData = new ArrayList();
 	
 	ListModel listTC2Model = new DefaultComboBoxModel(); //Listmodel für verwandte Termine
 	
@@ -530,10 +535,9 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 						tab0.add(lblBeschreibung);
 						lblBeschreibung
 							.setText("Thema: Matrizen\nPrüfungsanmeldung\nAnmeldung zum Vorbereitungstutorium");
-						lblBeschreibung.setBounds(7, 112, 231, 133);
+						lblBeschreibung.setBounds(7, 98, 231, 147);
 						lblBeschreibung.setOpaque(false);
-						lblBeschreibung.setBorder(BorderFactory
-							.createEmptyBorder(0, 0, 0, 0));
+						lblBeschreibung.setBorder(BorderFactory.createEtchedBorder(BevelBorder.LOWERED));
 					}
 					{
 						lblTerminContainer = new JLabel();
@@ -559,19 +563,16 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 					{
 						lblOrt = new JLabel();
 						tab0.add(lblOrt);
-						lblOrt.setText("Ort: AudiMax");
+						lblOrt.setText("Ort:");
 						lblOrt.setBounds(7, 56, 231, 14);
+						lblOrt.setFont(new java.awt.Font("Tahoma",0,12));
 					}
 					{
-						jLabel9 = new JLabel();
-						tab0.add(jLabel9);
-						jLabel9.setText("Beschreibung:");
-						jLabel9.setBounds(11, 89, 84, 14);
-					}
-					{
-						jSeparator1 = new JSeparator();
-						tab0.add(jSeparator1);
-						jSeparator1.setBounds(7, 105, 217, 7);
+						lblZeit = new JLabel();
+						tab0.add(lblZeit);
+						lblZeit.setText("Beginn:");
+						lblZeit.setBounds(7, 74, 231, 14);
+						lblZeit.setFont(new java.awt.Font("Tahoma",0,12));
 					}
 				}
 				{
@@ -723,13 +724,15 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 			}
 			{
 				TableModel timetableModel = new DefaultTableModel(
-					new String[][] {{ "Zeit"},{"7.00-"},{"8.00-"},{"9.00-"} },
+					new String[][] {{ "Zeit"},{"7.00-"},{"8.00-"},{"9.00-"},{"10.00-"},{"11.00-"},{"12.00-"},{"13.00-"}
+					,{"14.00-"},{"15.00-"},{"16.00-"},{"17.00-"},{"18.00-"},{"19.00-"},{"20.00-"},{"21.00-"}},
 					new String[] { "Column 1"});
 				timetable = new JTable();
 				getContentPane().add(timetable);
 				timetable.setModel(timetableModel);
 				timetable.setBounds(253, 35, 35, 483);
 				timetable.setBorder(new LineBorder(new java.awt.Color(0,0,0), 1, false));
+				timetable.setVisible(false);
 			}
 			{
 				mainMenu = new JMenuBar();
@@ -846,11 +849,13 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 		{
 			setModel("month");
 			layoutTable();
+			timetable.setVisible(false);
 		}
 		if(arg0.getSource().equals(viewButton2) )
 		{
 			setModel("week");
 			layoutTable();
+			timetable.setVisible(true);
 		}
 		if(arg0.getSource().equals(table))
 		{ //zeigt den angeklickten Tag in der Infobar an
@@ -879,7 +884,7 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 	    		String title = converter.toLong(dat.toString());
 	    		loadList(data);
 	    		lblDatum.setText(title);
-	    		
+	    		terminData.add(0,data[0]);
 
 	    		if(viewMonth) lblToday.setText("Heutige Termine:");
 	    		else lblToday.setText("Heutige Termine zwischen "+(table.getSelectedRow()+6)+":00 und "+(table.getSelectedRow()+7)+":00");
@@ -946,11 +951,13 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 		{
 			setModel("week");
 			layoutTable();
+			timetable.setVisible(true);
 		}
 		if(arg0.getSource().equals(view_month))
 		{
 			setModel("month");
 			layoutTable();
+			timetable.setVisible(false);
 		}
 		if(arg0.getSource().equals(view_dayNext))
 		{
@@ -1140,6 +1147,7 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 						if(i==j) { k=186; } //Reihe j ist die Reihe, über die gerade "gehovert" wird
 						else { k = 76; } //Die anderen Reihen werden verkleinert
 						table.setRowHeight(i,k); //Reihe i wird mit Höhe k versehen
+						
 					}
 				}
 				else
@@ -1158,6 +1166,7 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 							if(i==j) { k=150; } //Reihe j ist die Reihe, über die gerade "gehovert" wird
 							else { k = 31; } //Die anderen Reihen werden verkleinert
 							table.setRowHeight(i,k); //Reihe i wird mit Höhe k versehen
+							timetable.setRowHeight(i,k);
 						}
 					
 					
@@ -1317,6 +1326,9 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 			viewMonth = false;
 			table.setRowHeight(31);
 			setTimeSpace(calStart);
+			timetable.setRowHeight(31);
+			timetable.setRowHeight(0,20);
+			table.setShowVerticalLines(true);
 		}
 		else if (view.equals("month"))
 		{
@@ -1329,11 +1341,38 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 			viewMonth = true;
 			table.setRowHeight(98);
 			setTimeSpace(calStart);
+			table.setShowVerticalLines(false);
 		}
 	}
 	
 	private void loadTerminData()
 	{
-		
+try
+{
+	
+	IGenericDAO igdao = new GenericDAO();
+	Termin termin = new Termin();
+	String query = "select * from termin where date='" +terminData.get(0)+" "+todayList.getSelectedValue().toString().substring(0,5)+":000'";
+	System.out.println(query);
+	List<GenericDataObject> data = igdao.unsafeQuery(query,termin);
+	
+	termin = (Termin)data.get(0);
+	
+	int dauer = termin.getSetDuration(false,null);
+	int stunden = 0;
+	int minuten = 0;
+	while(dauer>59)
+	{
+	dauer = dauer -60;
+	stunden++;
 	}
+	minuten = dauer;
+	lblZeit.setText("Zeit: "+todayList.getSelectedValue().toString().substring(0,5)+"           Dauer "+stunden+":"+minuten);
+	lblTermin.setText(termin.getSetSecondaryTitle(false,null));
+	lblOrt.setText("Ort: "+termin.getSetPlace(false,null));
+	lblBeschreibung.setText(termin.getSetDescription(false,null));
+}
+catch(Exception ex) {System.out.println(ex.toString());}
+		
+	};
 }
