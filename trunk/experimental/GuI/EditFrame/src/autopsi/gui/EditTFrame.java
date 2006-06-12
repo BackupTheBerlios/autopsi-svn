@@ -4,6 +4,7 @@ import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.awt.event.MouseEvent;
 import java.sql.Date;
+import java.util.List;
 
 import javax.swing.BorderFactory;
 
@@ -20,7 +21,11 @@ import javax.swing.WindowConstants;
 import javax.swing.border.LineBorder;
 
 import autopsi.database.dao.GenericDAO;
+import autopsi.database.dao.GenericDataObject;
 import autopsi.database.dao.IGenericDAO;
+import autopsi.database.exception.EAttributeNotFound;
+import autopsi.database.exception.EDatabase;
+import autopsi.database.exception.EDatabaseConnection;
 
 
 /**
@@ -79,19 +84,33 @@ public class EditTFrame extends javax.swing.JFrame implements java.awt.event.Mou
 	private int duration;
 	private String desc = "";
 	private Date upd_date;
-	
+	private IGenericDAO gdo; 
 
 	/**
 	* Auto-generated main method to display this JFrame
 	*/
 	public static void main(String[] args) {
+		
 		EditTFrame inst = new EditTFrame();
 		inst.setVisible(true);
 	}
 	
 	public EditTFrame() {
 		super();
+		gdo = new GenericDAO();
+		gdo.setCurrentTable("termin");
 		initGUI();
+	}
+	
+	private void readData(Integer id) throws EDatabaseConnection, EAttributeNotFound, EDatabase{
+		TData lookup = new TData();
+		lookup.id = 1;
+		List<GenericDataObject> list = null;
+		list = gdo.getDataObjects(lookup);
+		sec_title = ((TData)list.get(1)).secondary_title;
+		duration = ((TData)list.get(1)).duration;
+		desc = ((TData)list.get(1)).description;
+		
 	}
 	
 	private void initGUI() {
@@ -160,6 +179,7 @@ public class EditTFrame extends javax.swing.JFrame implements java.awt.event.Mou
 
 							public void focusLost(FocusEvent arg0) {
 								sec_title = ((JTextField)arg0.getSource()).getText();
+								System.out.println(sec_title);
 								
 							}
 							
@@ -324,13 +344,12 @@ public class EditTFrame extends javax.swing.JFrame implements java.awt.event.Mou
 			this.dispose();
 		}
 		if(arg0.getSource().equals(jButton3)){
-			IGenericDAO gdo = new GenericDAO();
-			gdo.setCurrentTable("tcdatatable");
+			
 			try{
-				TCData lookup = new TCData(), updateData = new TCData();
+				TData lookup = new TData(), updateData = new TData();
 				lookup.id = 1;
 				updateData.id = 1;
-				updateData.title = title;
+				updateData.secondary_title = this.sec_title;
 				updateData.description = desc;
 				gdo.updDataObjects(lookup, updateData);
 				dispose();
@@ -340,13 +359,13 @@ public class EditTFrame extends javax.swing.JFrame implements java.awt.event.Mou
 			}
 		}
 		if(arg0.getSource().equals(jButton2)){
-			IGenericDAO gdo = new GenericDAO();
-			gdo.setCurrentTable("tdatatable");
+			
 			try{
 				TData lookup = new TData(), updateData = new TData();
 				lookup.id = 1;
 				updateData.id = 1;
-				updateData.sec_title = sec_title;
+				System.out.println("here:" + sec_title);
+				updateData.secondary_title = sec_title;
 				updateData.description = desc;
 				updateData.duration = duration;
 				try{

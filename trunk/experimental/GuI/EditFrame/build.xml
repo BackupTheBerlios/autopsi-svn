@@ -5,8 +5,16 @@
 	<property name="build" value="class"/>
 	<property name="src" value="src"/>
 	
+	<property name="hsqldb_data" value="data"/>
+	<property name="jdbc.username" value="SA"/>
+	<property name="jdbc.password" value="AB"/>
+	<property name="jdbc.url" value="jdbc:hsqldb:file:${hsqldb_data}/database"/>
+	
 	<path id="classpath">
 		<pathelement location="${build}"/>
+		<fileset dir="${basedir}/lib" id="lib">
+			<include name="*.jar"/>
+		</fileset>
 	</path>
 	
 	<target name="clean">
