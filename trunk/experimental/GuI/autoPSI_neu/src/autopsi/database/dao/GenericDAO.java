@@ -126,7 +126,6 @@ public class GenericDAO implements IGenericDAO{
 	
 		SQLStatement sqlSelect = new SQLSelect(sqlTable, sqlFields);
 		String query = sqlSelect.getQuery();
-		System.out.println("Q=="+query);
 		List<GenericDataObject> res = null;
 		try{
 			
