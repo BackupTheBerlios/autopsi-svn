@@ -63,6 +63,7 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 	private JButton viewButton2;
 	private JButton viewButton1;
 	private JTable table;
+	private JButton jJumpToToday;
 	private JButton newTerminContainer;
 	private JPanel tab0;
 	private JLabel jLabel2;
@@ -70,6 +71,11 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 	private JPanel tab2;
 	private JTextPane lblBeschreibung;
 	private JTabbedPane infobar;
+	private JLabel jLabel8;
+	private JLabel jLabel5;
+	private JLabel jLabel4;
+	private JLabel jLabel3;
+	private JPanel jPanel1;
 	private JMenuItem view_dayNext;
 	private JMenuItem view_weekNext;
 	private JMenuItem view_monthNext;
@@ -168,7 +174,7 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 		MonatTM tablemodel = new MonatTM(tsBegin,tsEnd);
 		table.setModel(tablemodel);
 
-		table.setBounds(259, 28, 679, 490);
+		table.setBounds(287, 35, 651, 483);
 		table.setBorder(new LineBorder(new java.awt.Color(0,0,0), 1, false));
 		table.setRowSelectionAllowed(false);
 		table.setSelectionForeground(new java.awt.Color(0,0,0));
@@ -322,6 +328,15 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 					weekNext.addMouseListener(this);
 				}
 				{
+					jJumpToToday = new JButton();
+					toolbar.add(jJumpToToday);
+					jJumpToToday
+						.setIcon(new ImageIcon("src/images/jumpToToday.GIF"));
+					jJumpToToday.setBounds(798, 0, 28, 28);
+					jJumpToToday.setBorder(BorderFactory.createEtchedBorder(BevelBorder.LOWERED));
+					jJumpToToday.addMouseListener(this);
+				}
+				{
 					jPanel2 = new JPanel();
 					toolbar.add(jPanel2);
 					jPanel2.setBounds(826, 0, 56, 28);
@@ -443,7 +458,7 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 				{
 					jPanel5 = new JPanel();
 					toolbar.add(jPanel5);
-					jPanel5.setBounds(777, 0, 49, 28);
+					jPanel5.setBounds(777, 0, 21, 28);
 					jPanel5.setBorder(BorderFactory.createEtchedBorder(BevelBorder.LOWERED));
 				}
 			}
@@ -717,6 +732,37 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 				}
 			}
 			{
+				jPanel1 = new JPanel();
+				getContentPane().add(jPanel1);
+				jPanel1.setBounds(252, 35, 35, 483);
+				jPanel1.setLayout(null);
+				jPanel1.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
+				{
+					jLabel3 = new JLabel();
+					jPanel1.add(jLabel3);
+					jLabel3.setText("7:00");
+					jLabel3.setBounds(7, 14, 28, 14);
+				}
+				{
+					jLabel4 = new JLabel();
+					jPanel1.add(jLabel4);
+					jLabel4.setText("8:00");
+					jLabel4.setBounds(7, 44, 28, 14);
+				}
+				{
+					jLabel5 = new JLabel();
+					jPanel1.add(jLabel5);
+					jLabel5.setText("9:00");
+					jLabel5.setBounds(7, 74, 28, 14);
+				}
+				{
+					jLabel8 = new JLabel();
+					jPanel1.add(jLabel8);
+					jLabel8.setText("10:00");
+					jLabel8.setBounds(1, 106, 28, 14);
+				}
+			}
+			{
 				mainMenu = new JMenuBar();
 				setJMenuBar(mainMenu);
 				mainMenu.setPreferredSize(new java.awt.Dimension(892, 24));
@@ -906,6 +952,9 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 			calStart.set(Calendar.DAY_OF_MONTH, calStart.get(Calendar.DAY_OF_MONTH)-28);
 			setTimeSpace(calStart);
 		}
+		if(arg0.getSource().equals(jJumpToToday)) {
+			setTimeSpace(new GregorianCalendar());
+		}
 	}
 
 	public void mousePressed(MouseEvent arg0)
@@ -1013,6 +1062,9 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 		if(arg0.getSource().equals(dateJumper)) {
 			statusBar.setText("Geben Sie ein Datum im Format TT.MM.JJJJ ein und bestätigen sie mit 'ENTER'");
 		}
+		if(arg0.getSource().equals(jJumpToToday)) {
+			statusBar.setText("Setzt den Kalender auf das heutige Datum.");
+		}
 		
 	}
 
@@ -1062,6 +1114,9 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 			statusBar.setText("");	
 		}
 		if(arg0.getSource().equals(listTC2)) {
+			statusBar.setText("");
+		}
+		if(arg0.getSource().equals(jJumpToToday)) {
 			statusBar.setText("");
 		}
 	}
