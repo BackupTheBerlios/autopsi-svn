@@ -5,7 +5,7 @@ import java.awt.Component;
 
 public abstract class EditPlugin implements Cloneable{
 
-	protected String name;
+	protected String name = "";
 	
 	
 	public abstract Component getEditor();
@@ -19,8 +19,11 @@ public abstract class EditPlugin implements Cloneable{
 	public abstract void nameChanged();
 	
 	public void setName(String newName){
+		System.out.println("setName");
 		this.name = newName;
+		System.out.println("trying to set name");
 		nameChanged();
+		System.out.println("name set!!");
 	}
 	
 	public String getName(){

@@ -5,6 +5,7 @@ import java.awt.Dimension;
 
 import javax.swing.JPanel;
 import javax.swing.JCheckBox;
+import javax.swing.JLabel;
 
 public class BooleanEditPlugin extends EditPlugin{
 
@@ -24,6 +25,7 @@ public class BooleanEditPlugin extends EditPlugin{
 	}
 	
 	public void nameChanged(){
+		System.out.println("BooleanEditPlugin.nameChanged()");
 		checkBox.setText(name);
 	}
 	

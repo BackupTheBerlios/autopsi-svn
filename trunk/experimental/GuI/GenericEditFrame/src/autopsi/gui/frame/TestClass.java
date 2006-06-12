@@ -8,17 +8,26 @@ public class TestClass extends GenericData implements GenericDataObject{
 
 	private String name;
 	private Boolean test1;
+	private double ob;
 	
 	public TestClass(){
 		try{
-			Class[] abc = {String.class};
-			this.addAttribute("name", this.getClass().getMethod("getName", new Class[0]), this.getClass().getMethod("setName",   abc ));
-			Class[] bc = {Boolean.class};
-			this.addAttribute("test1", this.getClass().getMethod("getTest1", new Class[0]), this.getClass().getMethod("setTest1",  bc   ));			
+			Class cl = this.getClass();
+			this.addAttribute("name",cl.getMethod("getName", new Class[] {} ), cl.getMethod("setName",  new Class[] {String.class} ));
+			this.addAttribute("test1", cl.getMethod("getTest1", new Class[] {} ), cl.getMethod("setTest1",  new Class[] {Boolean.class}   ));			
+			this.addAttribute("ob", cl.getMethod("getOb", new Class[] {} ), cl.getMethod("setOb", new Class[] {double.class} ));
 		}
 		catch (Exception e){
 			System.out.println("TestClass::addAttribute fehlgeschlagen::="+e.toString());
 		}
+	}
+	
+	public double getOb(){
+		return this.ob;
+	}
+	
+	public void setOb(double ob){
+		this.ob = ob;
 	}
 
 	public String getName(){

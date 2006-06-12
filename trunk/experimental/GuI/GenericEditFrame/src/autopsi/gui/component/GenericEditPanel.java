@@ -34,11 +34,14 @@ public class GenericEditPanel extends JPanel {
 		EditPlugin edit = new BooleanEditPlugin();
 		plugins.put(boolean.class, edit);
 		plugins.put(Boolean.class, edit);
+		plugins.put(Object.class, new UnimplementedEditPlugin());
 	}
 	
 	public void setObjectToEdit(GenericData obj) throws EClassEditorMissing{
 		this.editedObject = obj;
+		System.out.println("aa ha");
 		inspectEditedObject();
+		System.out.println("immernoch hier");
 		createUI();
 	}
 	
@@ -47,37 +50,54 @@ public class GenericEditPanel extends JPanel {
 	}
 	
 	private void inspectEditedObject() throws EClassEditorMissing{
+		System.out.println("inspectEditedObject 1");
 		Method[] tempMethods = editedObject.getClass().getDeclaredMethods();
 		methods = new HashMap<GSMethod, EditPlugin>();
 		Map<String, GSMethod> map = this.editedObject.getAllAttribs();
 		Set<String> set = map.keySet();
 		Iterator<String> iter = set.iterator();
+		System.out.println("inspectEditedObject 2");
 		while(iter.hasNext()){
 			String key = iter.next();
 			GSMethod x = map.get(key);
-			EditPlugin plug = this.getNewPlugin(x.getMethod);
+			System.out.println("before plug = "+key);
+			EditPlugin plug = this.getNewPlugin(x.getMethod.getReturnType());
+			if (plug == null)
+				plug = this.getNewPlugin(Object.class);
+			System.out.println("after plug = "+key);
 			plug.setName(key);
+			System.out.println("after key!!");
 			try{
-				plug.setValue(x.getMethod.invoke(this.editedObject, new Object[0]));
+				plug.setValue(x.getMethod.invoke(this.editedObject, new Object[] {} ));
 			}
 			catch (Exception e){
 				System.out.println("Couldn' t set value in plugin::"+e.toString());
 			}
 			methods.put(x, plug);
 		}
+		System.out.println("inspectEditedObject 3");
 	}
 	
-	private EditPlugin getNewPlugin(Method method) throws EClassEditorMissing{
+	private EditPlugin getNewPlugin(Class cl){
 		EditPlugin newPlugin = null;
 		try{
-			newPlugin = (EditPlugin)(plugins.get(method.getReturnType()).clone());
-		}
-		catch (NullPointerException e){
-			throw new EClassEditorMissing();
+			if (cl!=null){
+				try{
+					newPlugin = (EditPlugin)(plugins.get(cl).clone());
+				}
+				catch (NullPointerException e){
+					newPlugin = (EditPlugin)(plugins.get(Object.class));
+				}
+			}
+			else
+				newPlugin = (EditPlugin)(plugins.get(Object.class));
+			
+			if (newPlugin == null)
+				newPlugin = (EditPlugin)(plugins.get(Object.class));
 		}
 		//this case should never occur cause only EditPlugins are in the list which extends Cloneable
 		catch (CloneNotSupportedException e){
-			
+
 		}
 		return newPlugin;
 	}
