@@ -1,77 +1,55 @@
-<project name="Suche" default="dist" basedir=".">
+<project name="autoPSISuchen" default="compile" basedir=".">
 
+	<property name="project_name" value="autoPSIsearch"/>
+	<property name="basedir" value="."/>
+	<property name="build" value="class"/>
+	<property name="src" value="src"/>
+	<property name="doc" value="doc"/>
+	<property name="hsqldb_data" value="data"/>
 	
-    <!-- Get properties from external file -->
-    <property file="build.properties"/>
-    
-	
-    <!-- Set classpath -->
-    <path id="classpath">
-        <fileset dir="${basecp}/lib" id="lib">
-            <include name="*.jar"/>
-        </fileset>
-        <pathelement location="${build}"/>
-    </path>    
-    	
-	
-    <!-- clean up: delete all files (also JBuilder bak/) except sources -->     
-    <target name="clean">
-        <!-- Delete the ${build} and ${dist} directory trees -->
-        <delete dir="${build}" />
-        <delete dir="${dist}" />
-    </target>
-    
-	
-    <!-- Initialize Compilation: clean up and define classpath -->
-    <target name="init">
-        <!--<splash/>-->
-        <!-- Create the time stamp -->
-        <tstamp/>
-    		<!-- Create required directories -->
-        <mkdir dir="${build}"/>
-        <mkdir dir="${dist}/${projname}"/>
-    		<!-- Task Definitions for other ant tasks -->
-	</target>
 
+	<property name="jdbc.username" value="SA"/>
+	<property name="jdbc.password" value="ab"/>
+	<property name="jdbc.url" value="jdbc:hsqldb:file:${hsqldb_data}/database"/>
 	
-	
-    <!-- Compile Sources without debug info -->
-    <target name="compile" depends="init">
-         <javac srcdir="${src}"
-             destdir="${build}"
-             classpathref="classpath"
-             debug="off"
-          />
-    </target>
-
-   	<!-- Make Distribution of project  -->
-	<target name="dist" depends="clean,compile">
-		<!-- Copy Spring beans-config -->
-		<copy file="${src}/beans.xml" todir="${build}" />    
-
-     	<!-- create jar including project plus libraries -->
-		<jar destfile="${outjar}">
-			<fileset dir="${build}" />
-			<!-- 
-                these statements expand the library jars 
-                and include them into the distribution jar
-            -->
-			<zipgroupfileset refid="lib"/>
-		</jar>
- 	   	<!-- create distribution archive -->
-     	<tar destfile="${dist}/${projname}.tar.gz" basedir="${dist}" compression="gzip"></tar>
- 
-    </target>
-
-	<target name="run">
-	        <java 
-	            classpathref="classpath"
-	            classname="Basis"
-	            fork="true"
-	        />
-		</target>
+	<path id="classpath">
+		<pathelement location="${build}"/>
+		<fileset dir="${basedir}/lib" id="lib">
+			<include name="*.jar"/>
+		</fileset>
 		
-	<!-- Run HSQLDB Swing Database Manager -->
+	</path>
+	
+	<target name="clean">
+		<delete dir="${build}"/>
+	</target>
+		
+	<target name="init">
+		<mkdir dir="${build}"/>
+	</target>
+	
+	<target name="compile" depends="init">
+		<javac srcdir="${src}" destdir="${build}" classpathref="classpath"/>
+	</target>
+	
+	<target name="run">
+		<java classpathref="classpath" classname="basis.Basis" fork="true"/> 
+	</target>
+	
+	<target name="javadoc">
+        <javadoc 
+            destdir="${doc}/api"
+            use="true"
+            author="true" version="true"
+            doctitle="${project_name}"
+            classpathref="classpath"
+        >
+            <packageset dir="${src}" defaultexcludes="yes">
+                <include name="autopsi/**"/>
+            </packageset>
+        </javadoc>
+	</target>
+	
 	<target name="runDBMan">
         <java 
             classpathref="classpath"
@@ -83,7 +61,8 @@
             <arg line="-password ${jdbc.password}" />
         </java>
 	</target>
-    
+		
+	<target name="compile_and_run" depends="compile,run">
+	</target>
+	
 </project>
-
-    

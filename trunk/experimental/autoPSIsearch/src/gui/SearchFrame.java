@@ -1,4 +1,5 @@
 package gui;
+
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -22,6 +23,8 @@ import javax.swing.JSeparator;
 import javax.swing.JTabbedPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+
+import model.Termin;
 
 /**
 * This code was edited or generated using CloudGarden's Jigloo
@@ -49,6 +52,7 @@ public class SearchFrame extends javax.swing.JPanel implements ActionListener {
 	static final long serialVersionUID = 18310810238219L;
 
 	private JTabbedPane jTabbedSearchPane;
+	
 	
 	private JPanel jkontaktSuchePanel;
 	private JPanel jLVASuchePanel;
@@ -79,10 +83,11 @@ public class SearchFrame extends javax.swing.JPanel implements ActionListener {
 	private JLabel jTypeLabel;
 	private JLabel jDatumLabel;
 
-	private JCheckBox jTerminSpaceSucheCheckBox, jTerminLokalSucheCheckBox;
 	private JCheckBox jTerminCheckBox, jTerminContainerCheckBox;
 	
 	private JTable jKontaktTable, jLVATable, jTerminTable;
+	
+	private TerminTableModel jTerminTableModel;
 	
 	private JButton jKontaktSuchenButton, jTerminSuchenButton, jLVASuchenButton;
 	private ButtonGroup jKontaktSucheGroup,jLVASucheGroup, jTerminSucheGroup;
@@ -255,7 +260,6 @@ public class SearchFrame extends javax.swing.JPanel implements ActionListener {
 							jEmailLabel.setText("Email:");
 							jEmailLabel.setBounds(386, 12, 35, 14);
 						}
-						
 
 					}
 					
@@ -357,7 +361,8 @@ public class SearchFrame extends javax.swing.JPanel implements ActionListener {
 							jLVAScrollPane.setWheelScrollingEnabled(true);
 							{
 								TableModel jLVATableModel = new DefaultTableModel(
-									new String[][] { { "One", "Two" },
+									new String[][] { 
+											{ "One", "Two" },
 											{ "Three", "Four" },
 											{ "Three", "Four" },
 											{ "Three", "Four" },
@@ -448,6 +453,8 @@ public class SearchFrame extends javax.swing.JPanel implements ActionListener {
 						jTerminSuchePanel.add(jTerminTypeComboBox);
 						jTerminTypeComboBox.setModel(jTerminTypeComboBoxModel);
 						jTerminTypeComboBox.setBounds(420, 30, 210, 21);
+						
+						
 
 						{
 							jSeparator3 = new JSeparator();
@@ -494,10 +501,7 @@ public class SearchFrame extends javax.swing.JPanel implements ActionListener {
 							jTerminScrollPane.setBounds(18, 147, 658, 203);
 							jTerminScrollPane.setWheelScrollingEnabled(true);
 							{
-								TableModel jTerminTableModel = new DefaultTableModel(
-									new String[][] { { "One", "Two" },
-											{ "Three", "Four" } },
-									new String[] { "Column 1", "Column 2" });
+								jTerminTableModel = new TerminTableModel();
 								jTerminTable = new JTable();
 								jTerminScrollPane.setViewportView(jTerminTable);
 								jTerminTable.setModel(jTerminTableModel);
@@ -507,7 +511,6 @@ public class SearchFrame extends javax.swing.JPanel implements ActionListener {
 								jTerminTable.setGridColor(Color.LIGHT_GRAY);
 							}
 						}
-						
 
 					}
 					
@@ -538,6 +541,21 @@ public class SearchFrame extends javax.swing.JPanel implements ActionListener {
 		} else if(cmd.equals("Termin Suchen")) {
 			if (jTerminLokalSuchenRadioButton.isSelected()){
 				System.out.println("Termin wird lokal gesucht...");
+				Termin ter = new Termin();
+				if (!jTerminTitelField.getText().equals("")) {
+					ter.setSecondarytitle(jTerminTitelField.getText());
+				} else {
+					ter.setSecondarytitle(null);
+				}
+				if (!jTerminBeschreibungField.getText().equals("")){
+					ter.setDescription(jTerminBeschreibungField.getText());
+				} else {
+					ter.setDescription(null);
+				}
+				jTerminTableModel.setSuchtermin(ter);
+				jTerminTableModel.fireDataChanged();
+				
+				
 			} else if (jTerminOnlineSuchenRadioButton.isSelected()) {
 				System.out.println("Termint wird online gesucht...");
 			}
