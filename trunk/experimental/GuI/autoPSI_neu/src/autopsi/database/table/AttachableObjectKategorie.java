@@ -2,7 +2,7 @@ package autopsi.database.table;
 
 import autopsi.database.dao.GenericDataObject;
 
-public class Kategorie implements GenericDataObject {
+public class AttachableObjectKategorie implements GenericDataObject {
 	private Integer id;
 	private String title;
 	private String description;

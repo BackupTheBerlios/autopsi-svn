@@ -6,6 +6,7 @@ public class AttachableObject implements GenericDataObject {
 
 	
 	private Integer id;
+	private Integer kategorie_id;
 	
 	
 	public int getId(){
@@ -14,6 +15,14 @@ public class AttachableObject implements GenericDataObject {
 	
 	public void setId(int id){
 		this.id = id;
+	}
+	
+	public int getKategorieId(){
+		return this.kategorie_id;
+	}
+	
+	public void setKategorieId(int kategorieId){
+		this.kategorie_id = kategorieId;
 	}
 
 }
