@@ -57,7 +57,7 @@ public class Lehrmittel implements GenericDataObject {
 	}
 	
 	public void setFileLink(String fileLink){
-		return this.file_link;
+		this.file_link = fileLink;
 	}
 	
 }
