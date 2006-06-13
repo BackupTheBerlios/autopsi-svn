@@ -24,11 +24,13 @@ import java.util.*;
 * LEGALLY FOR ANY CORPORATE OR COMMERCIAL PURPOSE.
 */
 public class DayCell extends javax.swing.JPanel {
-	private String date;
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -8020672112509466104L;
 	private JLabel title = new JLabel();
 	private JList list;
 	private JScrollPane jScrollPane1;
-private ArrayList<String> data;
 	{
 		//Set Look & Feel
 		try {
