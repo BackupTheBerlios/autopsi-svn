@@ -53,6 +53,7 @@ public class SearchFrame extends javax.swing.JPanel implements ActionListener {
 
 	private JTabbedPane jTabbedSearchPane;
 	
+	private IDate_selector s;
 	
 	private JPanel jkontaktSuchePanel;
 	private JPanel jLVASuchePanel;
@@ -461,6 +462,8 @@ public class SearchFrame extends javax.swing.JPanel implements ActionListener {
 							jTerminSuchePanel.add(jSeparator3);
 							jSeparator3.setBounds(7, 140, 679, 7);
 						}
+						
+						
 							jTerminSuchenButton = new JButton();
 							jTerminSuchePanel.add(jTerminSuchenButton);
 							jTerminSuchenButton.setText("Termin Suchen");
@@ -561,5 +564,4 @@ public class SearchFrame extends javax.swing.JPanel implements ActionListener {
 			}
 		}
 	}
-
 }
