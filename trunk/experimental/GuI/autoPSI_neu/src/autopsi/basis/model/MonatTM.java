@@ -31,7 +31,7 @@ public class MonatTM extends AbstractTableModel {
 		igdao.setCurrentTable("Termin");
 		try
 		{
-			termine = igdao.getDataObjects(tc);
+			termine = igdao.unsafeQuery("select * from termin where date >='"+begin + "' and date <='"+end+"' order by date",tc);
 		}
 		catch(Exception ex)
 		{
@@ -79,13 +79,13 @@ public class MonatTM extends AbstractTableModel {
 		
 		Timestamp stamp = new Timestamp(c.getTimeInMillis());
 		
-		List<String> ret = new ArrayList();
+		List<String> ret = new ArrayList<String>();
 		ret.add(stamp.toString().substring(0,10));
 		
 		for (int i = 0;i<termine.size();i++)
 		{
-			if (((Termin)termine.get(i)).getSetDate(false, null).toString().substring(0,10).equals(stamp.toString().substring(0,10))){	
-				 ret.add(((Termin)termine.get(i)).getSetDate(false, null).toString().substring(11,16)+" "+((Termin)termine.get(i)).getSetSecondaryTitle(false, null));
+			if (((Termin)termine.get(i)).getDate().toString().substring(0,10).equals(stamp.toString().substring(0,10))){	
+				 ret.add(((Termin)termine.get(i)).getDate().toString().substring(11,16)+" "+((Termin)termine.get(i)).getSecondaryTitle());
 			}
 		}
 		String [] data = new String[ret.size()];

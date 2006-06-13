@@ -31,7 +31,8 @@ public class WocheTM extends AbstractTableModel {
 		igdao.setCurrentTable("Termin");
 		try
 		{
-			termine = igdao.getDataObjects(tc);
+			termine = igdao.unsafeQuery("select * from termin where date >='"+begin + "' and date <='"+end+"' order by date",tc);
+			
 		}
 		catch(Exception ex)
 		{
@@ -79,18 +80,18 @@ public class WocheTM extends AbstractTableModel {
 		
 		Timestamp stamp = new Timestamp(c.getTimeInMillis());
 		
-		List<String> ret = new ArrayList();
+		List<String> ret = new ArrayList<String>();
 		ret.add(stamp.toString().substring(0,10));
 		
 		for (int i = 0;i<termine.size();i++)
 		{
-			if (((Termin)termine.get(i)).getSetDate(false, null).toString().substring(0,10).equals(stamp.toString().substring(0,10)))
+			if (((Termin)termine.get(i)).getDate().toString().substring(0,10).equals(stamp.toString().substring(0,10)))
 			{	
 				//System.out.println("termin    "+Integer.parseInt(((Termin)termine.get(i)).getSetDate(false, null).toString().substring(11,13)));
 				//System.out.println("row       "+row);
-				if(row+6==Integer.parseInt(((Termin)termine.get(i)).getSetDate(false, null).toString().substring(11,13)))
+				if(row+6==Integer.parseInt(((Termin)termine.get(i)).getDate().toString().substring(11,13)))
 				{
-					 ret.add(((Termin)termine.get(i)).getSetDate(false, null).toString().substring(11,16)+" "+((Termin)termine.get(i)).getSetSecondaryTitle(false, null));
+					 ret.add(((Termin)termine.get(i)).getDate().toString().substring(11,16)+" "+((Termin)termine.get(i)).getSecondaryTitle());
 				}
 				
 			}
