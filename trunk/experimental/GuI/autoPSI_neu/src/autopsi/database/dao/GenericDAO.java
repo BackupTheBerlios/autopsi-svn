@@ -357,9 +357,11 @@ public class GenericDAO implements IGenericDAO{
 			
 			PreparedStatement ps = null;
 			try{
+				System.out.println(query);
 				ps = dbCon.prepareStatement(query);
 			}
 			catch (SQLException e){
+				System.out.println(e.toString());
 				ps = dbCon.prepareStatement("SELECT * FROM "+currentTable);
 				
 				if (ps ==null)
@@ -408,7 +410,7 @@ public class GenericDAO implements IGenericDAO{
 	
 	protected void shutdownDB() throws Throwable{
 		try{
-			System.out.println("closung DB Connection with SHUTDOWN");
+			System.out.println("closing DB Connection with SHUTDOWN");
 			PreparedStatement pshut = dbCon.prepareStatement("SHUTDOWN IMMEDIATELY");
 			pshut.execute();
 			dbCon.commit();
