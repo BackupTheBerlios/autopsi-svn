@@ -1,4 +1,4 @@
-package gui;
+package autopsi.gui;
 
 import java.awt.event.ActionListener;
 import java.util.Date;

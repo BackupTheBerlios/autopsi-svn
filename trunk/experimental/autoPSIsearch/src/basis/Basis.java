@@ -1,7 +1,7 @@
 package basis;
 
 
-import gui.SearchFrame;
+import autopsi.gui.SearchFrame;
 
 public class Basis {
 	

@@ -1,4 +1,4 @@
-package gui;
+package autopsi.gui;
 
 import java.awt.Color;
 import java.awt.event.ActionEvent;
