@@ -113,6 +113,81 @@ public class GenericDAO implements IGenericDAO{
 				throw new EAttributeNotFound();
 		}
 	}
+
+	public List<GenericDataObject> getDataObjects(GenericDataObject lookupObj, boolean likeSearch) throws EDatabase, EDatabaseConnection, EAttributeNotFound{
+		if (connect() == null)
+			throw new EDatabaseConnection();
+
+		SQLTable sqlTable = new SQLTable(currentTable);
+		SQLFields sqlFields = getSQLFields(lookupObj);
+		sqlFields.beginTraversal();
+//		while(sqlFields.next())
+//			System.out.println("next=="+sqlFields.getCurrentName()+";"+sqlFields.getCurrentValue());
+	
+		SQLWhere sqlWhere = new SQLWhere();
+		SQLConjunctor con = new SQLConjunctorAnd();
+		SQLOperator op = new SQLOperatorLike(sqlFields);
+		con.addOperator(op);
+		sqlWhere.addConjunctor(con);
+		SQLStatement sqlSelect = new SQLSelect(sqlTable, sqlWhere);
+		String query = sqlSelect.getQuery();
+		System.out.println("Q=="+query);
+		List<GenericDataObject> res = null;
+		try{
+			
+			PreparedStatement ps = null;
+			try{
+				ps = dbCon.prepareStatement(query);
+			}
+			catch (SQLException e){
+				ps = dbCon.prepareStatement("SELECT * FROM "+currentTable);
+				
+				if (ps ==null)
+					throw new EDatabase();
+				
+				this.checkAttributes(ps.getMetaData(), lookupObj);
+				throw new EDatabase();
+			}
+			
+			if (!ps.execute())
+				throw new EDatabase();
+			
+			ResultSet rs = ps.getResultSet();
+			res = new ArrayList<GenericDataObject>();
+			while (rs.next()){
+				GenericDataObject obj = lookupObj.getClass().newInstance();
+				Field[] fd = obj.getClass().getDeclaredFields();
+				AccessibleObject.setAccessible(fd, true);
+				for(int i=0;i<fd.length;i++){
+					Object dbObj = null;
+					dbObj = rs.getObject(fd[i].getName());	
+					fd[i].set(obj, dbObj);
+				}
+				res.add(obj);
+			}
+		}
+		catch (SQLException e){
+			System.out.println("Exception;"+e.toString());
+			throw new EDatabase();
+		}
+		catch (InstantiationException e){
+			System.out.println("Exception;"+e.toString());
+			throw new EDatabase();
+		}
+		catch (IllegalArgumentException e){
+			System.out.println("Exception;"+e.toString());
+			throw new EDatabase();
+		}
+		catch (IllegalAccessException e){
+			System.out.println("Exception;"+e.toString());
+			throw new EDatabase();
+		}
+		return res;
+		
+		
+	}
+	
+	
 	
 	public List<GenericDataObject> getDataObjects(GenericDataObject lookupObj) throws EDatabase, EDatabaseConnection, EAttributeNotFound{
 		if (connect() == null)
@@ -121,7 +196,7 @@ public class GenericDAO implements IGenericDAO{
 		SQLTable sqlTable = new SQLTable(currentTable);
 		SQLFields sqlFields = getSQLFields(lookupObj);
 		sqlFields.beginTraversal();
-		while(sqlFields.next())
+//		while(sqlFields.next())
 //			System.out.println("next=="+sqlFields.getCurrentName()+";"+sqlFields.getCurrentValue());
 	
 		SQLStatement sqlSelect = new SQLSelect(sqlTable, sqlFields);
