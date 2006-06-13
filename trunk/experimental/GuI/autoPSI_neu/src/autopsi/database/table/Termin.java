@@ -14,40 +14,53 @@ public class Termin implements GenericDataObject{
 	private Integer duration = null;
 	private String place = null;
 	
-	public Integer getSetId(boolean set, Integer newId){
-		if (set)
-			this.id = newId;
+	
+	public Integer getId(){
 		return this.id;
 	}
 	
-	public String getSetSecondaryTitle(boolean set, String newSecTitle){
-		if (set)
-			this.secondary_title = newSecTitle;
+	public void setIt(int id){
+		this.id = id;
+	}
+	
+	public String getSecondaryTitle(){
 		return this.secondary_title;
 	}
 	
-	public String getSetDescription(boolean set, String newDescription){
-		if (set)
-			this.description = newDescription;
+	public void setSecondaryTitle(String secondaryTitle){
+		this.secondary_title = secondaryTitle;
+	}
+	
+	public String getDescription(){
 		return this.description;
 	}
 	
-	public Timestamp getSetDate(boolean set, Timestamp newDate){
-		if (set)
-			this.date = newDate;
+	public void setDescription(String newDescription){
+		this.description = newDescription;
+	}
+	
+	public Timestamp getDate(){
 		return this.date;
 	}
 	
-	public Integer getSetDuration(boolean set, Integer newDuration){
-		if (set)
-			this.duration = newDuration;
+	public void setDate(Timestamp date){
+		this.date = date;
+	}
+	
+	public Integer getDuration(){
 		return this.duration;
 	}
 	
-	public String getSetPlace(boolean set, String newPlace){
-		if (set)
-			this.place = newPlace;
+	public void setDuration(int duration){
+		this.duration = duration;
+	}
+	
+	public String getPlace(String place){
 		return this.place;
+	}
+	
+	public void setPlace(String place){
+		this.place = place;
 	}
 	
 }
