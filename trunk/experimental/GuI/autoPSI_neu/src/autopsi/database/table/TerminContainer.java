@@ -22,8 +22,16 @@ public class TerminContainer implements GenericDataObject{
 		return this.title;
 	}
 	
-	public void setTitle(Sting title){
+	public void setTitle(String title){
 		this.title = title;
 	}
 	
+	public String getDescription()
+	{
+		return this.description;
+	}
+	
+	public void setDescription(String description) {
+		this.description = description;
+	}
 }

@@ -19,7 +19,7 @@ public class Termin implements GenericDataObject{
 		return this.id;
 	}
 	
-	public void setIt(int id){
+	public void setId(int id){
 		this.id = id;
 	}
 	
@@ -55,7 +55,7 @@ public class Termin implements GenericDataObject{
 		this.duration = duration;
 	}
 	
-	public String getPlace(String place){
+	public String getPlace(){
 		return this.place;
 	}
 	
