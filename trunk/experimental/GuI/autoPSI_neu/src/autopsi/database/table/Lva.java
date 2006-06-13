@@ -50,7 +50,7 @@ public class Lva implements GenericDataObject {
 		return this.description;
 	}
 	
-	public void setDescription(description){
+	public void setDescription(String description){
 		this.description = description;
 	}
 	
