@@ -4,8 +4,8 @@ import autopsi.database.dao.GenericDataObject;
 
 public class Email implements GenericDataObject {
 
-	private int id;
-	private int kontakt_id;
+	private Integer id;
+	private Integer kontakt_id;
 	private String email;
 	
 	
@@ -13,7 +13,7 @@ public class Email implements GenericDataObject {
 		return this.id;
 	}
 	
-	public void setId(String id){
+	public void setId(Integer id){
 		this.id = id;
 	}
 	
@@ -21,7 +21,7 @@ public class Email implements GenericDataObject {
 		return this.kontakt_id;
 	}
 	
-	public void setKontaktId(int kontaktId){
+	public void setKontaktId(Integer kontaktId){
 		this.kontakt_id = kontaktId;
 	}
 	
