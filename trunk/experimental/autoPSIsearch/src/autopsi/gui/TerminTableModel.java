@@ -7,7 +7,7 @@ import autopsi.database.dao.GenericDAO;
 import autopsi.database.dao.GenericDataObject;
 import autopsi.database.dao.IGenericDAO;
 
-import model.Termin;
+import autopsi.database.table.Termin;
 
 public class TerminTableModel extends AbstractTableModel{
 	private static final long serialVersionUID = 8737097029189851737L;
@@ -36,7 +36,7 @@ public class TerminTableModel extends AbstractTableModel{
 	}
 	
 	
-	public void setSuchtermin (Termin suchtermin){
+	public void setSuchTermin (Termin suchtermin){
 		this.suchTermin=suchtermin;
 		fireDataChanged();
 	}
@@ -71,7 +71,7 @@ public class TerminTableModel extends AbstractTableModel{
 		if (ter==null)
 			return null;
 		else if (col==0)
-			return ter.getSecondarytitle();
+			return ter.getSecondaryTitle();
 		else if (col==1)
 			return ter.getDescription();
 		else if (col==2)

@@ -24,7 +24,7 @@ import javax.swing.JTabbedPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 
-import model.Termin;
+import autopsi.database.table.Termin;
 
 /**
 * This code was edited or generated using CloudGarden's Jigloo
@@ -546,16 +546,16 @@ public class SearchFrame extends javax.swing.JPanel implements ActionListener {
 				System.out.println("Termin wird lokal gesucht...");
 				Termin ter = new Termin();
 				if (!jTerminTitelField.getText().equals("")) {
-					ter.setSecondarytitle(jTerminTitelField.getText());
+					ter.setSecondaryTitle(jTerminTitelField.getText());
 				} else {
-					ter.setSecondarytitle(null);
+					ter.setSecondaryTitle(null);
 				}
 				if (!jTerminBeschreibungField.getText().equals("")){
 					ter.setDescription(jTerminBeschreibungField.getText());
 				} else {
 					ter.setDescription(null);
 				}
-				jTerminTableModel.setSuchtermin(ter);
+				jTerminTableModel.setSuchTermin(ter);
 				jTerminTableModel.fireDataChanged();
 				
 				

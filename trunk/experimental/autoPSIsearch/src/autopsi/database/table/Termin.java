@@ -8,7 +8,7 @@ import autopsi.database.dao.GenericDataObject;
 public class Termin implements GenericDataObject{
 
 	private Integer id = null;
-	private Integer termin_kategorie_id;
+	private Integer termin_kategorie_id=null;
 	private String secondary_title = null;
 	private String description = null;
 	private Timestamp date = null;
