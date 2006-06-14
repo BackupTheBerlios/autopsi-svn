@@ -25,6 +25,7 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 
 import autopsi.database.table.Termin;
+import autopsi.database.table.TerminKategorie;
 
 /**
 * This code was edited or generated using CloudGarden's Jigloo
@@ -52,8 +53,6 @@ public class SearchFrame extends javax.swing.JPanel implements ActionListener {
 	static final long serialVersionUID = 18310810238219L;
 
 	private JTabbedPane jTabbedSearchPane;
-	
-	private IDate_selector s;
 	
 	private JPanel jkontaktSuchePanel;
 	private JPanel jLVASuchePanel;
@@ -448,8 +447,7 @@ public class SearchFrame extends javax.swing.JPanel implements ActionListener {
 						jTerminSuchePanel.add(jDatumField);
 						jDatumField.setBounds(420, 7, 210, 21);
 						
-						ComboBoxModel jTerminTypeComboBoxModel = new DefaultComboBoxModel(
-							new String[] { "LVA", "Prüfung" });
+						ComboBoxModel jTerminTypeComboBoxModel = new KategoryComboBoxModel("TERMIN_KATEGORIE", new TerminKategorie() );
 						jTerminTypeComboBox = new JComboBox();
 						jTerminSuchePanel.add(jTerminTypeComboBox);
 						jTerminTypeComboBox.setModel(jTerminTypeComboBoxModel);

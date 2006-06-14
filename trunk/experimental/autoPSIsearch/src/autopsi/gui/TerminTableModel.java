@@ -59,7 +59,7 @@ public class TerminTableModel extends AbstractTableModel{
 	}
 	
 	public int getColumnCount() {
-		System.out.println("colCount = " + columnName.length);
+		//System.out.println("colCount = " + columnName.length);
 		return columnName.length;
 	}
 	
