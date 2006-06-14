@@ -1,4 +1,4 @@
-package basis;
+package autopsi.basis;
 
 
 import autopsi.gui.SearchFrame;
