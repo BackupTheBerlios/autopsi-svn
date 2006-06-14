@@ -22,12 +22,24 @@ public class TerminTableModel extends AbstractTableModel{
 	}
 	
 	private void readData() {
+		String query="select * from Termin where";
+		Boolean first = true;
 		try{
 			IGenericDAO gdo = new GenericDAO();
-			gdo.setCurrentTable("TERMIN");
-			this.termine =  gdo.getDataObjects(this.suchTermin);
-		}
-		catch (Exception e){
+			if (suchTermin!=null) {
+				if (suchTermin.getSecondaryTitle()!=null) {
+					if (first){
+						query += " SECONDARY_TITLE LIKE '%" + suchTermin.getSecondaryTitle()+"%'";
+						first = false;
+					} else {
+						query += "AND SECONDARY_TITLE LIKE '%" + suchTermin.getSecondaryTitle()+"%'";
+					}
+				}
+				if (first == false){
+					this.termine =  gdo.unsafeQuery(query, suchTermin);
+				}
+			}
+		} catch (Exception e){
 			System.out.println("AAARGH;"+e.toString());
 		}
 	}
