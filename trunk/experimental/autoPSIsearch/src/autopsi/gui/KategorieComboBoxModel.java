@@ -7,13 +7,13 @@ import autopsi.database.dao.IGenericDAO;
 
 import autopsi.database.table.TerminKategorie;
 import autopsi.database.table.LvaKategorie;
-public class KategoryComboBoxModel extends DefaultComboBoxModel {
+public class KategorieComboBoxModel extends DefaultComboBoxModel {
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 134543543534534L;
 	
-	public KategoryComboBoxModel(String tablename, TerminKategorie kat) {
+	public KategorieComboBoxModel(String tablename, TerminKategorie kat) {
 		super ();
 		List <GenericDataObject> kategorien = null;
 		IGenericDAO gdo=new GenericDAO();
@@ -31,7 +31,7 @@ public class KategoryComboBoxModel extends DefaultComboBoxModel {
 		}
 	}
 	
-	public KategoryComboBoxModel(String tablename, LvaKategorie kat) {
+	public KategorieComboBoxModel(String tablename, LvaKategorie kat) {
 		super ();
 		List <GenericDataObject> kategorien=null;
 		IGenericDAO gdo=new GenericDAO();

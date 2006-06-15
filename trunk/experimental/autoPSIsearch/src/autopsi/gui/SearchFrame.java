@@ -25,6 +25,7 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 
 import autopsi.database.table.Termin;
+import autopsi.database.table.Kontakt;
 import autopsi.database.table.TerminKategorie;
 import autopsi.database.table.LvaKategorie;
 
@@ -325,7 +326,7 @@ public class SearchFrame extends javax.swing.JPanel implements ActionListener {
 						jLVAKatComboBox.setModel(jLVAKatComboBoxModel);
 						jLVAKatComboBox.setBounds(420, 7, 210, 21);
 						
-						KategoryComboBoxModel jLVATypeComboBoxModel = new KategoryComboBoxModel("LVA_KATEGORIE", new LvaKategorie() );
+						KategorieComboBoxModel jLVATypeComboBoxModel = new KategorieComboBoxModel("LVA_KATEGORIE", new LvaKategorie() );
 						jLVATypeComboBox = new JComboBox();
 						jLVASuchePanel.add(jLVATypeComboBox);
 						jLVATypeComboBox.setModel(jLVATypeComboBoxModel);
@@ -457,7 +458,7 @@ public class SearchFrame extends javax.swing.JPanel implements ActionListener {
 						jTerminSuchePanel.add(jDatumField);
 						jDatumField.setBounds(420, 7, 210, 21);
 						
-						KategoryComboBoxModel jTerminTypeComboBoxModel = new KategoryComboBoxModel("TERMIN_KATEGORIE", new TerminKategorie() );
+						KategorieComboBoxModel jTerminTypeComboBoxModel = new KategorieComboBoxModel("TERMIN_KATEGORIE", new TerminKategorie() );
 						jTerminTypeComboBox = new JComboBox();
 						jTerminSuchePanel.add(jTerminTypeComboBox);
 						jTerminTypeComboBox.setModel(jTerminTypeComboBoxModel);
@@ -545,6 +546,13 @@ public class SearchFrame extends javax.swing.JPanel implements ActionListener {
 		if (cmd.equals("Kontakt Suchen")) {
 			if (jKontaktLokalSuchenRadioButton.isSelected()){
 				System.out.println("Kontakt wird lokal gesucht...");
+				Kontakt kont = new Kontakt();
+				if (!jVornameField.getText().equals("")){
+					kont.setPrename(jVornameField.getText());
+				} else {
+					kont.setPrename(null);
+				}
+				
 			} else if (jKontaktOnlineSuchenRadioButton.isSelected()) {
 				System.out.println("Kontakt wird online gesucht...");
 			}
