@@ -90,6 +90,7 @@ public class SearchFrame extends javax.swing.JPanel implements ActionListener {
 	private JTable jKontaktTable, jLVATable, jTerminTable;
 	
 	private TerminTableModel jTerminTableModel;
+	private KontaktTableModel jKontaktTableModel;
 	
 	private JButton jKontaktSuchenButton, jTerminSuchenButton, jLVASuchenButton;
 	private ButtonGroup jKontaktSucheGroup,jLVASucheGroup, jTerminSucheGroup;
@@ -246,10 +247,7 @@ public class SearchFrame extends javax.swing.JPanel implements ActionListener {
 							jKontaktScrollPane.setWheelScrollingEnabled(true);
 							jKontaktScrollPane.setBackground(new java.awt.Color(255,255,255));
 							{
-								TableModel jKontaktTableModel = new DefaultTableModel(
-									new String[][] { { "One", "Two" },
-											{ "Three", "Four" } },
-									new String[] { "Column 1", "Column 2" });
+								jKontaktTableModel = new KontaktTableModel();
 								jKontaktTable = new JTable();
 								jKontaktScrollPane
 									.setViewportView(jKontaktTable);
@@ -552,6 +550,8 @@ public class SearchFrame extends javax.swing.JPanel implements ActionListener {
 				} else {
 					kont.setPrename(null);
 				}
+				jKontaktTableModel.setSuchKontakt(kont);
+				jKontaktTableModel.fireDataChanged();
 				
 			} else if (jKontaktOnlineSuchenRadioButton.isSelected()) {
 				System.out.println("Kontakt wird online gesucht...");
