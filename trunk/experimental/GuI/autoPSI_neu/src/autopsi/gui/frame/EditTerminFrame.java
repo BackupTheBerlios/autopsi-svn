@@ -171,8 +171,9 @@ public class EditTerminFrame extends javax.swing.JFrame implements java.awt.even
 			String query="";
 			if (ID==null) query = "insert into termin (secondary_title, description, date, duration, place) values ('"+sec_title+"','"+desc+"','"+date+"',"+duration+",'"+place+"')";
 			else query = "update termin  set secondary_title='"+sec_title+"', description='"+desc+"', date='"+date+"',duration="+duration+",place='"+place+"' where id="+ID;
-			gdo.unsafeQuery(query,null);
-			System.out.println("resr");
+			Termin vorlage = new Termin();
+			gdo.unsafeQuery(query,vorlage);
+			
 				
 			/*lookup.setId(ID);
 			updateData.setId(ID);
