@@ -2,13 +2,17 @@ package autopsi.gui.frame;
 
 
 import java.awt.event.MouseEvent;
+import java.sql.Date;
 import java.sql.Timestamp;
+import java.text.DateFormat;
 import java.util.List;
+import java.util.Locale;
 
 import javax.swing.BorderFactory;
 
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
+import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
@@ -18,6 +22,7 @@ import javax.swing.JTextField;
 import javax.swing.ListModel;
 import javax.swing.WindowConstants;
 import javax.swing.border.LineBorder;
+import javax.swing.text.DateFormatter;
 
 import autopsi.database.dao.GenericDAO;
 import autopsi.database.dao.GenericDataObject;
@@ -85,6 +90,7 @@ public class EditTerminFrame extends javax.swing.JFrame implements java.awt.even
 	
 	private String sec_title = "";
 	private String date;
+	private String time = ""; 
 	private int duration;
 	private String desc = "";
 	private IGenericDAO gdo; 
@@ -117,9 +123,11 @@ public class EditTerminFrame extends javax.swing.JFrame implements java.awt.even
 		desc_area.setText(desc);
 		place = ((Termin)list.get(0)).getPlace();
 		place_field.setText(place);
-		date = ((Termin)list.get(0)).getDate().toString();
+		date = ((Termin)list.get(0)).getDate().toString().substring(0,10);
 		date_field.setText(date.substring(0,10));
 		time_field.setText(date.substring(11,16));
+		time = ((Termin)list.get(0)).getDate().toString().substring(11);
+		
 		
 		
 		
@@ -128,7 +136,28 @@ public class EditTerminFrame extends javax.swing.JFrame implements java.awt.even
 		try{
 			sec_title = sec_titlefield.getText();
 			date = date_field.getText();
+			time = time_field.getText()+":00.0";
+			
+			
+			try{
+				int i = date.indexOf(".");
+				int day = Integer.parseInt(date.substring(0,i));
+				date = date.substring(i+1);
+				i = date.indexOf(".");
+				int month = Integer.parseInt(date.substring(0,i));
+				date = date.substring(i+1);
+				int year = 0;
+				if(date.length()==2) year = 2000+Integer.parseInt(date);
+				else year = Integer.parseInt(date);
+				
+				if(day < 1 || day>31 || month<1 || month > 12) throw new Exception();
+				date = "" + year + "-" + month + "-" + day; 
+			}catch(Exception e){
+				showErrorDialog("Datumsfehler","Bitte geben Sie das Datum in der Formatierung TT.MM.JJJJ ein!");
+			}
+			
 			//Timestamp veraltet und ungeeignet!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!			
+			date = date + " " + time;
 			desc = desc_area.getText();
 			place = place_field.getText();
 			try{
@@ -143,6 +172,7 @@ public class EditTerminFrame extends javax.swing.JFrame implements java.awt.even
 			if (ID==null) query = "insert into termin (secondary_title, description, date, duration, place) values ('"+sec_title+"','"+desc+"','"+date+"',"+duration+",'"+place+"')";
 			else query = "update termin  set secondary_title='"+sec_title+"', description='"+desc+"', date='"+date+"',duration="+duration+",place='"+place+"' where id="+ID;
 			gdo.unsafeQuery(query,null);
+			System.out.println("resr");
 				
 			/*lookup.setId(ID);
 			updateData.setId(ID);
@@ -399,6 +429,14 @@ public class EditTerminFrame extends javax.swing.JFrame implements java.awt.even
 		if(arg0.getSource().equals(ok_button)){
 			jLabel5.setText("");
 		}
+		
+	}
+	private void showErrorDialog(String title, String text)
+	{
+		InfoDialog info = new InfoDialog(title,text);
+		info.setLocation(this.getLocation().x+200,this.getLocation().y+200);
+		info.setVisible(true);
+		
 		
 	}
 
