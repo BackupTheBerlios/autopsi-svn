@@ -5,7 +5,7 @@ import javax.swing.table.AbstractTableModel;
 //import model.Kontakt;
 
 
-public class KontaktTablemodel  {
+public class KontaktTableModel1  {
 /*extends AbstractTableModel 	private static final long serialVersionUID = 8737097129189851737L;
 	//public List<Kontakt> Kontakte;
 	
