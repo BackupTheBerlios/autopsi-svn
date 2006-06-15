@@ -26,6 +26,7 @@ import javax.swing.JTextField;
 
 import autopsi.database.table.Termin;
 import autopsi.database.table.TerminKategorie;
+import autopsi.database.table.LvaKategorie;
 
 /**
 * This code was edited or generated using CloudGarden's Jigloo
@@ -137,6 +138,7 @@ public class SearchFrame extends javax.swing.JPanel implements ActionListener {
 					jTabbedSearchPane.addTab("Kontakt Suche", null, jkontaktSuchePanel, null);
 					jkontaktSuchePanel.setPreferredSize(new java.awt.Dimension(671, 357));
 					jkontaktSuchePanel.setLayout(null);
+					jkontaktSuchePanel.setBackground(new java.awt.Color(255,255,255));
 					{
 						jVornameLabel = new JLabel();
 						jkontaktSuchePanel.add(jVornameLabel);
@@ -231,7 +233,9 @@ public class SearchFrame extends javax.swing.JPanel implements ActionListener {
 							jKontaktLokalSuchenRadioButton.setSelected(true);
 							jKontaktSucheGroup = new ButtonGroup();
 							jKontaktSucheGroup.add(jKontaktLokalSuchenRadioButton);
+							jKontaktLokalSuchenRadioButton.setBackground(new java.awt.Color(255,255,255));
 							jKontaktSucheGroup.add(jKontaktOnlineSuchenRadioButton);				
+							jKontaktOnlineSuchenRadioButton.setBackground(new java.awt.Color(255,255,255));
 						}
 
 						{
@@ -239,6 +243,7 @@ public class SearchFrame extends javax.swing.JPanel implements ActionListener {
 							jkontaktSuchePanel.add(jKontaktScrollPane);
 							jKontaktScrollPane.setBounds(18, 147, 658, 203);
 							jKontaktScrollPane.setWheelScrollingEnabled(true);
+							jKontaktScrollPane.setBackground(new java.awt.Color(255,255,255));
 							{
 								TableModel jKontaktTableModel = new DefaultTableModel(
 									new String[][] { { "One", "Two" },
@@ -252,6 +257,7 @@ public class SearchFrame extends javax.swing.JPanel implements ActionListener {
 								jKontaktTable.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
 								jKontaktTable.setShowGrid(true);
 								jKontaktTable.setGridColor(Color.LIGHT_GRAY);
+								jKontaktTable.setBackground(new java.awt.Color(255,255,255));
 							}
 						}
 						{
@@ -270,6 +276,7 @@ public class SearchFrame extends javax.swing.JPanel implements ActionListener {
 					jTabbedSearchPane.addTab("LVA Suche", null, jLVASuchePanel, null);
 					jLVASuchePanel.setPreferredSize(new java.awt.Dimension(671, 357));
 					jLVASuchePanel.setLayout(null);
+					jLVASuchePanel.setBackground(new java.awt.Color(255,255,255));
 					{
 						jTitelLabel = new JLabel();
 						jLVASuchePanel.add(jTitelLabel);
@@ -318,8 +325,7 @@ public class SearchFrame extends javax.swing.JPanel implements ActionListener {
 						jLVAKatComboBox.setModel(jLVAKatComboBoxModel);
 						jLVAKatComboBox.setBounds(420, 7, 210, 21);
 						
-						ComboBoxModel jLVATypeComboBoxModel = new DefaultComboBoxModel(
-							new String[] { "VO", "LU" });
+						KategoryComboBoxModel jLVATypeComboBoxModel = new KategoryComboBoxModel("LVA_KATEGORIE", new LvaKategorie() );
 						jLVATypeComboBox = new JComboBox();
 						jLVASuchePanel.add(jLVATypeComboBox);
 						jLVATypeComboBox.setModel(jLVATypeComboBoxModel);
@@ -351,7 +357,9 @@ public class SearchFrame extends javax.swing.JPanel implements ActionListener {
 							jLVALokalSuchenRadioButton.setSelected(true);
 							jLVASucheGroup = new ButtonGroup();
 							jLVASucheGroup.add(jLVALokalSuchenRadioButton);
+							jLVALokalSuchenRadioButton.setBackground(new java.awt.Color(255,255,255));
 							jLVASucheGroup.add(jLVAOnlineSuchenRadioButton);				
+							jLVAOnlineSuchenRadioButton.setBackground(new java.awt.Color(255,255,255));
 						}
 
 						{
@@ -359,6 +367,7 @@ public class SearchFrame extends javax.swing.JPanel implements ActionListener {
 							jLVASuchePanel.add(jLVAScrollPane);
 							jLVAScrollPane.setBounds(18, 147, 658, 203);
 							jLVAScrollPane.setWheelScrollingEnabled(true);
+							jLVAScrollPane.setBackground(new java.awt.Color(255,255,255));
 							{
 								TableModel jLVATableModel = new DefaultTableModel(
 									new String[][] { 
@@ -410,6 +419,7 @@ public class SearchFrame extends javax.swing.JPanel implements ActionListener {
 					jTabbedSearchPane.addTab("Termin Suche", null, jTerminSuchePanel, null);
 					jTerminSuchePanel.setPreferredSize(new java.awt.Dimension(671, 357));
 					jTerminSuchePanel.setLayout(null);
+					jTerminSuchePanel.setBackground(new java.awt.Color(255,255,255));
 					{
 						jTitelLabel = new JLabel();
 						jTerminSuchePanel.add(jTitelLabel);
@@ -447,7 +457,7 @@ public class SearchFrame extends javax.swing.JPanel implements ActionListener {
 						jTerminSuchePanel.add(jDatumField);
 						jDatumField.setBounds(420, 7, 210, 21);
 						
-						ComboBoxModel jTerminTypeComboBoxModel = new KategoryComboBoxModel("TERMIN_KATEGORIE", new TerminKategorie() );
+						KategoryComboBoxModel jTerminTypeComboBoxModel = new KategoryComboBoxModel("TERMIN_KATEGORIE", new TerminKategorie() );
 						jTerminTypeComboBox = new JComboBox();
 						jTerminSuchePanel.add(jTerminTypeComboBox);
 						jTerminTypeComboBox.setModel(jTerminTypeComboBoxModel);
@@ -472,12 +482,14 @@ public class SearchFrame extends javax.swing.JPanel implements ActionListener {
 							jTerminSuchePanel.add(jTerminCheckBox);
 							jTerminCheckBox.setText("Termin Suchen");
 							jTerminCheckBox.setBounds(183, 77, 98, 14);
+							jTerminCheckBox.setBackground(new java.awt.Color(255,255,255));
 
 							jTerminContainerCheckBox = new JCheckBox();
 							jTerminSuchePanel.add(jTerminContainerCheckBox);
 							jTerminContainerCheckBox.setText("Termincontainer Suchen");
 							jTerminContainerCheckBox.setBounds(306, 77, 140, 14);
-							
+							jTerminContainerCheckBox.setBackground(new java.awt.Color(255,255,255));
+
 							{
 								jTerminLokalSuchenRadioButton = new JRadioButton();
 								jTerminSuchePanel.add(jTerminLokalSuchenRadioButton);
@@ -492,7 +504,9 @@ public class SearchFrame extends javax.swing.JPanel implements ActionListener {
 								jTerminLokalSuchenRadioButton.setSelected(true);
 								jTerminSucheGroup = new ButtonGroup();
 								jTerminSucheGroup.add(jTerminLokalSuchenRadioButton);
+								jTerminLokalSuchenRadioButton.setBackground(new java.awt.Color(255,255,255));
 								jTerminSucheGroup.add(jTerminOnlineSuchenRadioButton);				
+								jTerminOnlineSuchenRadioButton.setBackground(new java.awt.Color(255,255,255));
 							}
 							
 
@@ -501,6 +515,7 @@ public class SearchFrame extends javax.swing.JPanel implements ActionListener {
 							jTerminSuchePanel.add(jTerminScrollPane);
 							jTerminScrollPane.setBounds(18, 147, 658, 203);
 							jTerminScrollPane.setWheelScrollingEnabled(true);
+							jTerminScrollPane.setBackground(new java.awt.Color(255,255,255));
 							{
 								jTerminTableModel = new TerminTableModel();
 								jTerminTable = new JTable();
