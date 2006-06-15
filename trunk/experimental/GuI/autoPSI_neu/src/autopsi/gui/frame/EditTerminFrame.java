@@ -9,9 +9,11 @@ import java.util.List;
 import java.util.Locale;
 
 import javax.swing.BorderFactory;
+import javax.swing.ComboBoxModel;
 
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
 import javax.swing.JList;
@@ -64,6 +66,8 @@ public class EditTerminFrame extends javax.swing.JFrame implements java.awt.even
 	private JButton apply_button;
 	private JLabel jLabel4;
 	private JLabel jLabel8;
+	private JLabel jLabel11;
+	private JComboBox choose_Type;
 	private JLabel jLabel10;
 	private JTextField time_field;
 	private JLabel jLabel9;
@@ -214,12 +218,12 @@ public class EditTerminFrame extends javax.swing.JFrame implements java.awt.even
 						jLabel2 = new JLabel();
 						jPanel1.add(jLabel2);
 						jLabel2.setText("Beschreibung:");
-						jLabel2.setBounds(7, 147, 84, 28);
+						jLabel2.setBounds(7, 168, 84, 28);
 					}
 					{
 						desc_area = new JTextArea();
 						jPanel1.add(desc_area);
-						desc_area.setBounds(91, 147, 322, 84);
+						desc_area.setBounds(91, 175, 322, 84);
 						desc_area.setBorder(new LineBorder(new java.awt.Color(0,0,0), 1, false));
 						
 					}
@@ -291,6 +295,21 @@ public class EditTerminFrame extends javax.swing.JFrame implements java.awt.even
 						jPanel1.add(jLabel10);
 						jLabel10.setText("Uhrzeit:");
 						jLabel10.setBounds(217, 77, 42, 21);
+					}
+					{
+						ComboBoxModel choose_TypeModel = new DefaultComboBoxModel(
+							new String[] { "-Kein Typ gewählt-", "privat","Prüfung"});
+						choose_Type = new JComboBox();
+						jPanel1.add(choose_Type);
+						choose_Type.setModel(choose_TypeModel);
+						choose_Type.setBounds(91, 140, 119, 28);
+						choose_Type.setBorder(new LineBorder(new java.awt.Color(0,0,0), 1, false));
+					}
+					{
+						jLabel11 = new JLabel();
+						jPanel1.add(jLabel11);
+						jLabel11.setText("Termintyp:");
+						jLabel11.setBounds(7, 140, 98, 21);
 					}
 				}
 				{
