@@ -24,7 +24,7 @@ import javax.swing.JTabbedPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 
-import autipsi.components.KategorieComboBoxModel;
+import autipsi.gui.components.KategorieComboBoxModel;
 import autopsi.database.table.Termin;
 import autopsi.database.table.Kontakt;
 import autopsi.database.table.TerminKategorie;
