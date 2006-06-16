@@ -14,24 +14,18 @@ public abstract class EditPlugin implements Cloneable{
 	
 	public abstract Object getValue();
 	
-	protected abstract void setValue(Object newValue);
+	public abstract void setValue(Object newValue);
 	
 	public abstract void nameChanged();
 	
 	public void setName(String newName){
-		System.out.println("setName");
 		this.name = newName;
-		System.out.println("trying to set name");
 		nameChanged();
-		System.out.println("name set!!");
+		System.out.println("!!!name set!!=="+this.name);
 	}
 	
 	public String getName(){
 		return this.name;
-	}
-	
-	public Object clone() throws CloneNotSupportedException{
-		return super.clone();
 	}
 	
 }

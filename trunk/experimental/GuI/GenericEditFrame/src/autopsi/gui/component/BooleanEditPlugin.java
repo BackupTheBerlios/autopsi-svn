@@ -25,11 +25,10 @@ public class BooleanEditPlugin extends EditPlugin{
 	}
 	
 	public void nameChanged(){
-		System.out.println("BooleanEditPlugin.nameChanged()");
 		checkBox.setText(name);
 	}
 	
-	protected void setValue(Object newValue){
+	public void setValue(Object newValue){
 		if(newValue != null){
 			this.selected = (Boolean)newValue;
 			checkBox.setSelected(this.selected);

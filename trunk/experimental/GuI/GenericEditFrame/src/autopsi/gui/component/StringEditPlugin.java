@@ -40,7 +40,7 @@ public class StringEditPlugin extends EditPlugin{
 		return null;
 	}
 
-	protected void setValue(Object newValue){
+	public void setValue(Object newValue){
 		if (newValue != null)
 			this.value = (String)newValue;
 		else
