@@ -12,6 +12,7 @@ import autopsi.database.table.Kontakt;
 public class KontaktTableModel extends AbstractTableModel{
 	private static final long serialVersionUID = 8737097029189851737L;
 	public List <GenericDataObject> kontakte;
+	public String email = null;
 	public Kontakt suchKontakt = null;
 	
 	private final String [] columnName = {"Vorname", "Nachname", "PLZ", "Ort"};
@@ -21,17 +22,18 @@ public class KontaktTableModel extends AbstractTableModel{
 	}
 	
 	private void readData() {
-		String query="select * from Kontakt where";
+		String query="select * from Kontakt as k, Email as e, ATTACHABLE_OBJECT as a, ATTACHABLE_OBJECT_KATEGORIE as ok  where";
+		//String query="select * from Kontakt as k where";
 		Boolean first = true;
 		try{
 			IGenericDAO gdo = new GenericDAO();
 			if (suchKontakt!=null) {
 				if (suchKontakt.getPrename()!=null) {
 					if (first){
-						query += " LOWER(PRENAME) LIKE '%" + suchKontakt.getPrename().toLowerCase()+"%'";
+						query += " LOWER(k.PRENAME) LIKE '%" + suchKontakt.getPrename().toLowerCase()+"%'";
 						first = false;
 					} else {
-						query += "AND LOWER(PRENAME) LIKE '%" + suchKontakt.getPrename().toLowerCase()+"%'";
+						query += "AND LOWER(k.PRENAME) LIKE '%" + suchKontakt.getPrename().toLowerCase()+"%'";
 					}
 				}
 				if (suchKontakt.getSurname()!=null) {
@@ -50,7 +52,28 @@ public class KontaktTableModel extends AbstractTableModel{
 						query += "AND BIRTH_DATE LIKE '%" + suchKontakt.getBirthDate()+"%'";
 					}
 				}
+				if (suchKontakt.getTelBusiness()!=null){
+					if (first) {
+						query += " (TEL_PRIVATE LIKE '%" + suchKontakt.getTelBusiness()+"%' OR";
+						query += " TEL_BUSINESS LIKE '%" + suchKontakt.getTelBusiness()+"%' OR";
+						query += " TEL_MOBILE LIKE '%" + suchKontakt.getTelBusiness()+"%')";
+						first = false;
+					} else {
+						query += " AND (TEL_PRIVATE LIKE '%" + suchKontakt.getTelBusiness()+"%' OR";
+						query += " TEL_BUSINESS LIKE '%" + suchKontakt.getTelBusiness()+"%' OR";
+						query += " TEL_MOBILE LIKE '%" + suchKontakt.getTelBusiness()+"%')";
+					}
+				}
+				if (this.email != null){
+					if (first){
+						query += " e.EMAIL LIKE '%" +this.email+"%'";
+						first = false;
+					} else {
+						query += " AND e.EMAIL LIKE '%" +this.email+"%'";
+					}
+				}
 				if (first == false){
+					//System.out.println(query);
 					this.kontakte =  gdo.unsafeQuery(query, suchKontakt);
 				}
 			}
@@ -66,6 +89,10 @@ public class KontaktTableModel extends AbstractTableModel{
 	public void setSuchKontakt (Kontakt suchKontakt){
 		this.suchKontakt=suchKontakt;
 		fireDataChanged();
+	}
+	
+	public void setEmail (String email){
+		this.email=email;
 	}
 	
 	public void fireDataChanged() {

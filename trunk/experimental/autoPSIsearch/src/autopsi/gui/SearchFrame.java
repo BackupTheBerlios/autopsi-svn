@@ -27,7 +27,10 @@ import javax.swing.JSeparator;
 import javax.swing.JTabbedPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.text.AttributeSet;
+import javax.swing.text.BadLocationException;
 import javax.swing.text.MaskFormatter;
+import javax.swing.text.PlainDocument;
 
 import autopsi.database.table.Termin;
 import autopsi.database.table.Kontakt;
@@ -194,6 +197,19 @@ public class SearchFrame extends javax.swing.JPanel implements ActionListener {
 						jTelefonnummerField = new JTextField();
 						jkontaktSuchePanel.add(jTelefonnummerField);
 						jTelefonnummerField.setBounds(105, 76, 210, 21);
+						jTelefonnummerField.setDocument(new PlainDocument() {
+					    	private static final long serialVersionUID = 8723098029189851737L;
+							public void insertString(int offset, String str, AttributeSet a)
+									throws BadLocationException {
+								// Eingaben von Buchstaben ist nicht erlaubt...
+								if (str.matches(".*[[a-z]|[A-Z]].*"))
+									return;
+								//Höchstens 15 Zeichen
+								if (offset>15)
+									return;
+								super.insertString(offset, str, a);
+							}
+						});
 						
 						jEmailField = new JTextField();
 						jkontaktSuchePanel.add(jEmailField);
@@ -583,11 +599,20 @@ public class SearchFrame extends javax.swing.JPanel implements ActionListener {
 						Date geburtsdatum = sf.parse(jGeburtsdatumField.getText());
 						java.sql.Date sqlgeburtsdatum = new java.sql.Date( geburtsdatum.getTime());
 						kont.setBirthDate(sqlgeburtsdatum);
+					} else {
+						kont.setBirthDate(null);
 					}
-					
+					if (!jTelefonnummerField.getText().equals("")){
+						kont.setTelBusiness(jTelefonnummerField.getText());
+					} else {
+						kont.setTelBusiness(null);
+					}
+					if (!jEmailField.getText().equals("")) {
+						jKontaktTableModel.setEmail(jEmailField.getText());
+					} else {
+						jKontaktTableModel.setEmail(null);
+					}
 					jKontaktTableModel.setSuchKontakt(kont);
-					jKontaktTableModel.fireDataChanged();
-					
 				} else if (jKontaktOnlineSuchenRadioButton.isSelected()) {
 					System.out.println("Kontakt wird online gesucht...");
 				}
@@ -612,9 +637,6 @@ public class SearchFrame extends javax.swing.JPanel implements ActionListener {
 						ter.setDescription(null);
 					}
 					jTerminTableModel.setSuchTermin(ter);
-					jTerminTableModel.fireDataChanged();
-					
-					
 				} else if (jTerminOnlineSuchenRadioButton.isSelected()) {
 					System.out.println("Termint wird online gesucht...");
 				}
