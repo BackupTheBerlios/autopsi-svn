@@ -24,11 +24,11 @@ import javax.swing.JTabbedPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 
-import autipsi.gui.components.KategorieComboBoxModel;
 import autopsi.database.table.Termin;
 import autopsi.database.table.Kontakt;
 import autopsi.database.table.TerminKategorie;
 import autopsi.database.table.LvaKategorie;
+import autopsi.gui.components.KategorieComboBoxModel;
 
 /**
 * This code was edited or generated using CloudGarden's Jigloo
