@@ -16,6 +16,8 @@ public class GenericEditFrame extends JDialog implements ActionListener {
 	protected JButton cancelButton;
 	protected JButton applyButton;
 	protected JButton okButton;
+	protected boolean canceled = false;
+	
 	
 	public GenericEditFrame(){
 		this.setLayout(new BorderLayout());
@@ -31,11 +33,12 @@ public class GenericEditFrame extends JDialog implements ActionListener {
 		buttonPanel.add(okButton);
 		this.setSize(400, 400);
 		cancelButton.addActionListener(this);
+		okButton.addActionListener(this);
 		try{
 			editPanel.setObjectToEdit(new TestClass());
 		}
 		catch (Exception e){
-			System.out.println("Exception :: "+e.toString());
+			System.out.println("Exception blablabla :: "+e.toString());
 		}
 	}
 	
@@ -49,12 +52,25 @@ public class GenericEditFrame extends JDialog implements ActionListener {
 	}
 	
 	public GenericData getObjectToEdit(){
-		return editPanel.getEditedObject();
+		System.out.println("GenericEditFrame::getObjectToEdit");
+		GenericData d =editPanel.getEditedObject();
+		System.out.println("beinahe nach GenericEditFrame::getObjectToEdit");
+		return d;
+	}
+	
+	public boolean getCanceled(){
+		return this.canceled;
 	}
 
 	public void actionPerformed(ActionEvent arg0) {
 		if (arg0.getSource().equals(cancelButton)){
+			this.canceled = true;
 			this.dispose();
+		}
+		if (arg0.getSource().equals(okButton)){
+			this.canceled = false;
+			TestClass c = (TestClass)this.getObjectToEdit();
+			System.out.println("name=="+c.getTest1().toString());
 		}
 		
 	}

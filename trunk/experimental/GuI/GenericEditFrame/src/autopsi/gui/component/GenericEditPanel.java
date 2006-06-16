@@ -15,6 +15,8 @@ import autopsi.gui.exceptions.EWrongMethod;
 import autopsi.gui.exceptions.EClassEditorMissing;
 import javax.swing.JButton;
 import autopsi.gui.component.GSMethod;
+import autopsi.gui.frame.TestClass;
+
 public class GenericEditPanel extends JPanel {
 
 	private GenericData editedObject = null;
@@ -50,7 +52,26 @@ public class GenericEditPanel extends JPanel {
 	}
 	
 	public GenericData getEditedObject(){
+		this.updateEditedObject();
+//		System.out.println("TestClass.getOb()=="+((TestClass)this.editedObject).getOb());
 		return this.editedObject;
+	}
+	
+	protected void updateEditedObject(){
+//		System.out.println("GenericEditPanel::updateEditedObject");
+		Set<GSMethod> s = methods.keySet();
+		Iterator<GSMethod> iter = s.iterator();
+		while(iter.hasNext()){
+			GSMethod meth = iter.next();
+			try{
+//				System.out.println("GenericEditPanel::updateEditedObject::invoke");
+				meth.setMethod.invoke(this.editedObject, methods.get(meth).getValue());
+//				System.out.println("GenericEditPanel::methods.get(meth)::"+methods.get(meth).getValue().toString());
+			}
+			catch (Exception e){
+				System.out.println("updateEditedObject::"+e.toString());
+			}
+		}
 	}
 	
 	private void inspectEditedObject() throws EClassEditorMissing{
@@ -74,7 +95,7 @@ public class GenericEditPanel extends JPanel {
 			}
 			methods.put(x, plug);
 		}
-		System.out.println("inspectEditedObject 3");
+//		System.out.println("inspectEditedObject 3");
 	}
 	
 	private EditPlugin getNewPlugin(Class cl){

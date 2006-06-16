@@ -23,7 +23,7 @@ public class DateEditPlugin extends EditPlugin {
 	}
 
 	@Override
-	protected void setValue(Object newValue) {
+	public void setValue(Object newValue) {
 		// TODO Auto-generated method stub
 
 	}

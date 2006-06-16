@@ -19,7 +19,7 @@ public class GenericData {
 	public Object getAttrib(String name){
 		GSMethod gsm = map.get(name);
 		try{
-			return gsm.getMethod.invoke(this, new Object[] {name});
+			return gsm.getMethod.invoke(this, new Object[] {});
 		}
 		catch (Exception e){
 			System.out.println("Exception :: "+e.toString());

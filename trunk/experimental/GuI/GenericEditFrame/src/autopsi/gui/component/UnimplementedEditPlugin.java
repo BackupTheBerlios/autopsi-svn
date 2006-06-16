@@ -33,7 +33,7 @@ public class UnimplementedEditPlugin extends EditPlugin {
 	}
 
 	@Override
-	protected void setValue(Object newValue) {
+	public void setValue(Object newValue) {
 
 	}
 
