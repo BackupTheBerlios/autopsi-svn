@@ -35,8 +35,9 @@ import java.util.GregorianCalendar;
 import java.util.List;
 import java.sql.Timestamp;
 
-import java.text.DateFormat;
-import javax.swing.text.DateFormatter;
+import java.text.SimpleDateFormat;
+
+import javax.swing.text.MaskFormatter;
 
 
 /**
@@ -461,14 +462,11 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 			{
 				jLabel1 = new JLabel();
 				getContentPane().add(jLabel1);
-				jLabel1.setText("Springe zu Datum: (TT.MM.JJJJ)");
+				jLabel1.setText("Springe zu Datum: (TT-MM-JJJJ)");
 				jLabel1.setBounds(686, 525, 168, 21);
 			}
 			{
-				dateJumper = new JFormattedTextField(
-					new DateFormatter(DateFormat.getDateInstance(
-						DateFormat.SHORT,
-						Locale.GERMAN)));
+				dateJumper = new JFormattedTextField(createFormatter("##-##-####"));
 				getContentPane().add(dateJumper);
 				dateJumper.setText("");
 				dateJumper.setBounds(854, 525, 84, 21);
@@ -478,22 +476,11 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 						if(arg0.getKeyChar()==(KeyEvent.VK_ENTER)){
 							try
 							{
-								String datum = dateJumper.getText();
-								int i = datum.indexOf(".");
-								int day = Integer.parseInt(datum.substring(0,i));
-								datum = datum.substring(i+1);
-								i = datum.indexOf(".");
-								int month = Integer.parseInt(datum.substring(0,i));
-								datum = datum.substring(i+1);
-								int year = 0;
-								if(datum.length()==2) year = 2000+Integer.parseInt(datum);
-								else year = Integer.parseInt(datum);
 								
-								if(day < 1 || day>31 || month<1 || month > 12) throw new Exception();
-								c = new GregorianCalendar(year,month-1,day);
-								
-								c_marker.setTime(c.getTime());
-								
+								SimpleDateFormat sf = new SimpleDateFormat("dd-MM-yyyy");
+								Date jumpDate = sf.parse(dateJumper.getText());
+								c_marker.setTime(jumpDate);
+								c.setTime(c_marker.getTime());
 								if(viewMonth)
 								{
 									table.setDefaultRenderer(String[].class, new MonthRenderer(c_marker));
@@ -655,20 +642,13 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 								{
 									data[j]=liste.get(j);
 								}		
-									listTC2.setModel(new DefaultComboBoxModel(data));
-								
-								
-								
+									listTC2.setModel(new DefaultComboBoxModel(data));	
 							}
 
-							public void keyPressed(KeyEvent arg0) {
-								// TODO Auto-generated method stub
-								
+							public void keyPressed(KeyEvent arg0) {		
 							}
 
-							public void keyReleased(KeyEvent arg0) {
-								// TODO Auto-generated method stub
-								
+							public void keyReleased(KeyEvent arg0) {	
 							}});
 					}
 					{
@@ -845,7 +825,6 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 	}
 
 	public void mouseClicked(MouseEvent arg0) {
-		// TODO Auto-generated method stub
 		if(arg0.getSource().equals(viewButton1))
 		{
 			setModel("month");
@@ -934,15 +913,16 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 			loadTerminData();
 		}
 		if(arg0.getSource().equals(neuerTermin)) {
-			EditTerminFrame newTermin = new EditTerminFrame(null);
+			EditTerminFrame newTermin = new EditTerminFrame(c_marker, null);
 			newTermin.setTitle("neuen Termin hinzufügen");
 			newTermin.setLocation(this.getLocation().x+30,this.getLocation().y+30);
 			newTermin.setVisible(true);
 			
 		}
 		if(arg0.getSource().equals(editTermin)) {
+			System.out.println("++++ " + terminId);
 			if(terminId != -1){
-			EditTerminFrame newTermin = new EditTerminFrame(terminId);
+			EditTerminFrame newTermin = new EditTerminFrame(null, terminId);
 			newTermin.setTitle("Termin bearbeiten");
 			newTermin.setLocation(this.getLocation().x+30,this.getLocation().y+30);
 			newTermin.setVisible(true);
@@ -1327,7 +1307,7 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 	
 	private void showErrorDialog(String title, String text)
 	{
-		InfoDialog info = new InfoDialog(title,text);
+		InfoDialog info = new InfoDialog(this, title,text);
 		info.setLocation(this.getLocation().x+200,this.getLocation().y+200);
 		info.setVisible(true);
 		
@@ -1395,5 +1375,15 @@ try
 }
 catch(Exception ex) {System.out.println(ex.toString());}
 		
-	};
+	}
+
+	protected MaskFormatter createFormatter(String s) {
+		 MaskFormatter formatter = null;
+		 try {
+			 formatter = new MaskFormatter(s);
+		} catch (java.text.ParseException exc) {
+			System.err.println("formatter is bad: " + exc.getMessage());
+		}
+		return formatter;
+	}
 }

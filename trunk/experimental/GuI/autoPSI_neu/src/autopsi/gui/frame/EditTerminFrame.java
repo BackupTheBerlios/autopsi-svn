@@ -1,10 +1,16 @@
 package autopsi.gui.frame;
 
 
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.sql.Date;
 import java.sql.Timestamp;
 import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Locale;
 
@@ -25,6 +31,7 @@ import javax.swing.ListModel;
 import javax.swing.WindowConstants;
 import javax.swing.border.LineBorder;
 import javax.swing.text.DateFormatter;
+import javax.swing.text.MaskFormatter;
 
 import autopsi.database.dao.GenericDAO;
 import autopsi.database.dao.GenericDataObject;
@@ -66,16 +73,16 @@ public class EditTerminFrame extends javax.swing.JFrame implements java.awt.even
 	private JButton apply_button;
 	private JLabel jLabel4;
 	private JLabel jLabel8;
+	private JTextField duration_field;
+	private JFormattedTextField timeField;
+	private JFormattedTextField dateField;
 	private JLabel jLabel11;
 	private JComboBox choose_Type;
 	private JLabel jLabel10;
-	private JTextField time_field;
 	private JLabel jLabel9;
 	private JTextField place_field;
 	private JLabel jLabel7;
 	private JLabel jLabel6;
-	private JTextField duration_field;
-	private JTextField date_field;
 	private JTextField sec_titlefield;
 	private JLabel jLabel5;
 	private JLabel jLabel3;
@@ -92,23 +99,36 @@ public class EditTerminFrame extends javax.swing.JFrame implements java.awt.even
 	private JButton ok_button;
 	private JButton abort_button;
 	
+	private String dat = "";
+	private String time = "";
 	private String sec_title = "";
 	private String date;
-	private String time = ""; 
 	private int duration;
 	private String desc = "";
 	private IGenericDAO gdo; 
-	private Timestamp date_timestamp;
 	private String place;
 	private Integer ID;
+	private GregorianCalendar c = null;
+	private boolean ok = false;
+	private GregorianCalendar cal=null;
 	
-	
-	public EditTerminFrame(Integer id) {
+	public EditTerminFrame(GregorianCalendar cal, Integer id) {
 		super();
 		this.ID = id;
+		this.cal = cal;
 		gdo = new GenericDAO();
 		gdo.setCurrentTable("termin");
 		initGUI();
+		
+		addWindowListener(new WindowAdapter()
+				{
+				public void windowClosing(WindowEvent arg0)
+				{ //wird das Fenster über den X-Button rechts oben geschlossen
+				  //wird die Anwendung beendet.
+					super.windowClosing(arg0);
+					dispose();
+					}
+				});
 	}
 	
 	private void readData(Integer id) throws EDatabaseConnection, EAttributeNotFound, EDatabase{
@@ -128,8 +148,6 @@ public class EditTerminFrame extends javax.swing.JFrame implements java.awt.even
 		place = ((Termin)list.get(0)).getPlace();
 		place_field.setText(place);
 		date = ((Termin)list.get(0)).getDate().toString().substring(0,10);
-		date_field.setText(date.substring(0,10));
-		time_field.setText(date.substring(11,16));
 		time = ((Termin)list.get(0)).getDate().toString().substring(11);
 		
 		
@@ -138,54 +156,59 @@ public class EditTerminFrame extends javax.swing.JFrame implements java.awt.even
 	}
 	private void update(){
 		try{
-			sec_title = sec_titlefield.getText();
-			date = date_field.getText();
-			time = time_field.getText()+":00.0";
+			try
+			{
+				SimpleDateFormat sf = new SimpleDateFormat("dd-MM-yyyy");
+				java.util.Date jumpDate = sf.parse(dateField.getText());
+				c = new GregorianCalendar();
+				c.setTime(jumpDate);
 			
-			
-			try{
-				int i = date.indexOf(".");
-				int day = Integer.parseInt(date.substring(0,i));
-				date = date.substring(i+1);
-				i = date.indexOf(".");
-				int month = Integer.parseInt(date.substring(0,i));
-				date = date.substring(i+1);
-				int year = 0;
-				if(date.length()==2) year = 2000+Integer.parseInt(date);
-				else year = Integer.parseInt(date);
+			}
+			catch(Exception ex)
+			{
+				showErrorDialog("Falsches Datumsformat","Geben Sie ein Datum im Format TT-MM-JJJJ ein!");
 				
-				if(day < 1 || day>31 || month<1 || month > 12) throw new Exception();
-				date = "" + year + "-" + month + "-" + day; 
-			}catch(Exception e){
-				showErrorDialog("Datumsfehler","Bitte geben Sie das Datum in der Formatierung TT.MM.JJJJ ein!");
 			}
 			
-			//Timestamp veraltet und ungeeignet!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!			
-			date = date + " " + time;
+			sec_title = sec_titlefield.getText();
+			date = dateField.getText();
+			System.out.println("aha");
+			
+			Date dat = new Date(c.getTimeInMillis());
+			date = dat.toString();
+			
+			
+			date = date.substring(0,10) + " " + timeField.getText()+":00.0";
+			System.out.println(date);
 			desc = desc_area.getText();
 			place = place_field.getText();
+			
 			try{
-			duration = Integer.parseInt(duration_field.getText());
-			}catch(Exception e){
-				System.out.println("Fehler in der Eingabe der Dauer");
+			String test = "0123456789";
+			boolean testOk = false;
+			for(int i = 0;i<duration_field.getText().length();i++)
+			{
+				for(int k = 0;k<test.length();k++)
+				{
+					if(duration_field.getText().substring(i,i+1).equals(test.substring(k,k+1)))  testOk = true;
+				}
 				
 			}
-			//Termin lookup = new Termin(), updateData = new Termin();
+			if(testOk) duration = Integer.parseInt(duration_field.getText());
+			else throw new Exception();
+			
+			
+			}catch(Exception e){
+				showErrorDialog("Falsche Eingabe","Geben Sie eine Dauer ein!");
+			}
+			
 			
 			String query="";
 			if (ID==null) query = "insert into termin (secondary_title, description, date, duration, place) values ('"+sec_title+"','"+desc+"','"+date+"',"+duration+",'"+place+"')";
 			else query = "update termin  set secondary_title='"+sec_title+"', description='"+desc+"', date='"+date+"',duration="+duration+",place='"+place+"' where id="+ID;
 			Termin vorlage = new Termin();
 			gdo.unsafeQuery(query,vorlage);
-				
-			/*lookup.setId(ID);
-			updateData.setId(ID);
-			updateData.setSecondaryTitle(sec_title);
-			updateData.setDescription(desc);
-			updateData.setDuration(duration);
-			updateData.setDate(date_timestamp);
-			updateData.setPlace(place);
-			gdo.updDataObjects(lookup, updateData);*/
+			ok = true;
 			
 		}
 		catch (Exception e){
@@ -194,8 +217,12 @@ public class EditTerminFrame extends javax.swing.JFrame implements java.awt.even
 	}
 	private void initGUI() {
 		try {
+			if(cal!=null) {
+				Timestamp datum = new Timestamp(cal.getTimeInMillis());
+				dat = datum.toString();
+			}
+			
 			setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-			this.setTitle("Termin bearbeiten");
 			getContentPane().setLayout(null);
 			{
 				jTabbedPane1 = new JTabbedPane();
@@ -217,14 +244,15 @@ public class EditTerminFrame extends javax.swing.JFrame implements java.awt.even
 						jLabel2 = new JLabel();
 						jPanel1.add(jLabel2);
 						jLabel2.setText("Beschreibung:");
-						jLabel2.setBounds(7, 168, 84, 28);
+						jLabel2.setBounds(7, 182, 84, 21);
 					}
 					{
 						desc_area = new JTextArea();
 						jPanel1.add(desc_area);
-						desc_area.setBounds(91, 175, 322, 84);
+						desc_area.setBounds(91, 182, 322, 84);
 						desc_area.setBorder(new LineBorder(new java.awt.Color(0,0,0), 1, false));
-						
+						desc_area.setLineWrap(true);
+
 					}
 					{
 						sec_titlefield = new JTextField();
@@ -240,20 +268,6 @@ public class EditTerminFrame extends javax.swing.JFrame implements java.awt.even
 						jLabel4.setBounds(7, 42, 77, 21);
 					}
 					{
-						date_field = new JTextField();
-						jPanel1.add(date_field);
-						date_field.setBounds(91, 77, 98, 21);
-						date_field.setBorder(new LineBorder(new java.awt.Color(0,0,0), 1, false));
-						
-					}
-					{
-						duration_field = new JTextField();
-						jPanel1.add(duration_field);
-						duration_field.setBounds(266, 112, 84, 21);
-						duration_field.setBorder(new LineBorder(new java.awt.Color(0,0,0), 1, false));
-						
-					}
-					{
 						jLabel6 = new JLabel();
 						jPanel1.add(jLabel6);
 						jLabel6.setText("Datum:");
@@ -262,8 +276,8 @@ public class EditTerminFrame extends javax.swing.JFrame implements java.awt.even
 					{
 						jLabel7 = new JLabel();
 						jPanel1.add(jLabel7);
-						jLabel7.setText("Dauer:");
-						jLabel7.setBounds(217, 112, 42, 21);
+						jLabel7.setText("Dauer: (min)");
+						jLabel7.setBounds(303, 77, 63, 21);
 					}
 					{
 						jLabel8 = new JLabel();
@@ -284,16 +298,10 @@ public class EditTerminFrame extends javax.swing.JFrame implements java.awt.even
 						jLabel9.setBounds(7, 112, 63, 21);
 					}
 					{
-						time_field = new JTextField();
-						jPanel1.add(time_field);
-						time_field.setBounds(266, 77, 63, 21);
-						time_field.setBorder(new LineBorder(new java.awt.Color(0,0,0), 1, false));
-					}
-					{
 						jLabel10 = new JLabel();
 						jPanel1.add(jLabel10);
 						jLabel10.setText("Uhrzeit:");
-						jLabel10.setBounds(217, 77, 42, 21);
+						jLabel10.setBounds(203, 77, 42, 21);
 					}
 					{
 						ComboBoxModel choose_TypeModel = new DefaultComboBoxModel(
@@ -301,7 +309,7 @@ public class EditTerminFrame extends javax.swing.JFrame implements java.awt.even
 						choose_Type = new JComboBox();
 						jPanel1.add(choose_Type);
 						choose_Type.setModel(choose_TypeModel);
-						choose_Type.setBounds(91, 140, 119, 28);
+						choose_Type.setBounds(91, 147, 119, 21);
 						choose_Type.setBorder(new LineBorder(new java.awt.Color(0,0,0), 1, false));
 					}
 					{
@@ -309,6 +317,25 @@ public class EditTerminFrame extends javax.swing.JFrame implements java.awt.even
 						jPanel1.add(jLabel11);
 						jLabel11.setText("Termintyp:");
 						jLabel11.setBounds(7, 140, 98, 21);
+					}
+					{
+						dateField = new JFormattedTextField(createFormatter("##-##-####"));
+						jPanel1.add(dateField);
+						dateField.setBounds(91, 77, 98, 21);
+						dateField.setBorder(new LineBorder(new java.awt.Color(0,0,0), 1, false));
+						if(cal!=null) dateField.setText(dat.substring(8,10)+"-"+dat.substring(5,7)+"-"+dat.substring(0,4));
+					}
+					{
+						timeField = new JFormattedTextField(createFormatter("##:##"));
+						jPanel1.add(timeField);
+						timeField.setBounds(252, 77, 42, 21);
+						timeField.setBorder(new LineBorder(new java.awt.Color(0,0,0), 1, false));
+					}
+					{
+						duration_field = new JTextField();
+						jPanel1.add(duration_field);
+						duration_field.setBounds(371, 77, 42, 21);
+						duration_field.setBorder(new LineBorder(new java.awt.Color(0,0,0), 1, false));
 					}
 				}
 				{
@@ -391,10 +418,10 @@ public class EditTerminFrame extends javax.swing.JFrame implements java.awt.even
 				jLabel5.setBorder(BorderFactory.createTitledBorder(""));
 			}
 
-			this.setSize(589, 403);
-			this.setPreferredSize(new java.awt.Dimension(589, 403));
+			this.setSize(617, 401);
+			this.setPreferredSize(new java.awt.Dimension(617, 401));
 			this.setResizable(false);
-			if(ID!=null) readData(ID);
+			if(ID!=null && cal==null) readData(ID);
 			pack();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -412,7 +439,8 @@ public class EditTerminFrame extends javax.swing.JFrame implements java.awt.even
 		}
 		if(arg0.getSource().equals(ok_button)){
 			update();
-			dispose();
+			if(ok)
+				dispose();
 			
 		}
 		if(arg0.getSource().equals(apply_button)){
@@ -452,11 +480,23 @@ public class EditTerminFrame extends javax.swing.JFrame implements java.awt.even
 	}
 	private void showErrorDialog(String title, String text)
 	{
-		InfoDialog info = new InfoDialog(title,text);
+		InfoDialog info = new InfoDialog(this, title,text);
 		info.setLocation(this.getLocation().x+200,this.getLocation().y+200);
+		info.setModal(true);
 		info.setVisible(true);
 		
 		
+		
+	}
+	
+	protected MaskFormatter createFormatter(String s) {
+		 MaskFormatter formatter = null;
+		 try {
+			 formatter = new MaskFormatter(s);
+		} catch (java.text.ParseException exc) {
+			System.err.println("formatter is bad: " + exc.getMessage());
+		}
+		return formatter;
 	}
 
 }

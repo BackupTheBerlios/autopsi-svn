@@ -32,6 +32,7 @@ public class InfoDialog extends javax.swing.JDialog {
 
 	private JButton okbutton;
 	private JLabel textfield;
+	private JFrame owner;
 	String title = "";
 	String text = "";
 
@@ -39,15 +40,18 @@ public class InfoDialog extends javax.swing.JDialog {
 	* Auto-generated main method to display this JDialog
 	*/
 	
-	public InfoDialog(String title,String text) {
+	public InfoDialog(JFrame owner, String title,String text) {
 		this.title = title;
 		this.text = text;
+		this.owner = owner;
+		this.setAlwaysOnTop(true);
 		initGUI();
 	}
 	
 	private void initGUI() {
 		try {
 			{
+				owner.setEnabled(false);
 				this.setResizable(false);
 				getContentPane().setLayout(null);
 				{
@@ -58,6 +62,7 @@ public class InfoDialog extends javax.swing.JDialog {
 					okbutton.addActionListener(new ActionListener(){
 
 						public void actionPerformed(ActionEvent arg0) {
+							owner.setEnabled(true);
 							dispose();
 						}
 						
