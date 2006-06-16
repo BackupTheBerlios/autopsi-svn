@@ -40,6 +40,7 @@ import autopsi.database.exception.EAttributeNotFound;
 import autopsi.database.exception.EDatabase;
 import autopsi.database.exception.EDatabaseConnection;
 import autopsi.database.table.Termin;
+import autopsi.database.table.TerminKategorie;
 
 
 /**
@@ -72,7 +73,7 @@ public class EditTerminFrame extends javax.swing.JFrame implements java.awt.even
 	private JTabbedPane jTabbedPane1;
 	private JButton apply_button;
 	private JLabel jLabel4;
-	private JLabel jLabel8;
+	private JLabel tcTitle_field;
 	private JTextField duration_field;
 	private JFormattedTextField timeField;
 	private JFormattedTextField dateField;
@@ -111,6 +112,8 @@ public class EditTerminFrame extends javax.swing.JFrame implements java.awt.even
 	private GregorianCalendar c = null;
 	private boolean ok = false;
 	private GregorianCalendar cal=null;
+	private String tkat = "";
+	
 	
 	public EditTerminFrame(GregorianCalendar cal, Integer id) {
 		super();
@@ -152,6 +155,8 @@ public class EditTerminFrame extends javax.swing.JFrame implements java.awt.even
 		time = ((Termin)list.get(0)).getDate().toString().substring(11);
 		timeField.setText(time.substring(0,2)+":" + time.substring(3,5));
 		
+		choose_Type.setSelectedIndex((((Termin)list.get(0)).getTerminKategorieId()));
+		
 		
 		
 	}
@@ -170,6 +175,14 @@ public class EditTerminFrame extends javax.swing.JFrame implements java.awt.even
 				showErrorDialog("Falsches Datumsformat","Geben Sie ein Datum im Format TT-MM-JJJJ ein!");
 				
 			}
+			
+			
+			
+			int termin_kat = choose_Type.getSelectedIndex();
+			tkat = "" + termin_kat;
+				
+				
+		
 			
 			sec_title = sec_titlefield.getText();
 			date = dateField.getText();
@@ -205,9 +218,10 @@ public class EditTerminFrame extends javax.swing.JFrame implements java.awt.even
 			
 			
 			String query="";
-			if (ID==null) query = "insert into termin (secondary_title, description, date, duration, place) values ('"+sec_title+"','"+desc+"','"+date+"',"+duration+",'"+place+"')";
-			else query = "update termin  set secondary_title='"+sec_title+"', description='"+desc+"', date='"+date+"',duration="+duration+",place='"+place+"' where id="+ID;
+			if (ID==null) query = "insert into termin (TERMIN_KATEGORIE_ID, secondary_title, description, date, duration, place) values ('"+tkat+ "','"+sec_title+"','"+desc+"','"+date+"',"+duration+",'"+place+"')";
+			else query = "update termin  set TERMIN_KATEGORIE_ID = " + tkat + ", secondary_title='"+sec_title+"', description='"+desc+"', date='"+date+"',duration="+duration+",place='"+place+"' where id="+ID;
 			Termin vorlage = new Termin();
+			System.out.println(query);
 			gdo.unsafeQuery(query,vorlage);
 			ok = true;
 			
@@ -281,10 +295,10 @@ public class EditTerminFrame extends javax.swing.JFrame implements java.awt.even
 						jLabel7.setBounds(303, 77, 63, 21);
 					}
 					{
-						jLabel8 = new JLabel();
-						jPanel1.add(jLabel8);
-						jLabel8.setBounds(91, 14, 322, 21);
-						jLabel8.setBorder(new LineBorder(new java.awt.Color(0,0,0), 1, false));
+						tcTitle_field = new JLabel();
+						jPanel1.add(tcTitle_field);
+						tcTitle_field.setBounds(91, 14, 322, 21);
+						tcTitle_field.setBorder(new LineBorder(new java.awt.Color(0,0,0), 1, false));
 					}
 					{
 						place_field = new JTextField();
@@ -305,19 +319,27 @@ public class EditTerminFrame extends javax.swing.JFrame implements java.awt.even
 						jLabel10.setBounds(203, 77, 42, 21);
 					}
 					{
-						ComboBoxModel choose_TypeModel = new DefaultComboBoxModel(
-							new String[] { "-Kein Typ gewählt-", "privat","Prüfung"});
+						ComboBoxModel choose_TypeModel = new DefaultComboBoxModel();
 						choose_Type = new JComboBox();
 						jPanel1.add(choose_Type);
 						choose_Type.setModel(choose_TypeModel);
 						choose_Type.setBounds(91, 147, 119, 21);
 						choose_Type.setBorder(new LineBorder(new java.awt.Color(0,0,0), 1, false));
+						String query = "select * from termin_kategorie";
+						TerminKategorie kat = new TerminKategorie();
+						List<GenericDataObject> data = gdo.unsafeQuery(query,kat);
+						
+						for(int i = 0; i < data.size();i++){
+							kat = (TerminKategorie)data.get(i);
+							choose_Type.addItem(kat.getName());
+						}
+						
 					}
 					{
 						jLabel11 = new JLabel();
 						jPanel1.add(jLabel11);
 						jLabel11.setText("Termintyp:");
-						jLabel11.setBounds(7, 140, 98, 21);
+						jLabel11.setBounds(7, 147, 98, 21);
 					}
 					{
 						dateField = new JFormattedTextField(createFormatter("##-##-####"));
