@@ -73,7 +73,7 @@ public class SearchFrame extends javax.swing.JPanel implements ActionListener {
 
 	private JLabel jVornameLabel, jNachnameLabel, jGeburtsdatumLabel;
 	private JLabel jTelefonnummerLabel, jEmailLabel, jAdresseLabel, jOrtLabel, jPlzLabel;
-	private JLabel jTitelLabel, jKategorieLabel, jNummerLabel, jBeschreibungLabel;
+	private JLabel jTitelLabel, jNummerLabel, jBeschreibungLabel;
 	private JLabel jTypeLabel, jDatumLabel;
 	private JLabel jKontaktGruppeLabel, jLVAGruppeLabel, jTerminGruppeLabel;
 
@@ -293,16 +293,11 @@ public class SearchFrame extends javax.swing.JPanel implements ActionListener {
 						jLVASuchePanel.add(jBeschreibungLabel);
 						jBeschreibungLabel.setText("Beschreibung:");
 						jBeschreibungLabel.setBounds(29, 56, 70, 14);
-						
-						jKategorieLabel = new JLabel();
-						jLVASuchePanel.add(jKategorieLabel);
-						jKategorieLabel.setText("Kategorie:");
-						jKategorieLabel.setBounds(364, 13, 56, 14);
 
 						jTypeLabel = new JLabel();
 						jLVASuchePanel.add(jTypeLabel);
 						jTypeLabel.setText("Type:");
-						jTypeLabel.setBounds(385, 35, 28, 14);
+						jTypeLabel.setBounds(364, 13, 56, 14);
 
 	
 						
