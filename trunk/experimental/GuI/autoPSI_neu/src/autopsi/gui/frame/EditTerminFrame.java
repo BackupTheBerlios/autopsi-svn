@@ -40,6 +40,7 @@ import autopsi.database.exception.EAttributeNotFound;
 import autopsi.database.exception.EDatabase;
 import autopsi.database.exception.EDatabaseConnection;
 import autopsi.database.table.Termin;
+import autopsi.database.table.TerminContainer;
 import autopsi.database.table.TerminKategorie;
 
 
@@ -73,7 +74,7 @@ public class EditTerminFrame extends javax.swing.JFrame implements java.awt.even
 	private JTabbedPane jTabbedPane1;
 	private JButton apply_button;
 	private JLabel jLabel4;
-	private JLabel tcTitle_field;
+	private JComboBox tcTitle_box;
 	private JTextField duration_field;
 	private JFormattedTextField timeField;
 	private JFormattedTextField dateField;
@@ -295,10 +296,20 @@ public class EditTerminFrame extends javax.swing.JFrame implements java.awt.even
 						jLabel7.setBounds(303, 77, 63, 21);
 					}
 					{
-						tcTitle_field = new JLabel();
-						jPanel1.add(tcTitle_field);
-						tcTitle_field.setBounds(91, 14, 322, 21);
-						tcTitle_field.setBorder(new LineBorder(new java.awt.Color(0,0,0), 1, false));
+						ComboBoxModel tcTitle_boxModel = new DefaultComboBoxModel();
+						tcTitle_box = new JComboBox();
+						tcTitle_box.setModel(tcTitle_boxModel);
+						jPanel1.add(tcTitle_box);
+						tcTitle_box.setBounds(91, 14, 322, 21);
+						tcTitle_box.setBorder(new LineBorder(new java.awt.Color(0,0,0), 1, false));
+						String query = "select * from termincontainer";
+						TerminContainer cont = new TerminContainer();
+						List<GenericDataObject> dat = gdo.unsafeQuery(query,cont);
+						
+						for(int i = 0; i < dat.size();i++){
+							cont = (TerminContainer)dat.get(i);
+							tcTitle_box.addItem(cont.getTitle());
+						}
 					}
 					{
 						place_field = new JTextField();
