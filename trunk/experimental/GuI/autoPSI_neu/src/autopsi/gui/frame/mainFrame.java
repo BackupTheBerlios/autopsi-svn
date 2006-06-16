@@ -24,6 +24,9 @@ import autopsi.basis.model.*;
 import autopsi.database.dao.GenericDAO;
 import autopsi.database.dao.GenericDataObject;
 import autopsi.database.dao.IGenericDAO;
+import autopsi.database.exception.EAttributeNotFound;
+import autopsi.database.exception.EDatabase;
+import autopsi.database.exception.EDatabaseConnection;
 import autopsi.database.table.*;
 import autopsi.gui.DateConverter;
 import autopsi.gui.MonthRenderer;
@@ -255,6 +258,25 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 						
 						todayList = new JList();
 						todayList.addMouseListener(this);
+						todayList.addFocusListener(new FocusListener(){
+
+							public void focusGained(FocusEvent arg0) {
+								// TODO Auto-generated method stub
+								
+							}
+
+							public void focusLost(FocusEvent arg0) {
+								if(arg0.getOppositeComponent().equals(editTermin) || arg0.getOppositeComponent().equals(deleteTermin)){
+									
+								}else{
+									terminId = -1;
+								}
+								
+								
+								
+							}
+							
+						});
 						todayScrollPane.setViewportView(todayList);
 					}
 				}
@@ -929,6 +951,25 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 			}
 			
 		}
+		/*if(arg0.getSource().equals(deleteTermin)) {
+			System.out.println("++++ " + terminId);
+			GenericDAO gdo = new GenericDAO();
+			if(terminId != -1){
+				String query = "delete from termin where id =" +terminId;
+				try {
+					gdo.unsafeQuery(query,null);
+					updateTable();
+					//Liste muss noch geupdatet werden
+				} catch (EDatabaseConnection e) {
+					e.printStackTrace();
+				} catch (EAttributeNotFound e) {
+					e.printStackTrace();
+				} catch (EDatabase e) {
+					showErrorDialog("Fehler","Der Termin konnte nicht gelöscht werden");
+				}
+			}
+			
+		}//Hier muss noch eine Sicherheitsabfrage her!!!!!!!!!!!*/
 	}
 
 	public void mousePressed(MouseEvent arg0)
