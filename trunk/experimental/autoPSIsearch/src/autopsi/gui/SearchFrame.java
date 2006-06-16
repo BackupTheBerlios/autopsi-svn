@@ -96,7 +96,7 @@ public class SearchFrame extends javax.swing.JPanel implements ActionListener {
 	private JSeparator jSeparator3;
 	
 	
-	private JComboBox jLVAKatComboBox, jLVATypeComboBox, jTerminTypeComboBox;
+	private JComboBox jLVATypeComboBox, jTerminTypeComboBox;
 	private JComboBox jKontaktGruppeComboBox, jLVAGruppeComboBox, jTerminGruppeComboBox;
 	
 	/**
@@ -319,18 +319,11 @@ public class SearchFrame extends javax.swing.JPanel implements ActionListener {
 						jLVASuchePanel.add(jBeschreibungField);
 						jBeschreibungField.setBounds(105, 53, 210, 21);		
 						
-						ComboBoxModel jLVAKatComboBoxModel = new DefaultComboBoxModel(
-							new String[] { "Item One", "Item Two" });
-						jLVAKatComboBox = new JComboBox();
-						jLVASuchePanel.add(jLVAKatComboBox);
-						jLVAKatComboBox.setModel(jLVAKatComboBoxModel);
-						jLVAKatComboBox.setBounds(420, 7, 210, 21);
-						
 						KategorieComboBoxModel jLVATypeComboBoxModel = new KategorieComboBoxModel("LVA_KATEGORIE", new LvaKategorie(),true );
 						jLVATypeComboBox = new JComboBox();
 						jLVASuchePanel.add(jLVATypeComboBox);
 						jLVATypeComboBox.setModel(jLVATypeComboBoxModel);
-						jLVATypeComboBox.setBounds(420, 30, 210, 21);
+						jLVATypeComboBox.setBounds(420, 7, 210, 21);
 
 						{
 							jSeparator2 = new JSeparator();
@@ -483,44 +476,55 @@ public class SearchFrame extends javax.swing.JPanel implements ActionListener {
 							jTerminSuchePanel.add(jSeparator3);
 							jSeparator3.setBounds(7, 140, 679, 7);
 						}
-						
-						
+						{
 							jTerminSuchenButton = new JButton();
 							jTerminSuchePanel.add(jTerminSuchenButton);
 							jTerminSuchenButton.setText("Termin Suchen");
-							jTerminSuchenButton.setBounds(182, 105, 154, 28);
+							jTerminSuchenButton.setBounds(68, 105, 154, 28);
 							jTerminSuchenButton.addActionListener(this);
-
+							
 							jTerminCheckBox = new JCheckBox();
 							jTerminSuchePanel.add(jTerminCheckBox);
 							jTerminCheckBox.setText("Termin Suchen");
 							jTerminCheckBox.setBounds(183, 77, 98, 14);
 							jTerminCheckBox.setBackground(new java.awt.Color(255,255,255));
-
+							
 							jTerminContainerCheckBox = new JCheckBox();
 							jTerminSuchePanel.add(jTerminContainerCheckBox);
 							jTerminContainerCheckBox.setText("Termincontainer Suchen");
 							jTerminContainerCheckBox.setBounds(306, 77, 140, 14);
 							jTerminContainerCheckBox.setBackground(new java.awt.Color(255,255,255));
-
-							{
-								jTerminLokalSuchenRadioButton = new JRadioButton();
-								jTerminSuchePanel.add(jTerminLokalSuchenRadioButton);
-								jTerminLokalSuchenRadioButton.setText("Lokal Suchen");
-								jTerminLokalSuchenRadioButton.setBounds(343, 103, 91, 14);
+							
+							jTerminLokalSuchenRadioButton = new JRadioButton();
+							jTerminSuchePanel.add(jTerminLokalSuchenRadioButton);
+							jTerminLokalSuchenRadioButton.setText("Lokal Suchen");
+							jTerminLokalSuchenRadioButton.setBounds(231, 105, 91, 14);
+							jTerminLokalSuchenRadioButton.setBackground(new java.awt.Color(255,255,255));
+	
+							jTerminOnlineSuchenRadioButton = new JRadioButton();
+							jTerminSuchePanel.add(jTerminOnlineSuchenRadioButton);
+							jTerminOnlineSuchenRadioButton.setText("Online Suchen");
+							jTerminOnlineSuchenRadioButton.setBounds(231, 119, 98, 14);
+							jTerminOnlineSuchenRadioButton.setBackground(new java.awt.Color(255,255,255));
+							
+							jTerminLokalSuchenRadioButton.setSelected(true);
+							jTerminSucheGroup = new ButtonGroup();
+							jTerminSucheGroup.add(jTerminLokalSuchenRadioButton);
+							jTerminSucheGroup.add(jTerminOnlineSuchenRadioButton);				
+							
+							jTerminGruppeLabel = new JLabel();
+							jTerminSuchePanel.add(jTerminGruppeLabel);
+							jTerminGruppeLabel.setText("Gruppe:");
+							jTerminGruppeLabel.setBounds(348, 112, 42, 14);
 		
-								jTerminOnlineSuchenRadioButton = new JRadioButton();
-								jTerminSuchePanel.add(jTerminOnlineSuchenRadioButton);
-								jTerminOnlineSuchenRadioButton.setText("Online Suchen");
-								jTerminOnlineSuchenRadioButton.setBounds(343, 119, 105, 14);
-								
-								jTerminLokalSuchenRadioButton.setSelected(true);
-								jTerminSucheGroup = new ButtonGroup();
-								jTerminSucheGroup.add(jTerminLokalSuchenRadioButton);
-								jTerminLokalSuchenRadioButton.setBackground(new java.awt.Color(255,255,255));
-								jTerminSucheGroup.add(jTerminOnlineSuchenRadioButton);				
-								jTerminOnlineSuchenRadioButton.setBackground(new java.awt.Color(255,255,255));
-							}
+							ComboBoxModel jTerminGruppeComboBoxModel = new DefaultComboBoxModel(
+								new String[] { "Item One", "Item Two" });
+							jTerminGruppeComboBox = new JComboBox();
+							jTerminSuchePanel.add(jTerminGruppeComboBox);
+							jTerminGruppeComboBox
+								.setModel(jTerminGruppeComboBoxModel);
+							jTerminGruppeComboBox.setBounds(392, 109, 175, 21);
+						}
 							
 
 						{
