@@ -3,6 +3,9 @@ package autopsi.gui;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
@@ -14,6 +17,7 @@ import javax.swing.JComboBox;
 import javax.swing.WindowConstants;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
+import javax.swing.JFormattedTextField;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -23,6 +27,7 @@ import javax.swing.JSeparator;
 import javax.swing.JTabbedPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.text.MaskFormatter;
 
 import autopsi.database.table.Termin;
 import autopsi.database.table.Kontakt;
@@ -65,13 +70,15 @@ public class SearchFrame extends javax.swing.JPanel implements ActionListener {
 	private JScrollPane jLVAScrollPane;
 	private JScrollPane jTerminScrollPane;
 		
-	private JTextField jVornameField, jNachnameField, jGeburtsdatumField;
+	private JTextField jVornameField, jNachnameField;
 	private JTextField jTelefonnummerField, jEmailField;
 	private JTextField jAdresseField, jPlzField, jOrtField;
 	private JTextField jTitelField, jLVANummerField, jBeschreibungField;
 	private JTextField jTerminTitelField, jTerminBeschreibungField, jDatumField;
+	private JFormattedTextField jGeburtsdatumField;
 
 	private JLabel jVornameLabel, jNachnameLabel, jGeburtsdatumLabel;
+
 	private JLabel jTelefonnummerLabel, jEmailLabel, jAdresseLabel, jOrtLabel, jPlzLabel;
 	private JLabel jTitelLabel, jNummerLabel, jBeschreibungLabel;
 	private JLabel jTypeLabel, jDatumLabel;
@@ -181,7 +188,7 @@ public class SearchFrame extends javax.swing.JPanel implements ActionListener {
 						jkontaktSuchePanel.add(jNachnameField);
 						jNachnameField.setBounds(105, 30, 210, 21);
 
-						jGeburtsdatumField = new JTextField();
+						jGeburtsdatumField = new JFormattedTextField(createFormatter("##-##-####"));
 						jkontaktSuchePanel.add(jGeburtsdatumField);
 						jGeburtsdatumField.setBounds(105, 53, 210, 21);
 
@@ -553,49 +560,78 @@ public class SearchFrame extends javax.swing.JPanel implements ActionListener {
 	
 	public void actionPerformed(ActionEvent ae) {
 		String cmd = ae.getActionCommand();
-		//System.out.println( "e.getActionCommand() = " + cmd );
-		if (cmd.equals("Kontakt Suchen")) {
-			if (jKontaktLokalSuchenRadioButton.isSelected()){
-				System.out.println("Kontakt wird lokal gesucht...");
-				Kontakt kont = new Kontakt();
-				if (!jVornameField.getText().equals("")){
-					kont.setPrename(jVornameField.getText());
-				} else {
-					kont.setPrename(null);
+		try {
+			//System.out.println( "e.getActionCommand() = " + cmd );
+			if (cmd.equals("Kontakt Suchen")) {
+				if (jKontaktLokalSuchenRadioButton.isSelected()){
+					System.out.println("Kontakt wird lokal gesucht...");
+					Kontakt kont = new Kontakt();
+					if (!jVornameField.getText().equals("")){
+						kont.setPrename(jVornameField.getText());
+					} else {
+						kont.setPrename(null);
+					} 
+					if (!jNachnameField.getText().equals("")) {
+						kont.setSurname(jNachnameField.getText());
+					} else {
+						kont.setSurname(null);
+					}
+					if (!jGeburtsdatumField.getText().equals("    -  -  ")){
+						SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd");
+						Date geburtsdatum = sf.parse(jGeburtsdatumField.getText());
+						java.sql.Date sqlgeburtsdatum = new java.sql.Date( geburtsdatum.getTime());
+						kont.setBirthDate(sqlgeburtsdatum);
+					}
+					
+					jKontaktTableModel.setSuchKontakt(kont);
+					jKontaktTableModel.fireDataChanged();
+					
+				} else if (jKontaktOnlineSuchenRadioButton.isSelected()) {
+					System.out.println("Kontakt wird online gesucht...");
 				}
-				jKontaktTableModel.setSuchKontakt(kont);
-				jKontaktTableModel.fireDataChanged();
-				
-			} else if (jKontaktOnlineSuchenRadioButton.isSelected()) {
-				System.out.println("Kontakt wird online gesucht...");
-			}
-		} else if(cmd.equals("LVA Suchen")) {
-			if (jLVALokalSuchenRadioButton.isSelected()){
-				System.out.println("LVA wird lokal gesucht...");
-			} else if (jLVAOnlineSuchenRadioButton.isSelected()) {
-				System.out.println("LVA wird online gesucht...");
-			}
-		} else if(cmd.equals("Termin Suchen")) {
-			if (jTerminLokalSuchenRadioButton.isSelected()){
-				System.out.println("Termin wird lokal gesucht...");
-				Termin ter = new Termin();
-				if (!jTerminTitelField.getText().equals("")) {
-					ter.setSecondaryTitle(jTerminTitelField.getText());
-				} else {
-					ter.setSecondaryTitle(null);
+			} else if(cmd.equals("LVA Suchen")) {
+				if (jLVALokalSuchenRadioButton.isSelected()){
+					System.out.println("LVA wird lokal gesucht...");
+				} else if (jLVAOnlineSuchenRadioButton.isSelected()) {
+					System.out.println("LVA wird online gesucht...");
 				}
-				if (!jTerminBeschreibungField.getText().equals("")){
-					ter.setDescription(jTerminBeschreibungField.getText());
-				} else {
-					ter.setDescription(null);
+			} else if(cmd.equals("Termin Suchen")) {
+				if (jTerminLokalSuchenRadioButton.isSelected()){
+					System.out.println("Termin wird lokal gesucht...");
+					Termin ter = new Termin();
+					if (!jTerminTitelField.getText().equals("")) {
+						ter.setSecondaryTitle(jTerminTitelField.getText());
+					} else {
+						ter.setSecondaryTitle(null);
+					}
+					if (!jTerminBeschreibungField.getText().equals("")){
+						ter.setDescription(jTerminBeschreibungField.getText());
+					} else {
+						ter.setDescription(null);
+					}
+					jTerminTableModel.setSuchTermin(ter);
+					jTerminTableModel.fireDataChanged();
+					
+					
+				} else if (jTerminOnlineSuchenRadioButton.isSelected()) {
+					System.out.println("Termint wird online gesucht...");
 				}
-				jTerminTableModel.setSuchTermin(ter);
-				jTerminTableModel.fireDataChanged();
 				
-				
-			} else if (jTerminOnlineSuchenRadioButton.isSelected()) {
-				System.out.println("Termint wird online gesucht...");
 			}
+		} catch (ParseException ps) {
+			System.err.println("Parsererror: " + ps.getMessage());
+			System.exit(-1);
 		}
+	}
+	
+	protected MaskFormatter createFormatter(String s) {
+		 MaskFormatter formatter = null;
+		 try {
+			 formatter = new MaskFormatter(s);
+		} catch (java.text.ParseException exc) {
+			System.err.println("formatter is bad: " + exc.getMessage());
+			System.exit(-1);
+		}
+		return formatter;
 	}
 }

@@ -28,10 +28,26 @@ public class KontaktTableModel extends AbstractTableModel{
 			if (suchKontakt!=null) {
 				if (suchKontakt.getPrename()!=null) {
 					if (first){
-						query += " PRENAME LIKE '%" + suchKontakt.getPrename()+"%'";
+						query += " LOWER(PRENAME) LIKE '%" + suchKontakt.getPrename().toLowerCase()+"%'";
 						first = false;
 					} else {
-						query += "AND PRENAME LIKE '%" + suchKontakt.getPrename()+"%'";
+						query += "AND LOWER(PRENAME) LIKE '%" + suchKontakt.getPrename().toLowerCase()+"%'";
+					}
+				}
+				if (suchKontakt.getSurname()!=null) {
+					if (first){
+						query += " LOWER(SURNAME) LIKE '%" + suchKontakt.getSurname().toLowerCase()+"%'";
+						first = false;
+					} else {
+						query += "AND LOWER(SURNAME) LIKE '%" + suchKontakt.getSurname().toLowerCase()+"%'";
+					}
+				}
+				if (suchKontakt.getBirthDate()!=null) {
+					if (first){
+						query += " BIRTH_DATE LIKE '%" + suchKontakt.getBirthDate()+"%'";
+						first = false;
+					} else {
+						query += "AND BIRTH_DATE LIKE '%" + suchKontakt.getBirthDate()+"%'";
 					}
 				}
 				if (first == false){
