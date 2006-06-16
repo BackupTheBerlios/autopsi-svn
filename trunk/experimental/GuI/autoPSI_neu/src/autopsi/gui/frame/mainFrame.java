@@ -939,6 +939,7 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 			newTermin.setTitle("neuen Termin hinzufügen");
 			newTermin.setLocation(this.getLocation().x+30,this.getLocation().y+30);
 			newTermin.setVisible(true);
+			updateTable();
 			
 		}
 		if(arg0.getSource().equals(editTermin)) {
@@ -948,6 +949,7 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 			newTermin.setTitle("Termin bearbeiten");
 			newTermin.setLocation(this.getLocation().x+30,this.getLocation().y+30);
 			newTermin.setVisible(true);
+			updateTable();
 			}
 			
 		}
