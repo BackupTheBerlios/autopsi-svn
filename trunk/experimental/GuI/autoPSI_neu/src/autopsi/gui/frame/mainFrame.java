@@ -139,6 +139,7 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 	private JPanel tab1;
 	private JMenuBar mainMenu;
 	private JLabel statusBar;
+	private int terminId=0;
 	
 	boolean mouseEntered,mouseDown = false;
 	Date datum = new Date();
@@ -939,6 +940,13 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 			newTermin.setVisible(true);
 			
 		}
+		if(arg0.getSource().equals(editTermin)) {
+			EditTerminFrame newTermin = new EditTerminFrame(terminId);
+			newTermin.setTitle("neuen Termin hinzufügen");
+			newTermin.setLocation(this.getLocation().x+30,this.getLocation().y+30);
+			newTermin.setVisible(true);
+			
+		}
 	}
 
 	public void mousePressed(MouseEvent arg0)
@@ -1369,6 +1377,7 @@ try
 	termin = (Termin)data.get(0);
 	
 	int dauer = termin.getDuration();
+	terminId = termin.getId();
 	int stunden = 0;
 	int minuten = 0;
 	while(dauer>59)
