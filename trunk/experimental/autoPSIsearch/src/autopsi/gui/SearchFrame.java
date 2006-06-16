@@ -71,20 +71,11 @@ public class SearchFrame extends javax.swing.JPanel implements ActionListener {
 	private JTextField jTitelField, jLVANummerField, jBeschreibungField;
 	private JTextField jTerminTitelField, jTerminBeschreibungField, jDatumField;
 
-	private JLabel jVornameLabel;
-	private JLabel jNachnameLabel;
-	private JLabel jGeburtsdatumLabel;
-	private JLabel jTelefonnummerLabel;
-	private JLabel jEmailLabel;
-	private JLabel jAdresseLabel;
-	private JLabel jOrtLabel;
-	private JLabel jPlzLabel;
-	private JLabel jTitelLabel;
-	private JLabel jKategorieLabel;
-	private JLabel jNummerLabel;
-	private JLabel jBeschreibungLabel;
-	private JLabel jTypeLabel;
-	private JLabel jDatumLabel;
+	private JLabel jVornameLabel, jNachnameLabel, jGeburtsdatumLabel;
+	private JLabel jTelefonnummerLabel, jEmailLabel, jAdresseLabel, jOrtLabel, jPlzLabel;
+	private JLabel jTitelLabel, jKategorieLabel, jNummerLabel, jBeschreibungLabel;
+	private JLabel jTypeLabel, jDatumLabel;
+	private JLabel jKontaktGruppeLabel, jLVAGruppeLabel, jTerminGruppeLabel;
 
 	private JCheckBox jTerminCheckBox, jTerminContainerCheckBox;
 	
@@ -105,9 +96,8 @@ public class SearchFrame extends javax.swing.JPanel implements ActionListener {
 	private JSeparator jSeparator3;
 	
 	
-	private JComboBox jLVAKatComboBox;
-	private JComboBox jLVATypeComboBox;
-	private JComboBox jTerminTypeComboBox;
+	private JComboBox jLVAKatComboBox, jLVATypeComboBox, jTerminTypeComboBox;
+	private JComboBox jKontaktGruppeComboBox, jLVAGruppeComboBox, jTerminGruppeComboBox;
 	
 	/**
 	* Auto-generated main method to display this 
@@ -177,6 +167,11 @@ public class SearchFrame extends javax.swing.JPanel implements ActionListener {
 						jkontaktSuchePanel.add(jOrtLabel);
 						jOrtLabel.setText("Ort:");
 						jOrtLabel.setBounds(395, 80, 21, 14);
+						
+						jEmailLabel = new JLabel();
+						jkontaktSuchePanel.add(jEmailLabel);
+						jEmailLabel.setText("Email:");
+						jEmailLabel.setBounds(386, 12, 35, 14);
 
 						jVornameField = new JTextField();
 						jkontaktSuchePanel.add(jVornameField);
@@ -209,7 +204,7 @@ public class SearchFrame extends javax.swing.JPanel implements ActionListener {
 						jOrtField = new JTextField();
 						jkontaktSuchePanel.add(jOrtField);
 						jOrtField.setBounds(420, 76, 210, 21);
-
+						
 						{
 							jSeparator1 = new JSeparator();
 							jkontaktSuchePanel.add(jSeparator1);
@@ -219,19 +214,18 @@ public class SearchFrame extends javax.swing.JPanel implements ActionListener {
 							jKontaktSuchenButton = new JButton();
 							jkontaktSuchePanel.add(jKontaktSuchenButton);
 							jKontaktSuchenButton.setText("Kontakt Suchen");
-							jKontaktSuchenButton.setBounds(182, 105, 154, 28);
+							jKontaktSuchenButton.setBounds(68, 105, 154, 28);
 							jKontaktSuchenButton.addActionListener(this);
-						}
-						{
+							
 							jKontaktLokalSuchenRadioButton = new JRadioButton();
 							jkontaktSuchePanel.add(jKontaktLokalSuchenRadioButton);
 							jKontaktLokalSuchenRadioButton.setText("Lokal Suchen");
-							jKontaktLokalSuchenRadioButton.setBounds(343, 103, 91, 14);
+							jKontaktLokalSuchenRadioButton.setBounds(231, 105, 91, 14);
 	
 							jKontaktOnlineSuchenRadioButton = new JRadioButton();
 							jkontaktSuchePanel.add(jKontaktOnlineSuchenRadioButton);
 							jKontaktOnlineSuchenRadioButton.setText("Online Suchen");
-							jKontaktOnlineSuchenRadioButton.setBounds(343, 119, 105, 14);
+							jKontaktOnlineSuchenRadioButton.setBounds(231, 119, 98, 14);
 							
 							jKontaktLokalSuchenRadioButton.setSelected(true);
 							jKontaktSucheGroup = new ButtonGroup();
@@ -239,6 +233,19 @@ public class SearchFrame extends javax.swing.JPanel implements ActionListener {
 							jKontaktLokalSuchenRadioButton.setBackground(new java.awt.Color(255,255,255));
 							jKontaktSucheGroup.add(jKontaktOnlineSuchenRadioButton);				
 							jKontaktOnlineSuchenRadioButton.setBackground(new java.awt.Color(255,255,255));
+							
+							jKontaktGruppeLabel = new JLabel();
+							jkontaktSuchePanel.add(jKontaktGruppeLabel);
+							jKontaktGruppeLabel.setText("Gruppe:");
+							jKontaktGruppeLabel.setBounds(348, 112, 42, 14);
+		
+							ComboBoxModel jKontaktGruppeComboBoxModel = new DefaultComboBoxModel(
+								new String[] { "Item One", "Item Two" });
+							jKontaktGruppeComboBox = new JComboBox();
+							jkontaktSuchePanel.add(jKontaktGruppeComboBox);
+							jKontaktGruppeComboBox
+								.setModel(jKontaktGruppeComboBoxModel);
+							jKontaktGruppeComboBox.setBounds(392, 109, 175, 21);
 						}
 
 						{
@@ -259,12 +266,6 @@ public class SearchFrame extends javax.swing.JPanel implements ActionListener {
 								jKontaktTable.setGridColor(Color.LIGHT_GRAY);
 								jKontaktTable.setBackground(new java.awt.Color(255,255,255));
 							}
-						}
-						{
-							jEmailLabel = new JLabel();
-							jkontaktSuchePanel.add(jEmailLabel);
-							jEmailLabel.setText("Email:");
-							jEmailLabel.setBounds(386, 12, 35, 14);
 						}
 
 					}
@@ -340,19 +341,18 @@ public class SearchFrame extends javax.swing.JPanel implements ActionListener {
 							jLVASuchenButton = new JButton();
 							jLVASuchePanel.add(jLVASuchenButton);
 							jLVASuchenButton.setText("LVA Suchen");
-							jLVASuchenButton.setBounds(182, 105, 154, 28);
+							jLVASuchenButton.setBounds(68, 105, 154, 28);
 							jLVASuchenButton.addActionListener(this);
-						}
-						{
+							
 							jLVALokalSuchenRadioButton = new JRadioButton();
 							jLVASuchePanel.add(jLVALokalSuchenRadioButton);
 							jLVALokalSuchenRadioButton.setText("Lokal Suchen");
-							jLVALokalSuchenRadioButton.setBounds(343, 103, 91, 14);
+							jLVALokalSuchenRadioButton.setBounds(231, 105, 91, 14);
 	
 							jLVAOnlineSuchenRadioButton = new JRadioButton();
 							jLVASuchePanel.add(jLVAOnlineSuchenRadioButton);
 							jLVAOnlineSuchenRadioButton.setText("Online Suchen");
-							jLVAOnlineSuchenRadioButton.setBounds(343, 119, 105, 14);
+							jLVAOnlineSuchenRadioButton.setBounds(231, 119, 98, 14);
 							
 							jLVALokalSuchenRadioButton.setSelected(true);
 							jLVASucheGroup = new ButtonGroup();
@@ -360,6 +360,19 @@ public class SearchFrame extends javax.swing.JPanel implements ActionListener {
 							jLVALokalSuchenRadioButton.setBackground(new java.awt.Color(255,255,255));
 							jLVASucheGroup.add(jLVAOnlineSuchenRadioButton);				
 							jLVAOnlineSuchenRadioButton.setBackground(new java.awt.Color(255,255,255));
+							
+							jLVAGruppeLabel = new JLabel();
+							jLVASuchePanel.add(jLVAGruppeLabel);
+							jLVAGruppeLabel.setText("Gruppe:");
+							jLVAGruppeLabel.setBounds(348, 112, 42, 14);
+		
+							ComboBoxModel jLVAGruppeComboBoxModel = new DefaultComboBoxModel(
+								new String[] { "Item One", "Item Two" });
+							jLVAGruppeComboBox = new JComboBox();
+							jLVASuchePanel.add(jLVAGruppeComboBox);
+							jLVAGruppeComboBox
+								.setModel(jLVAGruppeComboBoxModel);
+							jLVAGruppeComboBox.setBounds(392, 109, 175, 21);
 						}
 
 						{
