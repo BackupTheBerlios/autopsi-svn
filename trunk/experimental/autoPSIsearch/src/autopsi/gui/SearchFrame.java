@@ -576,8 +576,8 @@ public class SearchFrame extends javax.swing.JPanel implements ActionListener {
 					} else {
 						kont.setSurname(null);
 					}
-					if (!jGeburtsdatumField.getText().equals("    -  -  ")){
-						SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd");
+					if (!jGeburtsdatumField.getText().equals("  -  -    ")){
+						SimpleDateFormat sf = new SimpleDateFormat("dd-MM-yyyy");
 						Date geburtsdatum = sf.parse(jGeburtsdatumField.getText());
 						java.sql.Date sqlgeburtsdatum = new java.sql.Date( geburtsdatum.getTime());
 						kont.setBirthDate(sqlgeburtsdatum);
