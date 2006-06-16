@@ -148,8 +148,9 @@ public class EditTerminFrame extends javax.swing.JFrame implements java.awt.even
 		place = ((Termin)list.get(0)).getPlace();
 		place_field.setText(place);
 		date = ((Termin)list.get(0)).getDate().toString().substring(0,10);
+		dateField.setText(date.substring(8,10)+"-"+date.substring(5,7)+"-"+date.substring(0,4));
 		time = ((Termin)list.get(0)).getDate().toString().substring(11);
-		
+		timeField.setText(time.substring(0,2)+":" + time.substring(3,5));
 		
 		
 		
