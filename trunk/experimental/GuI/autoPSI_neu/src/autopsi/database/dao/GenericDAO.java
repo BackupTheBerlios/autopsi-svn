@@ -1,6 +1,7 @@
 package autopsi.database.dao;
 
 
+import java.beans.Statement;
 import java.lang.String;
 import java.util.List;
 import java.util.Iterator;
@@ -355,26 +356,33 @@ public class GenericDAO implements IGenericDAO{
 		List<GenericDataObject> res = null;
 		try{
 			
-			PreparedStatement ps = null;
+			java.sql.Statement ps = null;
 			try{
 				System.out.println(query);
-				ps = dbCon.prepareStatement(query);
+				ps = dbCon.createStatement();
 			}
 			catch (SQLException e){
-				System.out.println(e.toString());
+				System.out.println("unsafeQuery::prepareStatement fehlgeschlagen::"+e.toString());
 				ps = dbCon.prepareStatement("SELECT * FROM "+currentTable);
 				
 				if (ps ==null)
 					throw new EDatabase();
 				
-				this.checkAttributes(ps.getMetaData(), prototype);
-				throw new EDatabase();
+/*				this.checkAttributes(ps.getMetaData(), prototype);
+				throw new EDatabase();*/
 			}
 			
-			if (!ps.execute())
+/*			if (!ps.execute()){
+				System.out.println("ps.execute() konnte nicht ausgeführt werden");
 				throw new EDatabase();
-			
-			ResultSet rs = ps.getResultSet();
+			}
+			dbCon.commit();
+			*/
+				
+//			ResultSet rs = ps.getResultSet();
+			ResultSet rs = ps.executeQuery(query);
+			ps.close();
+			dbCon.commit();
 			res = new ArrayList<GenericDataObject>();
 			while (rs.next()){
 				GenericDataObject obj = prototype.getClass().newInstance();
