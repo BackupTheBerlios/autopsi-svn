@@ -1,4 +1,4 @@
-package autipsi.components;
+package autipsi.gui.components;
 import java.util.List;
 import javax.swing.DefaultComboBoxModel;
 import autopsi.database.dao.GenericDAO;
