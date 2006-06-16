@@ -1,4 +1,4 @@
-package autopsi.gui;
+package autipsi.components;
 import java.util.List;
 import javax.swing.DefaultComboBoxModel;
 import autopsi.database.dao.GenericDAO;
@@ -31,10 +31,53 @@ public class KategorieComboBoxModel extends DefaultComboBoxModel {
 		}
 	}
 	
+	public KategorieComboBoxModel(String tablename, TerminKategorie kat, Boolean search) {
+		super ();
+		List <GenericDataObject> kategorien = null;
+		IGenericDAO gdo=new GenericDAO();
+		if (search) {
+			this.addElement("-");
+		}
+		
+		try {
+			kategorien = gdo.unsafeQuery("select * from "+tablename, kat);
+		} catch (Exception e) {
+			System.out.println("KategoryComboBoxModel: "+ e.toString());
+		}
+		
+		if (kategorien != null) {
+			for (int i = 0; i<kategorien.size();i++){
+				TerminKategorie kat1 = (TerminKategorie) kategorien.get(i);
+				this.addElement(kat1.getName());
+			}
+		}
+	}
+	
 	public KategorieComboBoxModel(String tablename, LvaKategorie kat) {
 		super ();
 		List <GenericDataObject> kategorien=null;
 		IGenericDAO gdo=new GenericDAO();
+		try {
+			kategorien = gdo.unsafeQuery("select * from "+tablename, kat);
+		} catch (Exception e) {
+			System.out.println("KategoryComboBoxModel: "+ e.toString());
+		}
+		
+		if (kategorien != null) {
+			for (int i = 0; i<kategorien.size();i++){
+				LvaKategorie kat1 = (LvaKategorie) kategorien.get(i);
+				this.addElement(kat1.getName());
+			}
+		}
+	}
+	
+	public KategorieComboBoxModel(String tablename, LvaKategorie kat, Boolean search) {
+		super ();
+		List <GenericDataObject> kategorien=null;
+		IGenericDAO gdo=new GenericDAO();
+		if (search) {
+			this.addElement("-");
+		}
 		try {
 			kategorien = gdo.unsafeQuery("select * from "+tablename, kat);
 		} catch (Exception e) {

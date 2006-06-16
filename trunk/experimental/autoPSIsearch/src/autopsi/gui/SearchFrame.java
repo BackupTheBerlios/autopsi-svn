@@ -24,6 +24,7 @@ import javax.swing.JTabbedPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 
+import autipsi.components.KategorieComboBoxModel;
 import autopsi.database.table.Termin;
 import autopsi.database.table.Kontakt;
 import autopsi.database.table.TerminKategorie;
@@ -324,7 +325,7 @@ public class SearchFrame extends javax.swing.JPanel implements ActionListener {
 						jLVAKatComboBox.setModel(jLVAKatComboBoxModel);
 						jLVAKatComboBox.setBounds(420, 7, 210, 21);
 						
-						KategorieComboBoxModel jLVATypeComboBoxModel = new KategorieComboBoxModel("LVA_KATEGORIE", new LvaKategorie() );
+						KategorieComboBoxModel jLVATypeComboBoxModel = new KategorieComboBoxModel("LVA_KATEGORIE", new LvaKategorie(),true );
 						jLVATypeComboBox = new JComboBox();
 						jLVASuchePanel.add(jLVATypeComboBox);
 						jLVATypeComboBox.setModel(jLVATypeComboBoxModel);
@@ -456,7 +457,7 @@ public class SearchFrame extends javax.swing.JPanel implements ActionListener {
 						jTerminSuchePanel.add(jDatumField);
 						jDatumField.setBounds(420, 7, 210, 21);
 						
-						KategorieComboBoxModel jTerminTypeComboBoxModel = new KategorieComboBoxModel("TERMIN_KATEGORIE", new TerminKategorie() );
+						KategorieComboBoxModel jTerminTypeComboBoxModel = new KategorieComboBoxModel("TERMIN_KATEGORIE", new TerminKategorie(),true );
 						jTerminTypeComboBox = new JComboBox();
 						jTerminSuchePanel.add(jTerminTypeComboBox);
 						jTerminTypeComboBox.setModel(jTerminTypeComboBoxModel);
