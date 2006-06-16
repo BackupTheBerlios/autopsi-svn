@@ -3,6 +3,8 @@ package autopsi.gui;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -47,7 +49,7 @@ import autopsi.gui.components.KategorieComboBoxModel;
 * THIS MACHINE, SO JIGLOO OR THIS CODE CANNOT BE USED
 * LEGALLY FOR ANY CORPORATE OR COMMERCIAL PURPOSE.
 */
-public class SearchFrame extends javax.swing.JPanel implements ActionListener {
+public class SearchFrame extends javax.swing.JPanel implements ActionListener, KeyListener {
 
 	{
 		//Set Look & Feel
@@ -114,7 +116,7 @@ public class SearchFrame extends javax.swing.JPanel implements ActionListener {
 	public SearchFrame() {
 		super();
 		initGUI();
-		
+		addKeyListener(this);
 		JFrame frame = new JFrame("Suchen");
 		frame.getContentPane().add(this);
 		frame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
@@ -633,5 +635,24 @@ public class SearchFrame extends javax.swing.JPanel implements ActionListener {
 			System.exit(-1);
 		}
 		return formatter;
+	}
+
+	public void keyTyped(KeyEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void keyPressed(KeyEvent arg0) {
+		// TODO Auto-generated method stub
+		if (arg0.equals(KeyEvent.VK_ENTER)){
+			System.out.println("You Pressed ENTER");
+			
+		}
+		
+	}
+
+	public void keyReleased(KeyEvent arg0) {
+		// TODO Auto-generated method stub
+		
 	}
 }
