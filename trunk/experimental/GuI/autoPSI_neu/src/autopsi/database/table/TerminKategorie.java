@@ -24,7 +24,7 @@ public class TerminKategorie extends GenericData implements GenericDataObject{
 		return this.id;
 	}
 	
-	public void setId(int id){
+	public void setId(Integer id){
 		this.id = id;
 	}
 	
