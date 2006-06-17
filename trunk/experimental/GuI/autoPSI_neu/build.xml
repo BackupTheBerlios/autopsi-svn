@@ -9,7 +9,7 @@
 	
 
 	<property name="jdbc.username" value="SA"/>
-	<property name="jdbc.password" value="ab"/>
+	<property name="jdbc.password" value="AB"/>
 	<property name="jdbc.url" value="jdbc:hsqldb:file:${hsqldb_data}/database"/>
 	
 	<path id="classpath">

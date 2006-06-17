@@ -5,6 +5,7 @@ import java.util.*;
 import javax.swing.table.AbstractTableModel;
 import autopsi.database.dao.*;
 import autopsi.database.table.*;
+
 import java.sql.Timestamp;
 import java.util.List;
 
@@ -48,7 +49,7 @@ public class WocheTM extends AbstractTableModel {
 	
 	public Class getColumnClass(int c)
 	{
-		return String[].class;
+		return Termin[].class;
 	}
 	public int getRowCount()
 	{
@@ -80,30 +81,24 @@ public class WocheTM extends AbstractTableModel {
 		
 		Timestamp stamp = new Timestamp(c.getTimeInMillis());
 		
-		List<String> ret = new ArrayList<String>();
-		ret.add(stamp.toString().substring(0,10));
+		List<Termin> ret = new ArrayList<Termin>();
+		Termin ter = new Termin();
+		ter.setSecondaryTitle(stamp.toString().substring(0,10));
+		ret.add(ter);
 		
 		for (int i = 0;i<termine.size();i++)
 		{
 			if (((Termin)termine.get(i)).getDate().toString().substring(0,10).equals(stamp.toString().substring(0,10)))
 			{	
-				//System.out.println("termin    "+Integer.parseInt(((Termin)termine.get(i)).getSetDate(false, null).toString().substring(11,13)));
-				//System.out.println("row       "+row);
 				if(row+6==Integer.parseInt(((Termin)termine.get(i)).getDate().toString().substring(11,13)))
 				{
-					 ret.add(((Termin)termine.get(i)).getDate().toString().substring(11,16)+" "+((Termin)termine.get(i)).getSecondaryTitle());
+					 ret.add((Termin)termine.get(i));
 				}
-				
 			}
 		}
-		String [] data = new String[ret.size()];
-		for(int j = 0;j<ret.size();j++)
-		{
-		data[j]=ret.get(j);	
-		}
-		
-		
-			return data;
+		Termin[] retur= new Termin[ret.size()];
+		retur = (Termin[])ret.toArray();
+		return retur;
 	}
 
 }

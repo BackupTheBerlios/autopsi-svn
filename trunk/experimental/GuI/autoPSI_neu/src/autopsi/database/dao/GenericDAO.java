@@ -358,7 +358,6 @@ public class GenericDAO implements IGenericDAO{
 			
 			java.sql.Statement ps = null;
 			try{
-				System.out.println(query);
 				ps = dbCon.createStatement();
 			}
 			catch (SQLException e){

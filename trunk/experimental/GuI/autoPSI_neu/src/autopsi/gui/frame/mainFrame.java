@@ -178,7 +178,7 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 		table.setRowSelectionAllowed(false);
 		table.setSelectionForeground(new java.awt.Color(0,0,0));
 		table.setSelectionBackground(new java.awt.Color(255,255,255));
-		table.setDefaultRenderer(String[].class, new MonthRenderer(null));
+		table.setDefaultRenderer(Termin[].class, new MonthRenderer(null));
 		table.setRowHeight(98);
 		table.addMouseListener(this);
 		table.addMouseMotionListener(this);
@@ -258,25 +258,6 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 						
 						todayList = new JList();
 						todayList.addMouseListener(this);
-						todayList.addFocusListener(new FocusListener(){
-
-							public void focusGained(FocusEvent arg0) {
-								// TODO Auto-generated method stub
-								
-							}
-
-							public void focusLost(FocusEvent arg0) {
-								if(arg0.getOppositeComponent().equals(editTermin) || arg0.getOppositeComponent().equals(deleteTermin)){
-									
-								}else{
-									terminId = -1;
-								}
-								
-								
-								
-							}
-							
-						});
 						todayScrollPane.setViewportView(todayList);
 					}
 				}
@@ -505,11 +486,11 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 								c.setTime(c_marker.getTime());
 								if(viewMonth)
 								{
-									table.setDefaultRenderer(String[].class, new MonthRenderer(c_marker));
+									table.setDefaultRenderer(Termin[].class, new MonthRenderer(c_marker));
 								}
 								else
 								{
-									table.setDefaultRenderer(String[].class, new WeekRenderer(c_marker));
+									table.setDefaultRenderer(Termin[].class, new WeekRenderer(c_marker));
 								}			
 								setTimeSpace(c);
 								layoutTable();
@@ -836,6 +817,22 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 						view_monthNext.setText("4 Wochen weiter");
 						view_monthNext.addMouseListener(this);
 					}
+					/*todayList.addFocusListener(new FocusListener(){
+
+						public void focusGained(FocusEvent arg0) {
+							
+						}
+
+						public void focusLost(FocusEvent arg0) {
+							if(arg0.getOppositeComponent().equals(editTermin) || arg0.getOppositeComponent().equals(deleteTermin)){
+								
+							}else{
+								terminId = -1;
+							}
+	
+						}
+						
+					});*/
 				}
 
 			}
@@ -935,7 +932,7 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 			loadTerminData();
 		}
 		if(arg0.getSource().equals(neuerTermin)) {
-			EditTerminFrame newTermin = new EditTerminFrame(c_marker, null);
+			EditTerminFrame newTermin = new EditTerminFrame(this,c_marker, null);
 			newTermin.setTitle("neuen Termin hinzufügen");
 			newTermin.setLocation(this.getLocation().x+30,this.getLocation().y+30);
 			newTermin.setVisible(true);
@@ -945,15 +942,15 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 		if(arg0.getSource().equals(editTermin)) {
 			System.out.println("++++ " + terminId);
 			if(terminId != -1){
-			EditTerminFrame newTermin = new EditTerminFrame(null, terminId);
+			EditTerminFrame newTermin = new EditTerminFrame(this,null, terminId);
 			newTermin.setTitle("Termin bearbeiten");
 			newTermin.setLocation(this.getLocation().x+30,this.getLocation().y+30);
 			newTermin.setVisible(true);
-			updateTable();
+			
 			}
 			
 		}
-		/*if(arg0.getSource().equals(deleteTermin)) {
+		if(arg0.getSource().equals(deleteTermin)) {
 			System.out.println("++++ " + terminId);
 			GenericDAO gdo = new GenericDAO();
 			if(terminId != -1){
@@ -971,7 +968,7 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 				}
 			}
 			
-		}//Hier muss noch eine Sicherheitsabfrage her!!!!!!!!!!!*/
+		}//Hier muss noch eine Sicherheitsabfrage her!!!!!!!!!!!
 	}
 
 	public void mousePressed(MouseEvent arg0)
@@ -1208,8 +1205,6 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 							table.setRowHeight(i,k); //Reihe i wird mit Höhe k versehen
 							timetable.setRowHeight(i,k);
 						}
-					
-					
 				}
 				
 				DefaultTableColumnModel cm = new DefaultTableColumnModel();
@@ -1258,7 +1253,7 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 	/* Liest die Daten für die Tabelle ein
 	 * 
 	 */
-	private void updateTable()
+	public void updateTable()
 	{
 		updateDateIndicator();
 			
@@ -1361,7 +1356,7 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 		if (view.equals("week"))
 		{
 			//lblToday.setText("Keine Termine ausgewählt.");
-			table.setDefaultRenderer(String[].class, new WeekRenderer(c_marker));
+			table.setDefaultRenderer(Termin[].class, new WeekRenderer(c_marker));
 			view_dayBack.setVisible(true);
 			view_dayNext.setVisible(true);
 			dayBack.setVisible(true);
@@ -1376,7 +1371,7 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 		else if (view.equals("month"))
 		{
 			lblToday.setText("heutige Termine:");
-			table.setDefaultRenderer(String[].class, new MonthRenderer(c_marker));
+			table.setDefaultRenderer(Termin[].class, new MonthRenderer(c_marker));
 			view_dayBack.setVisible(false);
 			view_dayNext.setVisible(false);
 			dayBack.setVisible(false);
@@ -1388,37 +1383,51 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 		}
 	}
 	
-	private void loadTerminData()
+	public void loadTerminData()
 	{
-try
-{
-	
-	IGenericDAO igdao = new GenericDAO();
-	Termin termin = new Termin();
-	String query = "select * from termin where date='" +terminData.get(0)+" "+todayList.getSelectedValue().toString().substring(0,5)+":000'";
-	System.out.println(query);
-	List<GenericDataObject> data = igdao.unsafeQuery(query,termin);
-	
-	termin = (Termin)data.get(0);
-	
-	int dauer = termin.getDuration();
-	terminId = termin.getId();
-	int stunden = 0;
-	int minuten = 0;
-	while(dauer>59)
-	{
-	dauer = dauer -60;
-	stunden++;
-	}
-	minuten = dauer;
-	lblZeit.setText("Zeit: "+todayList.getSelectedValue().toString().substring(0,5)+"           Dauer "+stunden+":"+minuten);
-	lblTermin.setText(termin.getSecondaryTitle());
-	lblOrt.setText("Ort: "+termin.getPlace());
-	lblBeschreibung.setText(termin.getDescription());
+		try
+		{
+			System.out.println("loadTerminData begin");
+			IGenericDAO igdao = new GenericDAO();
+			Termin termin = new Termin();
+			String query = "select * from termin where date='" +terminData.get(0)+" "+todayList.getSelectedValue().toString().substring(0,5)+":000'";
+			List<GenericDataObject> data = igdao.unsafeQuery(query,termin);
+			
+			termin = (Termin)data.get(0);
+			
+			int dauer = termin.getDuration();
+			terminId = termin.getId();
+			int stunden = 0;
+			int minuten = 0;
+			while(dauer>59)
+			{
+			dauer = dauer -60;
+			stunden++;
+			}
+			minuten = dauer;
+			lblZeit.setText("Zeit: "+todayList.getSelectedValue().toString().substring(0,5)+"           Dauer "+stunden+":"+minuten);
+			lblTermin.setText(termin.getSecondaryTitle());
+			lblOrt.setText("Ort: "+termin.getPlace());
+			lblBeschreibung.setText(termin.getDescription());
+			
+			IGenericDAO gdo = new GenericDAO();
+			String query2 = "select * from termincontainer where id="+termin.getTerminContainerID();
+			TerminContainer cont = new TerminContainer();
+			List<GenericDataObject> dat = gdo.unsafeQuery(query2,cont);
+			try
+			{
+				cont = (TerminContainer)dat.get(0);
+				lblTerminContainer.setText(cont.getTitle());
+			}
+			catch(Exception ex)
+			{
+				System.out.println("cast error");
+			}
+			
+			
+		}
+		catch(Exception ex) {System.out.println("error: " + ex.toString());}				
 }
-catch(Exception ex) {System.out.println(ex.toString());}
-		
-	}
 
 	protected MaskFormatter createFormatter(String s) {
 		 MaskFormatter formatter = null;

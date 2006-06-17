@@ -2,6 +2,8 @@ package autopsi.gui.frame;
 
 
 import java.awt.event.MouseEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.util.List;
 
 import javax.swing.BorderFactory;
@@ -27,6 +29,7 @@ import autopsi.database.dao.IGenericDAO;
 import autopsi.database.exception.EAttributeNotFound;
 import autopsi.database.exception.EDatabase;
 import autopsi.database.exception.EDatabaseConnection;
+import autopsi.database.table.Termin;
 import autopsi.database.table.TerminContainer;
 
 /**
@@ -91,10 +94,11 @@ public class EditTerminContainerFrame extends javax.swing.JFrame implements java
 	private String desc = "";
 	private IGenericDAO gdo; 
 	private int ID;
+	private EditTerminFrame owner;
 	
 	
 	
-	private void readData(Integer id) throws EDatabaseConnection, EAttributeNotFound, EDatabase{
+	private void readData(int id) throws EDatabaseConnection, EAttributeNotFound, EDatabase{
 		
 		TerminContainer lookup = new TerminContainer();
 		lookup.setId(id);
@@ -111,10 +115,14 @@ public class EditTerminContainerFrame extends javax.swing.JFrame implements java
 	}
 	private void update(){
 		try{
-			title = title_field.getText();
-			desc = desc_area.getText();
-					
-			
+
+			String query="";
+			if (ID<0) query = "insert into termincontainer (title, description) values ('"+title_field.getText()+ "','"+desc_area.getText()+"')";
+			else query = "update termincontainer  set title = " + title_field.getText() + ", description='"+desc_area.getText()+" where id="+ID+")";
+			Termin vorlage = new Termin();
+			System.out.println(query);
+			gdo.unsafeQuery(query,vorlage);
+			//ok = true;
 			
 			TerminContainer lookup = new TerminContainer(), updateData = new TerminContainer();
 			lookup.setId(ID);
@@ -122,18 +130,31 @@ public class EditTerminContainerFrame extends javax.swing.JFrame implements java
 			updateData.setTitle(title);
 			updateData.setDescription(desc);
 			gdo.updDataObjects(lookup, updateData);
+			if(owner!=null) owner.updateTCList();
 			
 		}
 		catch (Exception e){
 			System.out.println("Exception beim Updaten=="+e.toString());
 		}
 	}
-	public EditTerminContainerFrame(int id) {
+	public EditTerminContainerFrame(EditTerminFrame owner, int id) {
 		super();
 		this.ID = id;
+		this.owner = owner;
 		gdo = new GenericDAO();
 		gdo.setCurrentTable("termincontainer");
 		initGUI();
+		
+		
+		addWindowListener(new WindowAdapter()
+				{
+				public void windowClosing(WindowEvent arg0)
+				{ //wird das Fenster über den X-Button rechts oben geschlossen
+				  //wird die Anwendung beendet.
+					super.windowClosing(arg0);
+					dispose();
+					}
+				});
 	}
 	
 	private void initGUI() {
@@ -341,8 +362,7 @@ public class EditTerminContainerFrame extends javax.swing.JFrame implements java
 			
 			
 			
-			
-			readData(ID);
+			if(ID>-1) readData(ID);			
 			pack();
 			this.setSize(589, 389);
 			this.setResizable(false);

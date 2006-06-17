@@ -2,19 +2,23 @@ package autopsi.gui;
 
 import javax.swing.table.*;
 import javax.swing.*;
+
+import autopsi.database.table.Termin;
+
 import java.util.*;
 
 import java.awt.Color;
 import java.awt.Component;
 public class MonthRenderer extends WeekDayCell implements TableCellRenderer
 {
-	String [] data;
+	Termin[] data;
 	DateConverter converter = new DateConverter();
 	GregorianCalendar marker=null;;
     public MonthRenderer(GregorianCalendar mark) {
 		super();
 		// TODO Auto-generated constructor stub
 		this.marker = mark;
+	
 	}
 
 	private static final long serialVersionUID = 1L;
@@ -25,21 +29,15 @@ public class MonthRenderer extends WeekDayCell implements TableCellRenderer
     }
 
 	public Component getTableCellRendererComponent(JTable arg0, Object arg1, boolean arg2, boolean arg3, int arg4, int arg5) {
-		if(arg1 instanceof String[])
+		if(arg1 instanceof Termin[])
     	{
 			
-    		data = (String[])arg1;
+    		data = (Termin[])arg1;
     		
     		DayCell cell = new DayCell();
     		
-    		String[] liste = new String[data.length-1];
-    		for (int i = 0;i<liste.length;i++)
-    		{
-    			liste[i]=data[i+1];
-    		}
-    		
     		Calendar cal = new GregorianCalendar();
-    		cal.set(Integer.parseInt(data[0].substring(0,4)),Integer.parseInt(data[0].substring(5,7))-1,Integer.parseInt(data[0].substring(8,10)));
+    		cal.set(Integer.parseInt(data[0].getSecondaryTitle().substring(0,4)),Integer.parseInt(data[0].getSecondaryTitle().substring(5,7))-1,Integer.parseInt(data[0].getSecondaryTitle().substring(8,10)));
     		Date dat = new Date(cal.getTimeInMillis());
     		String title = converter.toShort(dat.toString());
     		cell.setTab(title);
@@ -57,6 +55,13 @@ public class MonthRenderer extends WeekDayCell implements TableCellRenderer
     				marker=null;
     			}		
     		}
+    		String[] liste = new String[data.length-1];
+    		
+    		for (int i = 0;i<data.length-1;i++)
+    		{
+    			liste[i] = data[i+1].getDate().toString().substring(11,16) + " " + data[i+1].getSecondaryTitle();
+    		}
+    		
     		
     		cell.fillList(liste);                	
     		cell.setVisible(true);

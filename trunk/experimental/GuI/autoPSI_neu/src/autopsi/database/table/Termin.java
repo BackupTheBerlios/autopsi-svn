@@ -9,6 +9,7 @@ public class Termin implements GenericDataObject{
 
 	private Integer id = null;
 	private Integer termin_kategorie_id;
+	private Integer termincontainer_id;
 	private String secondary_title = null;
 	private String description = null;
 	private Timestamp date = null;
@@ -70,6 +71,14 @@ public class Termin implements GenericDataObject{
 	
 	public void setPlace(String place){
 		this.place = place;
+	}
+	
+	public Integer getTerminContainerID(){
+		return this.termincontainer_id;
+	}
+	
+	public void setTerminContainerID(int terminContainer_id){
+		this.termincontainer_id = terminContainer_id;
 	}
 	
 }
