@@ -65,4 +65,9 @@
 	<target name="compile_and_run" depends="compile,run">
 	</target>
 	
+	<target name="Test:GenericEditFrame" depends="init">
+		<javac srcdir="${src}" destdir="${build}" classpathref="classpath"/>
+		<java classpathref="classpath" classname="EditFrameTest" fork="true"/> 
+	</target>
+	
 </project>
