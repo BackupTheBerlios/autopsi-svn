@@ -3,9 +3,10 @@ package autopsi.database.table;
 
 import java.sql.Timestamp;
 import autopsi.database.dao.GenericDataObject;
+import autopsi.gui.component.GenericData;
 
 
-public class Termin implements GenericDataObject{
+public class Termin extends GenericData implements GenericDataObject{
 
 	private Integer id = null;
 	private Integer termin_kategorie_id;
@@ -17,11 +18,28 @@ public class Termin implements GenericDataObject{
 	private String place = null;
 	
 	
+	public Termin(){
+		Class cl = this.getClass();
+		try{
+			this.addAttribute("Id",cl.getMethod("getId", new Class[] {}), cl.getMethod("setId", new Class[] {Integer.class} ));
+			this.addAttribute("TerminKategorieId",cl.getMethod("getTerminKategorieId", new Class[] {}), cl.getMethod("setTerminKategorieId", new Class[] {Integer.class} ));	
+			this.addAttribute("TermincontainerId",cl.getMethod("getTerminContainerID", new Class[] {}), cl.getMethod("setTerminContainerID", new Class[] {Integer.class} ));
+			this.addAttribute("Sekundärer Titel",cl.getMethod("getSecondaryTitle", new Class[] {}), cl.getMethod("setSecondaryTitle", new Class[] {String.class} ));	
+			this.addAttribute("Beschreibung",cl.getMethod("getDescription", new Class[] {}), cl.getMethod("setDescription", new Class[] {String.class} ));
+			this.addAttribute("Datum",cl.getMethod("getDate", new Class[] {}), cl.getMethod("setDate", new Class[] {Timestamp.class} ));	
+			this.addAttribute("Dauer",cl.getMethod("getDuration", new Class[] {}), cl.getMethod("setDuration", new Class[] {Integer.class} ));
+			this.addAttribute("Ort",cl.getMethod("getPlace", new Class[] {}), cl.getMethod("setPlace", new Class[] {String.class} ));
+		}
+		catch (Exception e){
+			System.out.println("Fehler beim Erstellen des LVA-Kategorie-Objekts::"+e.toString());
+		}
+	}
+	
 	public int getId(){
 		return this.id;
 	}
 	
-	public void setId(int id){
+	public void setId(Integer id){
 		this.id = id;
 	}
 	
@@ -29,7 +47,7 @@ public class Termin implements GenericDataObject{
 		return this.termin_kategorie_id;
 	}
 	
-	public void setTerminKategorieId(int terminKategorieId){
+	public void setTerminKategorieId(Integer terminKategorieId){
 		this.termin_kategorie_id = terminKategorieId;
 	}
 	
@@ -61,7 +79,7 @@ public class Termin implements GenericDataObject{
 		return this.duration;
 	}
 	
-	public void setDuration(int duration){
+	public void setDuration(Integer duration){
 		this.duration = duration;
 	}
 	
@@ -77,7 +95,7 @@ public class Termin implements GenericDataObject{
 		return this.termincontainer_id;
 	}
 	
-	public void setTerminContainerID(int terminContainer_id){
+	public void setTerminContainerID(Integer terminContainer_id){
 		this.termincontainer_id = terminContainer_id;
 	}
 	
