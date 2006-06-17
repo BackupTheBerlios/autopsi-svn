@@ -13,7 +13,7 @@ import autopsi.database.dao.GenericDAO;
 import autopsi.database.dao.GenericDataObject;
 import autopsi.database.dao.IGenericDAO;
 import autopsi.gui.component.*;
-import autopsi.gui.frame.Termin;
+import autopsi.database.table.Termin;
 
 public class GenericEditFrame extends JDialog implements ActionListener {
 	
