@@ -15,7 +15,7 @@ public class Notiz implements GenericDataObject {
 		return this.global_id;
 	}
 	
-	public void setGlobId(int globalId){
+	public void setGlobalId(int globalId){
 		this.global_id = globalId;
 	}
 	
