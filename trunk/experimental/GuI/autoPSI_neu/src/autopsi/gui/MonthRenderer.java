@@ -49,6 +49,7 @@ public class MonthRenderer extends WeekDayCell implements TableCellRenderer
     		
     		if(this.marker!=null) //im dateJumper gewähltes Datum wird im Kalender rot hinterlegt
     		{ 	
+    			
     			if(this.marker.getTime().toString().substring(0,10).equals(cal.getTime().toString().substring(0,10)))
     			{
     				cell.setBackColor(new Color(255,156,144));	
