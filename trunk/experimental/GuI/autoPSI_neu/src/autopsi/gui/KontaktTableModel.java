@@ -40,9 +40,9 @@ public class KontaktTableModel extends AbstractTableModel{
 					query += " TEL_BUSINESS LIKE '%" + suchKontakt.getTelBusiness()+"%' OR";
 					query += " TEL_MOBILE LIKE '%" + suchKontakt.getTelBusiness()+"%')";
 				}
-				if (suchKontakt.getFirst_Email()!=null){
-					query += " AND ( LOWER(FIRST_EMAIL) LIKE '%" + suchKontakt.getFirst_Email().toLowerCase() + "%' OR";
-					query += " LOWER(SECOND_EMAIL) LIKE '%" + suchKontakt.getFirst_Email().toLowerCase() +"%')";
+				if (suchKontakt.getFirstEmail()!=null){
+					query += " AND ( LOWER(FIRST_EMAIL) LIKE '%" + suchKontakt.getFirstEmail().toLowerCase() + "%' OR";
+					query += " LOWER(SECOND_EMAIL) LIKE '%" + suchKontakt.getFirstEmail().toLowerCase() +"%')";
 				}
 				if (this.group != ""){
 					query += " AND ok.NAME LIKE '%"+ this.group+"%'";
