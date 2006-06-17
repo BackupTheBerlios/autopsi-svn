@@ -31,7 +31,7 @@ public class Termin extends GenericData implements GenericDataObject{
 			this.addAttribute("Ort",cl.getMethod("getPlace", new Class[] {}), cl.getMethod("setPlace", new Class[] {String.class} ));
 		}
 		catch (Exception e){
-			System.out.println("Fehler beim Erstellen des LVA-Kategorie-Objekts::"+e.toString());
+			System.out.println("Fehler beim Erstellen des Termin-Kategorie-Objekts::"+e.toString());
 		}
 	}
 	
