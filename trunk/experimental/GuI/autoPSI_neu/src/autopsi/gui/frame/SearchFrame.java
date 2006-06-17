@@ -626,9 +626,9 @@ public class SearchFrame extends javax.swing.JPanel implements ActionListener {
 						kont.setTelBusiness(null);
 					}
 					if (!jEmailField.getText().equals("")) {
-						kont.setFirst_Email(jEmailField.getText());
+						kont.setFirstEmail(jEmailField.getText());
 					} else {
-						kont.setFirst_Email(null);
+						kont.setFirstEmail(null);
 					}
 					if (!jPlzField.getText().equals("")){
 						Integer plz = new Integer(jPlzField.getText());
