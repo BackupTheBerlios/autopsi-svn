@@ -1,4 +1,5 @@
 package autopsi.gui.frame;
+import java.awt.Point;
 import java.awt.event.*;
 import java.util.*;
 import javax.swing.BorderFactory;
@@ -145,6 +146,9 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 	private JLabel statusBar;
 	private int terminId=-1;
 	private Termin[] currentValue = null;
+	String[] data;
+	private Point currentCell = new Point();
+	private int selection;
 	
 	boolean mouseEntered,mouseDown = false;
 	Date datum = new Date();
@@ -160,6 +164,9 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 	GregorianCalendar c_marker = new GregorianCalendar();
 	
 	ListModel listTC2Model = new DefaultComboBoxModel(); //Listmodel für verwandte Termine
+	public boolean delete_ok = false;
+	
+	
 	
 	public mainFrame() {
 		super();
@@ -201,6 +208,7 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 	
 	private void initGUI() {
 		try {
+		
 			setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 			getContentPane().setLayout(null);
 			getContentPane().setBackground(new java.awt.Color(240,240,240));
@@ -259,6 +267,7 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 						todayList = new JList();
 						todayList.addMouseListener(this);
 						todayScrollPane.setViewportView(todayList);
+					
 					}
 				}
 			}
@@ -524,8 +533,6 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 					{
 						lblBeschreibung = new JTextPane();
 						tab0.add(lblBeschreibung);
-						lblBeschreibung
-							.setText("Thema: Matrizen\nPrüfungsanmeldung\nAnmeldung zum Vorbereitungstutorium");
 						lblBeschreibung.setBounds(7, 98, 231, 147);
 						lblBeschreibung.setOpaque(false);
 						lblBeschreibung.setBorder(BorderFactory.createEtchedBorder(BevelBorder.LOWERED));
@@ -533,7 +540,6 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 					{
 						lblTerminContainer = new JLabel();
 						tab0.add(lblTerminContainer);
-						lblTerminContainer.setText("VO Mathematik für Inf. I");
 						lblTerminContainer.setBounds(7, 28, 231, 21);
 						lblTerminContainer.setIcon(new ImageIcon(
 							"src/images/lva.GIF"));
@@ -545,7 +551,6 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 					{
 						lblTermin = new JLabel();
 						tab0.add(lblTermin);
-						lblTermin.setText("VO Mathe");
 						lblTermin
 							.setIcon(new ImageIcon("src/images/termin.GIF"));
 						lblTermin.setBounds(7, 7, 231, 21);
@@ -859,14 +864,13 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 		if(arg0.getSource().equals(table))
 		{ //zeigt den angeklickten Tag in der Infobar an
 			if(zoomBox.getSelectedObjects()!=null) tableZoom();
-			
+			currentCell.x = table.rowAtPoint(table.getMousePosition());
+			currentCell.y = table.columnAtPoint(table.getMousePosition());
 			try
 			{
 				currentValue = (Termin[])table.getValueAt(table.rowAtPoint(table.getMousePosition()),table.columnAtPoint(table.getMousePosition()));
 
 				c_marker.set(Integer.parseInt(currentValue[0].getSecondaryTitle().substring(0,4)),Integer.parseInt(currentValue[0].getSecondaryTitle().substring(5,7))-1,Integer.parseInt(currentValue[0].getSecondaryTitle().substring(8,10)));
-
-				
 			}
 			catch(Exception ex) {System.out.println(ex.toString());}; 
 
@@ -880,7 +884,7 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 	    		String title = converter.toLong(dat.toString());
 	    		lblDatum.setText(title);
 	    		
-	    		String[] data = new String[currentValue.length-1];
+	    		data = new String[currentValue.length-1];
 	    		
 	    		
 	    		
@@ -935,7 +939,8 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 			setTimeSpace(new GregorianCalendar());
 		}
 		if(arg0.getSource().equals(todayList)) {
-			loadTerminData();
+			selection = todayList.getSelectedIndex();
+			loadTerminData(false);
 		}
 		if(arg0.getSource().equals(neuerTermin)) {
 			EditTerminFrame newTermin = new EditTerminFrame(this,c_marker, null);
@@ -943,7 +948,7 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 			newTermin.setLocation(this.getLocation().x+30,this.getLocation().y+30);
 			newTermin.setVisible(true);
 			updateTable();
-			
+			updateInfoBar(false);
 		}
 		if(arg0.getSource().equals(editTermin)) {
 			System.out.println("++++ " + terminId);
@@ -952,7 +957,7 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 			newTermin.setTitle("Termin bearbeiten");
 			newTermin.setLocation(this.getLocation().x+30,this.getLocation().y+30);
 			newTermin.setVisible(true);
-			
+		
 			}
 			
 		}
@@ -962,8 +967,13 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 			if(terminId != -1){
 				String query = "delete from termin where id =" +terminId;
 				try {
+					SecurityDialog diag = new SecurityDialog(this,"Termin löschen","Wollen Sie den gewählten Termin wirklich löschen?");
+					diag.setLocation(this.getLocation().x+40,this.getLocation().y+40);
+					diag.setVisible(true);
+					if(delete_ok)					
 					gdo.unsafeQuery(query,null);
 					updateTable();
+					delete_ok = false;
 					//Liste muss noch geupdatet werden
 				} catch (EDatabaseConnection e) {
 					e.printStackTrace();
@@ -974,7 +984,7 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 				}
 			}
 			
-		}//Hier muss noch eine Sicherheitsabfrage her!!!!!!!!!!!
+		}
 	}
 
 	public void mousePressed(MouseEvent arg0)
@@ -1386,48 +1396,55 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 		}
 	}
 	
-	public void loadTerminData()
+	public void loadTerminData(boolean update)
 	{
 		try
 		{
-			System.out.println("loadTerminData begin");
-			IGenericDAO igdao = new GenericDAO();
-			Termin termin = new Termin();
-			String query = "select * from termin where date='" +currentValue[0].getSecondaryTitle().toString()+" "+todayList.getSelectedValue().toString().substring(0,5)+":000'";
+			currentValue = (Termin[])table.getValueAt(currentCell.x,currentCell.y);
+			if(todayList.getModel().getSize()>0) {
+				IGenericDAO igdao = new GenericDAO();
+				Termin termin = new Termin();
+		
+				String  query = "select * from termin where date='" +currentValue[0].getSecondaryTitle().toString()+" "+todayList.getSelectedValue().toString().substring(0,5)+":000'";
+				List<GenericDataObject> data = igdao.unsafeQuery(query,termin);					
+				termin = (Termin)data.get(0);
 			
-			List<GenericDataObject> data = igdao.unsafeQuery(query,termin);
-			
-			termin = (Termin)data.get(0);
-			
-			int dauer = termin.getDuration();
-			terminId = termin.getId();
-			int stunden = 0;
-			int minuten = 0;
-			while(dauer>59)
-			{
-			dauer = dauer -60;
-			stunden++;
+				int dauer = termin.getDuration();
+				terminId = termin.getId();
+				int stunden = 0;
+				int minuten = 0;
+				System.out.println("loadTerminData 3");
+				while(dauer>59)
+				{
+				dauer = dauer -60;
+				stunden++;
+				}
+				minuten = dauer;
+				
+				lblZeit.setText("Zeit: "+todayList.getSelectedValue().toString().substring(0,5)+"           Dauer "+stunden+":"+minuten);
+
+				
+				lblTermin.setText(termin.getSecondaryTitle());
+				
+				lblOrt.setText("Ort: "+termin.getPlace());
+				lblBeschreibung.setText(termin.getDescription());
+				
+				IGenericDAO gdo = new GenericDAO();
+				String query2 = "select * from termincontainer where id="+termin.getTerminContainerID();
+				TerminContainer cont = new TerminContainer();
+				List<GenericDataObject> dat = gdo.unsafeQuery(query2,cont);
+				
+				try
+				{
+					cont = (TerminContainer)dat.get(0);
+					lblTerminContainer.setText(cont.getTitle());
+				}
+				catch(Exception ex)
+				{
+					System.out.println("cast error");
+				}
+				
 			}
-			minuten = dauer;
-			lblZeit.setText("Zeit: "+todayList.getSelectedValue().toString().substring(0,5)+"           Dauer "+stunden+":"+minuten);
-			lblTermin.setText(termin.getSecondaryTitle());
-			lblOrt.setText("Ort: "+termin.getPlace());
-			lblBeschreibung.setText(termin.getDescription());
-			
-			IGenericDAO gdo = new GenericDAO();
-			String query2 = "select * from termincontainer where id="+termin.getTerminContainerID();
-			TerminContainer cont = new TerminContainer();
-			List<GenericDataObject> dat = gdo.unsafeQuery(query2,cont);
-			try
-			{
-				cont = (TerminContainer)dat.get(0);
-				lblTerminContainer.setText(cont.getTitle());
-			}
-			catch(Exception ex)
-			{
-				System.out.println("cast error");
-			}
-			
 			
 		}
 		catch(Exception ex) {System.out.println("error: " + ex.toString());}			
@@ -1442,4 +1459,23 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 		}
 		return formatter;
 	}
+	public void updateInfoBar(boolean select)
+	{
+		currentValue = (Termin[])table.getValueAt(currentCell.x,currentCell.y);
+		data = new String[currentValue.length-1];
+	
+	
+		
+	
+		for(int i = 0;i<currentValue.length-1;i++)
+		{
+			data[i]=currentValue[i+1].getDate().toString().substring(11,16) + " " + currentValue[i+1].getSecondaryTitle();
+		
+		}
+		loadList(data);
+		if(select) todayList.setSelectedIndex(selection);
+		System.out.println("selection:: "+selection + "  set::  "+todayList.getSelectedIndex());
+		loadTerminData(true);
+	}
+
 }

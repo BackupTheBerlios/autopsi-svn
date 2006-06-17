@@ -157,9 +157,10 @@ public class EditTerminFrame extends javax.swing.JFrame implements java.awt.even
 		time = ((Termin)list.get(0)).getDate().toString().substring(11);
 		timeField.setText(time.substring(0,2)+":" + time.substring(3,5));
 		
-		choose_Type.setSelectedIndex((((Termin)list.get(0)).getTerminKategorieId()));
+		choose_Type.setSelectedIndex(((Termin)list.get(0)).getTerminKategorieId());
 		
 		updateTCList();	
+		tcTitle_box.setSelectedIndex(((Termin)list.get(0)).getTerminContainerID());
 	}
 	
 	private void update(){
@@ -227,7 +228,7 @@ public class EditTerminFrame extends javax.swing.JFrame implements java.awt.even
 			gdo.unsafeQuery(query,vorlage);
 			ok = true;
 			owner.updateTable();
-			owner.loadTerminData();
+			owner.updateInfoBar(true);
 			
 		}
 		catch (Exception e){
