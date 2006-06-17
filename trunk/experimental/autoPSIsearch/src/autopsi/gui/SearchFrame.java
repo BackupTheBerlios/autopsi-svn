@@ -62,6 +62,9 @@ public class SearchFrame extends javax.swing.JPanel implements ActionListener {
 	}
 
 	static final long serialVersionUID = 18310810238219L;
+	
+	public static final int MAXPLZ = 6;
+	public static final int MAXTELEFON = 15;
 
 	private JTabbedPane jTabbedSearchPane;
 	
@@ -205,7 +208,7 @@ public class SearchFrame extends javax.swing.JPanel implements ActionListener {
 								if (str.matches(".*[[a-z]|[A-Z]].*"))
 									return;
 								//Höchstens 15 Zeichen
-								if (offset>15)
+								if (offset>MAXTELEFON)
 									return;
 								super.insertString(offset, str, a);
 							}
@@ -222,6 +225,19 @@ public class SearchFrame extends javax.swing.JPanel implements ActionListener {
 						jPlzField = new JTextField();
 						jkontaktSuchePanel.add(jPlzField);
 						jPlzField.setBounds(420, 53, 210, 21);
+						jPlzField.setDocument(new PlainDocument() {
+					    	private static final long serialVersionUID = 8723098029189851737L;
+							public void insertString(int offset, String str, AttributeSet a)
+									throws BadLocationException {
+								// Eingabe beschraenken
+								if (!str.matches(".*[[0-9]].*"))
+									return;
+								//Höchstens X Zeichen
+								if (offset>MAXPLZ)
+									return;
+								super.insertString(offset, str, a);
+							}
+						});
 						
 						jOrtField = new JTextField();
 						jkontaktSuchePanel.add(jOrtField);
@@ -608,9 +624,25 @@ public class SearchFrame extends javax.swing.JPanel implements ActionListener {
 						kont.setTelBusiness(null);
 					}
 					if (!jEmailField.getText().equals("")) {
-						jKontaktTableModel.setEmail(jEmailField.getText());
+						kont.setFirst_Email(jEmailField.getText());
 					} else {
-						jKontaktTableModel.setEmail(null);
+						kont.setFirst_Email(null);
+					}
+					if (!jPlzField.getText().equals("")){
+						Integer plz = new Integer(jPlzField.getText());
+						kont.setAZipCode(plz);
+					} else {
+						kont.setAZipCode(null);
+					}
+					if (!jAdresseField.getText().equals("")){
+						kont.setAAdress(jAdresseField.getText());
+					} else {
+						kont.setAAdress(null);
+					}
+					if (!jOrtField.getText().equals("")) {
+						kont.setACity(jOrtField.getText());
+					} else {
+						kont.setACity(null);
 					}
 					jKontaktTableModel.setSuchKontakt(kont);
 				} else if (jKontaktOnlineSuchenRadioButton.isSelected()) {

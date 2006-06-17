@@ -12,8 +12,8 @@ import autopsi.database.table.Kontakt;
 public class KontaktTableModel extends AbstractTableModel{
 	private static final long serialVersionUID = 8737097029189851737L;
 	public List <GenericDataObject> kontakte;
-	public String email = null;
 	public Kontakt suchKontakt = null;
+	public String group = "";
 	
 	private final String [] columnName = {"Vorname", "Nachname", "PLZ", "Ort"};
 	
@@ -40,9 +40,23 @@ public class KontaktTableModel extends AbstractTableModel{
 					query += " TEL_BUSINESS LIKE '%" + suchKontakt.getTelBusiness()+"%' OR";
 					query += " TEL_MOBILE LIKE '%" + suchKontakt.getTelBusiness()+"%')";
 				}
-				if (this.email != null){
-					query += " AND e.EMAIL LIKE '%" +this.email+"%'";
+				if (suchKontakt.getFirst_Email()!=null){
+					query += " AND ( LOWER(FIRST_EMAIL) LIKE '%" + suchKontakt.getFirst_Email().toLowerCase() + "%' OR";
+					query += " LOWER(SECOND_EMAIL) LIKE '%" + suchKontakt.getFirst_Email().toLowerCase() +"%')";
 				}
+				if (this.group != ""){
+					query += " AND ok.NAME LIKE '%"+ this.group+"%'";
+				}
+				if (suchKontakt.getAZipCode()!=null) {
+					query += " AND A_ZIPCODE  = " + suchKontakt.getAZipCode();
+				}
+				if (suchKontakt.getACity()!=null) {
+					query += " AND A_CITY LIKE '%" + suchKontakt.getACity()+"%'";
+				}
+				if (suchKontakt.getAAdress()!=null) {
+					query += " AND A_ADRESS LIKE '%" + suchKontakt.getAAdress()+"%'";
+				}
+				System.out.println(suchKontakt.toString());
 				this.kontakte =  gdo.unsafeQuery(query, suchKontakt);
 			}
 		} catch (Exception e){
@@ -59,8 +73,8 @@ public class KontaktTableModel extends AbstractTableModel{
 		fireDataChanged();
 	}
 	
-	public void setEmail (String email){
-		this.email=email;
+	public void setGroup(String gruppe){
+		this.group = gruppe;
 	}
 	
 	public void fireDataChanged() {
@@ -87,9 +101,7 @@ public class KontaktTableModel extends AbstractTableModel{
 	}
 	
 	public Object getValueAt(int row, int col) {
-		//System.out.println("getValue row = " + row + " col = " + col); 
 		Kontakt kont = (Kontakt) kontakte.get(row);
-		
 		if (kont==null)
 			return null;
 		else if (col==0)
@@ -102,7 +114,4 @@ public class KontaktTableModel extends AbstractTableModel{
 			return kont.getACity();
 		else return null;
 	}
-	
-	
-
 }
