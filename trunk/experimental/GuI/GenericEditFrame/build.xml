@@ -5,10 +5,17 @@
 	<property name="build" value="class"/>
 	<property name="src" value="src"/>
 	<property name="GenericDAO" value="E:/Uni/ss06/se1_ue/workspace/GenericDAO"/>
+	<property name="hsqldb_data" value="data"/>	
+	<property name="jdbc.username" value="SA"/>
+	<property name="jdbc.password" value="ab"/>
+	<property name="jdbc.url" value="jdbc:hsqldb:file:${hsqldb_data}/database"/>
 	
 	<path id="classpath">
 		<pathelement location="${build}"/>
-		<pathelement location="${GenericDAO}/class"/>
+		<fileset dir="${basedir}/lib" id="lib">
+			<include name="*.jar"/>
+		</fileset>
+		
 	</path>
 	
 	<target name="clean">
@@ -28,6 +35,18 @@
 	</target>
 
 	<target name="compile_and_run" depends="compile,run">
+	</target>
+	
+	<target name="runDBMan">
+        <java 
+            classpathref="classpath"
+            classname="org.hsqldb.util.DatabaseManagerSwing"
+            fork="true"
+        >
+        	<arg line="-url ${jdbc.url}"/>
+            <arg line="-user ${jdbc.username}" />
+            <arg line="-password ${jdbc.password}" />
+        </java>
 	</target>
 	
 </project>

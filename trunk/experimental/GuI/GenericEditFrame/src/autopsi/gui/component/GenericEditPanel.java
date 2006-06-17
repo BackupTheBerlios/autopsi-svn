@@ -1,6 +1,7 @@
 package autopsi.gui.component;
 
 import java.awt.Component;
+import java.sql.Timestamp;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ArrayList;
@@ -42,6 +43,10 @@ public class GenericEditPanel extends JPanel {
 		edit = new IntegerEditPlugin();
 		plugins.put(int.class, edit);
 		plugins.put(Integer.class, edit);
+		edit = new DateEditPlugin();
+		plugins.put(java.sql.Date.class, edit);
+		edit = new TimestampEditPlugin();
+		plugins.put(Timestamp.class, edit);
 		plugins.put(Object.class, new UnimplementedEditPlugin());
 	}
 	

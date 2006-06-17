@@ -64,7 +64,7 @@ public class GenericEditFrame extends JDialog implements ActionListener {
 			try{
 				editPanel.setObjectToEdit((GenericData)obj);
 				this.lookupObject = (GenericDataObject)(((GenericData)obj).clone());
-				System.out.println("lookupObject.note=="+((Notiz)lookupObject).getNote());
+//				System.out.println("lookupObject.note=="+((Notiz)lookupObject).getNote());
 			}
 			catch (Exception e){
 				System.out.println("exception@GenericEditFrame.setObjectToEdit::"+e.toString());
@@ -102,6 +102,7 @@ public class GenericEditFrame extends JDialog implements ActionListener {
 				try{
 					System.out.println("versuche neues objekt einzufügen");
 					gdao.addDataObject((GenericDataObject)editPanel.getEditedObject());
+//					System.out.println("birthDate=="+((Kontakt)editPanel.getEditedObject()).getBirthDate().toString());
 				}
 				catch (Exception e){
 					System.out.println("Konnte neue Daten nicht in die Tabelle einfügen::"+e.toString());

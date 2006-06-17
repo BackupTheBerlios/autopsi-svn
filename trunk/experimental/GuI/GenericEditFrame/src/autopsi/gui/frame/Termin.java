@@ -24,6 +24,7 @@ public class Termin extends GenericData implements GenericDataObject{
 //			this.addAttribute("Id", cl.getMethod("getId", new Class[] {}), cl.getMethod("setId", new Class[] {int.class}));
 			this.addAttribute("Kategorie Id", cl.getMethod("getTerminKategorieId", new Class[] {}), cl.getMethod("setTerminKategorieId", new Class[] {int.class}));
 			this.addAttribute("Sekundärtitel", cl.getMethod("getSecondaryTitle", new Class[] {}), cl.getMethod("setSecondaryTitle", new Class[] {String.class}));
+			this.addAttribute("Datum", cl.getMethod("getDate", new Class[] {}), cl.getMethod("setDate", new Class[] {Timestamp.class}));
 		} catch (Exception e){
 			System.out.println("Fehler beim Erstellen des Termin-Objekts::"+e.toString());
 		}
