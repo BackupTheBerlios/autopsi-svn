@@ -96,9 +96,16 @@ public class WocheTM extends AbstractTableModel {
 				}
 			}
 		}
+		
 		Termin[] retur= new Termin[ret.size()];
-		retur = (Termin[])ret.toArray();
-		return retur;
+		
+		for(int i = 0;i<ret.size();i++)
+		{
+			retur[i] = ret.get(i);
+		}
+		
+
+				return retur;
 	}
 
 }
