@@ -1,6 +1,7 @@
 package autopsi.database.table;
 
 import autopsi.database.dao.GenericDataObject;
+import autopsi.gui.component.GenericData;
 
 public class AttachableObject extends GenericData implements GenericDataObject {
 

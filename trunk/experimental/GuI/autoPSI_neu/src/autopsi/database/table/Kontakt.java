@@ -1,6 +1,8 @@
 package autopsi.database.table;
 
 import autopsi.database.dao.GenericDataObject;
+import autopsi.gui.component.GenericData;
+
 import java.sql.Date;
 
 public class Kontakt extends GenericData implements GenericDataObject {
@@ -23,16 +25,17 @@ public class Kontakt extends GenericData implements GenericDataObject {
 		Class cl = this.getClass();
 		try{
 			this.addAttribute("GlobalId",cl.getMethod("getGlobalId", new Class[] {}), cl.getMethod("setGlobalId", new Class[] {Integer.class} ));
-			this.addAttribute("Vorname",cl.getMethod("getPrename", new Class[] {}), cl.getMethod("setPrename", new Class[] {String.class} ));	}
+			this.addAttribute("Vorname",cl.getMethod("getPrename", new Class[] {}), cl.getMethod("setPrename", new Class[] {String.class} ));	
 			this.addAttribute("Nachname",cl.getMethod("getSurname", new Class[] {}), cl.getMethod("setSurname", new Class[] {String.class} ));
-			this.addAttribute("Geburstag",cl.getMethod("getBirthDate", new Class[] {}), cl.getMethod("setBirthDate", new Class[] {Date.class} ));	}
+			this.addAttribute("Geburstag",cl.getMethod("getBirthDate", new Class[] {}), cl.getMethod("setBirthDate", new Class[] {Date.class} ));	
 			this.addAttribute("Telefon privat",cl.getMethod("getTelPrivate", new Class[] {}), cl.getMethod("setTelPrivate", new Class[] {String.class} ));
-			this.addAttribute("Telefon geschäftlich",cl.getMethod("getTelBusiness", new Class[] {}), cl.getMethod("setTelBusiness", new Class[] {String.class} ));	}
+			this.addAttribute("Telefon geschäftlich",cl.getMethod("getTelBusiness", new Class[] {}), cl.getMethod("setTelBusiness", new Class[] {String.class} ));
 			this.addAttribute("Telefon mobil",cl.getMethod("getTelMobile", new Class[] {}), cl.getMethod("setTelMobile", new Class[] {String.class} ));
-			this.addAttribute("PLZ",cl.getMethod("getAZipcode", new Class[] {}), cl.getMethod("setAZipcode", new Class[] {Integer.class} ));	}
+			this.addAttribute("PLZ",cl.getMethod("getAZipcode", new Class[] {}), cl.getMethod("setAZipcode", new Class[] {Integer.class} ));	
 			this.addAttribute("Adresse",cl.getMethod("getAdress", new Class[] {}), cl.getMethod("setAdress", new Class[] {String.class} ));
-			this.addAttribute("Email 1",cl.getMethod("getFirstEmail", new Class[] {}), cl.getMethod("setFirstEmail", new Class[] {String.class} ));	}
+			this.addAttribute("Email 1",cl.getMethod("getFirstEmail", new Class[] {}), cl.getMethod("setFirstEmail", new Class[] {String.class} ));
 			this.addAttribute("Email 2",cl.getMethod("getSecondEmail", new Class[] {}), cl.getMethod("setSecondEmail", new Class[] {String.class} ));
+		}
 		catch (Exception e){
 			System.out.println("Fehler beim Erstellen des Kontakt-Objekts::"+e.toString());
 		}

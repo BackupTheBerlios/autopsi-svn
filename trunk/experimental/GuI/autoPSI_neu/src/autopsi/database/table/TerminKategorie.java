@@ -2,6 +2,7 @@ package autopsi.database.table;
 
 
 import autopsi.database.dao.GenericDataObject;
+import autopsi.gui.component.GenericData;
 
 public class TerminKategorie extends GenericData implements GenericDataObject{
 	

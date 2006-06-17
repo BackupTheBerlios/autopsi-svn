@@ -1,6 +1,7 @@
 package autopsi.database.table;
 
 import autopsi.database.dao.GenericDataObject;
+import autopsi.gui.component.GenericData;
 
 public class Universitaet extends GenericData implements GenericDataObject {
 
