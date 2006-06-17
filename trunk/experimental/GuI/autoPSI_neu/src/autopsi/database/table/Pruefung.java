@@ -1,16 +1,30 @@
 package autopsi.database.table;
 
 import autopsi.database.dao.GenericDataObject;
+import autopsi.gui.component.GenericData;
 
-public class Pruefung implements GenericDataObject {
+public class Pruefung extends GenericData implements GenericDataObject {
 
 	
-	private int global_id;
-	private int kategorie_id;
-	private int lva_id;
+	private Integer global_id;
+	private Integer kategorie_id;
+	private Integer lva_id;
 	private String examiner;
-	private int grade;
+	private Integer grade;
 	
+	
+	public Pruefung(){
+		Class cl = this.getClass();
+		try{
+			this.addAttribute("GlobalId",cl.getMethod("getGlobalId", new Class[] {}), cl.getMethod("setGlobalId", new Class[] {Integer.class} ));
+			this.addAttribute("KategorieId",cl.getMethod("getKategorieId", new Class[] {}), cl.getMethod("setKategorieId", new Class[] {Integer.class} ));
+			this.addAttribute("LvaId",cl.getMethod("getLvaId", new Class[] {}), cl.getMethod("setLvaId", new Class[] {Integer.class} ));
+			this.addAttribute("Prüfer",cl.getMethod("getExaminer", new Class[] {}), cl.getMethod("setExaminer", new Class[] {String.class} ));
+			this.addAttribute("Note",cl.getMethod("getGrade", new Class[] {}), cl.getMethod("setGrade", new Class[] {Integer.class} ));	}
+		catch (Exception e){
+			System.out.println("Fehler beim Erstellen des Prüfungs-Objekts::"+e.toString());
+		}
+	}
 	
 	public int getGlobalId(){
 		return this.global_id;

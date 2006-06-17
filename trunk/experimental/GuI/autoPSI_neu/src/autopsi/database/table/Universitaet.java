@@ -2,11 +2,21 @@ package autopsi.database.table;
 
 import autopsi.database.dao.GenericDataObject;
 
-public class Universitaet implements GenericDataObject {
+public class Universitaet extends GenericData implements GenericDataObject {
 
-	private int id;
+	private Integer id;
 	private String name;
+
 	
+	public Universitaet(){
+		Class cl = this.getClass();
+		try{
+			this.addAttribute("Id",cl.getMethod("getId", new Class[] {}), cl.getMethod("setId", new Class[] {Integer.class} ));
+			this.addAttribute("Universitätsname",cl.getMethod("getName", new Class[] {}), cl.getMethod("setName", new Class[] {String.class} ));	}
+		catch (Exception e){
+			System.out.println("Fehler beim Erstellen des LVA-Kategorie-Objekts::"+e.toString());
+		}
+	}
 	
 	public int getId(){
 		return this.id;

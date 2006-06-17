@@ -1,15 +1,29 @@
 package autopsi.database.table;
 
 import autopsi.database.dao.GenericDataObject;
+import autopsi.gui.component.GenericData;
 
-public class Notiz implements GenericDataObject {
+public class Notiz extends GenericData implements GenericDataObject {
 
 	
-	private int global_id;
-	private int kategorie_id;
+	private Integer global_id;
+	private Integer kategorie_id;
 	private String title;
 	private String note;
 	
+	
+	public Notiz(){
+		Class cl = this.getClass();
+		try{
+			this.addAttribute("GlobalId",cl.getMethod("getGlobalId", new Class[] {}), cl.getMethod("setGlobalId", new Class[] {Integer.class} ));
+			this.addAttribute("KategorieId", cl.getMethod("getKategorieId", new Class[] {}), cl.getMethod("setKategorieId", new Class[] {Integer.class}));
+			this.addAttribute("Titel",cl.getMethod("getTitle", new Class[] {}), cl.getMethod("setTitle", new Class[] {String.class} ));
+			this.addAttribute("Notiz",cl.getMethod("getNote", new Class[] {}), cl.getMethod("setNote", new Class[] {String.class} ));
+		}
+		catch (Exception e){
+			System.out.println("Fehler beim Erstellen des Notiz-Objekts::"+e.toString());
+		}
+	}
 	
 	public int getGlobalId(){
 		return this.global_id;

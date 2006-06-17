@@ -2,15 +2,29 @@ package autopsi.database.table;
 
 import autopsi.database.dao.GenericDataObject;
 
-public class Lehrmittel implements GenericDataObject {
+public class Lehrmittel extends GenericData implements GenericDataObject {
 
-	private int global_id;
-	private int kategorie_id;
-	private int lehrmittel_kategorie_id;
+	private Integer global_id;
+	private Integer kategorie_id;
+	private Integer lehrmittel_kategorie_id;
 	private String name;
 	private String description;
 	private String file_link;
 	
+	
+	public Lehrmittel(){
+		Class cl = this.getClass();
+		try{
+			this.addAttribute("GlobalId",cl.getMethod("getGlobalId", new Class[] {}), cl.getMethod("setGlobalId", new Class[] {Integer.class} ));
+			this.addAttribute("KategorieId",cl.getMethod("getKategorieId", new Class[] {}), cl.getMethod("setKategorieId", new Class[] {Integer.class} ));	}
+			this.addAttribute("LehrmittelKategorieId",cl.getMethod("getLehrmittelKategorieId", new Class[] {}), cl.getMethod("setLehrmittelKategorieId", new Class[] {Integer.class} ));
+			this.addAttribute("Name",cl.getMethod("getName", new Class[] {}), cl.getMethod("setName", new Class[] {String.class} ));	}
+			this.addAttribute("Beschreibung",cl.getMethod("getDescription", new Class[] {}), cl.getMethod("setDescription", new Class[] {String.class} ));
+			this.addAttribute("URL/File Link",cl.getMethod("getFileLink", new Class[] {}), cl.getMethod("setFileLink", new Class[] {String.class} ));	}
+		catch (Exception e){
+			System.out.println("Fehler beim Erstellen des Lehrmittel-Objekts::"+e.toString());
+		}
+	}
 	
 	public int getGlobalId(){
 		return this.global_id;

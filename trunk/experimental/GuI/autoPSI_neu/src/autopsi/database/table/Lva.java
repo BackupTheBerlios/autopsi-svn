@@ -1,18 +1,36 @@
 package autopsi.database.table;
 
 import autopsi.database.dao.GenericDataObject;
+import autopsi.gui.component.GenericData;
 
-public class Lva implements GenericDataObject {
+public class Lva extends GenericData implements GenericDataObject {
 
 	
-	private int global_id;
-	private int kategorie_id;
+	private Integer global_id;
+	private Integer kategorie_id;
 	private String title;
 	private String type;
 	private String description;
 	private String lva_nr;
-	private int uni_id;
+	private Integer uni_id;
 	
+	
+	public Lva(){
+		Class cl = this.getClass();
+		try{
+			this.addAttribute("GlobalId",cl.getMethod("getGlobalId", new Class[] {}), cl.getMethod("setGlobalId", new Class[] {Integer.class} ));
+			this.addAttribute("GlobalId",cl.getMethod("getGlobalId", new Class[] {}), cl.getMethod("setGlobalId", new Class[] {Integer.class} ));
+			this.addAttribute("KategorieId",cl.getMethod("getKategorieId", new Class[] {}), cl.getMethod("setKategorieId", new Class[] {String.class} ));
+			this.addAttribute("Titel",cl.getMethod("getTitleId", new Class[] {}), cl.getMethod("setTitleId", new Class[] {String.class} ));
+			this.addAttribute("LVA-Typ",cl.getMethod("getType", new Class[] {}), cl.getMethod("setType", new Class[] {String.class} ));
+			this.addAttribute("Beschreibung",cl.getMethod("getDescription", new Class[] {}), cl.getMethod("setDescription", new Class[] {String.class} ));
+			this.addAttribute("LVA-Nr.",cl.getMethod("getLvaNr", new Class[] {}), cl.getMethod("setLvaNr", new Class[] {String.class} ));
+			this.addAttribute("Uni-Id",cl.getMethod("getUniId", new Class[] {}), cl.getMethod("setUniId", new Class[] {Integer.class} ));
+		}
+		catch (Exception e){
+			System.out.println("Fehler beim Erstellen des LVA-Objekts::"+e.toString());
+		}
+	}
 	
 	public int getGlobalId(){
 		return this.global_id;
