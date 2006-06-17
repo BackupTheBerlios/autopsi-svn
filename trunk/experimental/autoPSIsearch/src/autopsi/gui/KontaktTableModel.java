@@ -22,60 +22,28 @@ public class KontaktTableModel extends AbstractTableModel{
 	}
 	
 	private void readData() {
-		String query="select * from Kontakt as k, Email as e, ATTACHABLE_OBJECT as a, ATTACHABLE_OBJECT_KATEGORIE as ok  where";
-		//String query="select * from Kontakt as k where";
-		Boolean first = true;
+		String query="select * from Kontakt as k, ATTACHABLE_OBJECT as a, ATTACHABLE_OBJECT_KATEGORIE as ok where k.GLOBAL_ID=a.GLOBAL_ID AND a.GLOBAL_ID=ok.ID";
 		try{
 			IGenericDAO gdo = new GenericDAO();
 			if (suchKontakt!=null) {
 				if (suchKontakt.getPrename()!=null) {
-					if (first){
-						query += " LOWER(k.PRENAME) LIKE '%" + suchKontakt.getPrename().toLowerCase()+"%'";
-						first = false;
-					} else {
-						query += "AND LOWER(k.PRENAME) LIKE '%" + suchKontakt.getPrename().toLowerCase()+"%'";
-					}
+					query += " AND LOWER(k.PRENAME) LIKE '%" + suchKontakt.getPrename().toLowerCase()+"%'";
 				}
 				if (suchKontakt.getSurname()!=null) {
-					if (first){
-						query += " LOWER(SURNAME) LIKE '%" + suchKontakt.getSurname().toLowerCase()+"%'";
-						first = false;
-					} else {
-						query += "AND LOWER(SURNAME) LIKE '%" + suchKontakt.getSurname().toLowerCase()+"%'";
-					}
+					query += " AND LOWER(SURNAME) LIKE '%" + suchKontakt.getSurname().toLowerCase()+"%'";
 				}
 				if (suchKontakt.getBirthDate()!=null) {
-					if (first){
-						query += " BIRTH_DATE LIKE '%" + suchKontakt.getBirthDate()+"%'";
-						first = false;
-					} else {
-						query += "AND BIRTH_DATE LIKE '%" + suchKontakt.getBirthDate()+"%'";
-					}
+					query += " AND BIRTH_DATE LIKE '%" + suchKontakt.getBirthDate()+"%'";
 				}
 				if (suchKontakt.getTelBusiness()!=null){
-					if (first) {
-						query += " (TEL_PRIVATE LIKE '%" + suchKontakt.getTelBusiness()+"%' OR";
-						query += " TEL_BUSINESS LIKE '%" + suchKontakt.getTelBusiness()+"%' OR";
-						query += " TEL_MOBILE LIKE '%" + suchKontakt.getTelBusiness()+"%')";
-						first = false;
-					} else {
-						query += " AND (TEL_PRIVATE LIKE '%" + suchKontakt.getTelBusiness()+"%' OR";
-						query += " TEL_BUSINESS LIKE '%" + suchKontakt.getTelBusiness()+"%' OR";
-						query += " TEL_MOBILE LIKE '%" + suchKontakt.getTelBusiness()+"%')";
-					}
+					query += " AND (TEL_PRIVATE LIKE '%" + suchKontakt.getTelBusiness()+"%' OR";
+					query += " TEL_BUSINESS LIKE '%" + suchKontakt.getTelBusiness()+"%' OR";
+					query += " TEL_MOBILE LIKE '%" + suchKontakt.getTelBusiness()+"%')";
 				}
 				if (this.email != null){
-					if (first){
-						query += " e.EMAIL LIKE '%" +this.email+"%'";
-						first = false;
-					} else {
-						query += " AND e.EMAIL LIKE '%" +this.email+"%'";
-					}
+					query += " AND e.EMAIL LIKE '%" +this.email+"%'";
 				}
-				if (first == false){
-					//System.out.println(query);
-					this.kontakte =  gdo.unsafeQuery(query, suchKontakt);
-				}
+				this.kontakte =  gdo.unsafeQuery(query, suchKontakt);
 			}
 		} catch (Exception e){
 			System.out.println("AAARGH;"+e.toString());
