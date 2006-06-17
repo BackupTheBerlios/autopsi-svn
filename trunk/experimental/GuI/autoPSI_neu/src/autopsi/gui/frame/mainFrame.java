@@ -30,6 +30,7 @@ import autopsi.database.exception.EDatabaseConnection;
 import autopsi.database.table.*;
 import autopsi.gui.DateConverter;
 import autopsi.gui.MonthRenderer;
+import autopsi.gui.frame.SearchFrame;
 import autopsi.gui.WeekRenderer;
 
 import java.util.Date;
@@ -976,6 +977,10 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 		if(arg0.getSource().equals(table)){
 			mouseDown = true;
 		}	
+		if(arg0.getSource().equals(menu_search) )
+		{
+			SearchFrame frame = new SearchFrame();
+		}
 		
 	}
 
