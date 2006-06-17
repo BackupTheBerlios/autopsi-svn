@@ -951,7 +951,7 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 			updateInfoBar(false);
 		}
 		if(arg0.getSource().equals(editTermin)) {
-			System.out.println("++++ " + terminId);
+			
 			if(terminId != -1){
 			EditTerminFrame newTermin = new EditTerminFrame(this,null, terminId);
 			newTermin.setTitle("Termin bearbeiten");
@@ -1413,7 +1413,7 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 				terminId = termin.getId();
 				int stunden = 0;
 				int minuten = 0;
-				System.out.println("loadTerminData 3");
+				
 				while(dauer>59)
 				{
 				dauer = dauer -60;
@@ -1474,7 +1474,7 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 		}
 		loadList(data);
 		if(select) todayList.setSelectedIndex(selection);
-		System.out.println("selection:: "+selection + "  set::  "+todayList.getSelectedIndex());
+		
 		loadTerminData(true);
 	}
 
