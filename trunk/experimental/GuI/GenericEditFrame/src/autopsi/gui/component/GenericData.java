@@ -5,7 +5,7 @@ import java.util.Map;
 import java.util.HashMap;
 import java.lang.reflect.Method;
 
-public class GenericData {
+public class GenericData implements Cloneable{
 	
 	protected Map<String, GSMethod> map = new HashMap<String, GSMethod>();
 	
@@ -39,6 +39,16 @@ public class GenericData {
 		catch(Exception e){
 			System.out.println("Exception :: "+e.toString());
 		}
+	}
+	
+	public Object clone(){
+		try{
+			return super.clone();
+		}
+		catch (Exception e){
+			System.out.println("Konnte GenericDataObject nicht klonen!::"+e.toString());
+		}
+		return null;
 	}
 	
 }

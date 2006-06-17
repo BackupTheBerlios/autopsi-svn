@@ -27,7 +27,7 @@ public class IntegerEditPlugin extends EditPlugin implements FocusListener {
 		label = new JLabel();
 		doubleEdit = new JTextField();
 		doubleEdit.setPreferredSize(new Dimension(200, doubleEdit.getPreferredSize().height));
-		doubleEdit.setText("3");
+		doubleEdit.setText("0");
 		doubleEdit.addFocusListener(this);
 		panel.add(label);
 		panel.add(doubleEdit);

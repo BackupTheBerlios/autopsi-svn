@@ -40,7 +40,6 @@ public class StringEditPlugin extends EditPlugin implements FocusListener{
 	}
 
 	public Object getValue(){
-		System.out.println("StringPlugin.getValue::"+this.value);
 		return this.value;
 	}
 

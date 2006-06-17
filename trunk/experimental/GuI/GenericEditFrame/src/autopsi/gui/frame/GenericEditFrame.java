@@ -8,7 +8,12 @@ import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JButton;
 import javax.swing.JPanel;
+
+import autopsi.database.dao.GenericDAO;
+import autopsi.database.dao.GenericDataObject;
+import autopsi.database.dao.IGenericDAO;
 import autopsi.gui.component.*;
+import autopsi.gui.frame.Termin;
 
 public class GenericEditFrame extends JDialog implements ActionListener {
 	
@@ -17,9 +22,12 @@ public class GenericEditFrame extends JDialog implements ActionListener {
 	protected JButton applyButton;
 	protected JButton okButton;
 	protected boolean canceled = false;
+	protected IGenericDAO gdao = null;
+	protected GenericDataObject lookupObject = null;
 	
 	
 	public GenericEditFrame(){
+		gdao = new GenericDAO();
 		this.setLayout(new BorderLayout());
 		editPanel = new GenericEditPanel();
 		JPanel buttonPanel = new JPanel();
@@ -42,12 +50,25 @@ public class GenericEditFrame extends JDialog implements ActionListener {
 		}
 	}
 	
-	public void setObjectToEdit(GenericData obj){
-		try{
-			editPanel.setObjectToEdit(obj);
+	public void setObjectToEdit(GenericDataObject obj, boolean newObject){
+		if (newObject){
+			try{
+				editPanel.setObjectToEdit((GenericData)obj);
+				this.lookupObject = null;
+			}
+			catch (Exception e){
+				System.out.println("exception@GenericEditFrame.setObjectToEdit::"+e.toString());
+			}
 		}
-		catch (Exception e){
-			System.out.println("exception@GenericEditFrame.setObjectToEdit::"+e.toString());
+		else{
+			try{
+				editPanel.setObjectToEdit((GenericData)obj);
+				this.lookupObject = (GenericDataObject)(((GenericData)obj).clone());
+				System.out.println("lookupObject.note=="+((Notiz)lookupObject).getNote());
+			}
+			catch (Exception e){
+				System.out.println("exception@GenericEditFrame.setObjectToEdit::"+e.toString());
+			}			
 		}
 	}
 	
@@ -56,6 +77,14 @@ public class GenericEditFrame extends JDialog implements ActionListener {
 		GenericData d =editPanel.getEditedObject();
 		System.out.println("beinahe nach GenericEditFrame::getObjectToEdit");
 		return d;
+	}
+	
+	public void setTableToEdit(String table){
+		gdao.setCurrentTable(table);
+	}
+	
+	public String getTableToEdit(){
+		return gdao.getCurrentTable();
 	}
 	
 	public boolean getCanceled(){
@@ -69,8 +98,26 @@ public class GenericEditFrame extends JDialog implements ActionListener {
 		}
 		if (arg0.getSource().equals(okButton)){
 			this.canceled = false;
-			TestClass c = (TestClass)this.getObjectToEdit();
-			System.out.println("name=="+c.getTest1().toString());
+			if (this.lookupObject == null){
+				try{
+					System.out.println("versuche neues objekt einzufügen");
+					gdao.addDataObject((GenericDataObject)editPanel.getEditedObject());
+				}
+				catch (Exception e){
+					System.out.println("Konnte neue Daten nicht in die Tabelle einfügen::"+e.toString());
+				}				
+			}
+			else{
+				try{
+					System.out.println("versuche objekt upzudaten");
+					System.out.println("updateObject::lookupObject.note=="+((Notiz)lookupObject).getNote());
+					gdao.updDataObjects(this.lookupObject, (GenericDataObject)editPanel.getEditedObject());
+				}
+				catch (Exception e){
+					System.out.println("Konnte veränderte Daten nicht in die Tabelle einfügen::"+e.toString());
+				}
+			}
+			this.dispose();
 		}
 		
 	}
