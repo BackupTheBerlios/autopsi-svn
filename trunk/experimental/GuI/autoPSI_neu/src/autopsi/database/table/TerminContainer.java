@@ -19,7 +19,7 @@ public class TerminContainer extends GenericData implements GenericDataObject{
 			this.addAttribute("Beschreibung",cl.getMethod("getDescription", new Class[] {}), cl.getMethod("setDescription", new Class[] {String.class} ));
 		}
 		catch (Exception e){
-			System.out.println("Fehler beim Erstellen des Termin-Kategorie-Objekts::"+e.toString());
+			System.out.println("Fehler beim Erstellen des Termin-Container-Objekts::"+e.toString());
 		}
 	}
 	
@@ -27,7 +27,7 @@ public class TerminContainer extends GenericData implements GenericDataObject{
 		return this.id;
 	}
 	
-	public void setId(int id){
+	public void setId(Integer id){
 		this.id = id;
 	}
 	
