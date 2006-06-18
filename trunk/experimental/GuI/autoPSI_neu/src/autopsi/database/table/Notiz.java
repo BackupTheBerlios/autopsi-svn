@@ -29,7 +29,7 @@ public class Notiz extends GenericData implements GenericDataObject {
 		return this.global_id;
 	}
 	
-	public void setGlobalId(int globalId){
+	public void setGlobalId(Integer globalId){
 		this.global_id = globalId;
 	}
 	
