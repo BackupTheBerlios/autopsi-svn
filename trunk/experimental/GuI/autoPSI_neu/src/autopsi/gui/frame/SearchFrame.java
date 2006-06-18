@@ -365,7 +365,7 @@ public class SearchFrame extends javax.swing.JFrame implements ActionListener {
 						jLVASuchePanel.add(jBeschreibungField);
 						jBeschreibungField.setBounds(105, 53, 210, 21);		
 						
-						KategorieComboBoxModel jLVATypeComboBoxModel = new KategorieComboBoxModel("LVA_KATEGORIE", new LvaKategorie(),true );
+						KategorieComboBoxModel jLVATypeComboBoxModel = new KategorieComboBoxModel("LVA_KATEGORIE", new LvaKategorie());
 						jLVATypeComboBox = new JComboBox();
 						jLVASuchePanel.add(jLVATypeComboBox);
 						jLVATypeComboBox.setModel(jLVATypeComboBoxModel);
@@ -509,7 +509,7 @@ public class SearchFrame extends javax.swing.JFrame implements ActionListener {
 						jTerminSuchePanel.add(jDatumField);
 						jDatumField.setBounds(420, 7, 210, 21);
 						
-						KategorieComboBoxModel jTerminTypeComboBoxModel = new KategorieComboBoxModel("TERMIN_KATEGORIE", new TerminKategorie(),true );
+						KategorieComboBoxModel jTerminTypeComboBoxModel = new KategorieComboBoxModel("TERMIN_KATEGORIE", new TerminKategorie());
 						jTerminTypeComboBox = new JComboBox();
 						jTerminSuchePanel.add(jTerminTypeComboBox);
 						jTerminTypeComboBox.setModel(jTerminTypeComboBoxModel);
