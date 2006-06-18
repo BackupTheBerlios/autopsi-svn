@@ -65,9 +65,15 @@
 	<target name="compile_and_run" depends="compile,run">
 	</target>
 	
-	<target name="Test:GenericEditFrame" depends="init">
+	<target name="Test:GenericEditFrame" depends="init,compile">
 		<javac srcdir="${src}" destdir="${build}" classpathref="classpath"/>
 		<java classpathref="classpath" classname="EditFrameTest" fork="true"/> 
+	</target>
+	
+	<target name="Test:JavaSpace" depends="init,compile">
+		<java classpathref="classpath" classname="autopsi.javaspace.Main" fork="true">
+			<jvmarg value="-Djava.security.policy=policy.all"/>
+		</java>
 	</target>
 	
 </project>
