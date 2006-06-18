@@ -1,19 +1,21 @@
 package autopsi.database.table;
 
+import net.jini.core.entry.Entry;
 import autopsi.database.dao.GenericDataObject;
 
-public class AttachableObjectKategorie implements GenericDataObject {
-	private Integer id;
-	private String title;
-	private String description;
-	private Boolean shareable;
+public class AttachableObjectKategorie implements Entry,GenericDataObject {
+	
+	public Integer id;
+	public String title;
+	public String description;
+	public Boolean shareable;
 	
 	
 	public int getId(){
 		return this.id;
 	}
 	
-	public void setId(int Id){
+	public void setId(Integer Id){
 		this.id = Id;
 	}
 	

@@ -1,15 +1,16 @@
 package autopsi.database.table;
 
+import net.jini.core.entry.Entry;
 import autopsi.database.dao.GenericDataObject;
 import autopsi.gui.component.GenericData;
 
-public class Notiz extends GenericData implements GenericDataObject {
+public class Notiz extends GenericData implements Entry,GenericDataObject {
 
 	
-	private Integer global_id;
-	private Integer kategorie_id;
-	private String title;
-	private String note;
+	public Integer global_id;
+	public Integer kategorie_id;
+	public String title;
+	public String note;
 	
 	
 	public Notiz(){

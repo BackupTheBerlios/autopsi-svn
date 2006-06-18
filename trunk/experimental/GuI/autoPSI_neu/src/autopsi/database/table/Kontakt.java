@@ -1,24 +1,25 @@
 package autopsi.database.table;
 
+import net.jini.core.entry.Entry;
 import autopsi.database.dao.GenericDataObject;
 import autopsi.gui.component.GenericData;
 
 import java.sql.Date;
 
-public class Kontakt extends GenericData implements GenericDataObject {
+public class Kontakt extends GenericData implements Entry,GenericDataObject {
 
-	private Integer global_id;
-	private String prename;
-	private String surname;
-	private Date birth_date;
-	private String tel_private;
-	private String tel_business;
-	private String tel_mobile;
-	private Integer a_zipcode;
-	private String a_city;
-	private String a_adress;
-	private String first_email;
-	private String second_email;
+	public Integer global_id;
+	public String prename;
+	public String surname;
+	public Date birth_date;
+	public String tel_private;
+	public String tel_business;
+	public String tel_mobile;
+	public Integer a_zipcode;
+	public String a_city;
+	public String a_adress;
+	public String first_email;
+	public String second_email;
 	
 	
 	public Kontakt(){

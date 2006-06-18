@@ -1,12 +1,14 @@
 package autopsi.database.table;
 
+import net.jini.core.entry.Entry;
+
 import autopsi.database.dao.GenericDataObject;
 import autopsi.gui.component.GenericData;
 
-public class Universitaet extends GenericData implements GenericDataObject {
+public class Universitaet extends GenericData implements Entry,GenericDataObject {
 
-	private Integer id;
-	private String name;
+	public Integer id;
+	public String name;
 
 	
 	public Universitaet(){
@@ -23,7 +25,7 @@ public class Universitaet extends GenericData implements GenericDataObject {
 		return this.id;
 	}
 	
-	public void setId(int id){
+	public void setId(Integer id){
 		this.id = id;
 	}
 	

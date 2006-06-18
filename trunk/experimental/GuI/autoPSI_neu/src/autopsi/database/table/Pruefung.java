@@ -1,16 +1,18 @@
 package autopsi.database.table;
 
+import net.jini.core.entry.Entry;
+
 import autopsi.database.dao.GenericDataObject;
 import autopsi.gui.component.GenericData;
 
-public class Pruefung extends GenericData implements GenericDataObject {
+public class Pruefung extends GenericData implements Entry,GenericDataObject {
 
 	
-	private Integer global_id;
-	private Integer kategorie_id;
-	private Integer lva_id;
-	private String examiner;
-	private Integer grade;
+	public Integer global_id;
+	public Integer kategorie_id;
+	public Integer lva_id;
+	public String examiner;
+	public Integer grade;
 	
 	
 	public Pruefung(){
@@ -30,7 +32,7 @@ public class Pruefung extends GenericData implements GenericDataObject {
 		return this.global_id;
 	}
 	
-	public void setGlobalId(int globalId){
+	public void setGlobalId(Integer globalId){
 		this.global_id = globalId;
 	}
 	
@@ -38,7 +40,7 @@ public class Pruefung extends GenericData implements GenericDataObject {
 		return this.kategorie_id;
 	}
 	
-	public void setKategorieId(int kategorieId){
+	public void setKategorieId(Integer kategorieId){
 		this.kategorie_id = kategorieId;
 	}
 	
@@ -46,7 +48,7 @@ public class Pruefung extends GenericData implements GenericDataObject {
 		return this.lva_id;
 	}
 	
-	public void setLvaId(int lvaId){
+	public void setLvaId(Integer lvaId){
 		this.lva_id = lvaId;
 	}
 	
@@ -62,7 +64,7 @@ public class Pruefung extends GenericData implements GenericDataObject {
 		return this.grade;
 	}
 	
-	public void setGrade(int grade){
+	public void setGrade(Integer grade){
 		this.grade = grade;
 	}
 	

@@ -1,16 +1,17 @@
 package autopsi.database.table;
 
+import net.jini.core.entry.Entry;
 import autopsi.database.dao.GenericDataObject;
 import autopsi.gui.component.GenericData;
 
-public class Lehrmittel extends GenericData implements GenericDataObject {
+public class Lehrmittel extends GenericData implements Entry,GenericDataObject {
 
-	private Integer global_id;
-	private Integer kategorie_id;
-	private Integer lehrmittel_kategorie_id;
-	private String name;
-	private String description;
-	private String file_link;
+	public Integer global_id;
+	public Integer kategorie_id;
+	public Integer lehrmittel_kategorie_id;
+	public String name;
+	public String description;
+	public String file_link;
 	
 	
 	public Lehrmittel(){
@@ -32,7 +33,7 @@ public class Lehrmittel extends GenericData implements GenericDataObject {
 		return this.global_id;
 	}
 	
-	public void setGlobalId(int globalId){
+	public void setGlobalId(Integer globalId){
 		this.global_id = globalId;
 	}
 	
@@ -40,7 +41,7 @@ public class Lehrmittel extends GenericData implements GenericDataObject {
 		return this.kategorie_id;
 	}
 	
-	public void setKategorieId(int kategorieId){
+	public void setKategorieId(Integer kategorieId){
 		this.kategorie_id = kategorieId;
 	}
 	
@@ -48,7 +49,7 @@ public class Lehrmittel extends GenericData implements GenericDataObject {
 		return this.lehrmittel_kategorie_id;
 	}
 	
-	public void setLehrmittelKategorieId(int lehrmittelKategorieId){
+	public void setLehrmittelKategorieId(Integer lehrmittelKategorieId){
 		this.lehrmittel_kategorie_id = lehrmittelKategorieId;
 	}
 	

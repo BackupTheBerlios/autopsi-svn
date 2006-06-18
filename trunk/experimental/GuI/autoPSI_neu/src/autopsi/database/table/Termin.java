@@ -1,21 +1,22 @@
 package autopsi.database.table;
 
 
+import net.jini.core.entry.Entry;
 import java.sql.Timestamp;
 import autopsi.database.dao.GenericDataObject;
 import autopsi.gui.component.GenericData;
 
 
-public class Termin extends GenericData implements GenericDataObject{
+public class Termin extends GenericData implements Entry,GenericDataObject{
 
-	private Integer id = null;
-	private Integer termin_kategorie_id;
-	private Integer termincontainer_id;
-	private String secondary_title = null;
-	private String description = null;
-	private Timestamp date = null;
-	private Integer duration = null;
-	private String place = null;
+	public Integer id = null;
+	public Integer termin_kategorie_id;
+	public Integer termincontainer_id;
+	public String secondary_title = null;
+	public String description = null;
+	public Timestamp date = null;
+	public Integer duration = null;
+	public String place = null;
 	
 	
 	public Termin(){

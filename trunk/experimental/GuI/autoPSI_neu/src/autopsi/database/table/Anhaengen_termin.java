@@ -1,11 +1,13 @@
 package autopsi.database.table;
 
+import net.jini.core.entry.Entry;
 import autopsi.database.dao.GenericDataObject;
 
-public class Anhaengen_termin implements GenericDataObject {
-	private Integer termin_id;
-	private Integer global_id;
-	private String table_name;
+public class Anhaengen_termin implements Entry,GenericDataObject {
+	
+	public Integer termin_id;
+	public Integer global_id;
+	public String table_name;
 	
 	
 	
@@ -13,7 +15,7 @@ public class Anhaengen_termin implements GenericDataObject {
 		return this.termin_id;
 	}
 	
-	public void setTerminId(int id){
+	public void setTerminId(Integer id){
 		termin_id = id;
 	}
 	
@@ -21,7 +23,7 @@ public class Anhaengen_termin implements GenericDataObject {
 		return this.global_id;
 	}
 	
-	public void setGlobalId(int id){
+	public void setGlobalId(Integer id){
 		global_id = id;
 	}
 	

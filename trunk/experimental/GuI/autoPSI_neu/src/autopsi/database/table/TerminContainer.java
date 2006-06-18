@@ -1,14 +1,16 @@
 package autopsi.database.table;
 
 
+import net.jini.core.entry.Entry;
+
 import autopsi.database.dao.GenericDataObject;
 import autopsi.gui.component.GenericData;
 
-public class TerminContainer extends GenericData implements GenericDataObject{
+public class TerminContainer extends GenericData implements Entry,GenericDataObject{
 
-	private Integer id = null;
-	private String title = null;
-	private String description = null;
+	public Integer id = null;
+	public String title = null;
+	public String description = null;
 
 	
 	public TerminContainer(){
