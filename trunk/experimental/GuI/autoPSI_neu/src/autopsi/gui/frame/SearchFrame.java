@@ -124,10 +124,10 @@ public class SearchFrame extends javax.swing.JFrame implements ActionListener {
 	public SearchFrame() {
 		super();
 		initGUI();
-		/*JFrame frame = new JFrame("Suchen");
-		frame.getContentPane().add(this);*/
+		this.setTitle("Suchen");
+		//frame.getContentPane().add(this);
 		setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-		pack();
+		this.pack();
 		
 		addWindowListener(new WindowAdapter()
 				{
