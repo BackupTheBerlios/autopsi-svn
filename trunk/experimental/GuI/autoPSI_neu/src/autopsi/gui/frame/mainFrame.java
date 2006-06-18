@@ -3,7 +3,7 @@ import java.awt.Point;
 import java.awt.event.*;
 import java.util.*;
 import javax.swing.BorderFactory;
-
+import java.awt.*;
 import javax.swing.*;
 
 import javax.swing.JMenu;
@@ -85,6 +85,8 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 	private JPanel tab2;
 	private JTextPane lblBeschreibung;
 	private JTabbedPane infobar;
+	private JButton searchButton;
+	private JPanel jPanel1;
 	private JTable timetable;
 	private JMenuItem view_dayNext;
 	private JMenuItem view_weekNext;
@@ -96,7 +98,6 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 	private JMenuItem view_week;
 	private JMenuItem view_month;
 	private JMenu view;
-	private JMenu menu_search;
 	private JMenuItem menu_add_LM;
 	private JMenuItem menu_add_Pruefung;
 	private JMenuItem menu_add_Kontakt;
@@ -290,7 +291,7 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 				{
 					jPanel3 = new JPanel();
 					toolbar.add(jPanel3);
-					jPanel3.setBounds(84, 0, 84, 28);
+					jPanel3.setBounds(84, 0, 28, 28);
 					jPanel3.setBorder(BorderFactory.createEtchedBorder(BevelBorder.LOWERED));
 				}
 				{
@@ -469,6 +470,20 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 					toolbar.add(jPanel5);
 					jPanel5.setBounds(777, 0, 21, 28);
 					jPanel5.setBorder(BorderFactory.createEtchedBorder(BevelBorder.LOWERED));
+				}
+				{
+					searchButton = new JButton();
+					toolbar.add(searchButton);
+					searchButton.setIcon(new ImageIcon("src/images/suche.GIF"));
+					searchButton.setBounds(112, 0, 28, 28);
+					searchButton.setBorder(BorderFactory.createEtchedBorder(BevelBorder.LOWERED));
+					searchButton.addMouseListener(this);
+				}
+				{
+					jPanel1 = new JPanel();
+					toolbar.add(jPanel1);
+					jPanel1.setBounds(140, 0, 28, 28);
+					jPanel1.setBorder(BorderFactory.createEtchedBorder(BevelBorder.LOWERED));
 				}
 			}
 			{
@@ -758,11 +773,6 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 					}
 				}
 				{
-					menu_search = new JMenu();
-					mainMenu.add(menu_search);
-					menu_search.setText("Suchen ...");
-				}
-				{
 					view = new JMenu();
 					mainMenu.add(view);
 					view.setText("Ansicht");
@@ -961,6 +971,17 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 			}
 			
 		}
+		if(arg0.getSource().equals(searchButton)) {
+			
+			SearchFrame search = new SearchFrame();
+			
+			GraphicsEnvironment env = GraphicsEnvironment.getLocalGraphicsEnvironment();
+			GraphicsDevice gd = env.getDefaultScreenDevice();
+			DisplayMode dm = gd.getDisplayMode();
+			search.setLocation((dm.getWidth()-search.getWidth())/2,(dm.getHeight()-search.getHeight())/2);
+			search.setVisible(true);
+		}
+		
 		if(arg0.getSource().equals(deleteTermin)) {
 			System.out.println("++++ " + terminId);
 			GenericDAO gdo = new GenericDAO();

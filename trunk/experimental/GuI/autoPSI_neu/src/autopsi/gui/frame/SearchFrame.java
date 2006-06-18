@@ -3,6 +3,8 @@ package autopsi.gui.frame;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -52,7 +54,7 @@ import autopsi.gui.component.KategorieComboBoxModel;
 * THIS MACHINE, SO JIGLOO OR THIS CODE CANNOT BE USED
 * LEGALLY FOR ANY CORPORATE OR COMMERCIAL PURPOSE.
 */
-public class SearchFrame extends javax.swing.JPanel implements ActionListener {
+public class SearchFrame extends javax.swing.JFrame implements ActionListener {
 
 	{
 		//Set Look & Feel
@@ -122,12 +124,21 @@ public class SearchFrame extends javax.swing.JPanel implements ActionListener {
 	public SearchFrame() {
 		super();
 		initGUI();
-		JFrame frame = new JFrame("Suchen");
-		frame.getContentPane().add(this);
-		frame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-		frame.pack();
-		frame.setVisible(true);
+		/*JFrame frame = new JFrame("Suchen");
+		frame.getContentPane().add(this);*/
+		setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+		pack();
 		
+		addWindowListener(new WindowAdapter()
+				{
+				public void windowClosing(WindowEvent arg0)
+				{ //wird das Fenster über den X-Button rechts oben geschlossen
+				  //wird die Anwendung beendet.
+					
+					super.windowClosing(arg0);
+					dispose();
+					}
+				});
 	}
 	
 	private void initGUI() {
