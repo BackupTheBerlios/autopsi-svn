@@ -37,7 +37,7 @@ public class Notiz extends GenericData implements GenericDataObject {
 		return this.kategorie_id;
 	}
 	
-	public void setKategorieId(int kategorieId){
+	public void setKategorieId(Integer kategorieId){
 		this.kategorie_id = kategorieId;
 	}
 	
