@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<eclipse-userlibraries version="2">
+<library name="jini" systemlibrary="false">
+<archive path="D:/Programme/jini2_1/lib/jini-core.jar"/>
+<archive path="D:/Programme/jini2_1/lib/browser.jar"/>
+<archive path="D:/Programme/jini2_1/lib/checkconfigurationfile.jar"/>
+<archive path="D:/Programme/jini2_1/lib/checkser.jar"/>
+<archive path="D:/Programme/jini2_1/lib/classdep.jar"/>
+<archive path="D:/Programme/jini2_1/lib/classserver.jar"/>
+<archive path="D:/Programme/jini2_1/lib/computedigest.jar"/>
+<archive path="D:/Programme/jini2_1/lib/computehttpmdcodebase.jar"/>
+<archive path="D:/Programme/jini2_1/lib/destroy.jar"/>
+<archive path="D:/Programme/jini2_1/lib/envcheck.jar"/>
+<archive path="D:/Programme/jini2_1/lib/fiddler.jar"/>
+<archive path="D:/Programme/jini2_1/lib/group.jar"/>
+<archive path="D:/Programme/jini2_1/lib/jarwrapper.jar"/>
+<archive path="D:/Programme/jini2_1/lib/jini-ext.jar"/>
+<archive path="D:/Programme/jini2_1/lib/jsk-debug-policy.jar"/>
+<archive path="D:/Programme/jini2_1/lib/jsk-lib.jar"/>
+<archive path="D:/Programme/jini2_1/lib/jsk-platform.jar"/>
+<archive path="D:/Programme/jini2_1/lib/jsk-resources.jar"/>
+<archive path="D:/Programme/jini2_1/lib/mahalo.jar"/>
+<archive path="D:/Programme/jini2_1/lib/mercury.jar"/>
+<archive path="D:/Programme/jini2_1/lib/norm.jar"/>
+<archive path="D:/Programme/jini2_1/lib/outrigger.jar"/>
+<archive path="D:/Programme/jini2_1/lib/outrigger-logstore.jar"/>
+<archive path="D:/Programme/jini2_1/lib/outrigger-snaplogstore.jar"/>
+<archive path="D:/Programme/jini2_1/lib/phoenix.jar"/>
+<archive path="D:/Programme/jini2_1/lib/phoenix-group.jar"/>
+<archive path="D:/Programme/jini2_1/lib/phoenix-init.jar"/>
+<archive path="D:/Programme/jini2_1/lib/prebuilt-outrigger-logstore.jar"/>
+<archive path="D:/Programme/jini2_1/lib/preferredlistgen.jar"/>
+<archive path="D:/Programme/jini2_1/lib/reggie.jar"/>
+<archive path="D:/Programme/jini2_1/lib/sharedvm.jar"/>
+<archive path="D:/Programme/jini2_1/lib/start.jar"/>
+<archive path="D:/Programme/jini2_1/lib/sun-util.jar"/>
+<archive path="D:/Programme/jini2_1/lib/tools.jar"/>
+</library>
+</eclipse-userlibraries>
