@@ -5,6 +5,7 @@ import autopsi.database.dao.GenericDAO;
 import autopsi.database.dao.GenericDataObject;
 import autopsi.database.dao.IGenericDAO;
 
+import autopsi.database.table.AttachableObjectKategorie;
 import autopsi.database.table.TerminKategorie;
 import autopsi.database.table.LvaKategorie;
 public class KategorieComboBoxModel extends DefaultComboBoxModel {
@@ -12,11 +13,12 @@ public class KategorieComboBoxModel extends DefaultComboBoxModel {
 	 * 
 	 */
 	private static final long serialVersionUID = 134543543534534L;
+	private List <GenericDataObject> kategorien=null;
+	private IGenericDAO gdo=new GenericDAO();
 	
 	public KategorieComboBoxModel(String tablename, TerminKategorie kat) {
 		super ();
-		List <GenericDataObject> kategorien = null;
-		IGenericDAO gdo=new GenericDAO();
+		kategorien = null;
 		try {
 			kategorien = gdo.unsafeQuery("select * from "+tablename, kat);
 		} catch (Exception e) {
@@ -33,8 +35,7 @@ public class KategorieComboBoxModel extends DefaultComboBoxModel {
 	
 	public KategorieComboBoxModel(String tablename, LvaKategorie kat) {
 		super ();
-		List <GenericDataObject> kategorien=null;
-		IGenericDAO gdo=new GenericDAO();
+		kategorien = null;
 		try {
 			kategorien = gdo.unsafeQuery("select * from "+tablename, kat);
 		} catch (Exception e) {
@@ -47,6 +48,22 @@ public class KategorieComboBoxModel extends DefaultComboBoxModel {
 				this.addElement(kat1.getName());
 			}
 		}
+	}
+	public KategorieComboBoxModel (String tablename, AttachableObjectKategorie kat) {
+		super ();
+		kategorien = null;
+		try {
+			kategorien = gdo.unsafeQuery("select * from "+tablename, kat);
+		} catch (Exception e) {
+			System.out.println("KategoryComboBoxModel: "+ e.toString());
+		}
+		if (kategorien != null) {
+			for (int i = 0; i<kategorien.size();i++){
+				AttachableObjectKategorie kat1 = (AttachableObjectKategorie) kategorien.get(i);
+				this.addElement(kat1.getTitle());
+			}
+		}
+		
 	}
 
 }
