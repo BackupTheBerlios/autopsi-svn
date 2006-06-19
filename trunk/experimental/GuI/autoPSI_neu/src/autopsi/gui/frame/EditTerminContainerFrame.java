@@ -25,10 +25,7 @@ import javax.swing.JTextField;
 import javax.swing.ListModel;
 
 import javax.swing.WindowConstants;
-import javax.swing.border.BevelBorder;
 import javax.swing.border.LineBorder;
-import javax.swing.border.SoftBevelBorder;
-
 import autopsi.database.dao.GenericDAO;
 import autopsi.database.dao.GenericDataObject;
 import autopsi.database.dao.IGenericDAO;
@@ -108,6 +105,8 @@ public class EditTerminContainerFrame extends javax.swing.JFrame implements java
 	List<GenericDataObject> group_data;
 	private mainFrame owner2;
 	private int konstruktor = 0;
+	
+	DefaultComboBoxModel terminModel = new DefaultComboBoxModel();
 	
 	
 	private void readData(int id) throws EDatabaseConnection, EAttributeNotFound, EDatabase{
@@ -329,25 +328,25 @@ public class EditTerminContainerFrame extends javax.swing.JFrame implements java
 						newTermin = new JButton();
 						jPanel2.add(newTermin);
 						newTermin.setBounds(210, 238, 42, 28);
-						newTermin.setIcon(new ImageIcon(getClass().getClassLoader().getResource("images/newTermin.GIF")));
+						newTermin.setIcon(new ImageIcon("src/images/newTermin.GIF"));
 					}
 					{
 						deleteTermin = new JButton();
 						jPanel2.add(deleteTermin);
 						deleteTermin.setBounds(371, 238, 42, 28);
-						deleteTermin.setIcon(new ImageIcon(getClass().getClassLoader().getResource("images/deleteTermin.GIF")));
+						deleteTermin.setIcon(new ImageIcon("src/images/deleteTermin.GIF"));
 					}
 					{
 						editTermin = new JButton();
 						jPanel2.add(editTermin);
 						editTermin.setBounds(329, 238, 42, 28);
-						editTermin.setIcon(new ImageIcon(getClass().getClassLoader().getResource("images/editTermin.GIF")));
+						editTermin.setIcon(new ImageIcon("src/images/editTermin.GIF"));
 					}
 					{
 						openTermin = new JButton();
 						jPanel2.add(openTermin);
 						openTermin.setBounds(7, 238, 42, 28);
-						openTermin.setIcon(new ImageIcon(getClass().getClassLoader().getResource("images/goToTermin.GIF")));
+						openTermin.setIcon(new ImageIcon("src/images/goToTermin.GIF"));
 					}
 					{
 						jLabel3 = new JLabel();
@@ -359,7 +358,7 @@ public class EditTerminContainerFrame extends javax.swing.JFrame implements java
 						newTerminReihe = new JButton();
 						jPanel2.add(newTerminReihe);
 						newTerminReihe.setBounds(252, 238, 56, 28);
-						newTerminReihe.setIcon(new ImageIcon(getClass().getClassLoader().getResource("images/newTerminReihe.GIF")));
+						newTerminReihe.setIcon(new ImageIcon("src/images/newTerminReihe.GIF"));
 						newTerminReihe.addMouseListener(this);
 					}
 					{
@@ -368,6 +367,11 @@ public class EditTerminContainerFrame extends javax.swing.JFrame implements java
 						jScrollPane1.setBounds(7, 63, 406, 168);
 						jScrollPane1.setBorder(new LineBorder(new java.awt.Color(0,0,0), 1, false));
 						jScrollPane1.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+						{
+							terminList = new JList();
+							jScrollPane1.setViewportView(terminList);
+							terminList.setModel(terminModel);
+						}
 					}
 					{
 						beginDate_field = new JFormattedTextField();
@@ -381,13 +385,7 @@ public class EditTerminContainerFrame extends javax.swing.JFrame implements java
 						endDate_field.setBounds(315, 35, 98, 21);
 						endDate_field.setBorder(new LineBorder(new java.awt.Color(0,0,0), 1, false));
 					}
-					{
-						ListModel jList2Model = new DefaultComboBoxModel();
-						terminList = new JList();
-						jPanel2.add(terminList);
-						terminList.setModel(jList2Model);
-						terminList.setBounds(6, 59, 404, 166);
-					}
+				
 				}
 			}
 			{
@@ -518,6 +516,7 @@ public class EditTerminContainerFrame extends javax.swing.JFrame implements java
 
 	public void updateTerminList(List<Termin> termine)
 	{
+		System.out.println(termine.size());
 		for(int i = 0;i<termine.size();i++)
 		{
 			DateConverter converter = new DateConverter();
