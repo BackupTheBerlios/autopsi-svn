@@ -1,5 +1,10 @@
 package autopsi.gui;
 
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 import javax.swing.table.AbstractTableModel;
 
@@ -12,8 +17,9 @@ import autopsi.database.table.Termin;
 public class TerminTableModel extends AbstractTableModel{
 	private static final long serialVersionUID = 8737097029189851737L;
 	//List<GenericDataObject> termine = null;
-	public List <GenericDataObject> termine;
-	public Termin suchTermin = null;
+	private List <GenericDataObject> termine;
+	private Termin suchTermin = null;
+	private String datum=null;
 	
 	private final String [] columnName = {"Titel", "Beschreibung", "Datum", "Dauer"};
 	
@@ -22,22 +28,41 @@ public class TerminTableModel extends AbstractTableModel{
 	}
 	
 	private void readData() {
-		String query="select * from Termin where";
+		String query="select * from Termin as t";
 		Boolean first = true;
 		try{
 			IGenericDAO gdo = new GenericDAO();
 			if (suchTermin!=null) {
 				if (suchTermin.getSecondaryTitle()!=null) {
-					if (first){
-						query += " SECONDARY_TITLE LIKE '%" + suchTermin.getSecondaryTitle()+"%'";
-						first = false;
+					if (!first){
+						query += " AND";
 					} else {
-						query += "AND SECONDARY_TITLE LIKE '%" + suchTermin.getSecondaryTitle()+"%'";
+						query += " where";
 					}
+					query += " LOWER(SECONDARY_TITLE) LIKE '%" + suchTermin.getSecondaryTitle().toLowerCase()+"%'";
+					first = false;
 				}
-				if (first == false){
-					this.termine =  gdo.unsafeQuery(query, suchTermin);
+				if (suchTermin.getDescription()!=null) {
+					if (!first){
+						query += " AND";
+					} else {
+						query += " where";
+					}
+					query += " LOWER(DESCRIPTION) LIKE '%" + suchTermin.getDescription().toLowerCase()+"%'";
+					first = false;
 				}
+				if (this.datum!=null){
+					if (!first){
+						query += " AND";
+					} else {
+						query += " where";
+					}
+
+					query += " DATE LIKE '%" + this.datum +"%'";
+					first = false;
+				}
+				System.out.println("Query:"+query);
+				this.termine =  gdo.unsafeQuery(query, suchTermin);
 			}
 		} catch (Exception e){
 			System.out.println("AAARGH;"+e.toString());
@@ -51,6 +76,10 @@ public class TerminTableModel extends AbstractTableModel{
 	public void setSuchTermin (Termin suchtermin){
 		this.suchTermin=suchtermin;
 		fireDataChanged();
+	}
+	
+	public void setDatum (String datum){
+		this.datum=datum;
 	}
 	
 	public void fireDataChanged() {
