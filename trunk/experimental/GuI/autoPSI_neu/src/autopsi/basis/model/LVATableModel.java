@@ -30,6 +30,12 @@ public class LVATableModel extends AbstractTableModel {
 				if (this.suchLva.getLvaNr()!=null){
 					query +=" AND LVA_NR ="+this.suchLva.getLvaNr()+"";
 				}
+				if (this.suchLva.getTitle()!=null){
+					query +=" AND Lower(TITLE) Like '%"+this.suchLva.getTitle().toLowerCase()+"%!";
+				}
+				if (this.suchLva.getDescription()!=null){
+					query +=" AND Lower(DESCRIPTION) Like '%"+this.suchLva.getDescription().toLowerCase()+"%!";
+				}
 				System.out.println(query);
 				this.lvas =  gdo.unsafeQuery(query, suchLva);
 			}
