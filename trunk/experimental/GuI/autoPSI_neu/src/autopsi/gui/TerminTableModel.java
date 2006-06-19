@@ -21,6 +21,7 @@ public class TerminTableModel extends AbstractTableModel{
 	private Termin suchTermin = null;
 	private String datum=null;
 	private String group=null;
+	private String type=null;
 	
 	private final String [] columnName = {"Titel", "Beschreibung", "Datum", "Dauer"};
 	
@@ -41,6 +42,9 @@ public class TerminTableModel extends AbstractTableModel{
 				}
 				if (this.datum!=null){
 					query += " AND t.DATE LIKE '%" + this.datum +"%'";
+				}
+				if (this.type!=null){
+					query += " AND kat.NAME LIKE '%" + this.type +"%'";
 				}
 				if (this.group != null){
 					query +=" AND ok.TITLE LIKE '%"+ this.group+"%'";
@@ -64,6 +68,10 @@ public class TerminTableModel extends AbstractTableModel{
 	
 	public void setDatum (String datum){
 		this.datum=datum;
+	}
+	
+	public void setType (String type){
+		this.type=type;
 	}
 	
 	public void setGroup (String group){
