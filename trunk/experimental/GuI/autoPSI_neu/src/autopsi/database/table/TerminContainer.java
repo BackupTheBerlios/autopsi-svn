@@ -8,9 +8,9 @@ import autopsi.gui.component.GenericData;
 
 public class TerminContainer extends GenericData implements Entry,GenericDataObject{
 
-	public Integer id = null;
-	public String title = null;
-	public String description = null;
+	public Integer id;
+	public String title;
+	public String description;
 	public Integer group_id;
 
 	

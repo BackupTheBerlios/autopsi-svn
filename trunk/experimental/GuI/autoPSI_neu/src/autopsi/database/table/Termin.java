@@ -9,14 +9,14 @@ import autopsi.gui.component.GenericData;
 
 public class Termin extends GenericData implements Entry,GenericDataObject{
 
-	public Integer id = null;
+	public Integer id;
 	public Integer termin_kategorie_id;
 	public Integer termincontainer_id;
-	public String secondary_title = null;
-	public String description = null;
-	public Timestamp date = null;
-	public Integer duration = null;
-	public String place = null;
+	public String secondary_title;
+	public String description;
+	public Timestamp date;
+	public Integer duration;
+	public String place;
 	public Integer group_id;
 	
 	
