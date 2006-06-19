@@ -1,0 +1,90 @@
+package autopsi.basis.model;
+
+import java.util.List;
+
+import javax.swing.table.AbstractTableModel;
+
+import autopsi.database.dao.GenericDAO;
+import autopsi.database.dao.GenericDataObject;
+import autopsi.database.dao.IGenericDAO;
+import autopsi.database.table.Lva;
+
+public class LVATableModel extends AbstractTableModel {
+
+	private static final long serialVersionUID = 8737097029189851737L;
+	public List <GenericDataObject> lvas;
+	public Lva suchLva = null;
+	public String group = null;
+	
+	private final String [] columnName = {"LVA-Nr","Titel", "Beschreibung", "UNI"};
+	
+	public List<GenericDataObject> getLvas() {
+		return this.lvas;
+	}
+	
+	private void readData() {
+		String query="select * from LVA as l, ATTACHABLE_OBJECT as a, ATTACHABLE_OBJECT_KATEGORIE as ok where l.GLOBAL_ID=a.GLOBAL_ID AND a.GLOBAL_ID=ok.ID";
+		try{
+			IGenericDAO gdo = new GenericDAO();
+			if (suchLva!=null) {
+				if (this.suchLva.getLvaNr()!=null){
+					query +=" AND LVA_NR ="+this.suchLva.getLvaNr()+"";
+				}
+				this.lvas =  gdo.unsafeQuery(query, suchLva);
+			}
+		} catch (Exception e){
+			System.out.println("AAARGH;"+e.toString());
+		}
+	}
+	
+	public LVATableModel (){
+	}
+	
+	
+	public void setSuchLVa (Lva suchLva){
+		this.suchLva=suchLva;
+		fireDataChanged();
+	}
+	
+	public void setGroup(String gruppe){
+		this.group = gruppe;
+	}
+	
+	public void fireDataChanged() {
+		readData();
+		fireTableDataChanged();
+	}
+	
+	public int getColumnCount() {
+		//System.out.println("colCount = " + columnName.length);
+		return columnName.length;
+	}
+	
+	public int getRowCount() {
+		//System.out.println("rowcount = " + Lesers.size());
+		if (lvas != null) {
+			return lvas.size();
+		} else {
+			return 0;
+		}
+	}
+	public String getColumnName(int c) {
+		//System.out.println("colName = " + columnName[c]);
+		return columnName[c];
+	}
+	
+	public Object getValueAt(int row, int col) {
+		Lva lva = (Lva) lvas.get(row);
+		if (lva==null)
+			return null;
+		else if (col==0)
+			return lva.getLvaNr();
+		else if (col==1)
+			return lva.getTitle();
+		else if (col==2)
+			return lva.getDescription();
+		else if (col==3)
+			return "NOOOOOOOO";
+		else return null;
+	}
+}
