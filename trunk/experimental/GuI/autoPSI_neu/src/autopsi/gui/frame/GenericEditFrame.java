@@ -42,12 +42,12 @@ public class GenericEditFrame extends JDialog implements ActionListener {
 		this.setSize(400, 400);
 		cancelButton.addActionListener(this);
 		okButton.addActionListener(this);
-		try{
+		/*try{
 			editPanel.setObjectToEdit(new TestClass());
 		}
 		catch (Exception e){
 			System.out.println("Exception blablabla :: "+e.toString());
-		}
+		}*/
 	}
 	
 	public void setObjectToEdit(GenericDataObject obj, boolean newObject){

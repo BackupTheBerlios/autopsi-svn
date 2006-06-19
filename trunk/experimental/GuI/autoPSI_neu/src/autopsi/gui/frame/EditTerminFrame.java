@@ -9,6 +9,7 @@ import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.GregorianCalendar;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 
@@ -16,6 +17,7 @@ import javax.swing.BorderFactory;
 import javax.swing.ComboBoxModel;
 
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFormattedTextField;
@@ -37,6 +39,7 @@ import autopsi.database.dao.IGenericDAO;
 import autopsi.database.exception.EAttributeNotFound;
 import autopsi.database.exception.EDatabase;
 import autopsi.database.exception.EDatabaseConnection;
+import autopsi.database.table.Anhaengen_termin;
 import autopsi.database.table.Termin;
 import autopsi.database.table.TerminContainer;
 import autopsi.database.table.TerminKategorie;
@@ -69,6 +72,8 @@ public class EditTerminFrame extends javax.swing.JFrame implements java.awt.even
 		}
 	}
 
+	private List<GenericDataObject> attachedObjects;
+	private DefaultListModel lm;
 	private JTabbedPane jTabbedPane1;
 	private JButton apply_button;
 	private JLabel jLabel4;
@@ -87,7 +92,7 @@ public class EditTerminFrame extends javax.swing.JFrame implements java.awt.even
 	private JTextField sec_titlefield;
 	private JLabel jLabel5;
 	private JLabel jLabel3;
-	private JButton jButton6;
+	private JButton open_button;
 	private JButton jButton5;
 	private JButton jButton4;
 	private JTextField jTextField2;
@@ -161,6 +166,7 @@ public class EditTerminFrame extends javax.swing.JFrame implements java.awt.even
 		
 		updateTCList();	
 		tcTitle_box.setSelectedIndex(((Termin)list.get(0)).getTerminContainerID());
+		loadObjectList();
 	}
 	
 	private void update(){
@@ -407,6 +413,7 @@ public class EditTerminFrame extends javax.swing.JFrame implements java.awt.even
 						jPanel3.add(jTextField2);
 						jTextField2.setBounds(70, 7, 343, 21);
 						jTextField2.setBorder(new LineBorder(new java.awt.Color(0,0,0), 1, false));
+						
 					}
 					{
 						jButton4 = new JButton();
@@ -421,10 +428,11 @@ public class EditTerminFrame extends javax.swing.JFrame implements java.awt.even
 						jButton5.setBounds(336, 238, 77, 21);
 					}
 					{
-						jButton6 = new JButton();
-						jPanel3.add(jButton6);
-						jButton6.setText("Öffnen");
-						jButton6.setBounds(21, 238, 70, 21);
+						open_button = new JButton();
+						jPanel3.add(open_button);
+						open_button.setText("Öffnen");
+						open_button.setBounds(21, 238, 70, 21);
+						open_button.addMouseListener(this);
 					}
 					{
 						jLabel3 = new JLabel();
@@ -462,7 +470,10 @@ public class EditTerminFrame extends javax.swing.JFrame implements java.awt.even
 				jLabel5.setBounds(7, 329, 434, 21);
 				jLabel5.setBorder(BorderFactory.createTitledBorder(""));
 			}
-
+			
+			lm = new DefaultListModel();
+			jList1.setModel(lm);
+			
 			this.setSize(456, 387);
 			this.setPreferredSize(new java.awt.Dimension(456, 387));
 			this.setResizable(false);
@@ -496,7 +507,21 @@ public class EditTerminFrame extends javax.swing.JFrame implements java.awt.even
 			frame.setLocation(this.getLocation().x+20,this.getLocation().y+20);
 			frame.setTitle("neuen Termincontainer hinzufügen");
 ;			frame.setVisible(true);
-			}		
+			}	
+		if(arg0.getSource().equals(open_button)){
+			int index = jList1.getSelectedIndex();
+			Anhaengen_termin obj = new Anhaengen_termin(); 
+			if(index != -1){
+				obj = (Anhaengen_termin) attachedObjects.get(index);
+				GenericEditFrame gef = new GenericEditFrame();
+				gef.setObjectToEdit(obj,false);
+				gef.setTableToEdit(obj.table_name);
+				gef.setVisible(true);
+				
+			
+			
+			}
+		}
 	}
 
 	public void mouseReleased(MouseEvent arg0) {
@@ -571,6 +596,46 @@ public class EditTerminFrame extends javax.swing.JFrame implements java.awt.even
 			
 		}
 	}
+	
+	public void loadObjectList(){
+		this.attachedObjects = null;
+		gdo.setCurrentTable("anhaengen_termin");
+		try {
+			attachedObjects = gdo.unsafeQuery("SELECT * FROM anhaengen_termin where termin_id="+this.ID, new Anhaengen_termin());
+		} catch (Exception e){
+			System.out.println("EditTerminFrame.loadObjectList()::"+e.toString());
+		}
+		Iterator<GenericDataObject> iter = attachedObjects.iterator();
+		System.out.println("at.size()=="+attachedObjects.size());
+		String tableName = "";
+		int globalId = -1;
+		while(iter.hasNext()){
+			Anhaengen_termin t = (Anhaengen_termin)iter.next();
+			tableName = t.getTable_Name();
+			globalId = t.getGlobalId();
+			List<GenericDataObject> ob = null;
+			tableName = tableName.toLowerCase();
+			if(tableName.equals("kontakt")){
+				gdo.setCurrentTable("kontakt");
+				try {
+					ob = gdo.unsafeQuery("select * from kontakt where global_id="+globalId, new Kontakt());
+				} 
+				catch (Exception e)
+				{
+					System.out.println("EditTerminFrame.loadObjectList() Kontaktlist::"+e.toString());
+				}
+				Iterator<GenericDataObject> iter2 = ob.iterator();
+				Kontakt k;
+				while(iter2.hasNext())
+				{
+					k = (Kontakt) iter2.next();
+					lm.addElement(k.getPrename() + " "+ k.getSurname());	
+				}
+				jList1.setModel(lm);
+			}
+		}
+	}
+	
 }
 
 
