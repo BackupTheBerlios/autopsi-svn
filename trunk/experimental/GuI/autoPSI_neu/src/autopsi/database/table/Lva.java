@@ -10,7 +10,7 @@ public class Lva extends GenericData implements Entry,GenericDataObject {
 	public Integer global_id;
 //	public Integer kategorie_id;
 	public String title;
-	public String type;
+	public Integer type;
 	public String description;
 	public String lva_nr;
 	public Integer uni_id;
@@ -22,7 +22,7 @@ public class Lva extends GenericData implements Entry,GenericDataObject {
 			this.addAttribute("GlobalId",cl.getMethod("getGlobalId", new Class[] {}), cl.getMethod("setGlobalId", new Class[] {Integer.class} ));
 //			this.addAttribute("KategorieId",cl.getMethod("getKategorieId", new Class[] {}), cl.getMethod("setKategorieId", new Class[] {Integer.class} ));
 			this.addAttribute("Titel",cl.getMethod("getTitle", new Class[] {}), cl.getMethod("setTitle", new Class[] {String.class} ));
-			this.addAttribute("LVA-Typ",cl.getMethod("getType", new Class[] {}), cl.getMethod("setType", new Class[] {String.class} ));
+			this.addAttribute("LVA-Typ",cl.getMethod("getType", new Class[] {}), cl.getMethod("setType", new Class[] {Integer.class} ));
 			this.addAttribute("Beschreibung",cl.getMethod("getDescription", new Class[] {}), cl.getMethod("setDescription", new Class[] {String.class} ));
 			this.addAttribute("LVA-Nr.",cl.getMethod("getLvaNr", new Class[] {}), cl.getMethod("setLvaNr", new Class[] {String.class} ));
 			this.addAttribute("Uni-Id",cl.getMethod("getUniId", new Class[] {}), cl.getMethod("setUniId", new Class[] {Integer.class} ));
@@ -56,11 +56,11 @@ public class Lva extends GenericData implements Entry,GenericDataObject {
 		this.title = title;
 	}
 	
-	public String getType(){
+	public Integer getType(){
 		return this.type;
 	}
 	
-	public void setType(String type){
+	public void setType(Integer type){
 		this.type = type;
 	}
 	
