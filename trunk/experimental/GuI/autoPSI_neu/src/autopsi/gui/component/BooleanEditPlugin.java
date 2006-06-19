@@ -33,10 +33,11 @@ public class BooleanEditPlugin extends EditPlugin implements ItemListener{
 	
 	public void setValue(Object newValue){
 		System.out.println("boolean edit plugin setValue");
-		if(newValue != null){
+		if(newValue != null)
 			this.selected = (Boolean)newValue;
-			checkBox.setSelected(this.selected);
-		}
+		else
+			this.selected = true;
+		checkBox.setSelected(this.selected);
 	}
 	
 	public Component getView(){

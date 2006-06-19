@@ -11,6 +11,8 @@ import java.util.Set;
 import java.awt.GridLayout;
 import javax.swing.JPanel;
 import autopsi.database.dao.GenericDataObject;
+
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import autopsi.gui.exceptions.EWrongMethod;
 import autopsi.gui.exceptions.EClassEditorMissing;
@@ -85,6 +87,7 @@ public class GenericEditPanel extends JPanel {
 		Map<String, GSMethod> map = this.editedObject.getAllAttribs();
 		Set<String> set = map.keySet();
 		Iterator<String> iter = set.iterator();
+		System.out.println("obj.size()=="+this.editedObject.getAttribCount());
 		while(iter.hasNext()){
 			String key = iter.next();
 			GSMethod x = map.get(key);
@@ -94,9 +97,18 @@ public class GenericEditPanel extends JPanel {
 			plug.setName(key);
 			System.out.println("GenericEditPanel.inspectEditedObject()::key=="+key);
 			try{
-				plug.setValue(x.getMethod.invoke(this.editedObject, new Object[] {} ));
+				Object obj = null;
+				try{
+					obj = x.getMethod.invoke(this.editedObject, new Object[] {} );
+				}
+				catch (Exception e){
+					obj = null;
+				}			
+				plug.setValue(obj);
 			}
 			catch (Exception e){
+				if (e instanceof InvocationTargetException)
+					System.out.println("InvocationTargetException::"+((InvocationTargetException)e).getTargetException().toString());
 				System.out.println("Couldn' t set value in plugin::"+e.toString());
 			}
 			methods.put(x, plug);

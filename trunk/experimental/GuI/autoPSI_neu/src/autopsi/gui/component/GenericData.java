@@ -41,6 +41,10 @@ public class GenericData implements Cloneable{
 		}
 	}
 	
+	public int getAttribCount(){
+		return map.size();
+	}
+	
 	public Object clone(){
 		try{
 			return super.clone();

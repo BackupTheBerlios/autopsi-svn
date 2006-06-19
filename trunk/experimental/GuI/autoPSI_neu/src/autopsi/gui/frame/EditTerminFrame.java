@@ -8,6 +8,7 @@ import java.sql.Date;
 import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.GregorianCalendar;
 import java.util.Iterator;
 import java.util.List;
@@ -40,6 +41,7 @@ import autopsi.database.exception.EAttributeNotFound;
 import autopsi.database.exception.EDatabase;
 import autopsi.database.exception.EDatabaseConnection;
 import autopsi.database.table.Anhaengen_termin;
+import autopsi.database.table.Kontakt;
 import autopsi.database.table.Termin;
 import autopsi.database.table.TerminContainer;
 import autopsi.database.table.TerminKategorie;
@@ -510,12 +512,18 @@ public class EditTerminFrame extends javax.swing.JFrame implements java.awt.even
 			}	
 		if(arg0.getSource().equals(open_button)){
 			int index = jList1.getSelectedIndex();
-			Anhaengen_termin obj = new Anhaengen_termin(); 
+			GenericDataObject obj = null; 
 			if(index != -1){
-				obj = (Anhaengen_termin) attachedObjects.get(index);
+				obj = attachedObjects.get(index);
 				GenericEditFrame gef = new GenericEditFrame();
-				gef.setObjectToEdit(obj,false);
-				gef.setTableToEdit(obj.table_name);
+				if(obj instanceof Kontakt){
+					gef.setObjectToEdit((Kontakt)obj,false);
+					gef.setTableToEdit("Kontakt");
+
+				}
+				
+				
+				
 				gef.setVisible(true);
 				
 			
@@ -598,15 +606,15 @@ public class EditTerminFrame extends javax.swing.JFrame implements java.awt.even
 	}
 	
 	public void loadObjectList(){
-		this.attachedObjects = null;
+		this.attachedObjects = new ArrayList<GenericDataObject>();
+		List<GenericDataObject> objs = null;
 		gdo.setCurrentTable("anhaengen_termin");
 		try {
-			attachedObjects = gdo.unsafeQuery("SELECT * FROM anhaengen_termin where termin_id="+this.ID, new Anhaengen_termin());
+			objs = gdo.unsafeQuery("SELECT * FROM anhaengen_termin where termin_id="+this.ID, new Anhaengen_termin());
 		} catch (Exception e){
 			System.out.println("EditTerminFrame.loadObjectList()::"+e.toString());
 		}
-		Iterator<GenericDataObject> iter = attachedObjects.iterator();
-		System.out.println("at.size()=="+attachedObjects.size());
+		Iterator<GenericDataObject> iter = objs.iterator();
 		String tableName = "";
 		int globalId = -1;
 		while(iter.hasNext()){
@@ -629,6 +637,7 @@ public class EditTerminFrame extends javax.swing.JFrame implements java.awt.even
 				while(iter2.hasNext())
 				{
 					k = (Kontakt) iter2.next();
+					this.attachedObjects.add(k);
 					lm.addElement(k.getPrename() + " "+ k.getSurname());	
 				}
 				jList1.setModel(lm);

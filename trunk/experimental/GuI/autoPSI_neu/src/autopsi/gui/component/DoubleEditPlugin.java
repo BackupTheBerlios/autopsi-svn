@@ -46,7 +46,10 @@ public class DoubleEditPlugin extends EditPlugin implements FocusListener{
 	}
 
 	public void setValue(Object newValue) {
-		this.value = (Double)newValue;
+		if (newValue != null)
+			this.value = (Double)newValue;
+		else
+			this.value = 0.0;
 	}
 
 	public void nameChanged() {

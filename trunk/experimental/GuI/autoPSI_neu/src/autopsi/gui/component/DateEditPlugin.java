@@ -50,7 +50,10 @@ public class DateEditPlugin extends EditPlugin implements FocusListener {
 
 	@Override
 	public void setValue(Object newValue) {
-		this.value = (Date)newValue;
+		if (newValue != null)
+			this.value = (Date)newValue;
+		else
+			this.value = new Date(System.currentTimeMillis());
 
 	}
 

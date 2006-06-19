@@ -111,7 +111,7 @@ public class GenericEditFrame extends JDialog implements ActionListener {
 			else{
 				try{
 					System.out.println("versuche objekt upzudaten");
-					System.out.println("updateObject::lookupObject.note=="+((Notiz)lookupObject).getNote());
+					//System.out.println("updateObject::lookupObject.note=="+((Notiz)lookupObject).getNote());
 					gdao.updDataObjects(this.lookupObject, (GenericDataObject)editPanel.getEditedObject());
 				}
 				catch (Exception e){
