@@ -97,6 +97,8 @@ public class EditTerminFrame extends javax.swing.JFrame implements java.awt.even
 	private JButton open_button;
 	private JButton jDelObjectButton;
 	private JButton jAddObjectButton;
+	private JButton edit_Group_button;
+	private JButton edit_Type_button;
 	private JList jList1;
 	private JPanel jPanel1;
 	private JTextArea desc_area;
@@ -371,7 +373,7 @@ public class EditTerminFrame extends javax.swing.JFrame implements java.awt.even
 						choose_Type = new JComboBox();
 						jPanel1.add(choose_Type);
 						choose_Type.setModel(choose_TypeModel);
-						choose_Type.setBounds(91, 147, 119, 21);
+						choose_Type.setBounds(238, 112, 119, 21);
 						choose_Type.setBorder(new LineBorder(new java.awt.Color(0,0,0), 1, false));
 						String query = "select * from termin_kategorie";
 						TerminKategorie kat = new TerminKategorie();
@@ -420,7 +422,7 @@ public class EditTerminFrame extends javax.swing.JFrame implements java.awt.even
 						jLabel11 = new JLabel();
 						jPanel1.add(jLabel11);
 						jLabel11.setText("Termintyp:");
-						jLabel11.setBounds(7, 147, 98, 21);
+						jLabel11.setBounds(175, 112, 63, 21);
 					}
 					{
 						dateField = new JFormattedTextField(createFormatter("##-##-####"));
@@ -453,7 +455,7 @@ public class EditTerminFrame extends javax.swing.JFrame implements java.awt.even
 						group_Box = new JComboBox();
 						jPanel1.add(group_Box);
 						group_Box.setModel(Group_BoxModel);
-						group_Box.setBounds(280, 147, 112, 21);
+						group_Box.setBounds(238, 147, 119, 21);
 						group_Box.setBorder(new LineBorder(new java.awt.Color(0,0,0), 1, false));
 
 						String query = "select * from attachable_object_kategorie";
@@ -504,7 +506,7 @@ public class EditTerminFrame extends javax.swing.JFrame implements java.awt.even
 						jLabel3 = new JLabel();
 						jPanel1.add(jLabel3);
 						jLabel3.setText("Gruppe:");
-						jLabel3.setBounds(231, 147, 63, 21);
+						jLabel3.setBounds(175, 147, 49, 21);
 					}
 				}
 				{
@@ -550,16 +552,30 @@ public class EditTerminFrame extends javax.swing.JFrame implements java.awt.even
 			{
 					type_add = new JButton();
 					jPanel1.add(type_add);
-					type_add.setText("...");
-					type_add.setBounds(210, 147, 14, 21);
+					type_add.setText("+");
+					type_add.setBounds(357, 112, 42, 21);
 					type_add.addMouseListener(this);
 			}
 			{
 					group_add = new JButton();
 					jPanel1.add(group_add);
-					group_add.setText("...");
-					group_add.setBounds(392, 147, 14, 21);
+					group_add.setText("+");
+					group_add.setBounds(357, 147, 42, 21);
 					group_add.addMouseListener(this);
+			}
+			{
+				edit_Type_button = new JButton();
+				jPanel1.add(edit_Type_button);
+				edit_Type_button.setText("...");
+				edit_Type_button.setBounds(399, 112, 14, 21);
+				edit_Type_button.addMouseListener(this);
+			}
+			{
+				edit_Group_button = new JButton();
+				jPanel1.add(edit_Group_button);
+				edit_Group_button.setText("+");
+				edit_Group_button.setBounds(399, 147, 14, 21);
+				edit_Group_button.addMouseListener(this);
 			}
 			{
 				abort_button = new JButton();
@@ -718,12 +734,30 @@ public class EditTerminFrame extends javax.swing.JFrame implements java.awt.even
 			gef.setTableToEdit("Termin_Kategorie");
 			gef.setVisible(true);
 		}
+		if(arg0.getSource().equals(edit_Type_button)){
+			GenericEditFrame gef = new GenericEditFrame();
+			if(choose_Type.getSelectedIndex()!=0){
+			TerminKategorie obj = (TerminKategorie)termin_kat_data.get(choose_Type.getSelectedIndex());
+			gef.setObjectToEdit(obj,false);
+			gef.setTableToEdit("Termin_Kategorie");
+			gef.setVisible(true);
+			}
+		}
 		if(arg0.getSource().equals(group_add)){
 			GenericEditFrame gef = new GenericEditFrame();
 			AttachableObjectKategorie obj = new AttachableObjectKategorie();
 			gef.setObjectToEdit(obj,true);
 			gef.setTableToEdit("Attachable_Object_Kategorie");
 			gef.setVisible(true);
+		}
+		if(arg0.getSource().equals(edit_Group_button)){
+			GenericEditFrame gef = new GenericEditFrame();
+			if(group_Box.getSelectedIndex() != 0){
+			AttachableObjectKategorie obj = (AttachableObjectKategorie)group_data.get(group_Box.getSelectedIndex());
+			gef.setObjectToEdit(obj,false);
+			gef.setTableToEdit("Attachable_Object_Kategorie");
+			gef.setVisible(true);
+			}
 		}
 	}
 
