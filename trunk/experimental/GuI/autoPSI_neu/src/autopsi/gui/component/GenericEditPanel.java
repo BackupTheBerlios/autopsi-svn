@@ -92,6 +92,7 @@ public class GenericEditPanel extends JPanel {
 			if (plug == null)
 				plug = this.getNewPlugin(Object.class);
 			plug.setName(key);
+			System.out.println("GenericEditPanel.inspectEditedObject()::key=="+key);
 			try{
 				plug.setValue(x.getMethod.invoke(this.editedObject, new Object[] {} ));
 			}
