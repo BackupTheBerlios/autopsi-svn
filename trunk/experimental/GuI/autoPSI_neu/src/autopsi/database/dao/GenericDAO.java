@@ -163,20 +163,8 @@ public class GenericDAO implements IGenericDAO{
 				res.add(obj);
 			}
 		}
-		catch (SQLException e){
-			System.out.println("Exception;"+e.toString());
-			throw new EDatabase();
-		}
-		catch (InstantiationException e){
-			System.out.println("Exception;"+e.toString());
-			throw new EDatabase();
-		}
-		catch (IllegalArgumentException e){
-			System.out.println("Exception;"+e.toString());
-			throw new EDatabase();
-		}
-		catch (IllegalAccessException e){
-			System.out.println("Exception;"+e.toString());
+		catch (Exception e){
+			System.out.println("GenericDAO.getDataObjects(...)::"+e.toString());
 			throw new EDatabase();
 		}
 		return res;

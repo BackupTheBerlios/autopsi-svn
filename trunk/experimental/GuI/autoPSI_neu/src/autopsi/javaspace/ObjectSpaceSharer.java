@@ -111,6 +111,8 @@ public class ObjectSpaceSharer {
 			}
 			if (obj instanceof Kontakt)
 				System.out.println("ObjectSpaceSharer.getSharedObjects()::Kontakt.getGlobalId()=="+((Kontakt)obj).getGlobalId());
+//			if (obj == null)
+//				System.out.println("ObjectSpaceSharer.getSharedObjects()::obj==null");
 			result.add(obj);
 		}
 		return result;
