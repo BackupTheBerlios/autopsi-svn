@@ -86,6 +86,7 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 	private JTextPane lblBeschreibung;
 	private JTabbedPane infobar;
 	private JButton searchButton;
+	private JLabel jLabel4;
 	private JLabel jLabel3;
 	private JTable timetable;
 	private JMenuItem view_dayNext;
@@ -262,6 +263,7 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 				toolbar.setLayout(null);
 				toolbar.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
 				toolbar.setBackground(new java.awt.Color(240,240,240));
+				toolbar.setOpaque(false);
 				{
 					neuerTermin = new JButton();
 					toolbar.add(neuerTermin);
@@ -726,6 +728,12 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 					lblDatum.setFont(new java.awt.Font("Tahoma", 1, 14));
 					lblDatum.setForeground(new java.awt.Color(255, 255, 255));
 				}
+			}
+			{
+				jLabel4 = new JLabel();
+				getContentPane().add(jLabel4);
+				jLabel4.setBounds(0, 0, 945, 35);
+				jLabel4.setIcon(new ImageIcon("src/images/banner.JPG"));
 			}
 			{
 				mainMenu = new JMenuBar();
