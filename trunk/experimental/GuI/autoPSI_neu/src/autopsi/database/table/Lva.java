@@ -21,8 +21,8 @@ public class Lva extends GenericData implements Entry,GenericDataObject {
 		try{
 			this.addAttribute("GlobalId",cl.getMethod("getGlobalId", new Class[] {}), cl.getMethod("setGlobalId", new Class[] {Integer.class} ));
 			this.addAttribute("GlobalId",cl.getMethod("getGlobalId", new Class[] {}), cl.getMethod("setGlobalId", new Class[] {Integer.class} ));
-			this.addAttribute("KategorieId",cl.getMethod("getKategorieId", new Class[] {}), cl.getMethod("setKategorieId", new Class[] {String.class} ));
-			this.addAttribute("Titel",cl.getMethod("getTitleId", new Class[] {}), cl.getMethod("setTitleId", new Class[] {String.class} ));
+			this.addAttribute("KategorieId",cl.getMethod("getKategorieId", new Class[] {}), cl.getMethod("setKategorieId", new Class[] {Integer.class} ));
+			this.addAttribute("Titel",cl.getMethod("getTitle", new Class[] {}), cl.getMethod("setTitle", new Class[] {String.class} ));
 			this.addAttribute("LVA-Typ",cl.getMethod("getType", new Class[] {}), cl.getMethod("setType", new Class[] {String.class} ));
 			this.addAttribute("Beschreibung",cl.getMethod("getDescription", new Class[] {}), cl.getMethod("setDescription", new Class[] {String.class} ));
 			this.addAttribute("LVA-Nr.",cl.getMethod("getLvaNr", new Class[] {}), cl.getMethod("setLvaNr", new Class[] {String.class} ));
