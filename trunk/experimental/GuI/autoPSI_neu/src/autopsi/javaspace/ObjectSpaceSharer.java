@@ -27,6 +27,14 @@ public class ObjectSpaceSharer {
 	
 	public void shareObjects(){
 		List<GenericDataObject> shOb = this.getSharedObjects();
+		Iterator<GenericDataObject> iter = shOb.iterator();
+		while(iter.hasNext()){
+			GenericDataObject gO = iter.next();
+			if (gO!=null)
+				com.addObject(gO);
+			else
+				System.out.println("ObjectSpaceSharer.shareObjects()::gO==null");
+		}
 	}
 	
 	private List<GenericDataObject> getSharedObjects(){
@@ -70,9 +78,9 @@ public class ObjectSpaceSharer {
 			}
 			
 			GenericDataObject obj = null;
-			System.out.println("ObjecTSpaceSharer.getSharedObjects()::1");
+//			System.out.println("ObjecTSpaceSharer.getSharedObjects()::1");
 			try{
-				System.out.println("ObjecTSpaceSharer.getSharedObjects()::1a");
+//				System.out.println("ObjecTSpaceSharer.getSharedObjects()::1a");
 				List<GenericDataObject> l = null;
 			/*	if (lookupObj instanceof Kontakt)
 					System.out.println("lookupObj instanceof Kontakt, global_id=="+((Kontakt)lookupObj).global_id);
