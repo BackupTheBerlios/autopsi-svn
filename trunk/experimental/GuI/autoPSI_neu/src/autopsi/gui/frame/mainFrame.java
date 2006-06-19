@@ -444,6 +444,7 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 					newTerminContainer.setBounds(168, 0, 28, 28);
 					newTerminContainer.setBorder(BorderFactory
 						.createEtchedBorder(BevelBorder.LOWERED));
+					newTerminContainer.addMouseListener(this);
 				}
 				{
 					editTermin = new JButton();
@@ -957,6 +958,14 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 			newTermin.setTitle("neuen Termin hinzufügen");
 			newTermin.setLocation(this.getLocation().x+30,this.getLocation().y+30);
 			newTermin.setVisible(true);
+			updateTable();
+			updateInfoBar(false);
+		}
+		if(arg0.getSource().equals(newTerminContainer)) {
+			EditTerminContainerFrame newTC = new EditTerminContainerFrame(this,c_marker, null);
+			newTC.setTitle("neuen Termin hinzufügen");
+			newTC.setLocation(this.getLocation().x+30,this.getLocation().y+30);
+			newTC.setVisible(true);
 			updateTable();
 			updateInfoBar(false);
 		}

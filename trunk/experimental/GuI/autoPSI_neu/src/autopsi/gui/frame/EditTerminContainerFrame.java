@@ -13,6 +13,7 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
@@ -62,6 +63,9 @@ public class EditTerminContainerFrame extends javax.swing.JFrame implements java
 	private JTabbedPane jTabbedPane1;
 	private JButton apply_button;
 	private JLabel jLabel4;
+	private JList jList2;
+	private JScrollPane jScrollPane1;
+	private JButton newTClist;
 	private JLabel jLabel7;
 	private JLabel jLabel3;
 
@@ -69,7 +73,6 @@ public class EditTerminContainerFrame extends javax.swing.JFrame implements java
 	private JButton jButton9;
 	private JButton jButton8;
 	private JButton jButton7;
-	private JList jList2;
 	private JTextField jTextField5;
 	private JLabel jLabel6;
 	private JTextField jTextField4;
@@ -289,31 +292,22 @@ public class EditTerminContainerFrame extends javax.swing.JFrame implements java
 						jTextField5.setBorder(new LineBorder(new java.awt.Color(0,0,0), 1, false));
 					}
 					{
-						ListModel jList2Model = new DefaultComboBoxModel(
-							new String[] { "Item One", "Item Two" });
-						jList2 = new JList();
-						jPanel2.add(jList2);
-						jList2.setModel(jList2Model);
-						jList2.setBounds(7, 63, 406, 147);
-						jList2.setBorder(new SoftBevelBorder(BevelBorder.LOWERED, null, null, null, null));
-					}
-					{
 						jButton7 = new JButton();
 						jPanel2.add(jButton7);
 						jButton7.setText("neuer Termin");
-						jButton7.setBounds(231, 217, 98, 21);
+						jButton7.setBounds(147, 217, 98, 21);
 					}
 					{
 						jButton8 = new JButton();
 						jPanel2.add(jButton8);
 						jButton8.setText("Termin aus Liste entfernen");
-						jButton8.setBounds(231, 245, 182, 21);
+						jButton8.setBounds(238, 245, 175, 21);
 					}
 					{
 						jButton9 = new JButton();
 						jPanel2.add(jButton9);
 						jButton9.setText("Bearbeiten");
-						jButton9.setBounds(329, 217, 84, 21);
+						jButton9.setBounds(147, 245, 84, 21);
 					}
 					{
 						jButton10 = new JButton();
@@ -326,6 +320,25 @@ public class EditTerminContainerFrame extends javax.swing.JFrame implements java
 						jPanel2.add(jLabel3);
 						jLabel3.setText("Suchen:");
 						jLabel3.setBounds(7, 5, 49, 28);
+					}
+					{
+						newTClist = new JButton();
+						jPanel2.add(newTClist);
+						newTClist.setText("neue Terminreihe");
+						newTClist.setBounds(252, 217, 161, 21);
+					}
+					{
+						jScrollPane1 = new JScrollPane();
+						jPanel2.add(jScrollPane1);
+						jScrollPane1.setBounds(7, 63, 406, 147);
+						{
+							ListModel jList2Model = new DefaultComboBoxModel(
+								new String[] { "Item One", "Item Two" });
+							jList2 = new JList();
+							jScrollPane1.setViewportView(jList2);
+							jList2.setModel(jList2Model);
+							jList2.setSize(406, 147);
+						}
 					}
 				}
 			}
