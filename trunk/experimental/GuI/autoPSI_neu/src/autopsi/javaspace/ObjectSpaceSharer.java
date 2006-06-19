@@ -38,30 +38,32 @@ public class ObjectSpaceSharer {
 			AttachableObject aob = aobIter.next();
 			GenericDataObject lookupObj = null;
 			String tableName = aob.getTableName().toLowerCase();
-			System.out.println("tableName=="+tableName);
-			if (tableName == "kontakt"){
-				System.out.println("Ist ein Kontakt");
+			if (tableName.equals("kontakt")){
+				System.out.println("Ist ein Kontakt, globalId=="+aob.getId());
 				lookupObj = new Kontakt();
 				this.gdo.setCurrentTable("kontakt");
 				((Kontakt)lookupObj).setGlobalId(aob.getId());
 			}
-			if (tableName == "notiz"){
-				System.out.println("Ist eine Notiz");
+			if (tableName.equals("notiz")){
+				System.out.println("Ist eine Notiz, globalId=="+aob.getId());
 				lookupObj = new Notiz();
 				this.gdo.setCurrentTable("notiz");
 				((Notiz)lookupObj).setGlobalId(aob.getId());
 			}
-			if (tableName == "lva"){
+			if (tableName.equals("lva")){
+				System.out.println("Ist eine Lva, globalId=="+aob.getId());
 				lookupObj = new Lva();
 				this.gdo.setCurrentTable("lva");
 				((Lva)lookupObj).setGlobalId(aob.getId());
 			}
-			if (tableName == "lehrmittel"){
+			if (tableName.equals("lehrmittel")){
+				System.out.println("Ist ein Lehrmittel, globalId=="+aob.getId());
 				lookupObj = new Lehrmittel();
 				this.gdo.setCurrentTable("lehrmittel");
 				((Lehrmittel)lookupObj).setGlobalId(aob.getId());
 			}
-			if (tableName == "pruefung"){
+			if (tableName.equals("pruefung")){
+				System.out.println("Ist eine Prüfung, globalId=="+aob.getId());
 				lookupObj = new Pruefung();
 				this.gdo.setCurrentTable("pruefung");
 				((Pruefung)lookupObj).setGlobalId(aob.getId());
@@ -72,11 +74,29 @@ public class ObjectSpaceSharer {
 			try{
 				System.out.println("ObjecTSpaceSharer.getSharedObjects()::1a");
 				List<GenericDataObject> l = null;
+			/*	if (lookupObj instanceof Kontakt)
+					System.out.println("lookupObj instanceof Kontakt, global_id=="+((Kontakt)lookupObj).global_id);
+				if (lookupObj instanceof Lva)
+					System.out.println("lookupObj instanceof Lva, global_id=="+((Lva)lookupObj).global_id);
+				if (lookupObj instanceof Notiz)
+					System.out.println("lookupObj instanceof Notiz, global_id=="+((Notiz)lookupObj).global_id);		
+				if (lookupObj instanceof Pruefung)
+					System.out.println("lookupObj instanceof Pruefung, global_id=="+((Pruefung)lookupObj).global_id);		
+				if (lookupObj instanceof Lehrmittel)
+					System.out.println("lookupObj instanceof Lehrmittel, global_id=="+((Lehrmittel)lookupObj).global_id);		
+			*/
+				if (lookupObj == null)
+					System.out.println("ObjectSpaceSharer.getSharedObjects()::lookupObj==null");
 				l = this.gdo.getDataObjects(lookupObj);
 				System.out.println("ObjecTSpaceSharer.getSharedObjects()::2");
 				if (l == null)
 					System.out.println("l==null");
+				try{
 				obj = l.get(0);
+				}
+				catch(Exception e){
+					System.out.println("ObjectSpaceSharer.getSharedObjects()::Kein solchesObjekt vorhanden::"+e.toString());
+				}
 			}
 			catch (Exception e){
 				System.out.println("ObjectSpaceSharer.getSharedObjects()::Konnte Objekt nicht aus Tabelle bekommen::"+e.toString());
