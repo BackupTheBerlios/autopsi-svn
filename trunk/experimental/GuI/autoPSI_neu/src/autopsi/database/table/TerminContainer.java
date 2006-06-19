@@ -11,6 +11,7 @@ public class TerminContainer extends GenericData implements Entry,GenericDataObj
 	public Integer id = null;
 	public String title = null;
 	public String description = null;
+	public Integer group_id;
 
 	
 	public TerminContainer(){
@@ -19,6 +20,7 @@ public class TerminContainer extends GenericData implements Entry,GenericDataObj
 			this.addAttribute("Id",cl.getMethod("getId", new Class[] {}), cl.getMethod("setId", new Class[] {Integer.class} ));
 			this.addAttribute("Titel",cl.getMethod("getTitle", new Class[] {}), cl.getMethod("setTitle", new Class[] {String.class} ));	
 			this.addAttribute("Beschreibung",cl.getMethod("getDescription", new Class[] {}), cl.getMethod("setDescription", new Class[] {String.class} ));
+			this.addAttribute("GruppenId",cl.getMethod("getGroupID", new Class[] {}), cl.getMethod("setGroupID", new Class[] {Integer.class} ));
 		}
 		catch (Exception e){
 			System.out.println("Fehler beim Erstellen des Termin-Container-Objekts::"+e.toString());
@@ -48,5 +50,13 @@ public class TerminContainer extends GenericData implements Entry,GenericDataObj
 	
 	public void setDescription(String description) {
 		this.description = description;
+	}
+
+	public int getGroupID(){
+		return this.group_id;
+	}
+	
+	public void setGroupID(Integer newGroupId){
+		this.group_id = newGroupId;
 	}
 }
