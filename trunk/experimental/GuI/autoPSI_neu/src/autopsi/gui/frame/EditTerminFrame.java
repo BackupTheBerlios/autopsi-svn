@@ -775,6 +775,18 @@ public class EditTerminFrame extends javax.swing.JFrame implements java.awt.even
 		if(arg0.getSource().equals(ok_button)){
 			jLabel5.setText("OK");
 		}
+		if(arg0.getSource().equals(edit_Group_button)){
+			jLabel5.setText("Gewählte Gruppe bearbeiten");
+		}
+		if(arg0.getSource().equals(group_add)){
+			jLabel5.setText("Gruppe hinzufügen");
+		}
+		if(arg0.getSource().equals(edit_Type_button)){
+			jLabel5.setText("Gewählten Termintyp bearbeiten");
+		}
+		if(arg0.getSource().equals(type_add)){
+			jLabel5.setText("Termintyp hinzufügen");
+		}
 	}
 
 	public void mouseExited(MouseEvent arg0) {
@@ -785,6 +797,18 @@ public class EditTerminFrame extends javax.swing.JFrame implements java.awt.even
 			jLabel5.setText("");
 		}
 		if(arg0.getSource().equals(ok_button)){
+			jLabel5.setText("");
+		}
+		if(arg0.getSource().equals(edit_Group_button)){
+			jLabel5.setText("");
+		}
+		if(arg0.getSource().equals(group_add)){
+			jLabel5.setText("");
+		}
+		if(arg0.getSource().equals(edit_Type_button)){
+			jLabel5.setText("");
+		}
+		if(arg0.getSource().equals(type_add)){
 			jLabel5.setText("");
 		}
 		
