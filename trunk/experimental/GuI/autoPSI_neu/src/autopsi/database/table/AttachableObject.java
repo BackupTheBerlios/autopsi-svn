@@ -6,7 +6,7 @@ import autopsi.gui.component.GenericData;
 
 public class AttachableObject extends GenericData implements Entry,GenericDataObject {
 
-	public Integer id;
+	public Integer global_id;
 	public Integer kategorie_id;
 	public String table_name;
 	
@@ -23,11 +23,11 @@ public class AttachableObject extends GenericData implements Entry,GenericDataOb
 	}
 	
 	public int getId(){
-		return this.id;
+		return this.global_id;
 	}
 	
 	public void setId(Integer id){
-		this.id = id;
+		this.global_id = id;
 	}
 	
 	public int getKategorieId(){
