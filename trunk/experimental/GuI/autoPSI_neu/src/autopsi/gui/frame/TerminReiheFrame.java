@@ -519,7 +519,7 @@ public class TerminReiheFrame extends javax.swing.JFrame implements java.awt.eve
 			}
 		
 			System.out.println(count[0]+" "+count[1]+" "+count[2]+" "+count[3]+" "+count[4]+" "+count[5]+" "+count[6]);
-			owner.updateTerminList(termine);
+//			owner.updateTerminList(termine);
 			owner.setVisible(true);
 			dispose();
 			
