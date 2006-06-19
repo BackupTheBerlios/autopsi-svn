@@ -51,7 +51,7 @@ public class TimestampEditPlugin extends EditPlugin implements FocusListener{
 	@Override
 	public void setValue(Object newValue) {
 		this.value = (Timestamp)newValue;
-
+//		this.dateEdit.setText(value.getHours().toString()+value)
 	}
 
 	@Override

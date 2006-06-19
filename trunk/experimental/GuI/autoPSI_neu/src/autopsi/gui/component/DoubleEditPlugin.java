@@ -11,7 +11,7 @@ import java.awt.Color;
 
 public class DoubleEditPlugin extends EditPlugin implements FocusListener{
 
-	protected double value = 0;
+	protected Double value = 0.0;
 
 	protected JPanel panel;
 	protected JLabel label;
@@ -50,6 +50,7 @@ public class DoubleEditPlugin extends EditPlugin implements FocusListener{
 			this.value = (Double)newValue;
 		else
 			this.value = 0.0;
+		this.doubleEdit.setText(this.value.toString());
 	}
 
 	public void nameChanged() {

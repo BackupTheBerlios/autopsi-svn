@@ -13,7 +13,7 @@ import java.awt.event.FocusEvent;
 
 public class IntegerEditPlugin extends EditPlugin implements FocusListener {
 
-	protected int value = 0;
+	protected Integer value = 0;
 
 	protected JPanel panel;
 	protected JLabel label;
@@ -56,6 +56,7 @@ public class IntegerEditPlugin extends EditPlugin implements FocusListener {
 			System.out.println("IntegerEditPlugin.setValue() newValue==null");
 			this.value = 0;
 		}
+		this.doubleEdit.setText(this.value.toString());
 	}
 
 	public void nameChanged() {
