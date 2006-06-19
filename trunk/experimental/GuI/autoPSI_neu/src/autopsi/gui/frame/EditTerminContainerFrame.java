@@ -4,14 +4,17 @@ package autopsi.gui.frame;
 import java.awt.event.MouseEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.util.Date;
 import java.util.List;
 
 import javax.swing.BorderFactory;
 import javax.swing.ComboBoxModel;
 
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
@@ -35,6 +38,7 @@ import autopsi.database.exception.EDatabaseConnection;
 import autopsi.database.table.AttachableObjectKategorie;
 import autopsi.database.table.Termin;
 import autopsi.database.table.TerminContainer;
+import autopsi.gui.DateConverter;
 
 /**
 * This code was edited or generated using CloudGarden's Jigloo
@@ -65,19 +69,17 @@ public class EditTerminContainerFrame extends javax.swing.JFrame implements java
 
 	private JTabbedPane jTabbedPane1;
 	private JButton apply_button;
-	private JList jList2;
+	private JList terminList;
 	private JScrollPane jScrollPane1;
-	private JButton newTClist;
+	private JButton newTerminReihe;
 	private JLabel jLabel7;
 	private JLabel jLabel3;
 
-	private JButton jButton10;
-	private JButton jButton9;
-	private JButton jButton8;
-	private JButton jButton7;
-	private JTextField jTextField5;
+	private JButton openTermin;
+	private JButton editTermin;
+	private JButton deleteTermin;
+	private JButton newTermin;
 	private JLabel jLabel6;
-	private JTextField jTextField4;
 	private JLabel jLabel5;
 	private JTextField jTextField3;
 
@@ -90,6 +92,8 @@ public class EditTerminContainerFrame extends javax.swing.JFrame implements java
 	private JLabel jLabel2;
 	private JTextField title_field;
 	private JLabel jLabel4;
+	private JFormattedTextField endDate_field;
+	private JFormattedTextField beginDate_field;
 	private JComboBox jGroupBox;
 	private JLabel jLabel1;
 	private JPanel jPanel3;
@@ -265,7 +269,7 @@ public class EditTerminContainerFrame extends javax.swing.JFrame implements java
 						null,
 						jPanel3,
 						null);
-					jPanel3.setBackground(new java.awt.Color(233,233,233));
+					jPanel3.setBackground(new java.awt.Color(255,255,255));
 					jPanel3.setLayout(null);
 					{
 						ListModel jList1Model = new DefaultComboBoxModel(
@@ -300,7 +304,7 @@ public class EditTerminContainerFrame extends javax.swing.JFrame implements java
 				{
 					jPanel2 = new JPanel();
 					jTabbedPane1.addTab("Termine", null, jPanel2, null);
-					jPanel2.setBackground(new java.awt.Color(233,233,233));
+					jPanel2.setBackground(new java.awt.Color(255,255,255));
 					jPanel2.setLayout(null);
 				
 					{
@@ -312,50 +316,38 @@ public class EditTerminContainerFrame extends javax.swing.JFrame implements java
 					{
 						jLabel5 = new JLabel();
 						jPanel2.add(jLabel5);
-						jLabel5.setText("Datum eingrenzen von (DD-MM-YYYY)");
+						jLabel5.setText("Datum eingrenzen von (TT-MM-JJJJ)");
 						jLabel5.setBounds(7, 32, 196, 28);
-					}
-					{
-						jTextField4 = new JTextField();
-						jPanel2.add(jTextField4);
-						jTextField4.setBounds(196, 35, 84, 21);
-						jTextField4.setBorder(new LineBorder(new java.awt.Color(0,0,0), 1, false));
 					}
 					{
 						jLabel6 = new JLabel();
 						jPanel2.add(jLabel6);
 						jLabel6.setText("bis");
-						jLabel6.setBounds(288, 32, 14, 28);
+						jLabel6.setBounds(294, 35, 14, 21);
 					}
 					{
-						jTextField5 = new JTextField();
-						jPanel2.add(jTextField5);
-						jTextField5.setBounds(308, 35, 84, 21);
-						jTextField5.setBorder(new LineBorder(new java.awt.Color(0,0,0), 1, false));
+						newTermin = new JButton();
+						jPanel2.add(newTermin);
+						newTermin.setBounds(210, 238, 42, 28);
+						newTermin.setIcon(new ImageIcon(getClass().getClassLoader().getResource("images/newTermin.GIF")));
 					}
 					{
-						jButton7 = new JButton();
-						jPanel2.add(jButton7);
-						jButton7.setText("neuer Termin");
-						jButton7.setBounds(147, 217, 98, 21);
+						deleteTermin = new JButton();
+						jPanel2.add(deleteTermin);
+						deleteTermin.setBounds(371, 238, 42, 28);
+						deleteTermin.setIcon(new ImageIcon(getClass().getClassLoader().getResource("images/deleteTermin.GIF")));
 					}
 					{
-						jButton8 = new JButton();
-						jPanel2.add(jButton8);
-						jButton8.setText("Termin aus Liste entfernen");
-						jButton8.setBounds(238, 245, 175, 21);
+						editTermin = new JButton();
+						jPanel2.add(editTermin);
+						editTermin.setBounds(329, 238, 42, 28);
+						editTermin.setIcon(new ImageIcon(getClass().getClassLoader().getResource("images/editTermin.GIF")));
 					}
 					{
-						jButton9 = new JButton();
-						jPanel2.add(jButton9);
-						jButton9.setText("Bearbeiten");
-						jButton9.setBounds(147, 245, 84, 21);
-					}
-					{
-						jButton10 = new JButton();
-						jPanel2.add(jButton10);
-						jButton10.setText("Gehe zu Termin");
-						jButton10.setBounds(7, 217, 112, 21);
+						openTermin = new JButton();
+						jPanel2.add(openTermin);
+						openTermin.setBounds(7, 238, 42, 28);
+						openTermin.setIcon(new ImageIcon(getClass().getClassLoader().getResource("images/goToTermin.GIF")));
 					}
 					{
 						jLabel3 = new JLabel();
@@ -364,24 +356,37 @@ public class EditTerminContainerFrame extends javax.swing.JFrame implements java
 						jLabel3.setBounds(7, 5, 49, 28);
 					}
 					{
-						newTClist = new JButton();
-						jPanel2.add(newTClist);
-						newTClist.setText("neue Terminreihe");
-						newTClist.setBounds(252, 217, 161, 21);
-						newTClist.addMouseListener(this);
+						newTerminReihe = new JButton();
+						jPanel2.add(newTerminReihe);
+						newTerminReihe.setBounds(252, 238, 56, 28);
+						newTerminReihe.setIcon(new ImageIcon(getClass().getClassLoader().getResource("images/newTerminReihe.GIF")));
+						newTerminReihe.addMouseListener(this);
 					}
 					{
 						jScrollPane1 = new JScrollPane();
 						jPanel2.add(jScrollPane1);
-						jScrollPane1.setBounds(7, 63, 406, 147);
-						{
-							ListModel jList2Model = new DefaultComboBoxModel(
-								new String[] { "Item One", "Item Two" });
-							jList2 = new JList();
-							jScrollPane1.setViewportView(jList2);
-							jList2.setModel(jList2Model);
-							jList2.setSize(406, 147);
-						}
+						jScrollPane1.setBounds(7, 63, 406, 168);
+						jScrollPane1.setBorder(new LineBorder(new java.awt.Color(0,0,0), 1, false));
+						jScrollPane1.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+					}
+					{
+						beginDate_field = new JFormattedTextField();
+						jPanel2.add(beginDate_field);
+						beginDate_field.setBounds(196, 35, 91, 21);
+						beginDate_field.setBorder(new LineBorder(new java.awt.Color(0,0,0), 1, false));
+					}
+					{
+						endDate_field = new JFormattedTextField();
+						jPanel2.add(endDate_field);
+						endDate_field.setBounds(315, 35, 98, 21);
+						endDate_field.setBorder(new LineBorder(new java.awt.Color(0,0,0), 1, false));
+					}
+					{
+						ListModel jList2Model = new DefaultComboBoxModel();
+						terminList = new JList();
+						jPanel2.add(terminList);
+						terminList.setModel(jList2Model);
+						terminList.setBounds(6, 59, 404, 166);
 					}
 				}
 			}
@@ -409,7 +414,6 @@ public class EditTerminContainerFrame extends javax.swing.JFrame implements java
 			{
 				jLabel7 = new JLabel();
 				getContentPane().add(jLabel7);
-				jLabel7.setText("- Zeigt Informationen an -");
 				jLabel7.setBounds(7, 343, 427, 21);
 				jLabel7.setBorder(BorderFactory.createTitledBorder(""));
 			}
@@ -438,7 +442,7 @@ public class EditTerminContainerFrame extends javax.swing.JFrame implements java
 		if(arg0.getSource().equals(apply_button)){
 			update();
 		}
-		if(arg0.getSource().equals(newTClist)){
+		if(arg0.getSource().equals(newTerminReihe)){
 			TerminReiheFrame terminreihe = new TerminReiheFrame(this, "Titel");
 			terminreihe.setLocation(this.getLocation().x+20,this.getLocation().y+20);
 			terminreihe.setTitle("Terminreihe hinzufügen");
@@ -467,6 +471,21 @@ public class EditTerminContainerFrame extends javax.swing.JFrame implements java
 		if(arg0.getSource().equals(ok_button)){
 			jLabel7.setText("OK");
 		}
+		if(arg0.getSource().equals(newTermin)){
+			jLabel7.setText("Erstellt einen neuen Termin in diesem Termincontainer");
+		}
+		if(arg0.getSource().equals(editTermin)){
+			jLabel7.setText("Bearbeitet den gewählten Termin");
+		}
+		if(arg0.getSource().equals(deleteTermin)){
+			jLabel7.setText("Löscht den gewählten Termin");
+		}
+		if(arg0.getSource().equals(newTerminReihe)){
+			jLabel7.setText("Erstellt sich wiederholende Termine");
+		}
+		if(arg0.getSource().equals(openTermin)){
+			jLabel7.setText("Sprung zum gewählten Termin im Kalender");
+		}
 		
 	}
 
@@ -480,8 +499,33 @@ public class EditTerminContainerFrame extends javax.swing.JFrame implements java
 		if(arg0.getSource().equals(ok_button)){
 			jLabel7.setText("");
 		}
-		
+		if(arg0.getSource().equals(newTermin)){
+			jLabel7.setText("");
+		}
+		if(arg0.getSource().equals(editTermin)){
+			jLabel7.setText("");
+		}
+		if(arg0.getSource().equals(deleteTermin)){
+			jLabel7.setText("");
+		}
+		if(arg0.getSource().equals(newTerminReihe)){
+			jLabel7.setText("");
+		}
+		if(arg0.getSource().equals(openTermin)){
+			jLabel7.setText("");
+		}
 	}
 
+	public void updateTerminList(List<Termin> termine)
+	{
+		for(int i = 0;i<termine.size();i++)
+		{
+			DateConverter converter = new DateConverter();
+			Date dat = new Date(termine.get(i).getDate().getTime());
+			String datum = converter.toShortYear(dat.toString());
+			String termin = datum+": "+termine.get(i).getSecondaryTitle()+",    Ort: "+termine.get(i).getPlace();
+			terminModel.addElement(termin);		
+		}
+	}
 }
 
