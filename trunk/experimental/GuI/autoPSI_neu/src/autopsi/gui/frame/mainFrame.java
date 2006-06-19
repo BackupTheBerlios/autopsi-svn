@@ -272,6 +272,7 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 					neuerTermin.setBounds(0, 0, 28, 28);
 					neuerTermin.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
 					neuerTermin.setOpaque(false);
+					neuerTermin.setBackground(new java.awt.Color(64,128,128));
 					neuerTermin.addMouseListener(this);
 				}
 				{
@@ -305,8 +306,7 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 					lblMonth.setFont(new java.awt.Font("Tahoma",1,12));
 					lblMonth.setBounds(350, 0, 343, 28);
 					lblMonth.setHorizontalTextPosition(JLabel.CENTER);
-					lblMonth.setBorder(BorderFactory
-						.createEtchedBorder(BevelBorder.LOWERED));
+					lblMonth.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
 					lblMonth.setHorizontalAlignment(SwingConstants.CENTER);
 				}
 				{
@@ -331,14 +331,16 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 					jPanel2 = new JPanel();
 					toolbar.add(jPanel2);
 					jPanel2.setBounds(826, 0, 56, 28);
-					jPanel2.setBorder(BorderFactory.createEtchedBorder(BevelBorder.LOWERED));
+					jPanel2.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
 					jPanel2.setLayout(null);
+					jPanel2.setOpaque(false);
 					{
 						zoomBox = new JCheckBox();
 						jPanel2.add(zoomBox);
 						zoomBox.setText("Zoom");
 						zoomBox.setBounds(4, 6, 49, 14);
 						zoomBox.setBorder(BorderFactory.createEmptyBorder(0,0,0,0));
+						zoomBox.setOpaque(false);
 					}
 				}
 				{
