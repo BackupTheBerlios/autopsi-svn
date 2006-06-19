@@ -20,6 +20,7 @@ public class TerminTableModel extends AbstractTableModel{
 	private List <GenericDataObject> termine;
 	private Termin suchTermin = null;
 	private String datum=null;
+	private String group=null;
 	
 	private final String [] columnName = {"Titel", "Beschreibung", "Datum", "Dauer"};
 	
@@ -80,6 +81,10 @@ public class TerminTableModel extends AbstractTableModel{
 	
 	public void setDatum (String datum){
 		this.datum=datum;
+	}
+	
+	public void setGroup (String group){
+		this.group=group;
 	}
 	
 	public void fireDataChanged() {
