@@ -4,6 +4,7 @@ package autopsi.gui.frame;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.sql.Date;
@@ -125,6 +126,7 @@ public class EditTerminFrame extends javax.swing.JFrame implements java.awt.even
 	private JButton group_add;
 	private JButton type_add;
 	private int selectedType;
+	private int selectedGroup;
 	
 	public EditTerminFrame(mainFrame owner, GregorianCalendar cal, Integer id) {
 		super();
@@ -188,6 +190,7 @@ public class EditTerminFrame extends javax.swing.JFrame implements java.awt.even
 				break;
 		}
 		group_Box.setSelectedIndex(i);
+		selectedGroup = i;
 		loadObjectList();
 	}
 	
@@ -407,7 +410,7 @@ public class EditTerminFrame extends javax.swing.JFrame implements java.awt.even
 							}
 
 							public void focusLost(FocusEvent arg0) {
-								// TODO Auto-generated method stub
+								selectedType = choose_Type.getSelectedIndex();
 							}
 						});
 						
@@ -461,7 +464,42 @@ public class EditTerminFrame extends javax.swing.JFrame implements java.awt.even
 							kat = (AttachableObjectKategorie)group_data.get(i);
 							group_Box.addItem(kat.getTitle());
 						}
+						group_Box.addFocusListener(new FocusListener(){
+
+							public void focusGained(FocusEvent arg0) {
+								
+								List<GenericDataObject> groupList;
+								AttachableObjectKategorie kat= new AttachableObjectKategorie();
+																
+								group_Box.setModel(new DefaultComboBoxModel());
+								try
+								{
+									groupList = gdo.unsafeQuery("select * from attachable_object_kategorie order by id",kat);
+									for(int i = 0;i<groupList.size();i++)
+									{
+										kat = (AttachableObjectKategorie)groupList.get(i);
+										group_Box.addItem(kat.getTitle());
+										
+									}		
+									String query = "select * from attachable_object_kategorie";
+									termin_kat_data = gdo.unsafeQuery(query,kat);
+									group_Box.setSelectedIndex(selectedGroup);
+								}
+								catch (Exception ex)
+								{
+									
+								}
+								
+							}
+
+							public void focusLost(FocusEvent arg0) {
+								selectedGroup = group_Box.getSelectedIndex();
+							}
+						});
+						
+					
 					}
+					
 					{
 						jLabel3 = new JLabel();
 						jPanel1.add(jLabel3);
