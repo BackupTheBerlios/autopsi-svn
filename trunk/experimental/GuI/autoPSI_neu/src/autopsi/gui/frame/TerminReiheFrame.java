@@ -1,8 +1,17 @@
 package autopsi.gui.frame;
+import java.awt.List;
+import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
+import javax.swing.BorderFactory;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -10,11 +19,14 @@ import javax.swing.JCheckBox;
 import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
 import javax.swing.JSeparator;
+import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
 import javax.swing.WindowConstants;
 import javax.swing.border.LineBorder;
 import javax.swing.text.MaskFormatter;
+
+import autopsi.database.table.Termin;
 
 /**
 * This code was edited or generated using CloudGarden's Jigloo
@@ -46,16 +58,19 @@ public class TerminReiheFrame extends javax.swing.JFrame implements java.awt.eve
 
 	private JCheckBox check1;
 	private JLabel jLabel2;
-	private JFormattedTextField EndDate_field;
+	private JFormattedTextField endDate_field;
 	private JLabel jLabel3;
 	private JFormattedTextField beginDate_field;
 	private JLabel jLabel1;
 	private JTextField name_field;
 	private JLabel jLabel4;
+	private JLabel jLabel8;
+	private JTextArea desc_field;
 	private JButton ok_button;
 	private JButton abort_button;
 	private JLabel infoLabel;
 	private JSeparator jSeparator2;
+	private JLabel jLabel7;
 	private JFormattedTextField zeit1;
 	private JButton oneForAll1;
 	private JTextField dauer1;
@@ -69,10 +84,15 @@ public class TerminReiheFrame extends javax.swing.JFrame implements java.awt.eve
 	private JTextField[] dauerArray = new JTextField[7];
 	private JButton[] buttonArray = new JButton[7];
 	private JCheckBox[] checkArray = new JCheckBox[7];
+	private String title;
+	
+	private EditTerminContainerFrame owner;
+	private ArrayList<Termin> termine; //Die erstellten Termine
 
-
-	public TerminReiheFrame() {
+	public TerminReiheFrame(EditTerminContainerFrame owner, String title) {
 		super();
+		this.title = title;
+		this.owner = owner;	
 		initGUI();
 		
 		addWindowListener(new WindowAdapter()
@@ -80,17 +100,23 @@ public class TerminReiheFrame extends javax.swing.JFrame implements java.awt.eve
 				public void windowClosing(WindowEvent arg0)
 				{ //wird das Fenster über den X-Button rechts oben geschlossen
 				  //wird die Anwendung beendet.
+					enableOwner();
 					super.windowClosing(arg0);
 					dispose();
 					}
 				});
 	}
 	
+	private void enableOwner()
+	{
+		owner.setEnabled(true);
+	}
+	
 	private void initGUI() {
 		try {
 			setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 			getContentPane().setLayout(null);
-			
+			owner.setEnabled(false);
 			{
 				for (int i=0;i<7;i++)
 				{
@@ -111,7 +137,7 @@ public class TerminReiheFrame extends javax.swing.JFrame implements java.awt.eve
 				checkArray[6].setText("Sonntag");
 			}
 			{
-				name_field = new JTextField();
+				name_field = new JTextField(title);
 				getContentPane().add(name_field);
 				name_field.setBounds(63, 14, 371, 21);
 				name_field.setBorder(new LineBorder(new java.awt.Color(0,0,0), 1, false));
@@ -129,10 +155,11 @@ public class TerminReiheFrame extends javax.swing.JFrame implements java.awt.eve
 				jLabel2.setBounds(7, 42, 63, 21);
 			}
 			{
-				beginDate_field = new JFormattedTextField(createFormatter("##-##-#####"));
+				beginDate_field = new JFormattedTextField(createFormatter("##-##-####"));
+				beginDate_field.setText("");
 				getContentPane().add(beginDate_field);
 				beginDate_field.setBounds(63, 42, 77, 21);
-				beginDate_field.setBorder(new LineBorder(new java.awt.Color(0,0,0), 1, false));
+				beginDate_field.setBorder(new LineBorder(new java.awt.Color(0,0,0), 1, false));	
 			}
 			{
 				jLabel3 = new JLabel();
@@ -141,10 +168,10 @@ public class TerminReiheFrame extends javax.swing.JFrame implements java.awt.eve
 				jLabel3.setBounds(147, 42, 21, 21);
 			}
 			{
-				EndDate_field = new JFormattedTextField(createFormatter("##-##-#####"));
-				getContentPane().add(EndDate_field);
-				EndDate_field.setBounds(168, 42, 77, 21);
-				EndDate_field.setBorder(new LineBorder(new java.awt.Color(0,0,0), 1, false));
+				endDate_field = new JFormattedTextField(createFormatter("##-##-####"));
+				getContentPane().add(endDate_field);
+				endDate_field.setBounds(168, 42, 77, 21);
+				endDate_field.setBorder(new LineBorder(new java.awt.Color(0,0,0), 1, false));
 			}
 			{
 				jSeparator1 = new JSeparator();
@@ -221,27 +248,47 @@ public class TerminReiheFrame extends javax.swing.JFrame implements java.awt.eve
 				infoLabel = new JLabel();
 				getContentPane().add(infoLabel);
 				infoLabel.setIcon(new ImageIcon("src/images/info.GIF"));
-				infoLabel.setBounds(7, 343, 420, 21);
+				infoLabel.setBounds(7, 448, 420, 21);
 			}
 			{
 				abort_button = new JButton();
 				getContentPane().add(abort_button);
 				abort_button.setText("Abbrechen");
-				abort_button.setBounds(266, 322, 91, 21);
+				abort_button.setBounds(273, 427, 91, 21);
+				abort_button.addMouseListener(this);
 			}
 			{
 				ok_button = new JButton();
 				getContentPane().add(ok_button);
 				ok_button.setText("OK");
-				ok_button.setBounds(364, 322, 63, 21);
+				ok_button.setBounds(371, 427, 63, 21);
+				ok_button.addMouseListener(this);
 			}
 			{
 				jSeparator2 = new JSeparator();
 				getContentPane().add(jSeparator2);
 				jSeparator2.setBounds(7, 315, 427, 7);
 			}
+			{
+				jLabel7 = new JLabel();
+				getContentPane().add(jLabel7);
+				jLabel7.setText("(TT-MM-JJJJ)");
+				jLabel7.setBounds(252, 42, 182, 21);
+			}
+			{
+				desc_field = new JTextArea();
+				getContentPane().add(desc_field);
+				desc_field.setBounds(7, 336, 427, 77);
+				desc_field.setBorder(new LineBorder(new java.awt.Color(0,0,0), 1, false));
+			}
+			{
+				jLabel8 = new JLabel();
+				getContentPane().add(jLabel8);
+				jLabel8.setText("Beschreibung:");
+				jLabel8.setBounds(7, 322, 91, 14);
+			}
 			pack();
-			this.setSize(449, 401);
+			this.setSize(449, 506);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -283,7 +330,16 @@ public class TerminReiheFrame extends javax.swing.JFrame implements java.awt.eve
 				buttonArray[i].setEnabled(check);
 			}
 		}
-
+		if(arg0.getSource().equals(abort_button))
+			{
+				enableOwner();
+				dispose();
+			}
+		if(arg0.getSource().equals(ok_button))
+			{
+				createTerminList();
+				enableOwner();
+			}
 	}
 
 	public void mousePressed(MouseEvent arg0) {
@@ -334,4 +390,149 @@ public class TerminReiheFrame extends javax.swing.JFrame implements java.awt.eve
 		
 	}
 
+	private void createTerminList()
+	{ //erstellt die Termine mit auf Basis der eingegeben Daten
+		termine = new ArrayList<Termin>();
+		
+		try
+		{
+			GregorianCalendar begin = new GregorianCalendar(); //Beginndatum
+			GregorianCalendar end = new GregorianCalendar();   //Enddatum
+			GregorianCalendar counter = new GregorianCalendar(); //"Zähler"
+			
+			SimpleDateFormat sf = new SimpleDateFormat("dd-MM-yyyy");
+			Date dat = sf.parse(beginDate_field.getText());
+			begin.setTime(dat);
+			dat = sf.parse(endDate_field.getText());
+			end.setTime(dat);
+			counter.setTime(begin.getTime());
+			
+			int[] count = {0,0,0,0,0,0,0}; 
+			
+			Timestamp stamp;
+			
+			String stampstring ="";
+			
+			while(counter.before(end)) //solange Zähler innerhalb der Zeitspanne
+			{
+				counter.set(Calendar.DAY_OF_MONTH,counter.get(Calendar.DAY_OF_MONTH)+1);
+
+				if(checkArray[0].getSelectedObjects()!=null && counter.getTime().toString().contains("Mon"))
+				{ count[0]++;
+						stamp = new Timestamp(counter.getTimeInMillis());
+						stampstring = stamp.toString().substring(0,10)+" "+zeitArray[0].getText()+":00.0";
+						stamp = Timestamp.valueOf(stampstring);
+						
+						Termin ter = new Termin();
+						ter.setDate(stamp);
+						ter.setSecondaryTitle(name_field.getText());
+						ter.setDuration(Integer.parseInt(dauerArray[0].getText()));
+						ter.setPlace(ortArray[0].getText());
+						ter.setDescription(desc_field.getText());
+						termine.add(ter);
+	
+				}
+				if(checkArray[1].getSelectedObjects()!=null && counter.getTime().toString().contains("Tue"))	
+				{count[1]++;
+						stamp = new Timestamp(counter.getTimeInMillis());
+						stampstring = stamp.toString().substring(0,10)+" "+zeitArray[1].getText()+":00.0";
+						stamp = Timestamp.valueOf(stampstring);
+							
+						Termin ter = new Termin();
+						ter.setDate(stamp);
+						ter.setSecondaryTitle(name_field.getText());
+						ter.setDuration(Integer.parseInt(dauerArray[1].getText()));
+						ter.setPlace(ortArray[1].getText());
+						ter.setDescription(desc_field.getText());
+						termine.add(ter);		
+				}
+				if(checkArray[2].getSelectedObjects()!=null && counter.getTime().toString().contains("Wed"))
+				{count[2]++;
+						stamp = new Timestamp(counter.getTimeInMillis());
+						stampstring = stamp.toString().substring(0,10)+" "+zeitArray[2].getText()+":00.0";
+						stamp = Timestamp.valueOf(stampstring);
+							
+						Termin ter = new Termin();
+						ter.setDate(stamp);
+						ter.setSecondaryTitle(name_field.getText());
+						ter.setDuration(Integer.parseInt(dauerArray[2].getText()));
+						ter.setPlace(ortArray[2].getText());
+						ter.setDescription(desc_field.getText());
+						termine.add(ter);
+				}
+				if(checkArray[3].getSelectedObjects()!=null && counter.getTime().toString().contains("Thu"))
+				{count[3]++;
+						stamp = new Timestamp(counter.getTimeInMillis());
+						stampstring = stamp.toString().substring(0,10)+" "+zeitArray[3].getText()+":00.0";
+						stamp = Timestamp.valueOf(stampstring);
+						
+						Termin ter = new Termin();
+						ter.setDate(stamp);
+						ter.setSecondaryTitle(name_field.getText());
+						ter.setDuration(Integer.parseInt(dauerArray[3].getText()));
+						ter.setPlace(ortArray[3].getText());
+						ter.setDescription(desc_field.getText());
+						termine.add(ter);	
+				}
+				if(checkArray[4].getSelectedObjects()!=null && counter.getTime().toString().contains("Fri"))
+				{count[4]++;
+						stamp = new Timestamp(counter.getTimeInMillis());
+						stampstring = stamp.toString().substring(0,10)+" "+zeitArray[4].getText()+":00.0";
+						stamp = Timestamp.valueOf(stampstring);
+							
+						Termin ter = new Termin();
+						ter.setDate(stamp);
+						ter.setSecondaryTitle(name_field.getText());
+						ter.setDuration(Integer.parseInt(dauerArray[4].getText()));
+						ter.setPlace(ortArray[4].getText());
+						ter.setDescription(desc_field.getText());
+						termine.add(ter);
+				}
+				if(checkArray[5].getSelectedObjects()!=null && counter.getTime().toString().contains("Sat"))
+				{count[5]++;
+						stamp = new Timestamp(counter.getTimeInMillis());
+						stampstring = stamp.toString().substring(0,10)+" "+zeitArray[5].getText()+":00.0";
+						stamp = Timestamp.valueOf(stampstring);
+						
+						Termin ter = new Termin();
+						ter.setDate(stamp);
+						ter.setSecondaryTitle(name_field.getText());
+						ter.setDuration(Integer.parseInt(dauerArray[5].getText()));
+						ter.setPlace(ortArray[5].getText());
+						ter.setDescription(desc_field.getText());
+						termine.add(ter);
+				}
+				if(checkArray[6].getSelectedObjects()!=null && counter.getTime().toString().contains("Sun"))
+				{count[6]++;
+						stamp = new Timestamp(counter.getTimeInMillis());
+						stampstring = stamp.toString().substring(0,10)+" "+zeitArray[6].getText()+":00.0";
+						stamp = Timestamp.valueOf(stampstring);
+						
+						Termin ter = new Termin();
+						ter.setDate(stamp);
+						ter.setSecondaryTitle(name_field.getText());
+						ter.setDuration(Integer.parseInt(dauerArray[6].getText()));
+						ter.setPlace(ortArray[6].getText());
+						ter.setDescription(desc_field.getText());
+						termine.add(ter);
+				}
+			}
+		
+			System.out.println(count[0]+" "+count[1]+" "+count[2]+" "+count[3]+" "+count[4]+" "+count[5]+" "+count[6]);
+			owner.updateTerminList(termine);
+			owner.setVisible(true);
+			dispose();
+			
+		}
+		catch(Exception ex)
+		{
+			ShowErrorDialog("Ungültige Eingabe!","Felder wurden ungültig oder nicht ausgefüllt.");
+		}
+}
+	private void ShowErrorDialog(String title, String text)
+	{
+		InfoDialog info = new InfoDialog(this, title,text);
+		info.setLocation(this.getLocation().x+200,this.getLocation().y+200);
+		info.setVisible(true);
+	}
 }
