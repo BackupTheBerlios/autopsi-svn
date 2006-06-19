@@ -1,6 +1,8 @@
 package autopsi.gui.frame;
 
 
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
@@ -122,6 +124,7 @@ public class EditTerminFrame extends javax.swing.JFrame implements java.awt.even
 	List<GenericDataObject> termin_cont_data;
 	private JButton group_add;
 	private JButton type_add;
+	private int selectedType;
 	
 	public EditTerminFrame(mainFrame owner, GregorianCalendar cal, Integer id) {
 		super();
@@ -172,7 +175,7 @@ public class EditTerminFrame extends javax.swing.JFrame implements java.awt.even
 		}
 		
 		choose_Type.setSelectedIndex(i);
-		
+		selectedType = i;
 		updateTCList();	
 		for(i = 0;i<termin_cont_data.size();i++){
 			if(((TerminContainer)termin_cont_data.get(i)).getId() == ((Termin)list.get(0)).getTerminContainerID())
@@ -375,6 +378,39 @@ public class EditTerminFrame extends javax.swing.JFrame implements java.awt.even
 							kat = (TerminKategorie)termin_kat_data.get(i);
 							choose_Type.addItem(kat.getName());
 						}
+						choose_Type.addFocusListener(new FocusListener(){
+
+							public void focusGained(FocusEvent arg0) {
+								
+								List<GenericDataObject> typeList;
+								TerminKategorie kat= new TerminKategorie();
+																
+								choose_Type.setModel(new DefaultComboBoxModel());
+								try
+								{
+									typeList = gdo.unsafeQuery("select * from termin_kategorie order by id",kat);
+									for(int i = 0;i<typeList.size();i++)
+									{
+										kat = (TerminKategorie)typeList.get(i);
+										choose_Type.addItem(kat.getName());
+										
+									}		
+									String query = "select * from termin_kategorie";
+									termin_kat_data = gdo.unsafeQuery(query,kat);
+									choose_Type.setSelectedIndex(selectedType);
+								}
+								catch (Exception ex)
+								{
+									
+								}
+								
+							}
+
+							public void focusLost(FocusEvent arg0) {
+								// TODO Auto-generated method stub
+							}
+						});
+						
 						
 					}
 					{
@@ -414,7 +450,7 @@ public class EditTerminFrame extends javax.swing.JFrame implements java.awt.even
 						group_Box = new JComboBox();
 						jPanel1.add(group_Box);
 						group_Box.setModel(Group_BoxModel);
-						group_Box.setBounds(301, 147, 112, 21);
+						group_Box.setBounds(280, 147, 112, 21);
 						group_Box.setBorder(new LineBorder(new java.awt.Color(0,0,0), 1, false));
 
 						String query = "select * from attachable_object_kategorie";
@@ -639,9 +675,16 @@ public class EditTerminFrame extends javax.swing.JFrame implements java.awt.even
 		}
 		if(arg0.getSource().equals(type_add)){
 			GenericEditFrame gef = new GenericEditFrame();
-			TerminKategorie obj = null;
+			TerminKategorie obj = new TerminKategorie();
 			gef.setObjectToEdit(obj,true);
 			gef.setTableToEdit("Termin_Kategorie");
+			gef.setVisible(true);
+		}
+		if(arg0.getSource().equals(group_add)){
+			GenericEditFrame gef = new GenericEditFrame();
+			AttachableObjectKategorie obj = new AttachableObjectKategorie();
+			gef.setObjectToEdit(obj,true);
+			gef.setTableToEdit("Attachable_Object_Kategorie");
 			gef.setVisible(true);
 		}
 	}
