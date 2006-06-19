@@ -76,4 +76,9 @@
 		</java>
 	</target>
 	
+	<target name="Test:SearchFrame" depends="init,compile">
+			<javac srcdir="${src}" destdir="${build}" classpathref="classpath"/>
+			<java classpathref="classpath" classname="SearchFrameTest" fork="true"/> 
+		</target>
+	
 </project>
