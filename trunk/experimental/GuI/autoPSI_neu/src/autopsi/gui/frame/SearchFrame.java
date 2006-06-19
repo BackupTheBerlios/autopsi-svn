@@ -35,11 +35,13 @@ import javax.swing.text.MaskFormatter;
 import javax.swing.text.PlainDocument;
 
 import autopsi.basis.model.KontaktTableModel;
+import autopsi.basis.model.LVATableModel;
 import autopsi.basis.model.TerminTableModel;
 import autopsi.database.table.AttachableObjectKategorie;
 import autopsi.database.table.Termin;
 import autopsi.database.table.Kontakt;
 import autopsi.database.table.TerminKategorie;
+import autopsi.database.table.Lva;
 import autopsi.database.table.LvaKategorie;
 import autopsi.gui.component.KategorieComboBoxModel;
 
@@ -420,36 +422,7 @@ public class SearchFrame extends javax.swing.JFrame implements ActionListener {
 							jLVAScrollPane.setWheelScrollingEnabled(true);
 							jLVAScrollPane.setBackground(new java.awt.Color(255,255,255));
 							{
-								TableModel jLVATableModel = new DefaultTableModel(
-									new String[][] { 
-											{ "One", "Two" },
-											{ "Three", "Four" },
-											{ "Three", "Four" },
-											{ "Three", "Four" },
-											{ "Three", "Four" },
-											{ "Three", "Four" },
-											{ "Three", "Four" },
-											{ "Three", "Four" },
-											{ "Three", "Four" },
-											{ "Three", "Four" },
-											{ "Three", "Four" },
-											{ "Three", "Four" },
-											{ "Three", "Four" },
-											{ "Three", "Four" },
-											{ "Three", "Four" },
-											{ "Three", "Four" },
-											{ "Three", "Four" },
-											{ "Three", "Four" },
-											{ "Three", "Four" },
-											{ "Three", "Four" },
-											{ "Three", "Four" },
-											{ "Three", "Four" },
-											{ "Three", "Four" },
-											{ "Three", "Four" },
-											{ "Three", "Four" },
-											{ "Three", "Four" },
-											{ "Three", "Four" } },
-									new String[] { "Column 1", "Column 2" });
+								LVATableModel jLVATableModel = new LVATableModel ();
 								jLVATable = new JTable();
 								jLVAScrollPane
 									.setViewportView(jLVATable);
@@ -663,6 +636,10 @@ public class SearchFrame extends javax.swing.JFrame implements ActionListener {
 			} else if(cmd.equals("LVA Suchen")) {
 				if (jLVALokalSuchenRadioButton.isSelected()){
 					System.out.println("LVA wird lokal gesucht...");
+					Lva lva = new Lva();
+					if (!jLVANummerField.getText().equals("")){
+						lva.setLvaNr(jLVANummerField.getText());
+					}
 				} else if (jLVAOnlineSuchenRadioButton.isSelected()) {
 					System.out.println("LVA wird online gesucht...");
 				}
