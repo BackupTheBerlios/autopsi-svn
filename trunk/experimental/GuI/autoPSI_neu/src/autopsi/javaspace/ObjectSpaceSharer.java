@@ -8,6 +8,11 @@ import autopsi.database.dao.GenericDAO;
 import autopsi.database.dao.GenericDataObject;
 import autopsi.database.table.AttachableObject;
 import autopsi.database.table.AttachableObjectKategorie;
+import autopsi.database.table.Kontakt;
+import autopsi.database.table.Lehrmittel;
+import autopsi.database.table.Lva;
+import autopsi.database.table.Notiz;
+import autopsi.database.table.Pruefung;
 
 public class ObjectSpaceSharer {
 
@@ -25,8 +30,62 @@ public class ObjectSpaceSharer {
 	}
 	
 	private List<GenericDataObject> getSharedObjects(){
+		List<GenericDataObject> result = new ArrayList<GenericDataObject>();
 		List<AttachableObject> aobs = this.getAttachableObjects();
-		return null;
+		
+		Iterator<AttachableObject> aobIter = aobs.iterator();
+		while(aobIter.hasNext()){
+			AttachableObject aob = aobIter.next();
+			GenericDataObject lookupObj = null;
+			String tableName = aob.getTableName().toLowerCase();
+			System.out.println("tableName=="+tableName);
+			if (tableName == "kontakt"){
+				System.out.println("Ist ein Kontakt");
+				lookupObj = new Kontakt();
+				this.gdo.setCurrentTable("kontakt");
+				((Kontakt)lookupObj).setGlobalId(aob.getId());
+			}
+			if (tableName == "notiz"){
+				System.out.println("Ist eine Notiz");
+				lookupObj = new Notiz();
+				this.gdo.setCurrentTable("notiz");
+				((Notiz)lookupObj).setGlobalId(aob.getId());
+			}
+			if (tableName == "lva"){
+				lookupObj = new Lva();
+				this.gdo.setCurrentTable("lva");
+				((Lva)lookupObj).setGlobalId(aob.getId());
+			}
+			if (tableName == "lehrmittel"){
+				lookupObj = new Lehrmittel();
+				this.gdo.setCurrentTable("lehrmittel");
+				((Lehrmittel)lookupObj).setGlobalId(aob.getId());
+			}
+			if (tableName == "pruefung"){
+				lookupObj = new Pruefung();
+				this.gdo.setCurrentTable("pruefung");
+				((Pruefung)lookupObj).setGlobalId(aob.getId());
+			}
+			
+			GenericDataObject obj = null;
+			System.out.println("ObjecTSpaceSharer.getSharedObjects()::1");
+			try{
+				System.out.println("ObjecTSpaceSharer.getSharedObjects()::1a");
+				List<GenericDataObject> l = null;
+				l = this.gdo.getDataObjects(lookupObj);
+				System.out.println("ObjecTSpaceSharer.getSharedObjects()::2");
+				if (l == null)
+					System.out.println("l==null");
+				obj = l.get(0);
+			}
+			catch (Exception e){
+				System.out.println("ObjectSpaceSharer.getSharedObjects()::Konnte Objekt nicht aus Tabelle bekommen::"+e.toString());
+			}
+			if (obj instanceof Kontakt)
+				System.out.println("ObjectSpaceSharer.getSharedObjects()::Kontakt.getGlobalId()=="+((Kontakt)obj).getGlobalId());
+			result.add(obj);
+		}
+		return result;
 	}
 	
 	private List<AttachableObject> getAttachableObjects(){
@@ -53,7 +112,7 @@ public class ObjectSpaceSharer {
 					aobs = this.gdo.getDataObjects(lookupObj);
 				}
 				catch (Exception e){
-					System.out.println("ObjectSpaceSharer.getAttachableObjects()::Konnte Objekte einer Kategorie nicht auslesen!::"+e.toString());
+//					System.out.println("ObjectSpaceSharer.getAttachableObjects()::Konnte Objekte einer Kategorie nicht auslesen!::"+e.toString());
 				}
 				Iterator<GenericDataObject> attObIter = aobs.iterator();
 				while(attObIter.hasNext()){

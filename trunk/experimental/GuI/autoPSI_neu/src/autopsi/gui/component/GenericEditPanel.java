@@ -53,9 +53,13 @@ public class GenericEditPanel extends JPanel {
 	}
 	
 	public void setObjectToEdit(GenericData obj) throws EClassEditorMissing{
+		System.out.println("GenericEditPanel.setObjectToEdit(...)::1");
 		this.editedObject = obj;
+		System.out.println("GenericEditPanel.setObjectToEdit(...)::2");
 		inspectEditedObject();
+		System.out.println("GenericEditPanel.setObjectToEdit(...)::3");
 		createUI();
+		System.out.println("GenericEditPanel.setObjectToEdit(...)::4");
 	}
 	
 	public GenericData getEditedObject(){
