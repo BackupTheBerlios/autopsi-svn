@@ -30,6 +30,7 @@ public class LVATableModel extends AbstractTableModel {
 				if (this.suchLva.getLvaNr()!=null){
 					query +=" AND LVA_NR ="+this.suchLva.getLvaNr()+"";
 				}
+				System.out.println(query);
 				this.lvas =  gdo.unsafeQuery(query, suchLva);
 			}
 		} catch (Exception e){
