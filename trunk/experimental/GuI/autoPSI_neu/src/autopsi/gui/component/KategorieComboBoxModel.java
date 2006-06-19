@@ -6,6 +6,7 @@ import autopsi.database.dao.GenericDataObject;
 import autopsi.database.dao.IGenericDAO;
 
 import autopsi.database.table.AttachableObjectKategorie;
+import autopsi.database.table.LehrmittelKategorie;
 import autopsi.database.table.TerminKategorie;
 import autopsi.database.table.LvaKategorie;
 public class KategorieComboBoxModel extends DefaultComboBoxModel {
@@ -60,6 +61,23 @@ public class KategorieComboBoxModel extends DefaultComboBoxModel {
 		if (kategorien != null) {
 			for (int i = 0; i<kategorien.size();i++){
 				AttachableObjectKategorie kat1 = (AttachableObjectKategorie) kategorien.get(i);
+				this.addElement(kat1.getTitle());
+			}
+		}
+		
+	}
+	
+	public KategorieComboBoxModel (String tablename, LehrmittelKategorie kat) {
+		super ();
+		kategorien = null;
+		try {
+			kategorien = gdo.unsafeQuery("select * from "+tablename, kat);
+		} catch (Exception e) {
+			System.out.println("KategoryComboBoxModel: "+ e.toString());
+		}
+		if (kategorien != null) {
+			for (int i = 0; i<kategorien.size();i++){
+				LehrmittelKategorie kat1 = (LehrmittelKategorie) kategorien.get(i);
 				this.addElement(kat1.getTitle());
 			}
 		}
