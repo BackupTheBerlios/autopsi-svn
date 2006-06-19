@@ -120,6 +120,8 @@ public class EditTerminFrame extends javax.swing.JFrame implements java.awt.even
 	List<GenericDataObject> group_data;
 	List<GenericDataObject> termin_kat_data;
 	List<GenericDataObject> termin_cont_data;
+	private JButton group_add;
+	private JButton type_add;
 	
 	public EditTerminFrame(mainFrame owner, GregorianCalendar cal, Integer id) {
 		super();
@@ -470,6 +472,21 @@ public class EditTerminFrame extends javax.swing.JFrame implements java.awt.even
 
 				}
 			}
+
+			{
+					type_add = new JButton();
+					jPanel1.add(type_add);
+					type_add.setText("...");
+					type_add.setBounds(210, 147, 14, 21);
+					type_add.addMouseListener(this);
+			}
+			{
+					group_add = new JButton();
+					jPanel1.add(group_add);
+					group_add.setText("...");
+					group_add.setBounds(392, 147, 14, 21);
+					group_add.addMouseListener(this);
+			}
 			{
 				abort_button = new JButton();
 				getContentPane().add(abort_button);
@@ -619,6 +636,13 @@ public class EditTerminFrame extends javax.swing.JFrame implements java.awt.even
 		}
 		if (arg0.getSource().equals(this.jAddObjectButton)){
 			
+		}
+		if(arg0.getSource().equals(type_add)){
+			GenericEditFrame gef = new GenericEditFrame();
+			TerminKategorie obj = null;
+			gef.setObjectToEdit(obj,true);
+			gef.setTableToEdit("Termin_Kategorie");
+			gef.setVisible(true);
 		}
 	}
 
