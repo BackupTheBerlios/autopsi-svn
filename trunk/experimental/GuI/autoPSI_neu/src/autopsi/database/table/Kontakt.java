@@ -33,7 +33,7 @@ public class Kontakt extends GenericData implements Entry,GenericDataObject {
 			this.addAttribute("Telefon geschäftlich",cl.getMethod("getTelBusiness", new Class[] {}), cl.getMethod("setTelBusiness", new Class[] {String.class} ));
 			this.addAttribute("Telefon mobil",cl.getMethod("getTelMobile", new Class[] {}), cl.getMethod("setTelMobile", new Class[] {String.class} ));
 			this.addAttribute("PLZ",cl.getMethod("getAZipCode", new Class[] {}), cl.getMethod("setAZipCode", new Class[] {Integer.class} ));	
-			this.addAttribute("Adresse",cl.getMethod("getAdress", new Class[] {}), cl.getMethod("setAdress", new Class[] {String.class} ));
+			this.addAttribute("Adresse",cl.getMethod("getAAdress", new Class[] {}), cl.getMethod("setAAdress", new Class[] {String.class} ));
 			this.addAttribute("Email 1",cl.getMethod("getFirstEmail", new Class[] {}), cl.getMethod("setFirstEmail", new Class[] {String.class} ));
 			this.addAttribute("Email 2",cl.getMethod("getSecondEmail", new Class[] {}), cl.getMethod("setSecondEmail", new Class[] {String.class} ));
 		}
