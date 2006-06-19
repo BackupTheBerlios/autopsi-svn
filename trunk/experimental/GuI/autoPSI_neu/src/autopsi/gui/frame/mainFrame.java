@@ -716,7 +716,7 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 			{
 				jLabel3 = new JLabel();
 				getContentPane().add(jLabel3);
-				jLabel3.setIcon(new ImageIcon(getClass().getClassLoader().getResource("images/background.gif")));
+				jLabel3.setIcon(new ImageIcon("src/images/background.gif"));
 				jLabel3.setBounds(0, 21, 252, 56);
 				{
 					lblDatum = new JLabel();
