@@ -9,7 +9,6 @@ public class AttachableObject extends GenericData implements Entry,GenericDataOb
 	public Integer id;
 	public Integer kategorie_id;
 	public String table_name;
-	public Integer table_id;
 	
 	
 	public AttachableObject(){
@@ -17,9 +16,7 @@ public class AttachableObject extends GenericData implements Entry,GenericDataOb
 		try{
 			this.addAttribute("Id",cl.getMethod("getId", new Class[] {}), cl.getMethod("setId", new Class[] {Integer.class} ));
 			this.addAttribute("KategorieId",cl.getMethod("getKategorieId", new Class[] {}), cl.getMethod("setKategorieId", new Class[] {String.class} ));
-			this.addAttribute("TableName",cl.getMethod("getTableName", new Class[] {}), cl.getMethod("setTableName", new Class[] {String.class} ));
-			this.addAttribute("TableId",cl.getMethod("getTableId", new Class[] {}), cl.getMethod("setTableId", new Class[] {Integer.class} ));
-		}
+			this.addAttribute("TableName",cl.getMethod("getTableName", new Class[] {}), cl.getMethod("setTableName", new Class[] {String.class} ));		}
 		catch (Exception e){
 			System.out.println("Fehler beim Erstellen des Attachable-Objects::"+e.toString());
 		}
@@ -47,14 +44,6 @@ public class AttachableObject extends GenericData implements Entry,GenericDataOb
 	
 	public void setTableName(String newTableName){
 		this.table_name = newTableName;
-	}
-	
-	public int getTableId(){
-		return this.table_id;
-	}
-	
-	public void setTableId(Integer newTableId){
-		this.table_id = newTableId;
 	}
 
 }
