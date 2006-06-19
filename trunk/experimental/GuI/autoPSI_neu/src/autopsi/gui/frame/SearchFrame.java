@@ -641,6 +641,15 @@ public class SearchFrame extends javax.swing.JFrame implements ActionListener {
 					if (!jLVANummerField.getText().equals("")){
 						lva.setLvaNr(jLVANummerField.getText());
 					}
+					if (!jTitelField.getText().equals("")){
+						lva.setTitle(jTitelField.getText());
+					}
+					if (!jBeschreibungField.getText().equals("")){
+						lva.setDescription(jBeschreibungField.getText());
+					}
+					if (!jBeschreibungField.getText().equals("")){
+						lva.setDescription(jBeschreibungField.getText());
+					}
 					jLVATableModel.setSuchLVa(lva);
 				} else if (jLVAOnlineSuchenRadioButton.isSelected()) {
 					System.out.println("LVA wird online gesucht...");
