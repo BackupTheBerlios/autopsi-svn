@@ -168,8 +168,7 @@ public class EditTerminContainerFrame extends javax.swing.JFrame implements java
 			{
 				jTabbedPane1 = new JTabbedPane();
 				getContentPane().add(jTabbedPane1);
-				jTabbedPane1.setBounds(7, 14, 567, 280);
-				jTabbedPane1.setTabPlacement(JTabbedPane.LEFT);
+				jTabbedPane1.setBounds(7, 14, 427, 294);
 				jTabbedPane1.setFocusable(false);
 				{
 					jPanel1 = new JPanel();
@@ -326,6 +325,7 @@ public class EditTerminContainerFrame extends javax.swing.JFrame implements java
 						jPanel2.add(newTClist);
 						newTClist.setText("neue Terminreihe");
 						newTClist.setBounds(252, 217, 161, 21);
+						newTClist.addMouseListener(this);
 					}
 					{
 						jScrollPane1 = new JScrollPane();
@@ -346,28 +346,28 @@ public class EditTerminContainerFrame extends javax.swing.JFrame implements java
 				abort_button = new JButton();
 				getContentPane().add(abort_button);
 				abort_button.setText("Abbrechen");
-				abort_button.setBounds(294, 301, 105, 21);
+				abort_button.setBounds(133, 315, 105, 21);
 				abort_button.addMouseListener(this);
 			}
 			{
 				apply_button = new JButton();
 				getContentPane().add(apply_button);
 				apply_button.setText("Übernehmen");
-				apply_button.setBounds(406, 301, 112, 21);
+				apply_button.setBounds(266, 315, 112, 21);
 				apply_button.addMouseListener(this);
 			}
 			{
 				ok_button = new JButton();
 				getContentPane().add(ok_button);
 				ok_button.setText("OK");
-				ok_button.setBounds(525, 301, 49, 21);
+				ok_button.setBounds(385, 315, 49, 21);
 				ok_button.addMouseListener(this);
 			}
 			{
 				jLabel7 = new JLabel();
 				getContentPane().add(jLabel7);
 				jLabel7.setText("- Zeigt Informationen an -");
-				jLabel7.setBounds(7, 329, 574, 21);
+				jLabel7.setBounds(7, 343, 427, 21);
 				jLabel7.setBorder(BorderFactory.createTitledBorder(""));
 			}
 			
@@ -377,7 +377,7 @@ public class EditTerminContainerFrame extends javax.swing.JFrame implements java
 			
 			if(ID>-1) readData(ID);			
 			pack();
-			this.setSize(589, 389);
+			this.setSize(449, 408);
 			this.setResizable(false);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -394,6 +394,12 @@ public class EditTerminContainerFrame extends javax.swing.JFrame implements java
 		}
 		if(arg0.getSource().equals(apply_button)){
 			update();
+		}
+		if(arg0.getSource().equals(newTClist)){
+			TerminReiheFrame terminreihe = new TerminReiheFrame();
+			terminreihe.setLocation(this.getLocation().x+20,this.getLocation().y+20);
+			terminreihe.setTitle("Terminreihe hinzufügen");
+			terminreihe.setVisible(true);
 		}
 		
 	}
