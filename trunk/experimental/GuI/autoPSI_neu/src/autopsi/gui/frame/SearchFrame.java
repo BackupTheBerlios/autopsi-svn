@@ -33,6 +33,7 @@ import javax.swing.text.BadLocationException;
 import javax.swing.text.MaskFormatter;
 import javax.swing.text.PlainDocument;
 
+import autopsi.database.table.AttachableObjectKategorie;
 import autopsi.database.table.Termin;
 import autopsi.database.table.Kontakt;
 import autopsi.database.table.TerminKategorie;
@@ -289,8 +290,7 @@ public class SearchFrame extends javax.swing.JFrame implements ActionListener {
 							jKontaktGruppeLabel.setText("Gruppe:");
 							jKontaktGruppeLabel.setBounds(348, 112, 42, 14);
 		
-							ComboBoxModel jKontaktGruppeComboBoxModel = new DefaultComboBoxModel(
-								new String[] { "Item One", "Item Two" });
+							KategorieComboBoxModel jKontaktGruppeComboBoxModel = new KategorieComboBoxModel("ATTACHABLE_OBJECT_KATEGORIE", new AttachableObjectKategorie());
 							jKontaktGruppeComboBox = new JComboBox();
 							jkontaktSuchePanel.add(jKontaktGruppeComboBox);
 							jKontaktGruppeComboBox
@@ -610,7 +610,7 @@ public class SearchFrame extends javax.swing.JFrame implements ActionListener {
 		try {
 			if (cmd.equals("Kontakt Suchen")) {
 				if (jKontaktLokalSuchenRadioButton.isSelected()){
-					System.out.println("Kontakt wird lokal gesucht...");
+					//System.out.println("Kontakt wird lokal gesucht...");
 					Kontakt kont = new Kontakt();
 					if (!jVornameField.getText().equals("")){
 						kont.setPrename(jVornameField.getText());
@@ -656,6 +656,7 @@ public class SearchFrame extends javax.swing.JFrame implements ActionListener {
 					} else {
 						kont.setACity(null);
 					}
+					jKontaktTableModel.setGroup(jKontaktGruppeComboBox.getSelectedItem().toString());
 					jKontaktTableModel.setSuchKontakt(kont);
 				} else if (jKontaktOnlineSuchenRadioButton.isSelected()) {
 					System.out.println("Kontakt wird online gesucht...");
