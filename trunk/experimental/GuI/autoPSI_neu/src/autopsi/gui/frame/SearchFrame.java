@@ -103,6 +103,7 @@ public class SearchFrame extends javax.swing.JFrame implements ActionListener {
 	
 	private TerminTableModel jTerminTableModel;
 	private KontaktTableModel jKontaktTableModel;
+	private LVATableModel jLVATableModel;
 	
 	private JButton jKontaktSuchenButton, jTerminSuchenButton, jLVASuchenButton;
 	private ButtonGroup jKontaktSucheGroup,jLVASucheGroup, jTerminSucheGroup;
@@ -422,7 +423,7 @@ public class SearchFrame extends javax.swing.JFrame implements ActionListener {
 							jLVAScrollPane.setWheelScrollingEnabled(true);
 							jLVAScrollPane.setBackground(new java.awt.Color(255,255,255));
 							{
-								LVATableModel jLVATableModel = new LVATableModel ();
+								jLVATableModel = new LVATableModel ();
 								jLVATable = new JTable();
 								jLVAScrollPane
 									.setViewportView(jLVATable);
@@ -640,6 +641,7 @@ public class SearchFrame extends javax.swing.JFrame implements ActionListener {
 					if (!jLVANummerField.getText().equals("")){
 						lva.setLvaNr(jLVANummerField.getText());
 					}
+					jLVATableModel.setSuchLVa(lva);
 				} else if (jLVAOnlineSuchenRadioButton.isSelected()) {
 					System.out.println("LVA wird online gesucht...");
 				}
