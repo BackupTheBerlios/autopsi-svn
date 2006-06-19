@@ -144,7 +144,7 @@ public class SearchFrame extends javax.swing.JFrame implements ActionListener {
 	
 	private void initGUI() {
 		try {
-			this.setPreferredSize(new java.awt.Dimension(812, 406));
+			this.setPreferredSize(new java.awt.Dimension(812, 430));
 			this.setLayout(null);
 			{
 				jTabbedSearchPane = new JTabbedPane();
