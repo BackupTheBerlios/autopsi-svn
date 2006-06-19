@@ -1,9 +1,12 @@
 package autopsi.gui.frame;
 
 
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -26,6 +29,8 @@ import javax.swing.ListModel;
 
 import javax.swing.WindowConstants;
 import javax.swing.border.LineBorder;
+import javax.swing.text.MaskFormatter;
+
 import autopsi.database.dao.GenericDAO;
 import autopsi.database.dao.GenericDataObject;
 import autopsi.database.dao.IGenericDAO;
@@ -36,6 +41,8 @@ import autopsi.database.table.AttachableObjectKategorie;
 import autopsi.database.table.Termin;
 import autopsi.database.table.TerminContainer;
 import autopsi.gui.DateConverter;
+import autopsi.gui.MonthRenderer;
+import autopsi.gui.WeekRenderer;
 
 /**
 * This code was edited or generated using CloudGarden's Jigloo
@@ -78,7 +85,7 @@ public class EditTerminContainerFrame extends javax.swing.JFrame implements java
 	private JButton newTermin;
 	private JLabel jLabel6;
 	private JLabel jLabel5;
-	private JTextField jTextField3;
+	private JTextField sucheTermin_field;
 
 	private JButton jButton6;
 	private JButton jButton5;
@@ -307,10 +314,33 @@ public class EditTerminContainerFrame extends javax.swing.JFrame implements java
 					jPanel2.setLayout(null);
 				
 					{
-						jTextField3 = new JTextField();
-						jPanel2.add(jTextField3);
-						jTextField3.setBounds(56, 7, 357, 21);
-						jTextField3.setBorder(new LineBorder(new java.awt.Color(0,0,0), 1, false));
+						sucheTermin_field = new JTextField();
+						jPanel2.add(sucheTermin_field);
+						sucheTermin_field.setBounds(56, 7, 357, 21);
+						sucheTermin_field.setBorder(new LineBorder(new java.awt.Color(0,0,0), 1, false));
+						sucheTermin_field.addKeyListener(new KeyListener(){
+
+							public void keyTyped(KeyEvent arg0)
+							{
+								DefaultComboBoxModel model2 = new DefaultComboBoxModel();
+								
+								for(int i = 0;i<terminModel.getSize();i++)
+								{
+									if(terminModel.getElementAt(i).toString().toLowerCase().contains(sucheTermin_field.getText().toLowerCase()))
+									{
+										model2.addElement(terminModel.getElementAt(i));
+									}
+								}
+								
+								terminList.setModel(model2);
+							}
+							public void keyPressed(KeyEvent arg0)
+							{						
+							}
+							public void keyReleased(KeyEvent arg0) 
+							{						
+							}				
+						});
 					}
 					{
 						jLabel5 = new JLabel();
@@ -374,13 +404,13 @@ public class EditTerminContainerFrame extends javax.swing.JFrame implements java
 						}
 					}
 					{
-						beginDate_field = new JFormattedTextField();
+						beginDate_field = new JFormattedTextField(createFormatter("##-##-####"));
 						jPanel2.add(beginDate_field);
-						beginDate_field.setBounds(196, 35, 91, 21);
+						beginDate_field.setBounds(189, 35, 98, 21);
 						beginDate_field.setBorder(new LineBorder(new java.awt.Color(0,0,0), 1, false));
 					}
 					{
-						endDate_field = new JFormattedTextField();
+						endDate_field = new JFormattedTextField(createFormatter("##-##-####"));
 						jPanel2.add(endDate_field);
 						endDate_field.setBounds(315, 35, 98, 21);
 						endDate_field.setBorder(new LineBorder(new java.awt.Color(0,0,0), 1, false));
@@ -525,6 +555,16 @@ public class EditTerminContainerFrame extends javax.swing.JFrame implements java
 			String termin = datum+": "+termine.get(i).getSecondaryTitle()+",    Ort: "+termine.get(i).getPlace();
 			terminModel.addElement(termin);		
 		}
+	}
+	
+	protected MaskFormatter createFormatter(String s) {
+		 MaskFormatter formatter = null;
+		 try {
+			 formatter = new MaskFormatter(s);
+		} catch (java.text.ParseException exc) {
+			System.err.println("formatter is bad: " + exc.getMessage());
+		}
+		return formatter;
 	}
 }
 
