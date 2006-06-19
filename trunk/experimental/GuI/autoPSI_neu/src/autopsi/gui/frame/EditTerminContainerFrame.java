@@ -439,7 +439,7 @@ public class EditTerminContainerFrame extends javax.swing.JFrame implements java
 			update();
 		}
 		if(arg0.getSource().equals(newTClist)){
-			TerminReiheFrame terminreihe = new TerminReiheFrame(this);
+			TerminReiheFrame terminreihe = new TerminReiheFrame();
 			terminreihe.setLocation(this.getLocation().x+20,this.getLocation().y+20);
 			terminreihe.setTitle("Terminreihe hinzufügen");
 			terminreihe.setVisible(true);

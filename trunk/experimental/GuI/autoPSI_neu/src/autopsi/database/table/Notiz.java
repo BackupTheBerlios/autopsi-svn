@@ -8,7 +8,7 @@ public class Notiz extends GenericData implements Entry,GenericDataObject {
 
 	
 	public Integer global_id;
-	public Integer kategorie_id;
+//	public Integer kategorie_id;
 	public String title;
 	public String note;
 	
@@ -17,7 +17,7 @@ public class Notiz extends GenericData implements Entry,GenericDataObject {
 		Class cl = this.getClass();
 		try{
 			this.addAttribute("GlobalId",cl.getMethod("getGlobalId", new Class[] {}), cl.getMethod("setGlobalId", new Class[] {Integer.class} ));
-			this.addAttribute("KategorieId", cl.getMethod("getKategorieId", new Class[] {}), cl.getMethod("setKategorieId", new Class[] {Integer.class}));
+//			this.addAttribute("KategorieId", cl.getMethod("getKategorieId", new Class[] {}), cl.getMethod("setKategorieId", new Class[] {Integer.class}));
 			this.addAttribute("Titel",cl.getMethod("getTitle", new Class[] {}), cl.getMethod("setTitle", new Class[] {String.class} ));
 			this.addAttribute("Notiz",cl.getMethod("getNote", new Class[] {}), cl.getMethod("setNote", new Class[] {String.class} ));
 
@@ -28,7 +28,6 @@ public class Notiz extends GenericData implements Entry,GenericDataObject {
 	}
 	
 	public int getGlobalId(){
-		System.out.println("Notiz.getGlobalId()=="+global_id);
 		return this.global_id;
 	}
 	
@@ -36,17 +35,16 @@ public class Notiz extends GenericData implements Entry,GenericDataObject {
 		this.global_id = globalId;
 	}
 	
-	public int getKategorieId(){
-		System.out.println("Notiz.getKategorieId()=="+kategorie_id);
-		return this.kategorie_id;
-	}
-	
-	public void setKategorieId(Integer kategorieId){
-		this.kategorie_id = kategorieId;
-	}
+//	public int getKategorieId(){
+//		System.out.println("Notiz.getKategorieId()=="+kategorie_id);
+//		return this.kategorie_id;
+//	}
+//	
+//	public void setKategorieId(Integer kategorieId){
+//		this.kategorie_id = kategorieId;
+//	}
 	
 	public String getTitle(){
-		System.out.println("Notiz.getTitle()=="+title);
 		return this.title;
 	}
 	
@@ -55,7 +53,6 @@ public class Notiz extends GenericData implements Entry,GenericDataObject {
 	}
 	
 	public String getNote(){
-		System.out.println("Notiz.getNote()=="+note);
 		return this.note;
 	}
 	

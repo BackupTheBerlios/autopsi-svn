@@ -40,12 +40,7 @@ import autopsi.database.dao.IGenericDAO;
 import autopsi.database.exception.EAttributeNotFound;
 import autopsi.database.exception.EDatabase;
 import autopsi.database.exception.EDatabaseConnection;
-import autopsi.database.table.Anhaengen_termin;
-import autopsi.database.table.AttachableObjectKategorie;
-import autopsi.database.table.Kontakt;
-import autopsi.database.table.Termin;
-import autopsi.database.table.TerminContainer;
-import autopsi.database.table.TerminKategorie;
+import autopsi.database.table.*;
 
 
 /**
@@ -547,9 +542,23 @@ public class EditTerminFrame extends javax.swing.JFrame implements java.awt.even
 				if(obj instanceof Kontakt){
 					gef.setObjectToEdit((Kontakt)obj,false);
 					gef.setTableToEdit("Kontakt");
-
 				}
-				
+				if (obj instanceof Notiz){
+					gef.setObjectToEdit((Notiz)obj, false);
+					gef.setTableToEdit("Notiz");
+				}
+				if (obj instanceof Lva){
+					gef.setObjectToEdit((Lva)obj, false);
+					gef.setTableToEdit("Lva");
+				}				
+				if (obj instanceof Lehrmittel){
+					gef.setObjectToEdit((Lehrmittel)obj, false);
+					gef.setTableToEdit("Lehrmittel");
+				}
+				if (obj instanceof Pruefung){
+					gef.setObjectToEdit((Pruefung)obj, false);
+					gef.setTableToEdit("Lehrmittel");
+				}
 				
 				
 				gef.setVisible(true);
@@ -654,6 +663,7 @@ public class EditTerminFrame extends javax.swing.JFrame implements java.awt.even
 			globalId = t.getGlobalId();
 			List<GenericDataObject> ob = null;
 			tableName = tableName.toLowerCase();
+			System.out.println("EditTerminFrame.loadObjectList::tableName=="+tableName);
 			if(tableName.equals("kontakt")){
 				gdo.setCurrentTable("kontakt");
 				try {
@@ -671,8 +681,82 @@ public class EditTerminFrame extends javax.swing.JFrame implements java.awt.even
 					this.attachedObjects.add(k);
 					lm.addElement(k.getPrename() + " "+ k.getSurname());	
 				}
-				jList1.setModel(lm);
 			}
+			if(tableName.equals("notiz")){
+				gdo.setCurrentTable("notiz");
+				try {
+					ob = gdo.unsafeQuery("select * from notiz where global_id="+globalId, new Notiz());
+				} 
+				catch (Exception e)
+				{
+					System.out.println("EditTerminFrame.loadObjectList() Notizlist::"+e.toString());
+				}
+				Iterator<GenericDataObject> iter2 = ob.iterator();
+				Notiz n;
+				while(iter2.hasNext())
+				{
+					n = (Notiz) iter2.next();
+					this.attachedObjects.add(n);
+					lm.addElement(n.getTitle());	
+				}
+			}
+			if(tableName.equals("lva")){
+				gdo.setCurrentTable("lva");
+				try {
+					ob = gdo.unsafeQuery("select * from notiz where global_id="+globalId, new Notiz());
+				} 
+				catch (Exception e)
+				{
+					System.out.println("EditTerminFrame.loadObjectList() Lvalist::"+e.toString());
+				}
+				Iterator<GenericDataObject> iter2 = ob.iterator();
+				Lva l;
+				while(iter2.hasNext())
+				{
+					l = (Lva) iter2.next();
+					this.attachedObjects.add(l);
+					lm.addElement(l.getLvaNr() + " , "+l.getTitle());	
+				}
+			}
+			if(tableName.equals("lehrmittel")){
+				gdo.setCurrentTable("lehrmittel");
+				try {
+					ob = gdo.unsafeQuery("select * from notiz where global_id="+globalId, new Notiz());
+				} 
+				catch (Exception e)
+				{
+					System.out.println("EditTerminFrame.loadObjectList() Lehrmitellist::"+e.toString());
+				}
+				Iterator<GenericDataObject> iter2 = ob.iterator();
+				Lehrmittel l;
+				while(iter2.hasNext())
+				{
+					l = (Lehrmittel) iter2.next();
+					this.attachedObjects.add(l);
+					lm.addElement(l.getName());	
+				}
+			}
+			if(tableName.equals("Pruefung")){
+				gdo.setCurrentTable("Pruefung");
+				try {
+					ob = gdo.unsafeQuery("select * from notiz where global_id="+globalId, new Notiz());
+				} 
+				catch (Exception e)
+				{
+					System.out.println("EditTerminFrame.loadObjectList() Pruefunglist::"+e.toString());
+				}
+				Iterator<GenericDataObject> iter2 = ob.iterator();
+				Pruefung p;
+				while(iter2.hasNext())
+				{
+					p = (Pruefung) iter2.next();
+					this.attachedObjects.add(p);
+					lm.addElement(p.getLvaId() + " - " + p.getExaminer());	
+				}
+			}
+			
+			
+			jList1.setModel(lm);
 		}
 	}
 	
