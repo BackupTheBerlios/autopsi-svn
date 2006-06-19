@@ -7,6 +7,8 @@
 
 package autopsi.database.dao;
 
+import net.jini.core.entry.Entry;
+
 /**
  * GenericDataObject is the object that one has to implement if he wants to get data from a table; 
  * the GenericDataObject itself should hold only attributes and methods directly related to the date
@@ -21,7 +23,7 @@ package autopsi.database.dao;
  * @author Rudolf
  *
  */
-public interface GenericDataObject{
+public interface GenericDataObject extends Entry{
 
 }
 
