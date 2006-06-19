@@ -11,8 +11,7 @@ public class SpaceTestFrame extends JFrame {
 	protected JButton cancelButton;
 	
 	public SpaceTestFrame(){
-		ServiceCommunicator com = new ServiceCommunicator();
-		com.delAllObjects();
+/*		ServiceCommunicator com = new ServiceCommunicator();
 		Notiz insert = new Notiz();
 		insert.setNote("here we are");
 		com.addObject(insert);
@@ -20,7 +19,10 @@ public class SpaceTestFrame extends JFrame {
 		lookup.setNote(null);
 		Notiz out = null;
 		out = (Notiz)com.getObject(lookup);
-		System.out.println("Notiz       out.getNote()=="+out.getNote());
+		System.out.println("Notiz       out.getNote()=="+out.getNote());*/
+		
+		ObjectSpaceSharer sh = new ObjectSpaceSharer();
+		sh.shareObjects();
 	}
 	
 }

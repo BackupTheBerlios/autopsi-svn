@@ -22,6 +22,7 @@ public class ServiceCommunicator implements IServiceCommunicator, DesiredExpirat
 	protected List<Lease> leases = null;
 	protected long renewalTime = 5000;
 	protected long timeout = 5000;
+	protected String adress = "jini://localhost";
 
 	
 	public ServiceCommunicator(){
@@ -45,11 +46,19 @@ public class ServiceCommunicator implements IServiceCommunicator, DesiredExpirat
 		this.timeout = newTimeout;
 	}
 	
+	public String getAdress(){
+		return this.adress;
+	}
+	
+	public void setAdress(String newAdress){
+		this.adress = newAdress;
+	}
+	
 	protected JavaSpace getSpace(){
 		if (this.space == null)
 		{
 			JavaSpace sp = null;
-			sp = (JavaSpace)ServiceFinder.getServiceFrom(JavaSpace.class, null, this.timeout, "jini://localhost");
+			sp = (JavaSpace)ServiceFinder.getServiceFrom(JavaSpace.class, null, this.timeout, this.adress);
 			this.space = sp;
 		}
 		
