@@ -98,6 +98,8 @@ public class EditTerminContainerFrame extends javax.swing.JFrame implements java
 	private IGenericDAO gdo; 
 	private int ID;
 	private EditTerminFrame owner;
+	private mainFrame owner2;
+	private int konstruktor = 0;
 	
 	
 	
@@ -133,19 +135,24 @@ public class EditTerminContainerFrame extends javax.swing.JFrame implements java
 			updateData.setTitle(title);
 			updateData.setDescription(desc);
 			gdo.updDataObjects(lookup, updateData);
-			if(owner!=null) owner.updateTCList();
+			if(konstruktor == 1) {if(owner!=null) owner.updateTCList();}
+			else {
+				owner2.updateInfoBar(true);
+				owner2.updateTable();
+			}
 			
 		}
 		catch (Exception e){
 			System.out.println("Exception beim Updaten=="+e.toString());
 		}
 	}
-	public EditTerminContainerFrame(EditTerminFrame owner, int id) {
+	public EditTerminContainerFrame(EditTerminFrame owner, int id) { //Konstruktor für das EditTermin-Frame
 		super();
 		this.ID = id;
 		this.owner = owner;
 		gdo = new GenericDAO();
 		gdo.setCurrentTable("termincontainer");
+		this.konstruktor = 1;
 		initGUI();
 		
 		
@@ -159,6 +166,28 @@ public class EditTerminContainerFrame extends javax.swing.JFrame implements java
 					}
 				});
 	}
+	
+	public EditTerminContainerFrame(mainFrame owner, int id) { //Konstruktor für das MainFrame
+		super();
+		this.ID = id;
+		this.owner2 = owner;
+		gdo = new GenericDAO();
+		gdo.setCurrentTable("termincontainer");
+		this.konstruktor = 2;
+		initGUI();
+		
+		
+		addWindowListener(new WindowAdapter()
+				{
+				public void windowClosing(WindowEvent arg0)
+				{ //wird das Fenster über den X-Button rechts oben geschlossen
+				  //wird die Anwendung beendet.
+					super.windowClosing(arg0);
+					dispose();
+					}
+				});
+	}
+	
 	
 	private void initGUI() {
 		try {

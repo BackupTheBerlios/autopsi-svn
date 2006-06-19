@@ -962,12 +962,12 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 			updateInfoBar(false);
 		}
 		if(arg0.getSource().equals(newTerminContainer)) {
-			/*EditTerminContainerFrame newTC = new EditTerminContainerFrame(this,c_marker, null);
-			newTC.setTitle("neuen Termin hinzufügen");
-			newTC.setLocation(this.getLocation().x+30,this.getLocation().y+30);
-			newTC.setVisible(true);
+			EditTerminContainerFrame frame = new EditTerminContainerFrame(this,-1);
+			frame.setLocation(this.getLocation().x+20,this.getLocation().y+20);
+			frame.setTitle("neuen Termincontainer hinzufügen");
+;			frame.setVisible(true);
 			updateTable();
-			updateInfoBar(false);*/
+			updateInfoBar(false);
 		}
 		if(arg0.getSource().equals(editTermin)) {
 			

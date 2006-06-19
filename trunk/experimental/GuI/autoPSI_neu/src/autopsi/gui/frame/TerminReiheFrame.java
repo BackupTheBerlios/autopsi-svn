@@ -97,8 +97,10 @@ public class TerminReiheFrame extends javax.swing.JFrame implements java.awt.eve
 					check1 = new JCheckBox();
 					getContentPane().add(check1);
 					check1.setText("Montag");
-					check1.setBounds(7, 112+i*28, 73, 28);
+					check1.setBounds(7, 112+i*28, 93, 28);
 					checkArray[i]=check1;
+					checkArray[i].addMouseListener(this);
+					checkArray[i].addMouseMotionListener(this);
 				}
 				checkArray[0].setText("Montag");
 				checkArray[1].setText("Dienstag");
@@ -107,7 +109,6 @@ public class TerminReiheFrame extends javax.swing.JFrame implements java.awt.eve
 				checkArray[4].setText("Freitag");
 				checkArray[5].setText("Samstag");
 				checkArray[6].setText("Sonntag");
-				
 			}
 			{
 				name_field = new JTextField();
@@ -128,7 +129,7 @@ public class TerminReiheFrame extends javax.swing.JFrame implements java.awt.eve
 				jLabel2.setBounds(7, 42, 63, 21);
 			}
 			{
-				beginDate_field = new JFormattedTextField();
+				beginDate_field = new JFormattedTextField(createFormatter("##-##-#####"));
 				getContentPane().add(beginDate_field);
 				beginDate_field.setBounds(63, 42, 77, 21);
 				beginDate_field.setBorder(new LineBorder(new java.awt.Color(0,0,0), 1, false));
@@ -140,7 +141,7 @@ public class TerminReiheFrame extends javax.swing.JFrame implements java.awt.eve
 				jLabel3.setBounds(147, 42, 21, 21);
 			}
 			{
-				EndDate_field = new JFormattedTextField();
+				EndDate_field = new JFormattedTextField(createFormatter("##-##-#####"));
 				getContentPane().add(EndDate_field);
 				EndDate_field.setBounds(168, 42, 77, 21);
 				EndDate_field.setBorder(new LineBorder(new java.awt.Color(0,0,0), 1, false));
@@ -175,6 +176,7 @@ public class TerminReiheFrame extends javax.swing.JFrame implements java.awt.eve
 					getContentPane().add(ort1);
 					ort1.setBounds(112, 112+i*28, 126, 21);
 					ort1.setBorder(new LineBorder(new java.awt.Color(0, 0, 0),1,false));
+					ort1.setEnabled(false);
 					ortArray[i]=ort1;
 				}
 			}
@@ -185,6 +187,7 @@ public class TerminReiheFrame extends javax.swing.JFrame implements java.awt.eve
 					getContentPane().add(zeit1);
 					zeit1.setBounds(252, 112+i*28, 49, 21);
 					zeit1.setBorder(new LineBorder(new java.awt.Color(0, 0, 0),1,false));
+					zeit1.setEnabled(false);
 					zeitArray[i]=zeit1;
 				}
 				
@@ -196,6 +199,7 @@ public class TerminReiheFrame extends javax.swing.JFrame implements java.awt.eve
 					getContentPane().add(dauer1);
 					dauer1.setBounds(315, 112+i*28, 49, 21);
 					dauer1.setBorder(new LineBorder(new java.awt.Color(0, 0, 0),1,false));
+					dauer1.setEnabled(false);
 					dauerArray[i]=dauer1;
 				}
 				
@@ -207,8 +211,9 @@ public class TerminReiheFrame extends javax.swing.JFrame implements java.awt.eve
 					getContentPane().add(oneForAll1);
 					oneForAll1.setBounds(378, 112+i*28, 35, 21);
 					oneForAll1.setIcon(new ImageIcon("src/images/oneForAll.GIF"));
-					oneForAll1.addMouseListener(this);
+					oneForAll1.setEnabled(false);
 					buttonArray[i]=oneForAll1;
+					buttonArray[i].addMouseListener(this);
 				}
 				
 			}
@@ -253,15 +258,32 @@ public class TerminReiheFrame extends javax.swing.JFrame implements java.awt.eve
 	}
 
 	public void mouseClicked(MouseEvent arg0) {
-		if(arg0.getSource().equals(oneForAll1))
+		for(int i=0;i<7;i++)
 		{
-			for(int i = 1;i<7;i++)
+			if(arg0.getSource().equals(buttonArray[i]))
 			{
-				ortArray[i].setText(ortArray[1].getText());
-				zeitArray[i].setText(zeitArray[1].getText());
-				dauerArray[i].setText(dauerArray[1].getText());	
+				for(int j = 0;j<7;j++)
+				{
+					ortArray[j].setText(ortArray[i].getText());
+					zeitArray[j].setText(zeitArray[i].getText());
+					dauerArray[j].setText(dauerArray[i].getText());	
+				}
 			}
 		}
+		for(int i=0;i<7;i++) //Checkboxen überprüfen
+		{
+			if(arg0.getSource().equals(checkArray[i]))
+			{
+				boolean check;
+				if(checkArray[i].getSelectedObjects()!=null) check = true;
+				else check = false;
+				ortArray[i].setEnabled(check);
+				zeitArray[i].setEnabled(check);
+				dauerArray[i].setEnabled(check);
+				buttonArray[i].setEnabled(check);
+			}
+		}
+
 	}
 
 	public void mousePressed(MouseEvent arg0) {
@@ -271,11 +293,24 @@ public class TerminReiheFrame extends javax.swing.JFrame implements java.awt.eve
 	}
 
 	public void mouseEntered(MouseEvent arg0) {		
+		for(int i=0;i<7;i++)
+		{
+			if(arg0.getSource().equals(buttonArray[i]))
+			{
+				infoLabel.setText("Setzt alle Ort-,Zeit- und Dauer-Felder auf die Werte dieses Tags.");
+			}
+		}
 		
 	}
 
 	public void mouseExited(MouseEvent arg0) {
-		
+		for(int i=0;i<7;i++)
+		{
+			if(arg0.getSource().equals(buttonArray[i]))
+			{
+				infoLabel.setText("");
+			}
+		}
 	}
 
 	public void mouseDragged(MouseEvent arg0) {
@@ -283,6 +318,19 @@ public class TerminReiheFrame extends javax.swing.JFrame implements java.awt.eve
 	}
 
 	public void mouseMoved(MouseEvent arg0) {
+		for(int i=0;i<7;i++) //Checkboxen überprüfen
+		{
+			if(arg0.getSource().equals(checkArray[i]))
+			{
+				boolean check;
+				if(checkArray[i].getSelectedObjects()!=null) check = true;
+				else check = false;
+				ortArray[i].setEnabled(check);
+				zeitArray[i].setEnabled(check);
+				dauerArray[i].setEnabled(check);
+				buttonArray[i].setEnabled(check);
+			}
+		}
 		
 	}
 
