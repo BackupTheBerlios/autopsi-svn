@@ -34,13 +34,13 @@ import javax.swing.text.BadLocationException;
 import javax.swing.text.MaskFormatter;
 import javax.swing.text.PlainDocument;
 
+import autopsi.basis.model.KontaktTableModel;
+import autopsi.basis.model.TerminTableModel;
 import autopsi.database.table.AttachableObjectKategorie;
 import autopsi.database.table.Termin;
 import autopsi.database.table.Kontakt;
 import autopsi.database.table.TerminKategorie;
 import autopsi.database.table.LvaKategorie;
-import autopsi.gui.KontaktTableModel;
-import autopsi.gui.TerminTableModel;
 import autopsi.gui.component.KategorieComboBoxModel;
 
 /**
