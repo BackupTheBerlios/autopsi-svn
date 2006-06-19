@@ -685,6 +685,7 @@ public class SearchFrame extends javax.swing.JFrame implements ActionListener {
 					} else {
 						jTerminTableModel.setDatum(null);
 					}
+					jTerminTableModel.setGroup(jTerminGruppeComboBox.getSelectedItem().toString());
 					jTerminTableModel.setSuchTermin(ter);
 				} else if (jTerminOnlineSuchenRadioButton.isSelected()) {
 					System.out.println("Termint wird online gesucht...");
