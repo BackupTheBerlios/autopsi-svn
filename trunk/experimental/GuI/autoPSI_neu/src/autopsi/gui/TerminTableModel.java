@@ -29,38 +29,21 @@ public class TerminTableModel extends AbstractTableModel{
 	}
 	
 	private void readData() {
-		String query="select * from Termin as t";
-		Boolean first = true;
+		String query="select * from TERMIN as t, ATTACHABLE_OBJECT_KATEGORIE as ok, TERMIN_KATEGORIE as kat where t.TERMIN_KATEGORIE_ID = kat.id AND t.GROUP_ID = ok.id";
 		try{
 			IGenericDAO gdo = new GenericDAO();
 			if (suchTermin!=null) {
 				if (suchTermin.getSecondaryTitle()!=null) {
-					if (!first){
-						query += " AND";
-					} else {
-						query += " where";
-					}
-					query += " LOWER(SECONDARY_TITLE) LIKE '%" + suchTermin.getSecondaryTitle().toLowerCase()+"%'";
-					first = false;
+					query += " AND LOWER(t.SECONDARY_TITLE) LIKE '%" + suchTermin.getSecondaryTitle().toLowerCase()+"%'";
 				}
 				if (suchTermin.getDescription()!=null) {
-					if (!first){
-						query += " AND";
-					} else {
-						query += " where";
-					}
-					query += " LOWER(DESCRIPTION) LIKE '%" + suchTermin.getDescription().toLowerCase()+"%'";
-					first = false;
+					query += " AND LOWER(t.DESCRIPTION) LIKE '%" + suchTermin.getDescription().toLowerCase()+"%'";
 				}
 				if (this.datum!=null){
-					if (!first){
-						query += " AND";
-					} else {
-						query += " where";
-					}
-
-					query += " DATE LIKE '%" + this.datum +"%'";
-					first = false;
+					query += " AND t.DATE LIKE '%" + this.datum +"%'";
+				}
+				if (this.group != null){
+					query +=" AND ok.TITLE LIKE '%"+ this.group+"%'";
 				}
 				System.out.println("Query:"+query);
 				this.termine =  gdo.unsafeQuery(query, suchTermin);
