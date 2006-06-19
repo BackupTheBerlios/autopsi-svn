@@ -36,10 +36,12 @@ import javax.swing.text.PlainDocument;
 
 import autopsi.basis.model.KontaktTableModel;
 import autopsi.basis.model.LVATableModel;
+import autopsi.basis.model.TerminContainerTableModel;
 import autopsi.basis.model.TerminTableModel;
 import autopsi.database.table.AttachableObjectKategorie;
 import autopsi.database.table.Termin;
 import autopsi.database.table.Kontakt;
+import autopsi.database.table.TerminContainer;
 import autopsi.database.table.TerminKategorie;
 import autopsi.database.table.Lva;
 import autopsi.database.table.LvaKategorie;
@@ -77,17 +79,19 @@ public class SearchFrame extends javax.swing.JFrame implements ActionListener {
 	
 	private JPanel jkontaktSuchePanel;
 	private JPanel jLVASuchePanel;
-	private JPanel jTerminSuchePanel;
+	private JPanel jTerminSuchePanel, jTerminContainerSuchePanel;
 	
 	private JScrollPane jKontaktScrollPane;
 	private JScrollPane jLVAScrollPane;
 	private JScrollPane jTerminScrollPane;
+	private JScrollPane jTerminContainerScrollPane;
 		
 	private JTextField jVornameField, jNachnameField;
 	private JTextField jTelefonnummerField, jEmailField;
 	private JTextField jAdresseField, jPlzField, jOrtField;
 	private JTextField jTitelField, jLVANummerField, jBeschreibungField;
 	private JTextField jTerminTitelField, jTerminBeschreibungField;
+	private JTextField jTerminContainerTitelField, jTerminContainerBeschreibungField;;
 	private JFormattedTextField jGeburtsdatumField, jDatumField;
 
 	private JLabel jVornameLabel, jNachnameLabel, jGeburtsdatumLabel;
@@ -96,20 +100,22 @@ public class SearchFrame extends javax.swing.JFrame implements ActionListener {
 	private JLabel jTitelLabel, jNummerLabel, jBeschreibungLabel;
 	private JLabel jTypeLabel, jDatumLabel;
 	private JLabel jKontaktGruppeLabel, jLVAGruppeLabel, jTerminGruppeLabel;
-
-	private JCheckBox jTerminCheckBox, jTerminContainerCheckBox;
+	private JLabel jTerminContainerGruppeLabel;
 	
-	private JTable jKontaktTable, jLVATable, jTerminTable;
+	private JTable jKontaktTable, jLVATable, jTerminTable, jTerminContainerTable;
 	
 	private TerminTableModel jTerminTableModel;
+	private TerminContainerTableModel jTerminContainerTableModel;
 	private KontaktTableModel jKontaktTableModel;
 	private LVATableModel jLVATableModel;
 	
 	private JButton jKontaktSuchenButton, jTerminSuchenButton, jLVASuchenButton;
-	private ButtonGroup jKontaktSucheGroup,jLVASucheGroup, jTerminSucheGroup;
+	private JButton jTerminContainerSuchenButton;
+	private ButtonGroup jKontaktSucheGroup,jLVASucheGroup, jTerminSucheGroup, jTerminContainerSucheGroup;
 	private JRadioButton jKontaktOnlineSuchenRadioButton, jKontaktLokalSuchenRadioButton;
 	private JRadioButton jLVAOnlineSuchenRadioButton, jLVALokalSuchenRadioButton;
 	private JRadioButton jTerminOnlineSuchenRadioButton, jTerminLokalSuchenRadioButton;
+	private JRadioButton jTerminContainerOnlineSuchenRadioButton, jTerminContainerLokalSuchenRadioButton;
 	
 	
 	private JSeparator jSeparator1;
@@ -117,7 +123,7 @@ public class SearchFrame extends javax.swing.JFrame implements ActionListener {
 	private JSeparator jSeparator3;
 	
 	
-	private JComboBox jLVATypeComboBox, jTerminTypeComboBox;
+	private JComboBox jLVATypeComboBox, jTerminTypeComboBox, jTerminContainerGruppeComboBox;
 	private JComboBox jKontaktGruppeComboBox, jLVAGruppeComboBox, jTerminGruppeComboBox;
 	
 	/**
@@ -129,9 +135,11 @@ public class SearchFrame extends javax.swing.JFrame implements ActionListener {
 		super();
 		initGUI();
 		this.setTitle("Suchen");
+		this.setResizable(false);
 		//frame.getContentPane().add(this);
 		setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 		this.pack();
+		
 		
 		addWindowListener(new WindowAdapter()
 				{
@@ -502,18 +510,6 @@ public class SearchFrame extends javax.swing.JFrame implements ActionListener {
 							jTerminSuchenButton.setBounds(68, 105, 154, 28);
 							jTerminSuchenButton.addActionListener(this);
 							
-							jTerminCheckBox = new JCheckBox();
-							jTerminSuchePanel.add(jTerminCheckBox);
-							jTerminCheckBox.setText("Termin Suchen");
-							jTerminCheckBox.setBounds(183, 77, 98, 14);
-							jTerminCheckBox.setBackground(new java.awt.Color(255,255,255));
-							
-							jTerminContainerCheckBox = new JCheckBox();
-							jTerminSuchePanel.add(jTerminContainerCheckBox);
-							jTerminContainerCheckBox.setText("Termincontainer Suchen");
-							jTerminContainerCheckBox.setBounds(306, 77, 140, 14);
-							jTerminContainerCheckBox.setBackground(new java.awt.Color(255,255,255));
-							
 							jTerminLokalSuchenRadioButton = new JRadioButton();
 							jTerminSuchePanel.add(jTerminLokalSuchenRadioButton);
 							jTerminLokalSuchenRadioButton.setText("Lokal Suchen");
@@ -565,7 +561,95 @@ public class SearchFrame extends javax.swing.JFrame implements ActionListener {
 
 					}
 					
+// #####################################################################
 					
+					jTerminContainerSuchePanel = new JPanel();
+					jTabbedSearchPane.addTab("TerminContainer Suche", null, jTerminContainerSuchePanel, null);
+					jTerminContainerSuchePanel.setPreferredSize(new java.awt.Dimension(671, 357));
+					jTerminContainerSuchePanel.setLayout(null);
+					jTerminContainerSuchePanel.setBackground(new java.awt.Color(255,255,255));
+					{
+						jTitelLabel = new JLabel();
+						jTerminContainerSuchePanel.add(jTitelLabel);
+						jTitelLabel.setText("Titel:");
+						jTitelLabel.setBounds(74, 12, 28, 14);
+
+						jBeschreibungLabel = new JLabel();
+						jTerminContainerSuchePanel.add(jBeschreibungLabel);
+						jBeschreibungLabel.setText("Beschreibung:");
+						jBeschreibungLabel.setBounds(30, 35, 70, 14);	
+						
+						jTerminContainerTitelField = new JTextField();
+						jTerminContainerSuchePanel.add(jTerminContainerTitelField);
+						jTerminContainerTitelField.setBounds(105, 7, 210, 21);
+
+
+						jTerminContainerBeschreibungField = new JTextField();
+						jTerminContainerSuchePanel.add(jTerminContainerBeschreibungField);
+						jTerminContainerBeschreibungField.setBounds(105, 30, 210, 21);			
+
+						{
+							jSeparator3 = new JSeparator();
+							jTerminContainerSuchePanel.add(jSeparator3);
+							jSeparator3.setBounds(7, 140, 679, 7);
+						}
+						{
+							jTerminContainerSuchenButton = new JButton();
+							jTerminContainerSuchePanel.add(jTerminContainerSuchenButton);
+							jTerminContainerSuchenButton.setText("Termincontainer Suchen");
+							jTerminContainerSuchenButton.setBounds(68, 105, 154, 28);
+							jTerminContainerSuchenButton.addActionListener(this);
+							
+							jTerminContainerLokalSuchenRadioButton = new JRadioButton();
+							jTerminContainerSuchePanel.add(jTerminContainerLokalSuchenRadioButton);
+							jTerminContainerLokalSuchenRadioButton.setText("Lokal Suchen");
+							jTerminContainerLokalSuchenRadioButton.setBounds(231, 105, 91, 14);
+							jTerminContainerLokalSuchenRadioButton.setBackground(new java.awt.Color(255,255,255));
+	
+							jTerminContainerOnlineSuchenRadioButton = new JRadioButton();
+							jTerminContainerSuchePanel.add(jTerminContainerOnlineSuchenRadioButton);
+							jTerminContainerOnlineSuchenRadioButton.setText("Online Suchen");
+							jTerminContainerOnlineSuchenRadioButton.setBounds(231, 119, 98, 14);
+							jTerminContainerOnlineSuchenRadioButton.setBackground(new java.awt.Color(255,255,255));
+							
+							jTerminContainerLokalSuchenRadioButton.setSelected(true);
+							jTerminContainerSucheGroup = new ButtonGroup();
+							jTerminContainerSucheGroup.add(jTerminContainerLokalSuchenRadioButton);
+							jTerminContainerSucheGroup.add(jTerminContainerOnlineSuchenRadioButton);				
+							
+							jTerminContainerGruppeLabel = new JLabel();
+							jTerminContainerSuchePanel.add(jTerminContainerGruppeLabel);
+							jTerminContainerGruppeLabel.setText("Gruppe:");
+							jTerminContainerGruppeLabel.setBounds(348, 112, 42, 14);
+		
+							KategorieComboBoxModel jTerminContainerGruppeComboBoxModel = new KategorieComboBoxModel("ATTACHABLE_OBJECT_KATEGORIE", new AttachableObjectKategorie());
+							jTerminContainerGruppeComboBox = new JComboBox();
+							jTerminContainerSuchePanel.add(jTerminContainerGruppeComboBox);
+							jTerminContainerGruppeComboBox
+								.setModel(jTerminContainerGruppeComboBoxModel);
+							jTerminContainerGruppeComboBox.setBounds(392, 109, 175, 21);
+						}
+							
+
+						{
+							jTerminContainerScrollPane = new JScrollPane();
+							jTerminContainerSuchePanel.add(jTerminContainerScrollPane);
+							jTerminContainerScrollPane.setBounds(18, 147, 658, 203);
+							jTerminContainerScrollPane.setWheelScrollingEnabled(true);
+							jTerminContainerScrollPane.setBackground(new java.awt.Color(255,255,255));
+							{
+								jTerminContainerTableModel = new TerminContainerTableModel();
+								jTerminContainerTable = new JTable();
+								jTerminContainerScrollPane.setViewportView(jTerminContainerTable);
+								jTerminContainerTable.setModel(jTerminContainerTableModel);
+								jTerminContainerTable.setBounds(7, 252, 644, 56);
+								jTerminContainerTable.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
+								jTerminContainerTable.setShowGrid(true);
+								jTerminContainerTable.setGridColor(Color.LIGHT_GRAY);
+							}
+						}
+
+					}					
 				}
 			}
 		} catch (Exception e) {
@@ -647,9 +731,7 @@ public class SearchFrame extends javax.swing.JFrame implements ActionListener {
 					if (!jBeschreibungField.getText().equals("")){
 						lva.setDescription(jBeschreibungField.getText());
 					}
-					if (!jBeschreibungField.getText().equals("")){
-						lva.setDescription(jBeschreibungField.getText());
-					}
+					jLVATableModel.setGroup(jTerminGruppeComboBox.getSelectedItem().toString());
 					jLVATableModel.setSuchLVa(lva);
 				} else if (jLVAOnlineSuchenRadioButton.isSelected()) {
 					System.out.println("LVA wird online gesucht...");
@@ -676,6 +758,26 @@ public class SearchFrame extends javax.swing.JFrame implements ActionListener {
 					jTerminTableModel.setType(jTerminTypeComboBox.getSelectedItem().toString());
 					jTerminTableModel.setGroup(jTerminGruppeComboBox.getSelectedItem().toString());
 					jTerminTableModel.setSuchTermin(ter);
+				} else if (jTerminOnlineSuchenRadioButton.isSelected()) {
+					System.out.println("Termint wird online gesucht...");
+				}
+				
+			}  else if(cmd.equals("Termincontainer Suchen")) {
+				if (jTerminLokalSuchenRadioButton.isSelected()){
+					System.out.println("Termin wird lokal gesucht...");
+					TerminContainer terc = new TerminContainer();
+					if (!jTerminTitelField.getText().equals("")) {
+						terc.setTitle(jTerminTitelField.getText());
+					} else {
+						terc.setTitle(null);
+					}
+					if (!jTerminBeschreibungField.getText().equals("")){
+						terc.setDescription(jTerminBeschreibungField.getText());
+					} else {
+						terc.setDescription(null);
+					}
+					jTerminContainerTableModel.setGroup(jTerminContainerGruppeComboBox.getSelectedItem().toString());
+					jTerminContainerTableModel.setSuchTerminc(terc);
 				} else if (jTerminOnlineSuchenRadioButton.isSelected()) {
 					System.out.println("Termint wird online gesucht...");
 				}
