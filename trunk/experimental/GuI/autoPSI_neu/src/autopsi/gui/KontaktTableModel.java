@@ -13,7 +13,7 @@ public class KontaktTableModel extends AbstractTableModel{
 	private static final long serialVersionUID = 8737097029189851737L;
 	public List <GenericDataObject> kontakte;
 	public Kontakt suchKontakt = null;
-	public String group = "";
+	public String group = null;
 	
 	private final String [] columnName = {"Vorname", "Nachname", "PLZ", "Ort"};
 	
@@ -44,8 +44,8 @@ public class KontaktTableModel extends AbstractTableModel{
 					query += " AND ( LOWER(FIRST_EMAIL) LIKE '%" + suchKontakt.getFirstEmail().toLowerCase() + "%' OR";
 					query += " LOWER(SECOND_EMAIL) LIKE '%" + suchKontakt.getFirstEmail().toLowerCase() +"%')";
 				}
-				if (this.group != ""){
-					query += " AND ok.TITLE LIKE '%"+ this.group+"%'";
+				if (this.group != null){
+					query += " AND LOWER(ok.TITLE) LIKE '%"+ this.group+"%'";
 				}
 				if (suchKontakt.getAZipCode()!=null) {
 					query += " AND A_ZIPCODE  = " + suchKontakt.getAZipCode();
