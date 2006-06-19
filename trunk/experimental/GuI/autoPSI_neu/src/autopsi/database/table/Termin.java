@@ -17,6 +17,7 @@ public class Termin extends GenericData implements Entry,GenericDataObject{
 	public Timestamp date = null;
 	public Integer duration = null;
 	public String place = null;
+	public Integer group_id;
 	
 	
 	public Termin(){
@@ -30,6 +31,7 @@ public class Termin extends GenericData implements Entry,GenericDataObject{
 			this.addAttribute("Datum",cl.getMethod("getDate", new Class[] {}), cl.getMethod("setDate", new Class[] {Timestamp.class} ));	
 			this.addAttribute("Dauer",cl.getMethod("getDuration", new Class[] {}), cl.getMethod("setDuration", new Class[] {Integer.class} ));
 			this.addAttribute("Ort",cl.getMethod("getPlace", new Class[] {}), cl.getMethod("setPlace", new Class[] {String.class} ));
+			this.addAttribute("GruppenId",cl.getMethod("getGroupID", new Class[] {}), cl.getMethod("setGroupID", new Class[] {Integer.class} ));
 		}
 		catch (Exception e){
 			System.out.println("Fehler beim Erstellen des Termin-Kategorie-Objekts::"+e.toString());
@@ -98,6 +100,14 @@ public class Termin extends GenericData implements Entry,GenericDataObject{
 	
 	public void setTerminContainerID(Integer terminContainer_id){
 		this.termincontainer_id = terminContainer_id;
+	}
+	
+	public int getGroupID(){
+		return this.group_id;
+	}
+	
+	public void setGroupID(Integer newGroupId){
+		this.group_id = newGroupId;
 	}
 	
 }
