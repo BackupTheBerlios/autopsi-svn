@@ -92,8 +92,8 @@ public class EditTerminFrame extends javax.swing.JFrame implements java.awt.even
 	private JTextField sec_titlefield;
 	private JLabel jLabel5;
 	private JButton open_button;
-	private JButton jButton5;
-	private JButton jButton4;
+	private JButton jDelObjectButton;
+	private JButton jAddObjectButton;
 	private JList jList1;
 	private JPanel jPanel1;
 	private JTextArea desc_area;
@@ -447,16 +447,18 @@ public class EditTerminFrame extends javax.swing.JFrame implements java.awt.even
 						jList1.setVisibleRowCount(1);
 					}
 					{
-						jButton4 = new JButton();
-						jPanel3.add(jButton4);
-						jButton4.setText("Hinzufügen");
-						jButton4.setBounds(231, 238, 98, 21);
+						jAddObjectButton = new JButton();
+						jPanel3.add(jAddObjectButton);
+						jAddObjectButton.setText("Hinzufügen");
+						jAddObjectButton.setBounds(231, 238, 98, 21);
+						this.jAddObjectButton.addMouseListener(this);
 					}
 					{
-						jButton5 = new JButton();
-						jPanel3.add(jButton5);
-						jButton5.setText("Löschen");
-						jButton5.setBounds(336, 238, 77, 21);
+						jDelObjectButton = new JButton();
+						jPanel3.add(jDelObjectButton);
+						jDelObjectButton.setText("Löschen");
+						jDelObjectButton.setBounds(336, 238, 77, 21);
+						this.jDelObjectButton.addMouseListener(this);
 					}
 					{
 						open_button = new JButton();
@@ -557,7 +559,7 @@ public class EditTerminFrame extends javax.swing.JFrame implements java.awt.even
 				}
 				if (obj instanceof Pruefung){
 					gef.setObjectToEdit((Pruefung)obj, false);
-					gef.setTableToEdit("Lehrmittel");
+					gef.setTableToEdit("Pruefung");
 				}
 				
 				
@@ -566,6 +568,57 @@ public class EditTerminFrame extends javax.swing.JFrame implements java.awt.even
 			
 			
 			}
+		}
+		if(arg0.getSource().equals(jDelObjectButton)){
+			System.out.println("EditTerminFrame.mousePressed(...)::Versuche angehängtes Objekt zu löschen");
+			GenericDataObject obj = null;
+			if(jList1.getSelectedIndex() != -1)
+				obj = attachedObjects.get(jList1.getSelectedIndex());
+			if(obj!= null){
+				
+				Anhaengen_termin at = new Anhaengen_termin();
+				at.setTable_Name(null);
+				at.setTerminId(this.ID);
+				
+				if (obj instanceof Kontakt){
+					this.gdo.setCurrentTable("Kontakt");
+					at.setGlobalId(((Kontakt)obj).getGlobalId());
+				}
+				if (obj instanceof Notiz){
+					this.gdo.setCurrentTable("Notiz");
+					at.setGlobalId(((Notiz)obj).getGlobalId());
+				}
+				if (obj instanceof Lva){
+					this.gdo.setCurrentTable("Lva");
+					at.setGlobalId(((Lva)obj).getGlobalId());
+				}
+				if (obj instanceof Lehrmittel){
+					this.gdo.setCurrentTable("Lehrmittel");
+					at.setGlobalId(((Lehrmittel)obj).getGlobalId());
+				}
+				if (obj instanceof Pruefung){
+					this.gdo.setCurrentTable("Pruefung");
+					at.setGlobalId(((Pruefung)obj).getGlobalId());
+				}
+				
+				try{
+					this.gdo.delDataObjects(obj);
+				}
+				catch (Exception e){
+					System.out.println("EditTerminFrame.mousePressed(...)::Konnte Attached Objekt nicht löschen::"+e.toString());
+				}
+				
+				this.gdo.setCurrentTable("anhaengen_termin");
+				try{
+					this.gdo.delDataObjects(at);
+				}
+				catch (Exception e){
+					System.out.println("EditTerminFrame.mousePressed(...)::Konnte Attached_termin-Objekt nicht löschen::"+e.toString());
+				}
+			}
+		}
+		if (arg0.getSource().equals(this.jAddObjectButton)){
+			
 		}
 	}
 
