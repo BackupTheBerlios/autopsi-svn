@@ -1,5 +1,6 @@
 package autopsi.javaspace;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
@@ -19,10 +20,10 @@ public class ObjectSpaceSharer {
 	}
 	
 	public void shareObjects(){
-		this.get
+		List<AttachableObjectKategorie> aol = this.getCategories();
 	}
 	
-	private List<GenericDataObject> getCategories(){
+	private List<AttachableObjectKategorie> getCategories(){
 	
 		this.gdo.setCurrentTable("attachable_object_kategorie");
 		List<GenericDataObject> categories = null;
@@ -33,6 +34,15 @@ public class ObjectSpaceSharer {
 			System.out.println("ObjectSpaceSharer.shareObjects()::Konnte die zu sharenden Kategorien nicht auslesen::"+e.toString());
 		}
 		Iterator<GenericDataObject> iter = categories.iterator();
+		ArrayList<AttachableObjectKategorie> result = new ArrayList<AttachableObjectKategorie>();
+		while(iter.hasNext()){
+			AttachableObjectKategorie aok = (AttachableObjectKategorie)iter.next();
+			if (aok.getShareable() == true){
+				System.out.println("ObjectSpaceSharer.getCategories()::aok.getTitle()=="+aok.getTitle());
+				result.add(aok);
+			}
+		}
+		return result;
 	}
 	
 }
