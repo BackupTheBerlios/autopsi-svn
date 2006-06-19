@@ -5,6 +5,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -84,8 +85,8 @@ public class SearchFrame extends javax.swing.JFrame implements ActionListener {
 	private JTextField jTelefonnummerField, jEmailField;
 	private JTextField jAdresseField, jPlzField, jOrtField;
 	private JTextField jTitelField, jLVANummerField, jBeschreibungField;
-	private JTextField jTerminTitelField, jTerminBeschreibungField, jDatumField;
-	private JFormattedTextField jGeburtsdatumField;
+	private JTextField jTerminTitelField, jTerminBeschreibungField;
+	private JFormattedTextField jGeburtsdatumField, jDatumField;
 
 	private JLabel jVornameLabel, jNachnameLabel, jGeburtsdatumLabel;
 
@@ -404,8 +405,7 @@ public class SearchFrame extends javax.swing.JFrame implements ActionListener {
 							jLVAGruppeLabel.setText("Gruppe:");
 							jLVAGruppeLabel.setBounds(348, 112, 42, 14);
 		
-							ComboBoxModel jLVAGruppeComboBoxModel = new DefaultComboBoxModel(
-								new String[] { "Item One", "Item Two" });
+							KategorieComboBoxModel jLVAGruppeComboBoxModel = new KategorieComboBoxModel("ATTACHABLE_OBJECT_KATEGORIE", new AttachableObjectKategorie());
 							jLVAGruppeComboBox = new JComboBox();
 							jLVASuchePanel.add(jLVAGruppeComboBox);
 							jLVAGruppeComboBox
@@ -504,7 +504,7 @@ public class SearchFrame extends javax.swing.JFrame implements ActionListener {
 						jTerminBeschreibungField.setBounds(105, 30, 210, 21);
 
 												
-						jDatumField = new JTextField();
+						jDatumField = new JFormattedTextField();
 						jTerminSuchePanel.add(jDatumField);
 						jDatumField.setBounds(420, 7, 210, 21);
 						
@@ -562,8 +562,7 @@ public class SearchFrame extends javax.swing.JFrame implements ActionListener {
 							jTerminGruppeLabel.setText("Gruppe:");
 							jTerminGruppeLabel.setBounds(348, 112, 42, 14);
 		
-							ComboBoxModel jTerminGruppeComboBoxModel = new DefaultComboBoxModel(
-								new String[] { "Item One", "Item Two" });
+							KategorieComboBoxModel jTerminGruppeComboBoxModel = new KategorieComboBoxModel("ATTACHABLE_OBJECT_KATEGORIE", new AttachableObjectKategorie());
 							jTerminGruppeComboBox = new JComboBox();
 							jTerminSuchePanel.add(jTerminGruppeComboBox);
 							jTerminGruppeComboBox
@@ -681,6 +680,11 @@ public class SearchFrame extends javax.swing.JFrame implements ActionListener {
 					} else {
 						ter.setDescription(null);
 					}
+					if (!jDatumField.getText().equals("")){
+						jTerminTableModel.setDatum(jDatumField.getText());
+					} else {
+						jTerminTableModel.setDatum(null);
+					}
 					jTerminTableModel.setSuchTermin(ter);
 				} else if (jTerminOnlineSuchenRadioButton.isSelected()) {
 					System.out.println("Termint wird online gesucht...");
@@ -694,8 +698,8 @@ public class SearchFrame extends javax.swing.JFrame implements ActionListener {
 	
 	protected MaskFormatter createFormatter(String s) {
 		 MaskFormatter formatter = null;
-		 try {
-			 formatter = new MaskFormatter(s);
+		try {
+			formatter = new MaskFormatter(s);
 		} catch (java.text.ParseException exc) {
 			System.err.println("formatter is bad: " + exc.getMessage());
 		}
