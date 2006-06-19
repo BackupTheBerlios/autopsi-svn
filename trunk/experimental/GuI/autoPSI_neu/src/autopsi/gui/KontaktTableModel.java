@@ -45,7 +45,7 @@ public class KontaktTableModel extends AbstractTableModel{
 					query += " LOWER(SECOND_EMAIL) LIKE '%" + suchKontakt.getFirstEmail().toLowerCase() +"%')";
 				}
 				if (this.group != null){
-					query += " AND LOWER(ok.TITLE) LIKE '%"+ this.group+"%'";
+					query += " AND ok.TITLE LIKE '%"+ this.group+"%'";
 				}
 				if (suchKontakt.getAZipCode()!=null) {
 					query += " AND A_ZIPCODE  = " + suchKontakt.getAZipCode();
