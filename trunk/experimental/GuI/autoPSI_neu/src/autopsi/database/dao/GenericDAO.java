@@ -124,9 +124,11 @@ public class GenericDAO implements IGenericDAO{
 //		sqlFields.beginTraversal();
 //		while(sqlFields.next())
 //			System.out.println("next=="+sqlFields.getCurrentName()+";"+sqlFields.getCurrentValue());
-	
+		
+		
 		SQLStatement sqlSelect = new SQLSelect(sqlTable, sqlFields);
 		String query = sqlSelect.getQuery();
+//		System.out.println("GenericDAO.getDataObjects(...)::query=="+query);
 		List<GenericDataObject> res = null;
 		try{
 			
