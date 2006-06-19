@@ -86,7 +86,7 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 	private JTextPane lblBeschreibung;
 	private JTabbedPane infobar;
 	private JButton searchButton;
-	private JPanel jPanel1;
+	private JLabel jLabel3;
 	private JTable timetable;
 	private JMenuItem view_dayNext;
 	private JMenuItem view_weekNext;
@@ -107,7 +107,6 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 	private JPanel jPanel5;
 	private JFormattedTextField dateJumper;
 	private JLabel jLabel1;
-	private JPanel jPanel4;
 	private JToolBar toolbar;
 	private JButton dayNext;
 	private JButton dayBack;
@@ -137,7 +136,6 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 	private JLabel jLabel6;
 	private JCheckBox zoomBox;
 	private JTextField txtSuche2;
-	private JPanel terminPanel;
 	private JLabel lblTerminContainer;
 	private JLabel lblOrt;
 	private JLabel lblDatum;
@@ -227,26 +225,10 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 				statusBar.setBorder(BorderFactory.createTitledBorder(""));
 			}
 			{
-				terminPanel = new JPanel();
-				getContentPane().add(terminPanel);
-				terminPanel.setBounds(0, 28, 252, 28);
-				terminPanel.setBorder(BorderFactory.createEtchedBorder(BevelBorder.LOWERED));
-				terminPanel.setLayout(null);
-				terminPanel.setBackground(new java.awt.Color(51,73,98));
-				{
-					lblDatum = new JLabel();
-					terminPanel.add(lblDatum);
-					lblDatum.setText("Montag, 22. Mai 2006");
-					lblDatum.setBounds(7, 3, 196, 21);
-					lblDatum.setFont(new java.awt.Font("Tahoma",1,14));
-					lblDatum.setForeground(new java.awt.Color(255,255,255));
-				}
-			}
-			{
 				today = new JPanel();
 				today.setLayout(null);
 				getContentPane().add(today);
-				today.setBounds(0, 56, 252, 182);
+				today.setBounds(0, 63, 252, 175);
 				today.setBorder(BorderFactory.createEtchedBorder(BevelBorder.LOWERED));
 				today.setBackground(new java.awt.Color(102,136,174));
 				{
@@ -260,7 +242,7 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 					todayScrollPane = new JScrollPane();
 					
 					today.add(todayScrollPane);
-					todayScrollPane.setBounds(7, 21, 238, 154);
+					todayScrollPane.setBounds(7, 21, 238, 147);
 					todayScrollPane.setBackground(new java.awt.Color(255,255,255));
 					todayScrollPane.setBorder(new LineBorder(new java.awt.Color(0,0,0), 1, false));
 					{
@@ -275,24 +257,27 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 			{
 				toolbar = new JToolBar();
 				getContentPane().add(toolbar);
-				toolbar.setBounds(0, 0, 938, 28);
+				toolbar.setBounds(0, 0, 938, 35);
 				toolbar.setFloatable(false);
 				toolbar.setLayout(null);
+				toolbar.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
+				toolbar.setBackground(new java.awt.Color(240,240,240));
 				{
 					neuerTermin = new JButton();
 					toolbar.add(neuerTermin);
 					neuerTermin.setIcon(new ImageIcon(
 						"src/images/newTermin.GIF"));
 					neuerTermin.setBounds(0, 0, 28, 28);
-					neuerTermin.setBorder(BorderFactory
-						.createEtchedBorder(BevelBorder.LOWERED));
+					neuerTermin.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
+					neuerTermin.setOpaque(false);
 					neuerTermin.addMouseListener(this);
 				}
 				{
 					jPanel3 = new JPanel();
 					toolbar.add(jPanel3);
 					jPanel3.setBounds(84, 0, 28, 28);
-					jPanel3.setBorder(BorderFactory.createEtchedBorder(BevelBorder.LOWERED));
+					jPanel3.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
+					jPanel3.setOpaque(false);
 				}
 				{
 					editTC = new JButton();
@@ -300,22 +285,16 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 					editTC.setIcon(new ImageIcon(
 						"src/images/editTerminContainer.GIF"));
 					editTC.setBounds(196, 0, 28, 28);
-					editTC.setBorder(BorderFactory
-						.createEtchedBorder(BevelBorder.LOWERED));
-				}
-				{
-					jPanel4 = new JPanel();
-					toolbar.add(jPanel4);
-					jPanel4.setBounds(252, 0, 14, 28);
-					jPanel4.setBorder(BorderFactory.createEtchedBorder(BevelBorder.LOWERED));
+					editTC.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
+					editTC.setOpaque(false);
 				}
 				{
 					weekBack = new JButton();
 					toolbar.add(weekBack);
 					weekBack.setBounds(294, 0, 28, 28);
 					weekBack.setIcon(new ImageIcon("src/images/weekBack.GIF"));
-					weekBack.setBorder(BorderFactory
-						.createEtchedBorder(BevelBorder.LOWERED));
+					weekBack.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
+					weekBack.setOpaque(false);
 					weekBack.addMouseListener(this);
 				}
 				{
@@ -423,8 +402,8 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 					monthBack
 						.setIcon(new ImageIcon("src/images/monthBack.GIF"));
 					monthBack.setBounds(266, 0, 28, 28);
-					monthBack.setBorder(BorderFactory
-						.createEtchedBorder(BevelBorder.LOWERED));
+					monthBack.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
+					monthBack.setOpaque(false);
 					monthBack.addMouseListener(this);
 				}
 				{
@@ -433,8 +412,8 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 					deleteTC.setIcon(new ImageIcon(
 						"src/images/deleteTerminContainer.GIF"));
 					deleteTC.setBounds(224, 0, 28, 28);
-					deleteTC.setBorder(BorderFactory
-						.createEtchedBorder(BevelBorder.LOWERED));
+					deleteTC.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
+					deleteTC.setOpaque(false);
 				}
 				{
 					newTerminContainer = new JButton();
@@ -442,8 +421,8 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 					newTerminContainer.setIcon(new ImageIcon(
 						"src/images/newTerminContainer.GIF"));
 					newTerminContainer.setBounds(168, 0, 28, 28);
-					newTerminContainer.setBorder(BorderFactory
-						.createEtchedBorder(BevelBorder.LOWERED));
+					newTerminContainer.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
+					newTerminContainer.setOpaque(false);
 					newTerminContainer.addMouseListener(this);
 				}
 				{
@@ -452,8 +431,8 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 					editTermin.setIcon(new ImageIcon(
 						"src/images/editTermin.GIF"));
 					editTermin.setBounds(28, 0, 28, 28);
-					editTermin.setBorder(BorderFactory
-						.createEtchedBorder(BevelBorder.LOWERED));
+					editTermin.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
+					editTermin.setOpaque(false);
 					editTermin.addMouseListener(this);
 				}
 				{
@@ -462,8 +441,8 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 					deleteTermin.setIcon(new ImageIcon(
 						"src/images/deleteTermin.GIF"));
 					deleteTermin.setBounds(56, 0, 28, 28);
-					deleteTermin.setBorder(BorderFactory
-						.createEtchedBorder(BevelBorder.LOWERED));
+					deleteTermin.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
+					deleteTermin.setOpaque(false);
 					deleteTermin.addMouseListener(this);
 				}
 				{
@@ -477,14 +456,9 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 					toolbar.add(searchButton);
 					searchButton.setIcon(new ImageIcon("src/images/suche.GIF"));
 					searchButton.setBounds(112, 0, 28, 28);
-					searchButton.setBorder(BorderFactory.createEtchedBorder(BevelBorder.LOWERED));
+					searchButton.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
+					searchButton.setOpaque(false);
 					searchButton.addMouseListener(this);
-				}
-				{
-					jPanel1 = new JPanel();
-					toolbar.add(jPanel1);
-					jPanel1.setBounds(140, 0, 28, 28);
-					jPanel1.setBorder(BorderFactory.createEtchedBorder(BevelBorder.LOWERED));
 				}
 			}
 			{
@@ -738,6 +712,20 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 				timetable.setBounds(253, 35, 35, 483);
 				timetable.setBorder(new LineBorder(new java.awt.Color(0,0,0), 1, false));
 				timetable.setVisible(false);
+			}
+			{
+				jLabel3 = new JLabel();
+				getContentPane().add(jLabel3);
+				jLabel3.setIcon(new ImageIcon(getClass().getClassLoader().getResource("images/background.gif")));
+				jLabel3.setBounds(0, 21, 252, 56);
+				{
+					lblDatum = new JLabel();
+					jLabel3.add(lblDatum);
+					lblDatum.setText("Montag, 22. Mai 2006");
+					lblDatum.setBounds(7, 14, 210, 28);
+					lblDatum.setFont(new java.awt.Font("Tahoma", 1, 14));
+					lblDatum.setForeground(new java.awt.Color(255, 255, 255));
+				}
 			}
 			{
 				mainMenu = new JMenuBar();
