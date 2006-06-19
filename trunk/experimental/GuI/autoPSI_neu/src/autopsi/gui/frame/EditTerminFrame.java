@@ -703,7 +703,7 @@ public class EditTerminFrame extends javax.swing.JFrame implements java.awt.even
 			if(tableName.equals("lva")){
 				gdo.setCurrentTable("lva");
 				try {
-					ob = gdo.unsafeQuery("select * from notiz where global_id="+globalId, new Notiz());
+					ob = gdo.unsafeQuery("select * from lva where global_id="+globalId, new Lva());
 				} 
 				catch (Exception e)
 				{
@@ -721,7 +721,7 @@ public class EditTerminFrame extends javax.swing.JFrame implements java.awt.even
 			if(tableName.equals("lehrmittel")){
 				gdo.setCurrentTable("lehrmittel");
 				try {
-					ob = gdo.unsafeQuery("select * from notiz where global_id="+globalId, new Notiz());
+					ob = gdo.unsafeQuery("select * from lehrmittel where global_id="+globalId, new Lehrmittel());
 				} 
 				catch (Exception e)
 				{
@@ -739,7 +739,7 @@ public class EditTerminFrame extends javax.swing.JFrame implements java.awt.even
 			if(tableName.equals("Pruefung")){
 				gdo.setCurrentTable("Pruefung");
 				try {
-					ob = gdo.unsafeQuery("select * from notiz where global_id="+globalId, new Notiz());
+					ob = gdo.unsafeQuery("select * from pruefung where global_id="+globalId, new Pruefung());
 				} 
 				catch (Exception e)
 				{
