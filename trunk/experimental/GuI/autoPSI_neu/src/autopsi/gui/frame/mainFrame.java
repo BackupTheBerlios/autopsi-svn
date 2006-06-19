@@ -56,7 +56,7 @@ import javax.swing.text.MaskFormatter;
 * THIS MACHINE, SO JIGLOO OR THIS CODE CANNOT BE USED
 * LEGALLY FOR ANY CORPORATE OR COMMERCIAL PURPOSE.
 */
-public class mainFrame extends javax.swing.JFrame implements java.awt.event.MouseListener,java.awt.event.MouseMotionListener{
+public class mainFrame extends javax.swing.JFrame implements java.awt.event.MouseListener,java.awt.event.MouseMotionListener,WindowListener{
 
 	{
 		//Set Look & Feel
@@ -175,6 +175,7 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 	
 	private void setTable()
 	{
+		this.addWindowListener(this);
 		table = new JTable();	
 		setTimeSpace(calStart);
 		MonatTM tablemodel = new MonatTM(tsBegin,tsEnd);
@@ -1504,6 +1505,46 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 		if(select) todayList.setSelectedIndex(selection);
 		
 		loadTerminData(true);
+	}
+
+	public void windowOpened(WindowEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void windowClosing(WindowEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void windowClosed(WindowEvent arg0) {
+		GenericDAO gdao = new GenericDAO();
+		try {
+			gdao.unsafeQuery("Shutdown immediately", new Notiz());
+		} catch (Exception e){
+			System.out.println("mainFrame.windowClosed(..)::Konnte Datenbankverbindungen nicht schlieﬂen::"+e.toString());
+		}
+		
+	}
+
+	public void windowIconified(WindowEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void windowDeiconified(WindowEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void windowActivated(WindowEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void windowDeactivated(WindowEvent arg0) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }
