@@ -36,9 +36,11 @@ import javax.swing.text.PlainDocument;
 
 import autopsi.basis.model.KontaktTableModel;
 import autopsi.basis.model.LVATableModel;
+import autopsi.basis.model.LehrmittelTableModel;
 import autopsi.basis.model.TerminContainerTableModel;
 import autopsi.basis.model.TerminTableModel;
 import autopsi.database.table.AttachableObjectKategorie;
+import autopsi.database.table.LehrmittelKategorie;
 import autopsi.database.table.Termin;
 import autopsi.database.table.Kontakt;
 import autopsi.database.table.TerminContainer;
@@ -80,52 +82,55 @@ public class SearchFrame extends javax.swing.JFrame implements ActionListener {
 	private JPanel jkontaktSuchePanel;
 	private JPanel jLVASuchePanel;
 	private JPanel jTerminSuchePanel, jTerminContainerSuchePanel;
+	private JPanel jLehrmittelSuchePanel;
 	
 	private JScrollPane jKontaktScrollPane;
 	private JScrollPane jLVAScrollPane;
 	private JScrollPane jTerminScrollPane;
 	private JScrollPane jTerminContainerScrollPane;
+	private JScrollPane jLehrmittelScrollPane;
 		
 	private JTextField jVornameField, jNachnameField;
 	private JTextField jTelefonnummerField, jEmailField;
 	private JTextField jAdresseField, jPlzField, jOrtField;
 	private JTextField jTitelField, jLVANummerField, jBeschreibungField;
 	private JTextField jTerminTitelField, jTerminBeschreibungField;
-	private JTextField jTerminContainerTitelField, jTerminContainerBeschreibungField;;
+	private JTextField jTerminContainerTitelField, jTerminContainerBeschreibungField;
+	private JTextField jLehrmittelNameField, jLehrmittelBeschreibungField;
 	private JFormattedTextField jGeburtsdatumField, jDatumField;
 
 	private JLabel jVornameLabel, jNachnameLabel, jGeburtsdatumLabel;
-
 	private JLabel jTelefonnummerLabel, jEmailLabel, jAdresseLabel, jOrtLabel, jPlzLabel;
 	private JLabel jTitelLabel, jNummerLabel, jBeschreibungLabel;
 	private JLabel jTypeLabel, jDatumLabel;
 	private JLabel jKontaktGruppeLabel, jLVAGruppeLabel, jTerminGruppeLabel;
 	private JLabel jTerminContainerGruppeLabel;
+	private JLabel jLehrmittelNameLabel, jLehrmittelGruppeLabel;
 	
-	private JTable jKontaktTable, jLVATable, jTerminTable, jTerminContainerTable;
+	private JTable jKontaktTable, jLVATable, jTerminTable, jTerminContainerTable, jLehrmittelTable;
 	
 	private TerminTableModel jTerminTableModel;
 	private TerminContainerTableModel jTerminContainerTableModel;
 	private KontaktTableModel jKontaktTableModel;
 	private LVATableModel jLVATableModel;
+	private LehrmittelTableModel jLehrmittelTableModel;
 	
 	private JButton jKontaktSuchenButton, jTerminSuchenButton, jLVASuchenButton;
-	private JButton jTerminContainerSuchenButton;
-	private ButtonGroup jKontaktSucheGroup,jLVASucheGroup, jTerminSucheGroup, jTerminContainerSucheGroup;
+	private JButton jTerminContainerSuchenButton, jLehrmittelSuchenButton;
+	private ButtonGroup jKontaktSucheGroup,jLVASucheGroup, jTerminSucheGroup, jTerminContainerSucheGroup, jLehrmittelSucheGroup;
 	private JRadioButton jKontaktOnlineSuchenRadioButton, jKontaktLokalSuchenRadioButton;
 	private JRadioButton jLVAOnlineSuchenRadioButton, jLVALokalSuchenRadioButton;
 	private JRadioButton jTerminOnlineSuchenRadioButton, jTerminLokalSuchenRadioButton;
 	private JRadioButton jTerminContainerOnlineSuchenRadioButton, jTerminContainerLokalSuchenRadioButton;
+	private JRadioButton jLehrmittelLokalSuchenRadioButton, jLehrmittelOnlineSuchenRadioButton;
 	
 	
-	private JSeparator jSeparator1;
-	private JSeparator jSeparator2;
-	private JSeparator jSeparator3;
+	private JSeparator jSeparator1,jSeparator2,jSeparator3,jSeparator4,jSeparator5;
 	
 	
 	private JComboBox jLVATypeComboBox, jTerminTypeComboBox, jTerminContainerGruppeComboBox;
 	private JComboBox jKontaktGruppeComboBox, jLVAGruppeComboBox, jTerminGruppeComboBox;
-	
+	private JComboBox jLehrmittelGruppeComboBox, jLehrmittelTypeComboBox;
 	/**
 	* Auto-generated main method to display this 
 	* JPanel inside a new JFrame.
@@ -589,9 +594,9 @@ public class SearchFrame extends javax.swing.JFrame implements ActionListener {
 						jTerminContainerBeschreibungField.setBounds(105, 30, 210, 21);			
 
 						{
-							jSeparator3 = new JSeparator();
-							jTerminContainerSuchePanel.add(jSeparator3);
-							jSeparator3.setBounds(7, 140, 679, 7);
+							jSeparator4 = new JSeparator();
+							jTerminContainerSuchePanel.add(jSeparator4);
+							jSeparator4.setBounds(7, 140, 679, 7);
 						}
 						{
 							jTerminContainerSuchenButton = new JButton();
@@ -649,7 +654,129 @@ public class SearchFrame extends javax.swing.JFrame implements ActionListener {
 							}
 						}
 
-					}					
+					}
+					
+// #####################################################################
+					
+					jLehrmittelSuchePanel = new JPanel();
+					jTabbedSearchPane.addTab("Lehrmittel Suche", null, jLehrmittelSuchePanel, null);
+					jLehrmittelSuchePanel.setPreferredSize(new java.awt.Dimension(671, 357));
+					jLehrmittelSuchePanel.setLayout(null);
+					jLehrmittelSuchePanel.setBackground(new java.awt.Color(255,255,255));
+					{
+						jLehrmittelNameLabel = new JLabel();
+						jLehrmittelSuchePanel.add(jLehrmittelNameLabel);
+						jLehrmittelNameLabel.setText("Titel:");
+						jLehrmittelNameLabel.setBounds(74, 12, 28, 14);
+
+						jBeschreibungLabel = new JLabel();
+						jLehrmittelSuchePanel.add(jNummerLabel);
+						jNummerLabel.setText("Beschreibung:");
+						jNummerLabel.setBounds(54, 35, 49, 14);
+
+						jTypeLabel = new JLabel();
+						jLehrmittelSuchePanel.add(jTypeLabel);
+						jTypeLabel.setText("Type:");
+						jTypeLabel.setBounds(364, 13, 56, 14);
+
+	
+						
+						jLehrmittelNameField = new JTextField();
+						jLehrmittelSuchePanel.add(jLehrmittelNameField);
+						jLehrmittelNameField.setBounds(105, 7, 210, 21);
+
+
+						jLehrmittelBeschreibungField = new JTextField();
+						jLehrmittelSuchePanel.add(jLehrmittelBeschreibungField);
+						jLehrmittelBeschreibungField.setBounds(105, 30, 210, 21);
+;		
+						
+						KategorieComboBoxModel jLehrmittelTypeComboBoxModel = new KategorieComboBoxModel("Lehrmittel_KATEGORIE", new LehrmittelKategorie());
+						jLehrmittelTypeComboBox = new JComboBox();
+						jLehrmittelSuchePanel.add(jLehrmittelTypeComboBox);
+						jLehrmittelTypeComboBox.setModel(jLehrmittelTypeComboBoxModel);
+						jLehrmittelTypeComboBox.setBounds(420, 7, 210, 21);
+
+						{
+							jSeparator5 = new JSeparator();
+							jLehrmittelSuchePanel.add(jSeparator5);
+							jSeparator5.setBounds(7, 140, 679, 7);
+						}
+						{
+							jLehrmittelSuchenButton = new JButton();
+							jLehrmittelSuchePanel.add(jLehrmittelSuchenButton);
+							jLehrmittelSuchenButton.setText("Lehrmittel Suchen");
+							jLehrmittelSuchenButton.setBounds(68, 105, 154, 28);
+							jLehrmittelSuchenButton.addActionListener(this);
+							
+							jLehrmittelLokalSuchenRadioButton = new JRadioButton();
+							jLehrmittelSuchePanel.add(jLehrmittelLokalSuchenRadioButton);
+							jLehrmittelLokalSuchenRadioButton.setText("Lokal Suchen");
+							jLehrmittelLokalSuchenRadioButton.setBounds(231, 105, 91, 14);
+	
+							jLehrmittelOnlineSuchenRadioButton = new JRadioButton();
+							jLehrmittelSuchePanel.add(jLehrmittelOnlineSuchenRadioButton);
+							jLehrmittelOnlineSuchenRadioButton.setText("Online Suchen");
+							jLehrmittelOnlineSuchenRadioButton.setBounds(231, 119, 98, 14);
+							
+							jLehrmittelLokalSuchenRadioButton.setSelected(true);
+							jLehrmittelSucheGroup = new ButtonGroup();
+							jLehrmittelSucheGroup.add(jLehrmittelLokalSuchenRadioButton);
+							jLehrmittelLokalSuchenRadioButton.setBackground(new java.awt.Color(255,255,255));
+							jLehrmittelSucheGroup.add(jLehrmittelOnlineSuchenRadioButton);				
+							jLehrmittelOnlineSuchenRadioButton.setBackground(new java.awt.Color(255,255,255));
+							
+							jLehrmittelGruppeLabel = new JLabel();
+							jLehrmittelSuchePanel.add(jLehrmittelGruppeLabel);
+							jLehrmittelGruppeLabel.setText("Gruppe:");
+							jLehrmittelGruppeLabel.setBounds(348, 112, 42, 14);
+		
+							KategorieComboBoxModel jLehrmittelGruppeComboBoxModel = new KategorieComboBoxModel("ATTACHABLE_OBJECT_KATEGORIE", new AttachableObjectKategorie());
+							jLehrmittelGruppeComboBox = new JComboBox();
+							jLehrmittelSuchePanel.add(jLehrmittelGruppeComboBox);
+							jLehrmittelGruppeComboBox
+								.setModel(jLehrmittelGruppeComboBoxModel);
+							jLehrmittelGruppeComboBox.setBounds(392, 109, 175, 21);
+						}
+
+						{
+							jLehrmittelScrollPane = new JScrollPane();
+							jLehrmittelSuchePanel.add(jLehrmittelScrollPane);
+							jLehrmittelScrollPane.setBounds(18, 147, 658, 203);
+							jLehrmittelScrollPane.setWheelScrollingEnabled(true);
+							jLehrmittelScrollPane.setBackground(new java.awt.Color(255,255,255));
+							{
+								jLehrmittelTableModel = new LehrmittelTableModel ();
+								jLehrmittelTable = new JTable();
+								jLehrmittelScrollPane
+									.setViewportView(jLehrmittelTable);
+								jLehrmittelTable.setModel(jLehrmittelTableModel);
+								jLehrmittelTable.setBounds(7, 252, 644, 56);
+								jLehrmittelTable.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
+								jLehrmittelTable.setShowGrid(true);
+								jLehrmittelTable.setGridColor(Color.LIGHT_GRAY);
+							}
+						}
+						
+
+					}
+					
+// #####################################################################
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
 				}
 			}
 		} catch (Exception e) {
