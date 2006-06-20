@@ -69,35 +69,34 @@ public class PruefungTableModel extends AbstractTableModel {
 		boolean deleted = false;
 		p = null;
 		//	 Check each cell in the range
-	    for (int r=0; r<this.getColumnCount(); r++) {
-            if (table.isCellSelected(r, 1)) {
-            	selected = true;
-            	p=(Pruefung) this.getPruefungen().get(r);
-            	
-            	if (p.getGlobalId() != null && p.getGlobalId() != 0 ) {
-            	
-	            	int auswahl = JOptionPane.showConfirmDialog(null, "Sind sie sicher dass sie die Prüfung löschen wollen?", "Löschen?",JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.ERROR_MESSAGE);
-	            	if (auswahl == JOptionPane.YES_OPTION) {
-	            		//weiter mit löschen
-	            		deleted = this.deletePruefung(p);
-	            		if (deleted) {
-	            			JOptionPane.showMessageDialog(null, "Die Prüfung wurde erfolgreich gelöscht." , "Gelöscht!" , JOptionPane.INFORMATION_MESSAGE);
-	            		} else {
-	            			JOptionPane.showMessageDialog(null, "Das Prüfung konnte nicht gelöscht werden." , "Löschen!" , JOptionPane.ERROR_MESSAGE);
-	            		}
-	            		
+	    for (int r=0; r<this.getRowCount(); r++) {
+        	
+	            if (table.isCellSelected(r, 1)) {
+	            	System.out.println("This row is selected: " +r);
+	            	selected = true;
+	            	p=(Pruefung) this.getPruefungen().get(r);
+	            	if (p.getGlobalId() != null && p.getGlobalId() != 0 ) {
+	            		int auswahl = JOptionPane.showConfirmDialog(null, "Sind sie sicher dass sie die selectierte(n) Prüfung(en) löschen wollen?", "Löschen?",JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.ERROR_MESSAGE);
+		            	if (auswahl == JOptionPane.YES_OPTION) {
+		            		//weiter mit löschen
+		            		deleted = this.deletePruefung(p);
+		            		if (deleted) {
+		            			JOptionPane.showMessageDialog(null, "Die Prüfung wurde erfolgreich gelöscht." , "Gelöscht!" , JOptionPane.INFORMATION_MESSAGE);
+		            		} else {
+		            			JOptionPane.showMessageDialog(null, "Das Prüfung konnte nicht gelöscht werden." , "Löschen!" , JOptionPane.ERROR_MESSAGE);
+		            		}
+		            	}
 	            	} else {
+	            		JOptionPane.showMessageDialog(null, "Diese Prüfung kann nicht gelöscht werden." , "Leser wurde nicht ausgewählt!" , JOptionPane.ERROR_MESSAGE);
 	            	}
-            	} else {
-            		JOptionPane.showMessageDialog(null, "Diese Prüfung kann nicht gelöscht werden." , "Leser wurde nicht ausgewählt!" , JOptionPane.ERROR_MESSAGE);
-            	}
-            	
-            }
+	            	
+	            }
 	    }
 	    
 	    if (selected == false) {
 	    	JOptionPane.showMessageDialog(null, "Bitte selektieren Sie eine Prüfung in der Tabelle", "Prüfung wurde nicht ausgewählt!" , JOptionPane.ERROR_MESSAGE);
 	    }
+	    this.fireDataChanged();
 	}
 	
 	/**
@@ -110,7 +109,7 @@ public class PruefungTableModel extends AbstractTableModel {
 		try{
 			IGenericDAO gdo = new GenericDAO();
 			this.geloeschtePruefung = gdo.unsafeQuery("DELETE FROM PRUEFUNG WHERE GLOBAL_ID ="+p.getGlobalId(), new Pruefung());
-			this.fireDataChanged();
+			return true;
 
 		} catch (Exception e){
 			System.out.println("PruefungTableModel @ deletePruefung;"+e.toString());
