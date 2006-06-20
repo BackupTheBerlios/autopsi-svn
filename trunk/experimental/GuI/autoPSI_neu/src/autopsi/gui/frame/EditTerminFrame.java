@@ -36,6 +36,9 @@ import javax.swing.ListModel;
 import javax.swing.WindowConstants;
 import javax.swing.border.LineBorder;
 import javax.swing.text.MaskFormatter;
+
+import com.sun.java_cup.internal.internal_error;
+
 import autopsi.gui.frame.EditTerminContainerFrame;
 import autopsi.database.dao.GenericDAO;
 import autopsi.database.dao.GenericDataObject;
@@ -97,6 +100,7 @@ public class EditTerminFrame extends javax.swing.JFrame implements java.awt.even
 	private JButton open_button;
 	private JButton jDelObjectButton;
 	private JButton jAddObjectButton;
+	private JButton editTC;
 	private JButton edit_Group_button;
 	private JButton edit_Type_button;
 	private JList jList1;
@@ -449,8 +453,8 @@ public class EditTerminFrame extends javax.swing.JFrame implements java.awt.even
 					{
 						newTC = new JButton();
 						jPanel1.add(newTC);
-						newTC.setText("erstellen ...");
-						newTC.setBounds(322, 14, 91, 21);
+						newTC.setText("erstellen");
+						newTC.setBounds(322, 14, 77, 21);
 						newTC.addMouseListener(this);
 					}
 					{
@@ -579,6 +583,13 @@ public class EditTerminFrame extends javax.swing.JFrame implements java.awt.even
 				edit_Group_button.setText("+");
 				edit_Group_button.setBounds(399, 147, 14, 21);
 				edit_Group_button.addMouseListener(this);
+			}
+			{
+				editTC = new JButton();
+				jPanel1.add(editTC);
+				editTC.setText("...");
+				editTC.setBounds(399, 14, 14, 21);
+				editTC.addMouseListener(this);
 			}
 			{
 				abort_button = new JButton();
@@ -762,6 +773,13 @@ public class EditTerminFrame extends javax.swing.JFrame implements java.awt.even
 			gef.setVisible(true);
 			}
 		}
+		if(arg0.getSource().equals(editTC)){
+			int id = ((TerminContainer)(termin_cont_data.get(tcTitle_box.getSelectedIndex()))).getId();
+			EditTerminContainerFrame frame = new EditTerminContainerFrame(this,id);
+			frame.setLocation(this.getLocation().x+20,this.getLocation().y+20);
+			frame.setTitle("Termincontainer bearbeiten");
+;			frame.setVisible(true);
+		}
 	}
 
 	public void mouseReleased(MouseEvent arg0) {
@@ -790,6 +808,12 @@ public class EditTerminFrame extends javax.swing.JFrame implements java.awt.even
 		if(arg0.getSource().equals(type_add)){
 			jLabel5.setText("Termintyp hinzufügen");
 		}
+		if(arg0.getSource().equals(editTC)){
+			jLabel5.setText("Termincontainer bearbeiten");
+		}
+		if(arg0.getSource().equals(newTC)){
+			jLabel5.setText("neuen Termincontainer erstellen");
+		}
 	}
 
 	public void mouseExited(MouseEvent arg0) {
@@ -814,7 +838,12 @@ public class EditTerminFrame extends javax.swing.JFrame implements java.awt.even
 		if(arg0.getSource().equals(type_add)){
 			jLabel5.setText("");
 		}
-		
+		if(arg0.getSource().equals(editTC)){
+			jLabel5.setText("");
+		}
+		if(arg0.getSource().equals(newTC)){
+			jLabel5.setText("");
+		}
 	}
 	private void showErrorDialog(String title, String text)
 	{
