@@ -823,6 +823,8 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 		{ //zeigt den angeklickten Tag in der Infobar an
 			
 			if(zoomBox.getSelectedObjects()!=null) tableZoom();
+			
+			selection = -1; 
 			currentCell.x = table.rowAtPoint(table.getMousePosition());
 			currentCell.y = table.columnAtPoint(table.getMousePosition());
 			
@@ -892,23 +894,19 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 		}
 		if(arg0.getSource().equals(todayList)) {
 			selection = todayList.getSelectedIndex()+1;
-			loadTerminData(false);
+			loadTerminData();
 		}
 		if(arg0.getSource().equals(button_newTermin)) {
 			EditTerminFrame newTermin = new EditTerminFrame(this,c_marker, null);
 			newTermin.setTitle("neuen Termin hinzufügen");
 			newTermin.setLocation(this.getLocation().x+30,this.getLocation().y+30);
 			newTermin.setVisible(true);
-			updateTable();
-			updateInfoBar(false);
 		}
 		if(arg0.getSource().equals(button_newTC)) {
 			EditTerminContainerFrame frame = new EditTerminContainerFrame(this,-1);
 			frame.setLocation(this.getLocation().x+20,this.getLocation().y+20);
 			frame.setTitle("neuen Termincontainer hinzufügen");
 ;			frame.setVisible(true);
-			updateTable();
-			updateInfoBar(false);
 		}
 		if(arg0.getSource().equals(button_editTermin)) {
 			
@@ -917,7 +915,6 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 			newTermin.setTitle("Termin bearbeiten");
 			newTermin.setLocation(this.getLocation().x+30,this.getLocation().y+30);
 			newTermin.setVisible(true);
-		
 			}
 			
 		}
@@ -1352,20 +1349,6 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 		this.setTitle("autoPSI | " + lblMonth.getText());
 	}
 	
-	/*Liest Termine aus einer Tag-Zelle aus und füllt sie in die Today-Liste
-	 * 
-	 */
-	private void loadList()
-	{
-		for(int i = 1;i<currentValue.length;i++)
-		{
-			String terminItem = currentValue[i].getDate().toString().substring(11,16) + 
-								" " + currentValue[i].getSecondaryTitle();
-			todayListModel.addElement(terminItem);
-		}
-		
-	}
-	
 	/* Diese Methode berechnet das Startdatum für die Monatsansicht.
 	 * Je nach übergebenem Datum wird das Startdatum so berechnet, dass es immer 
 	 * mit einem Montag beginnt.
@@ -1454,66 +1437,66 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 		}
 	}
 	
-	public void loadTerminData(boolean update)
+	/*
+	 * Lädt Termindetails in den unteren Teil der InfoBar
+	 */
+	public void loadTerminData()
 	{
-		try
-		{	Termin showTermin;
-		
-			showTermin = currentValue[selection];
-		
-			if(update) 
-			{
+		if(selection>=0)
+		{
+			try
+			{	
+				Termin showTermin;
+				showTermin = currentValue[selection];
+				
 				IGenericDAO igdao = new GenericDAO();
 				String  query = "select * from termin where id="+showTermin.getId();
 				List<GenericDataObject> data = igdao.unsafeQuery(query,new Termin());					
 				showTermin = (Termin)data.get(0);
-				currentValue[selection] = showTermin;			
-			}
-			
-			
-			if(todayList.getModel().getSize()>0) {
+				currentValue[selection] = showTermin;
 				
-			
-				int dauer = showTermin.getDuration();
-				terminId = showTermin.getId();
-				int stunden = 0;
-				int minuten = 0;
 				
-				while(dauer>59)
-				{
-				dauer = dauer -60;
-				stunden++;
-				}
-				minuten = dauer;
-				
-				lblZeit.setText("Zeit: "+todayList.getSelectedValue().toString().substring(0,5)+"           Dauer "+stunden+":"+minuten);
+				if(currentValue.length>0) {
+					
+					int dauer = showTermin.getDuration();
+					terminId = showTermin.getId();
+					int stunden = 0;
+					int minuten = 0;
+					
+					while(dauer>59)
+					{
+					dauer = dauer -60;
+					stunden++;
+					}
+					minuten = dauer;
+					
+					lblZeit.setText("Zeit: "+todayList.getSelectedValue().toString().substring(0,5)+"           Dauer "+stunden+":"+minuten);
 
-				
-				lblTermin.setText(showTermin.getSecondaryTitle());
-				
-				lblOrt.setText("Ort: "+showTermin.getPlace());
-				lblBeschreibung.setText(showTermin.getDescription());
-				
-				IGenericDAO gdo = new GenericDAO();
-				String query2 = "select * from termincontainer where id="+showTermin.getTerminContainerID();
-				TerminContainer cont = new TerminContainer();
-				List<GenericDataObject> dat = gdo.unsafeQuery(query2,cont);
-				
-				try
-				{
-					cont = (TerminContainer)dat.get(0);
-					lblTerminContainer.setText(cont.getTitle());
-				}
-				catch(Exception ex)
-				{
-					System.out.println("cast error");
-				}
-				
+					
+					lblTermin.setText(showTermin.getSecondaryTitle());
+					
+					lblOrt.setText("Ort: "+showTermin.getPlace());
+					lblBeschreibung.setText(showTermin.getDescription());
+					
+					IGenericDAO gdo = new GenericDAO();
+					String query2 = "select * from termincontainer where id="+showTermin.getTerminContainerID();
+					TerminContainer cont = new TerminContainer();
+					List<GenericDataObject> dat = gdo.unsafeQuery(query2,cont);
+					
+					try
+					{
+						cont = (TerminContainer)dat.get(0);
+						lblTerminContainer.setText(cont.getTitle());
+					}
+					catch(Exception ex)
+					{
+						System.out.println("cast error");
+					}	
+				}		
 			}
-			
-		}
-		catch(Exception ex) {System.out.println("error: " + ex.toString());}			
-		}
+			catch(Exception ex) {System.out.println("error: " + ex.toString());}		
+		}		
+	}
 
 	protected MaskFormatter createFormatter(String s) {
 		 MaskFormatter formatter = null;
@@ -1525,30 +1508,31 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 		return formatter;
 	}
 	
-	
-	public void updateInfoBar(boolean select)
+	/*Liest Termine aus einer Tag-Zelle aus und füllt sie in die Today-Liste
+	 * 
+	 */
+	private void loadList()
 	{
-		currentValue = (Termin[])table.getValueAt(currentCell.x,currentCell.y);
-		data = new String[currentValue.length-1];
-
-		for(int i = 0;i<currentValue.length-1;i++)
+		todayListModel.removeAllElements();
+		for(int i = 1;i<currentValue.length;i++)
 		{
-			data[i]=currentValue[i+1].getDate().toString().substring(11,16) + " " + currentValue[i+1].getSecondaryTitle();
-		}
+			String terminItem = currentValue[i].getDate().toString().substring(11,16) + 
+								" " + currentValue[i].getSecondaryTitle();
+			todayListModel.addElement(terminItem);
+		}	
+	}
+	
+	public void updateInfoBar()
+	{
+		updateTable();
 		loadList();
-		if(select) todayList.setSelectedIndex(selection);
-		
-		loadTerminData(true);
+		loadTerminData();
 	}
 
 	public void windowOpened(WindowEvent arg0) {
-		// TODO Auto-generated method stub
-		
 	}
 
 	public void windowClosing(WindowEvent arg0) {
-		// TODO Auto-generated method stub
-		
 	}
 
 	public void windowClosed(WindowEvent arg0) {
@@ -1562,7 +1546,6 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 		//deleting shared objects from JavaSpace
 		if (this.oss != null)
 			this.oss.unshareObjects();
-		
 	}
 
 	public void windowIconified(WindowEvent arg0) {
@@ -1649,9 +1632,7 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
     		cal2.set(Integer.parseInt(currentValue[0].getDate().toString().substring(0,4)),Integer.parseInt(currentValue[0].getDate().toString().substring(5,7))-1,Integer.parseInt(currentValue[0].getDate().toString().substring(8,10)));
     		Date dat = new Date(cal2.getTimeInMillis());
     		String title = converter.toLong(dat.toString());
-    		lblDatum.setText(title);
-			
-			
+    		lblDatum.setText(title);		
 		}
 		catch(Exception ex) {System.out.println(":::::  "+ex.toString());}
 	
