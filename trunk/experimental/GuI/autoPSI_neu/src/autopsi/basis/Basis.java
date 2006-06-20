@@ -13,7 +13,5 @@ public class Basis {
 
 		frame.setLocation(290,100); //Startposition
 		frame.setVisible(true); //Frame anzeigen
-		
-		
 	}
 }
