@@ -126,7 +126,7 @@ public class SearchFrame extends javax.swing.JFrame implements ActionListener {
 	private PruefungTableModel jPruefungTableModel;
 	
 	private JButton jKontaktSuchenButton, jTerminSuchenButton, jLVASuchenButton;
-	private JButton jPruefungLoeschenButton;
+	private JButton jPruefungLoeschenButton, jPruefungWiederherstellenButton;
 	private JComboBox jGradeComboBox;
 	private JButton jTerminContainerSuchenButton, jLehrmittelSuchenButton;
 	private JButton jNotizSuchenButton, jPruefungSuchenButton;
@@ -984,6 +984,13 @@ public class SearchFrame extends javax.swing.JFrame implements ActionListener {
 							jPruefungLoeschenButton.setBounds(21, 329, 112, 21);
 							jPruefungLoeschenButton.addActionListener(this);
 						}
+						{
+							jPruefungWiederherstellenButton = new JButton();
+							jPruefungSuchePanel.add(jPruefungWiederherstellenButton);
+							jPruefungWiederherstellenButton.setText("Prüfung(en) Wiederherstellen");
+							jPruefungWiederherstellenButton.setBounds(140, 329, 168, 21);
+							jPruefungWiederherstellenButton.addActionListener(this);
+						}
 
 					}
 					
@@ -1202,6 +1209,8 @@ public class SearchFrame extends javax.swing.JFrame implements ActionListener {
 				
 			} else if(cmd.equals("Prüfung Löschen")) {
 				jPruefungTableModel.deleteSelectedRow(jPruefungTable);
+			} else if(cmd.equals("Prüfung(en) Wiederherstellen")) {
+				jPruefungTableModel.restoreLastDeletedObjects();
 			}
 		} catch (ParseException ps) {
 			System.err.println("Parsererror: " + ps.getMessage());
