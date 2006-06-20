@@ -127,6 +127,7 @@ public class SearchFrame extends javax.swing.JFrame implements ActionListener {
 	
 	private JButton jKontaktSuchenButton, jTerminSuchenButton, jLVASuchenButton;
 	private JButton jPruefungLoeschenButton, jPruefungWiederherstellenButton;
+	private JButton jLVALoeschenButton, jLVAWiederherstellenButton;
 	private JComboBox jGradeComboBox;
 	private JButton jTerminContainerSuchenButton, jLehrmittelSuchenButton;
 	private JButton jNotizSuchenButton, jPruefungSuchenButton;
@@ -448,7 +449,7 @@ public class SearchFrame extends javax.swing.JFrame implements ActionListener {
 						{
 							jLVAScrollPane = new JScrollPane();
 							jLVASuchePanel.add(jLVAScrollPane);
-							jLVAScrollPane.setBounds(18, 147, 610, 203);
+							jLVAScrollPane.setBounds(21, 147, 609, 175);
 							jLVAScrollPane.setWheelScrollingEnabled(true);
 							jLVAScrollPane.setBackground(new java.awt.Color(255,255,255));
 							{
@@ -463,7 +464,20 @@ public class SearchFrame extends javax.swing.JFrame implements ActionListener {
 								jLVATable.setGridColor(Color.LIGHT_GRAY);
 							}
 						}
-						
+						{
+							jLVALoeschenButton = new JButton();
+							jLVASuchePanel.add(jLVALoeschenButton);
+							jLVALoeschenButton.setText("LVA(s) Löschen");
+							jLVALoeschenButton.setBounds(21, 329, 112, 21);
+							jLVALoeschenButton.addActionListener(this);
+						}
+						{
+							jLVAWiederherstellenButton = new JButton();
+							jLVASuchePanel.add(jLVAWiederherstellenButton);
+							jLVAWiederherstellenButton.setText("LVA(s) Wiederherstellen");
+							jLVAWiederherstellenButton.setBounds(140, 329, 168, 21);
+							jLVAWiederherstellenButton.addActionListener(this);
+						}
 
 					}
 					
@@ -869,7 +883,6 @@ public class SearchFrame extends javax.swing.JFrame implements ActionListener {
 								jNotizTable.setGridColor(Color.LIGHT_GRAY);
 							}
 						}
-						
 
 					}
 					
@@ -1211,6 +1224,10 @@ public class SearchFrame extends javax.swing.JFrame implements ActionListener {
 				jPruefungTableModel.deleteSelectedRow(jPruefungTable);
 			} else if(cmd.equals("Prüfung(en) Wiederherstellen")) {
 				jPruefungTableModel.restoreLastDeletedObjects();
+			} else if(cmd.equals("LVA(s) Löschen")) {
+				jLVATableModel.deleteSelectedRow(jLVATable);
+			} else if(cmd.equals("LVA(s) Wiederherstellen")) {
+				jLVATableModel.restoreLastDeletedObjects();
 			}
 		} catch (ParseException ps) {
 			System.err.println("Parsererror: " + ps.getMessage());
