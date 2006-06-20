@@ -84,7 +84,6 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 	private JLabel button_deleteTC;
 	private JLabel jLabel4;
 	private JLabel button_newTC;
-	private JLabel separator1;
 	private JLabel button_deleteTermin;
 	private JLabel button_editTermin;
 	private JLabel button_newTermin;
@@ -128,7 +127,6 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 	private JScrollPane todayScrollPane;
 	private JLabel lblToday;
 	private JPanel today;
-	private JLabel lblMonth = new JLabel();
 	private JLabel tableBar;
 	private JList listTC2;
 	private JLabel jLabel7;
@@ -147,7 +145,7 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 	private Point currentCell = new Point();
 	private int selection;
 	private boolean online = false;
-	
+	private JLabel lblMonth = new JLabel("tralalala");
 	boolean mouseEntered,mouseDown = false;
 	Date datum = new Date();
 	int x = 0;
@@ -176,8 +174,7 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 		this.addWindowListener(this);
 		table = new JTable();	
 		setTimeSpace(calStart);
-		MonatTM tablemodel = new MonatTM(tsBegin,tsEnd);
-		table.setModel(tablemodel);
+		
 
 		table.setBounds(287, 53, 651, 465);
 		table.setBorder(new LineBorder(new java.awt.Color(0,0,0), 1, false));
@@ -185,7 +182,7 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 		table.setSelectionForeground(new java.awt.Color(0,0,0));
 		table.setSelectionBackground(new java.awt.Color(255,255,255));
 		table.setDefaultRenderer(Termin[].class, new MonthRenderer(null));
-		table.setRowHeight(98);
+		table.setRowHeight(93);
 		table.addMouseListener(this);
 		table.addMouseMotionListener(this);
 						
@@ -203,6 +200,9 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 		table.setShowVerticalLines(false);
 		table.setShowHorizontalLines(false);
 		table.setBackground(new java.awt.Color(230,230,230));
+		
+		MonatTM tablemodel = new MonatTM(tsBegin,tsEnd);
+		table.setModel(tablemodel);
 	}
 	
 	private void initGUI() {
@@ -217,6 +217,8 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 			
 			setTable();
 			{
+				
+				
 				statusBar = new JLabel();
 				getContentPane().add(statusBar);
 				statusBar.setBounds(7, 525, 672, 21);
@@ -303,6 +305,9 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 				});
 			}
 			{
+				
+			
+
 				infobar = new JTabbedPane();
 				getContentPane().add(infobar);
 				infobar.setBounds(0, 259, 252, 259);
@@ -534,12 +539,6 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 				button_deleteTermin.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
 				button_deleteTermin.addMouseListener(this);
 			}
-			/*{
-				separator1 = new JLabel();
-				getContentPane().add(separator1);
-				separator1.setIcon(new ImageIcon("src/images/icons/emptyBox.png"));
-				separator1.setBounds(217, -7, 31, 35);
-			}*/
 			{
 				zoomBox = new JCheckBox();
 				getContentPane().add(zoomBox);
@@ -555,12 +554,6 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 				button_search.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
 				button_search.addMouseListener(this);
 			}
-			/*{
-				separator1 = new JLabel();
-				getContentPane().add(separator1);
-				separator1.setIcon(new ImageIcon("src/images/icons/emptyBox.png"));
-				separator1.setBounds(279, -7, 31, 35);
-			}*/
 			{
 				button_monthBack = new JLabel();
 				getContentPane().add(button_monthBack);
@@ -595,13 +588,6 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 				button_jumpToToday.addMouseListener(this);
 			}	
 			{
-				tableBar = new JLabel();
-				getContentPane().add(tableBar);
-				tableBar.setIcon(new ImageIcon("src/images/tableBar.png"));
-				tableBar.setBounds(287, 30, 651, 35);
-				tableBar.add(lblMonth);
-			}
-			{
 				button_dayNext = new JLabel();
 				getContentPane().add(button_dayNext);
 				button_dayNext.setIcon(new ImageIcon("src/images/icons/dayNext.png"));
@@ -627,6 +613,13 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 				button_monthNext.addMouseListener(this);
 			}
 			{
+				tableBar = new JLabel();
+				getContentPane().add(tableBar);
+				tableBar.setIcon(new ImageIcon("src/images/tableBar.png"));
+				tableBar.setBounds(287, 30, 651, 35);
+
+			}
+			{
 				button_view1 = new JLabel();
 				getContentPane().add(button_view1);
 				button_view1.setIcon(new ImageIcon("src/images/icons/monatsansicht.png"));
@@ -650,13 +643,6 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 				button_space.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
 				button_space.addMouseListener(this);
 			}
-			
-			/*{
-				separator1 = new JLabel();
-				getContentPane().add(separator1);
-				separator1.setIcon(new ImageIcon("src/images/icons/emptyBox.png"));
-				separator1.setBounds(93, -7, 31, 35);
-			}*/
 			{
 				button_newTC = new JLabel();
 				getContentPane().add(button_newTC);
@@ -778,6 +764,9 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 						view_monthNext.setText("4 Wochen weiter");
 						view_monthNext.addMouseListener(this);
 					}
+					
+					lblMonth.setBounds(300, 300, 672, 21);
+					getContentPane().add(lblMonth);
 					/*todayList.addFocusListener(new FocusListener(){
 
 						public void focusGained(FocusEvent arg0) {
@@ -1278,7 +1267,7 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 						for (i=1;i<15;i++)
 						{ 
 							if(i==j) { k=150; } //Reihe j ist die Reihe, über die gerade "gehovert" wird
-							else { k = 31; } //Die anderen Reihen werden verkleinert
+							else { k = 29; } //Die anderen Reihen werden verkleinert
 							table.setRowHeight(i,k); //Reihe i wird mit Höhe k versehen
 							timetable.setRowHeight(i,k);
 						}
@@ -1319,9 +1308,9 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 		
 		if(viewMonth)
 		{
-			table.setRowHeight(98);	
+			table.setRowHeight(93);	
 		}
-		else table.setRowHeight(0,20);
+		else table.setRowHeight(0,22);
 		if(viewMonth) setModel("month");
 		else setModel("week");
 		updateTable();
@@ -1343,7 +1332,7 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 		{
 			WocheTM tableModel = new WocheTM(tsBegin, tsEnd);
 			table.setModel(tableModel);		
-			table.setRowHeight(0,20);
+			table.setRowHeight(0,22);
 		}	
 	}
 
@@ -1436,10 +1425,10 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 			button_dayBack.setVisible(true);
 			button_dayNext.setVisible(true);
 			viewMonth = false;
-			table.setRowHeight(31);
+			table.setRowHeight(29);
 			setTimeSpace(calStart);
-			timetable.setRowHeight(31);
-			timetable.setRowHeight(0,20);
+			timetable.setRowHeight(29);
+			timetable.setRowHeight(0,22);
 			table.setShowVerticalLines(true);
 		}
 		else if (view.equals("month"))
@@ -1451,7 +1440,7 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 			button_dayBack.setVisible(false);
 			button_dayNext.setVisible(false);
 			viewMonth = true;
-			table.setRowHeight(98);
+			table.setRowHeight(93);
 			setTimeSpace(calStart);
 			table.setShowVerticalLines(false);
 		}
