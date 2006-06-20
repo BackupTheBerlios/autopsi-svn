@@ -75,27 +75,24 @@ public class MonatTM extends AbstractTableModel {
 		Date d = new Date(begin.getTime());
 		Calendar c = new GregorianCalendar();
 		c.setTime(d);
-		c.set(Calendar.DAY_OF_MONTH, c.get(Calendar.DAY_OF_MONTH)+ ((7*row)+col ));
-		
+		c.set(Calendar.DAY_OF_MONTH, c.get(Calendar.DAY_OF_MONTH)+ ((7*row)+col));
+
 		Timestamp stamp = new Timestamp(c.getTimeInMillis());
-		
 		List<Termin> ret = new ArrayList<Termin>();
 		Termin ter = new Termin();
-		ter.setSecondaryTitle(stamp.toString().substring(0,10));
+		ter.setDate(stamp);
 		ret.add(ter);
-		
 		for (int i = 0;i<termine.size();i++)
 		{
 			if (((Termin)termine.get(i)).getDate().toString().substring(0,10).equals(stamp.toString().substring(0,10))){	
 				 ret.add((Termin)termine.get(i));
 			}
 		}
-		
 		Termin[] retur= new Termin[ret.size()];
-	for(int i = 0;i<ret.size();i++)
-	{
-		retur[i] = ret.get(i);
-	}
+		for(int i = 0;i<ret.size();i++)
+		{
+			retur[i] = ret.get(i);
+		}
 
 			return retur;
 	}
