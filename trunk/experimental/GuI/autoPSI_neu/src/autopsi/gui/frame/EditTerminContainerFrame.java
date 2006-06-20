@@ -9,13 +9,16 @@ import java.awt.event.MouseEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.swing.BorderFactory;
 import javax.swing.ComboBoxModel;
 
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -33,13 +36,21 @@ import javax.swing.WindowConstants;
 import javax.swing.border.LineBorder;
 import javax.swing.text.MaskFormatter;
 
+import autopsi.basis.model.AttachableListModel;
 import autopsi.database.dao.GenericDAO;
 import autopsi.database.dao.GenericDataObject;
 import autopsi.database.dao.IGenericDAO;
 import autopsi.database.exception.EAttributeNotFound;
 import autopsi.database.exception.EDatabase;
 import autopsi.database.exception.EDatabaseConnection;
+import autopsi.database.table.Anhaengen_termin;
+import autopsi.database.table.Anhaengen_termincontainer;
 import autopsi.database.table.AttachableObjectKategorie;
+import autopsi.database.table.Kontakt;
+import autopsi.database.table.Lehrmittel;
+import autopsi.database.table.Lva;
+import autopsi.database.table.Notiz;
+import autopsi.database.table.Pruefung;
 import autopsi.database.table.Termin;
 import autopsi.database.table.TerminContainer;
 import autopsi.gui.DateConverter;
@@ -80,7 +91,7 @@ public class EditTerminContainerFrame extends javax.swing.JFrame implements java
 	private JButton newTerminReihe;
 	private JLabel jLabel7;
 	private JLabel jLabel3;
-
+	private List<GenericDataObject> attachedObjects;
 	private JButton openTermin;
 	private JButton editTermin;
 	private JButton deleteTermin;
@@ -89,9 +100,9 @@ public class EditTerminContainerFrame extends javax.swing.JFrame implements java
 	private JLabel jLabel5;
 	private JTextField sucheTermin_field;
 
-	private JButton jButton6;
-	private JButton jButton5;
-	private JButton jButton4;
+	private JButton open_button;
+	private JButton jDelObjectButton;
+	private JButton jAddObjectButton;
 	private JList jList1;
 	private JPanel jPanel1;
 	private JTextArea desc_area;
@@ -119,6 +130,7 @@ public class EditTerminContainerFrame extends javax.swing.JFrame implements java
 	private int selectedGroup;
 	DefaultComboBoxModel terminModel = new DefaultComboBoxModel();
 	private JScrollPane jScrollPane;
+	private DefaultListModel lm;
 	
 	
 	private void readData(int id) throws EDatabaseConnection, EAttributeNotFound, EDatabase{
@@ -139,6 +151,7 @@ public class EditTerminContainerFrame extends javax.swing.JFrame implements java
 		}
 		jGroupBox.setSelectedIndex(i);
 		selectedGroup = i;
+		loadObjectList();
 		
 		
 	}
@@ -336,28 +349,32 @@ public class EditTerminContainerFrame extends javax.swing.JFrame implements java
 						jList1.setBounds(21, 14, 392, 210);
 						jList1.setBorder(new LineBorder(new java.awt.Color(0,0,0), 1, false));
 						jList1.setVisibleRowCount(1);
-						jList1.setModel(new AttachableListModel());
+						lm = new DefaultListModel();
+						jList1.setModel(lm);
 						jScrollPane = new JScrollPane(jList1);
 						jScrollPane.setBounds(21,14,392,210);
 						jPanel3.add(jScrollPane);
 					}
 					{
-						jButton4 = new JButton();
-						jPanel3.add(jButton4);
-						jButton4.setText("Hinzufügen");
-						jButton4.setBounds(231, 238, 98, 21);
+						jAddObjectButton = new JButton();
+						jPanel3.add(jAddObjectButton);
+						jAddObjectButton.setText("Hinzufügen");
+						jAddObjectButton.setBounds(231, 238, 98, 21);
+						jAddObjectButton.addMouseListener(this);
 					}
 					{
-						jButton5 = new JButton();
-						jPanel3.add(jButton5);
-						jButton5.setText("Löschen");
-						jButton5.setBounds(336, 238, 77, 21);
+						jDelObjectButton = new JButton();
+						jPanel3.add(jDelObjectButton);
+						jDelObjectButton.setText("Löschen");
+						jDelObjectButton.setBounds(336, 238, 77, 21);
+						jDelObjectButton.addMouseListener(this);
 					}
 					{
-						jButton6 = new JButton();
-						jPanel3.add(jButton6);
-						jButton6.setText("Öffnen");
-						jButton6.setBounds(21, 238, 70, 21);
+						open_button = new JButton();
+						jPanel3.add(open_button);
+						open_button.setText("Öffnen");
+						open_button.setBounds(21, 238, 70, 21);
+						open_button.addMouseListener(this);
 					}
 
 				}
@@ -545,6 +562,101 @@ public class EditTerminContainerFrame extends javax.swing.JFrame implements java
 			gef.setTableToEdit("Attachable_Object_Kategorie");
 			gef.setVisible(true);
 			}
+			
+		}
+		if(arg0.getSource().equals(jAddObjectButton)){
+			InsertDialog id = new InsertDialog(this);
+			Integer globalId = id.getAttachableObjectId();
+			String table = id.getAttachableObjectTableName();
+			this.gdo.setCurrentTable("anhaengen_termincontainer");
+			try {
+//				System.out.println("EditTerminFrame.jAddObjectButton::"+"INSERT INTO anhaengen_termin VALUES("+this.ID+","+globalId+","+table+")");
+				gdo.unsafeQuery("INSERT INTO anhaengen_termincontainer VALUES("+this.ID+","+globalId+",'"+table+"')",new Anhaengen_termincontainer());
+				
+			} catch (Exception e){
+				System.out.println("EditTerminCntainerFrame.mousePressed::Konnte Objekt nicht anhängen::"+e.toString());
+			}
+			this.loadObjectList();
+		}
+		if(arg0.getSource().equals(open_button)){
+			int index = jList1.getSelectedIndex();
+			GenericDataObject obj = null; 
+			if(index != -1){
+				obj = attachedObjects.get(index);
+				GenericEditFrame gef = new GenericEditFrame();
+				if(obj instanceof Kontakt){
+					gef.setObjectToEdit((Kontakt)obj,false);
+					gef.setTableToEdit("Kontakt");
+				}
+				if (obj instanceof Notiz){
+					gef.setObjectToEdit((Notiz)obj, false);
+					gef.setTableToEdit("Notiz");
+				}
+				if (obj instanceof Lva){
+					gef.setObjectToEdit((Lva)obj, false);
+					gef.setTableToEdit("Lva");
+				}				
+				if (obj instanceof Lehrmittel){
+					gef.setObjectToEdit((Lehrmittel)obj, false);
+					gef.setTableToEdit("Lehrmittel");
+				}
+				if (obj instanceof Pruefung){
+					gef.setObjectToEdit((Pruefung)obj, false);
+					gef.setTableToEdit("Pruefung");
+				}
+				
+				
+				gef.setVisible(true);
+				
+			
+			
+			}
+		}
+		if(arg0.getSource().equals(jDelObjectButton)){
+			System.out.println("EditTerminContainerFrame.mousePressed(...)::Versuche angehängtes Objekt zu löschen");
+			GenericDataObject obj = null;
+			if(jList1.getSelectedIndex() != -1)
+				obj = attachedObjects.get(jList1.getSelectedIndex());
+			if(obj!= null){
+				
+				Anhaengen_termincontainer at = new Anhaengen_termincontainer();
+				at.setTermincontainerId(this.ID);
+				
+				if (obj instanceof Notiz){
+					at.setGlobalId(((Notiz)obj).getGlobalId());
+				}
+				if (obj instanceof Kontakt){
+					at.setGlobalId(((Kontakt)obj).getGlobalId());
+				}
+				if (obj instanceof Lva){
+					at.setGlobalId(((Lva)obj).getGlobalId());
+				}
+				if (obj instanceof Lehrmittel){
+					at.setGlobalId(((Lehrmittel)obj).getGlobalId());
+				}
+				if (obj instanceof Pruefung){
+					at.setGlobalId(((Pruefung)obj).getGlobalId());
+				}
+				
+				this.gdo.setCurrentTable("anhaengen_termincontainer");
+				
+				try{
+					this.gdo.delDataObjects(at);
+				}
+				catch (Exception e){
+					System.out.println("EditTerminContainerFrame.mousePressed(...)::Konnte Attached Objekt nicht löschen::"+e.toString());
+				}
+				
+				this.gdo.setCurrentTable("anhaengen_termincontainer");
+				try{
+					this.gdo.delDataObjects(at);
+				}
+				catch (Exception e){
+					System.out.println("EditTerminContainerFrame.mousePressed(...)::Konnte Attached_termin-Objekt nicht löschen::"+e.toString());
+				}
+				
+				this.loadObjectList();
+			}
 		}
 		
 	}
@@ -646,6 +758,122 @@ public class EditTerminContainerFrame extends javax.swing.JFrame implements java
 			System.err.println("formatter is bad: " + exc.getMessage());
 		}
 		return formatter;
+	}
+	
+	public void loadObjectList(){
+		this.attachedObjects = new ArrayList<GenericDataObject>();
+		lm.clear();
+		List<GenericDataObject> objs = null;
+		gdo.setCurrentTable("anhaengen_termincontainer");
+		try {
+			objs = gdo.unsafeQuery("SELECT * FROM anhaengen_termincontainer where termincontainer_id="+this.ID, new Anhaengen_termincontainer());
+		} catch (Exception e){
+			System.out.println("EditTerminContainerFrame.loadObjectList()::"+e.toString());
+		}
+		Iterator<GenericDataObject> iter = objs.iterator();
+		String tableName = "";
+		int globalId = -1;
+		while(iter.hasNext()){
+			Anhaengen_termincontainer t = (Anhaengen_termincontainer)iter.next();
+			tableName = t.getTable_Name();
+			globalId = t.getGlobalId();
+			List<GenericDataObject> ob = null;
+			tableName = tableName.toLowerCase();
+			System.out.println("EditTerminContainerFrame.loadObjectList::tableName=="+tableName);
+			if(tableName.equals("kontakt")){
+				gdo.setCurrentTable("kontakt");
+				try {
+					ob = gdo.unsafeQuery("select * from kontakt where global_id="+globalId, new Kontakt());
+				} 
+				catch (Exception e)
+				{
+					System.out.println("EditTerminContainerFrame.loadObjectList() Kontaktlist::"+e.toString());
+				}
+				Iterator<GenericDataObject> iter2 = ob.iterator();
+				Kontakt k;
+				while(iter2.hasNext())
+				{
+					k = (Kontakt) iter2.next();
+					this.attachedObjects.add(k);
+					lm.addElement(k.getPrename() + " "+ k.getSurname());	
+				}
+			}
+			if(tableName.equals("notiz")){
+				gdo.setCurrentTable("notiz");
+				try {
+					ob = gdo.unsafeQuery("select * from notiz where global_id="+globalId, new Notiz());
+				} 
+				catch (Exception e)
+				{
+					System.out.println("EditTerminContainerFrame.loadObjectList() Notizlist::"+e.toString());
+				}
+				Iterator<GenericDataObject> iter2 = ob.iterator();
+				Notiz n;
+				while(iter2.hasNext())
+				{
+					n = (Notiz) iter2.next();
+					this.attachedObjects.add(n);
+					lm.addElement(n.getTitle());	
+				}
+			}
+			if(tableName.equals("lva")){
+				gdo.setCurrentTable("lva");
+				try {
+					ob = gdo.unsafeQuery("select * from lva where global_id="+globalId, new Lva());
+				} 
+				catch (Exception e)
+				{
+					System.out.println("EditTerminContainerFrame.loadObjectList() Lvalist::"+e.toString());
+				}
+				Iterator<GenericDataObject> iter2 = ob.iterator();
+				Lva l;
+				while(iter2.hasNext())
+				{
+					l = (Lva) iter2.next();
+					this.attachedObjects.add(l);
+					lm.addElement(l.getLvaNr() + " , "+l.getTitle());	
+				}
+			}
+			if(tableName.equals("lehrmittel")){
+				gdo.setCurrentTable("lehrmittel");
+				try {
+					ob = gdo.unsafeQuery("select * from lehrmittel where global_id="+globalId, new Lehrmittel());
+				} 
+				catch (Exception e)
+				{
+					System.out.println("EditTerminContainerFrame.loadObjectList() Lehrmitellist::"+e.toString());
+				}
+				Iterator<GenericDataObject> iter2 = ob.iterator();
+				Lehrmittel l;
+				while(iter2.hasNext())
+				{
+					l = (Lehrmittel) iter2.next();
+					this.attachedObjects.add(l);
+					lm.addElement(l.getName());	
+				}
+			}
+			if(tableName.equals("Pruefung")){
+				gdo.setCurrentTable("Pruefung");
+				try {
+					ob = gdo.unsafeQuery("select * from pruefung where global_id="+globalId, new Pruefung());
+				} 
+				catch (Exception e)
+				{
+					System.out.println("EditTerminContainerFrame.loadObjectList() Pruefunglist::"+e.toString());
+				}
+				Iterator<GenericDataObject> iter2 = ob.iterator();
+				Pruefung p;
+				while(iter2.hasNext())
+				{
+					p = (Pruefung) iter2.next();
+					this.attachedObjects.add(p);
+					lm.addElement(p.getLvaId() + " - " + p.getExaminer());	
+				}
+			}
+			
+			
+			jList1.setModel(lm);
+		}
 	}
 }
 
