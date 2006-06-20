@@ -797,8 +797,8 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 						view_monthNext.addMouseListener(this);
 					}
 					
-					lblMonth.setBounds(50, -6, 399, 35);
-					lblMonthShadow.setBounds(52, -4, 399, 35);
+					lblMonth.setBounds(8, -6, 399, 35);
+					lblMonthShadow.setBounds(9, -5, 399, 35);
 					lblMonthShadow.setForeground(new java.awt.Color(170,170,170));
 					lblMonth.setFont(new java.awt.Font("Tahoma",1,13));
 					lblMonthShadow.setFont(new java.awt.Font("Tahoma",1,13));
