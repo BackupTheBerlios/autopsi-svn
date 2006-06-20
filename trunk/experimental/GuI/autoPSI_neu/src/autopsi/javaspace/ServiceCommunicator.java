@@ -1,15 +1,9 @@
 package autopsi.javaspace;
 
-import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Iterator;
-
 import net.jini.core.entry.Entry;
-import net.jini.core.entry.UnusableEntryException;
 import net.jini.core.lease.Lease;
-import net.jini.core.lease.UnknownLeaseException;
-import net.jini.core.transaction.TransactionException;
 import net.jini.lease.DesiredExpirationListener;
 import net.jini.lease.LeaseRenewalEvent;
 import net.jini.lease.LeaseRenewalManager;
@@ -17,13 +11,14 @@ import net.jini.space.JavaSpace;
 
 public class ServiceCommunicator implements IServiceCommunicator, DesiredExpirationListener {
 
-	protected JavaSpace space = null;
+	protected static JavaSpace space = null;
 	protected LeaseRenewalManager lrm = null;
 	protected List<Lease> leases = null;
-	protected long renewalTime = 5000;
-	protected long timeout = 5000;
+	protected static long renewalTime = 5000;
+	protected static long timeout = 5000;
 //	protected String adress = "jini://localhost";
-	protected String adress = "jini://192.168.2.194:4160";
+//	protected String adress = "jini://192.168.2.194:4160";
+	protected static String adress = "jini://192.168.2.101:3164";
 
 	
 	public ServiceCommunicator(){
@@ -55,12 +50,12 @@ public class ServiceCommunicator implements IServiceCommunicator, DesiredExpirat
 		this.adress = newAdress;
 	}
 	
-	protected JavaSpace getSpace(){
-		if (this.space == null)
+	protected static JavaSpace getSpace(){
+		if (space == null)
 		{
 			JavaSpace sp = null;
-			sp = (JavaSpace)ServiceFinder.getServiceFrom(JavaSpace.class, null, this.timeout, this.adress);
-			this.space = sp;
+			sp = (JavaSpace)ServiceFinder.getServiceFrom(JavaSpace.class, null, timeout, adress);
+			space = sp;
 		}
 		
 		return space;
