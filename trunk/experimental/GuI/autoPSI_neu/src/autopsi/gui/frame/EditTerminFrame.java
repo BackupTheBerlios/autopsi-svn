@@ -219,6 +219,9 @@ public class EditTerminFrame extends javax.swing.JFrame implements java.awt.even
 			tkat = "" + termin_kat;
 			
 			int tc_id = ((TerminContainer)(termin_cont_data.get(tcTitle_box.getSelectedIndex()))).getId();
+			if((group_data.get(group_Box.getSelectedIndex())) instanceof AttachableObjectKategorie){
+				System.out.println("ist ein attachableobjectkategorie");
+			}
 			int group_id = ((AttachableObjectKategorie)(group_data.get(group_Box.getSelectedIndex()))).getId();
 			
 			
@@ -484,7 +487,7 @@ public class EditTerminFrame extends javax.swing.JFrame implements java.awt.even
 										
 									}		
 									String query = "select * from attachable_object_kategorie";
-									termin_kat_data = gdo.unsafeQuery(query,kat);
+									group_data = gdo.unsafeQuery(query,kat);
 									group_Box.setSelectedIndex(selectedGroup);
 								}
 								catch (Exception ex)
