@@ -833,25 +833,14 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 			catch(Exception ex) {System.out.println(ex.toString());}; 
 
 			try
-			{
-				
-				
+			{		
 				Calendar cal2 = new GregorianCalendar();
-	    		cal2.set(Integer.parseInt(currentValue[0].getSecondaryTitle().substring(0,4)),Integer.parseInt(currentValue[0].getSecondaryTitle().substring(5,7))-1,Integer.parseInt(currentValue[0].getSecondaryTitle().substring(8,10)));
+	    		cal2.set(Integer.parseInt(currentValue[0].getDate().toString().substring(0,4)),Integer.parseInt(currentValue[0].getDate().toString().substring(5,7))-1,Integer.parseInt(currentValue[0].getDate().toString().substring(8,10)));
 	    		Date dat = new Date(cal2.getTimeInMillis());
 	    		String title = converter.toLong(dat.toString());
 	    		lblDatum.setText(title);
-	    		
-	    		data = new String[currentValue.length-1];
-	    		
-	    		
-	    		
-	    			for(int i = 0;i<currentValue.length-1;i++)
-		    		{
-		    			data[i]=currentValue[i+1].getDate().toString().substring(11,16) + " " + currentValue[i+1].getSecondaryTitle();
-		    			
-		    		}
-	    			loadList(data);
+	    		todayListModel.removeAllElements();
+	    		loadList();
 
 	    		if(viewMonth) lblToday.setText("Heutige Termine:");
 	    		else lblToday.setText("Heutige Termine zwischen "+(table.getSelectedRow()+6)+":00 und "+(table.getSelectedRow()+7)+":00");
@@ -900,7 +889,7 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 			space();
 		}
 		if(arg0.getSource().equals(todayList)) {
-			selection = todayList.getSelectedIndex();
+			selection = todayList.getSelectedIndex()+1;
 			loadTerminData(false);
 		}
 		if(arg0.getSource().equals(button_newTermin)) {
@@ -1364,11 +1353,15 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 	/*Liest Termine aus einer Tag-Zelle aus und füllt sie in die Today-Liste
 	 * 
 	 */
-	private void loadList(String[] data)
-	
+	private void loadList()
 	{
-		todayListModel = new DefaultComboBoxModel(data);
-		todayList.setModel(todayListModel);
+		for(int i = 1;i<currentValue.length;i++)
+		{
+			String terminItem = currentValue[i+1].getDate().toString().substring(11,16) + 
+								" " + currentValue[i+1].getSecondaryTitle();
+			todayListModel.addElement(terminItem);
+		}
+		
 	}
 	
 	/* Diese Methode berechnet das Startdatum für die Monatsansicht.
@@ -1464,24 +1457,23 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 		try
 		{	Termin showTermin;
 		
-			showTermin = currentValue[selection];
+			showTermin = currentValue[selection+1];
 		
 			if(update) 
 			{
 				IGenericDAO igdao = new GenericDAO();
-		
 				String  query = "select * from termin where id="+showTermin.getId();
-				List<GenericDataObject> data = igdao.unsafeQuery(query,termin);					
+				List<GenericDataObject> data = igdao.unsafeQuery(query,new Termin());					
 				showTermin = (Termin)data.get(0);
-				currentValue[selection] = showTermin;			
+				currentValue[selection+1] = showTermin;			
 			}
 			
 			
 			if(todayList.getModel().getSize()>0) {
 				
 			
-				int dauer = termin.getDuration();
-				terminId = termin.getId();
+				int dauer = showTermin.getDuration();
+				terminId = showTermin.getId();
 				int stunden = 0;
 				int minuten = 0;
 				
@@ -1495,13 +1487,13 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 				lblZeit.setText("Zeit: "+todayList.getSelectedValue().toString().substring(0,5)+"           Dauer "+stunden+":"+minuten);
 
 				
-				lblTermin.setText(termin.getSecondaryTitle());
+				lblTermin.setText(showTermin.getSecondaryTitle());
 				
-				lblOrt.setText("Ort: "+termin.getPlace());
-				lblBeschreibung.setText(termin.getDescription());
+				lblOrt.setText("Ort: "+showTermin.getPlace());
+				lblBeschreibung.setText(showTermin.getDescription());
 				
 				IGenericDAO gdo = new GenericDAO();
-				String query2 = "select * from termincontainer where id="+termin.getTerminContainerID();
+				String query2 = "select * from termincontainer where id="+showTermin.getTerminContainerID();
 				TerminContainer cont = new TerminContainer();
 				List<GenericDataObject> dat = gdo.unsafeQuery(query2,cont);
 				
@@ -1545,7 +1537,7 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 			data[i]=currentValue[i+1].getDate().toString().substring(11,16) + " " + currentValue[i+1].getSecondaryTitle();
 		
 		}
-		loadList(data);
+		loadList();
 		if(select) todayList.setSelectedIndex(selection);
 		
 		loadTerminData(true);
@@ -1643,11 +1635,13 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 			
 			
 			termine = gdo.unsafeQuery("select * from termin where date > '"+ h1.toString()+"' and date < '"+ h2.toString()+"'",new Termin());
-			currentValue = new Termin[termine.size()];
+			currentValue = new Termin[termine.size()+1];
+			currentValue[0].setDate(h1);
+			System.out.println("jo");
 			for(int i  = 0;i<termine.size();i++)
 			{
 				Termin ter = (Termin)termine.get(i);
-				currentValue[i] = ter;
+				currentValue[i+1] = ter;
 				todayListModel.addElement(ter.getDate().toString().substring(11,16)+" "+ter.getSecondaryTitle());
 			}
 			

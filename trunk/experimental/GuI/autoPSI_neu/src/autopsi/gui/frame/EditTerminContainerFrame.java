@@ -785,7 +785,6 @@ public class EditTerminContainerFrame extends javax.swing.JFrame implements java
 
 	public void updateTerminList(List<Termin> termine)
 	{
-		System.out.println(termine.size());
 		for(int i = 0;i<termine.size();i++)
 		{
 			DateConverter converter = new DateConverter();
