@@ -8,11 +8,13 @@ import autopsi.database.dao.GenericDAO;
 import autopsi.database.dao.GenericDataObject;
 import autopsi.database.dao.IGenericDAO;
 import autopsi.database.table.Lva;
+import autopsi.database.table.Universitaet;
 
 public class LVATableModel extends AbstractTableModel {
 
 	private static final long serialVersionUID = 8737097029189851737L;
 	public List <GenericDataObject> lvas;
+	public List <GenericDataObject> uni;
 	public Lva suchLva = null;
 	public String group = null;
 	public String type = null;
@@ -88,6 +90,9 @@ public class LVATableModel extends AbstractTableModel {
 	
 	public Object getValueAt(int row, int col) {
 		Lva lva = (Lva) lvas.get(row);
+		IGenericDAO gdo = new GenericDAO();
+		this.uni =  gdo.unsafeQuery("selet * FROM UNIVERSITAET WHERE ID="+lva.getGlobalId(), new Universitaet());
+		Universitaet u = (Universitaet) uni;
 		if (lva==null)
 			return null;
 		else if (col==0)
@@ -97,7 +102,7 @@ public class LVATableModel extends AbstractTableModel {
 		else if (col==2)
 			return lva.getDescription();
 		else if (col==3)
-			return "NOOOOOOOO";
+			return u.getName();
 		else return null;
 	}
 }
