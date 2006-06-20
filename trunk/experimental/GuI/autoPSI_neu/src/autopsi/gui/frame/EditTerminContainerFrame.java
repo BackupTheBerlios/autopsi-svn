@@ -1,6 +1,8 @@
 package autopsi.gui.frame;
 
 
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
@@ -95,7 +97,9 @@ public class EditTerminContainerFrame extends javax.swing.JFrame implements java
 	private JTextArea desc_area;
 	private JLabel jLabel2;
 	private JTextField title_field;
+	private JButton add_group;
 	private JLabel jLabel4;
+	private JButton edit_group;
 	private JFormattedTextField endDate_field;
 	private JFormattedTextField beginDate_field;
 	private JComboBox jGroupBox;
@@ -112,7 +116,7 @@ public class EditTerminContainerFrame extends javax.swing.JFrame implements java
 	List<GenericDataObject> group_data;
 	private mainFrame owner2;
 	private int konstruktor = 0;
-	
+	private int selectedGroup;
 	DefaultComboBoxModel terminModel = new DefaultComboBoxModel();
 	
 	
@@ -129,11 +133,11 @@ public class EditTerminContainerFrame extends javax.swing.JFrame implements java
 	
 		int i = 0;
 		for(i = 0;i<group_data.size();i++){
-			if(((AttachableObjectKategorie)group_data.get(i)).getId() == ((Termin)list.get(0)).getGroupID())
+			if(((AttachableObjectKategorie)group_data.get(i)).getId() == ((TerminContainer)list.get(0)).getGroupID())
 				break;
 		}
 		jGroupBox.setSelectedIndex(i);
-		
+		selectedGroup = i;
 		
 		
 	}
@@ -142,7 +146,7 @@ public class EditTerminContainerFrame extends javax.swing.JFrame implements java
 			String query="";
 			int group_id = ((AttachableObjectKategorie)(group_data.get(jGroupBox.getSelectedIndex()))).getId();
 			if (ID<0) query = "insert into termincontainer (title,group_id, description) values ('"+title_field.getText()+ "',"+group_id+",'"+desc_area.getText()+"')";
-			else query = "update termincontainer  set title = " + title_field.getText() + ", group_id = " + group_id  + ", description='"+desc_area.getText()+" where id="+ID+")";
+			else query = "update termincontainer  set title = '" + title_field.getText() + "', group_id = " + group_id  + ", description='"+desc_area.getText()+"' where id="+ID;
 			TerminContainer vorlage = new TerminContainer();
 			System.out.println(query);
 			gdo.unsafeQuery(query,vorlage);
@@ -250,7 +254,7 @@ public class EditTerminContainerFrame extends javax.swing.JFrame implements java
 						jGroupBox = new JComboBox();
 						jPanel1.add(jGroupBox);
 						jGroupBox.setModel(jGroupBoxModel);
-						jGroupBox.setBounds(91, 42, 322, 21);
+						jGroupBox.setBounds(91, 42, 259, 21);
 						jGroupBox.setBorder(new LineBorder(new java.awt.Color(0,0,0), 1, false));
 						String query = "select * from attachable_object_kategorie";
 						AttachableObjectKategorie kat = new AttachableObjectKategorie();
@@ -260,12 +264,61 @@ public class EditTerminContainerFrame extends javax.swing.JFrame implements java
 							kat = (AttachableObjectKategorie)group_data.get(i);
 							jGroupBox.addItem(kat.getTitle());
 						}
+						
+						jGroupBox.addFocusListener(new FocusListener(){
+
+							
+
+							public void focusGained(FocusEvent arg0) {
+								
+								List<GenericDataObject> groupList;
+								AttachableObjectKategorie kat= new AttachableObjectKategorie();
+																
+								jGroupBox.setModel(new DefaultComboBoxModel());
+								try
+								{
+									groupList = gdo.unsafeQuery("select * from attachable_object_kategorie order by id",kat);
+									for(int i = 0;i<groupList.size();i++)
+									{
+										kat = (AttachableObjectKategorie)groupList.get(i);
+										jGroupBox.addItem(kat.getTitle());
+										
+									}		
+									String query = "select * from attachable_object_kategorie";
+									group_data = gdo.unsafeQuery(query,kat);
+									jGroupBox.setSelectedIndex(selectedGroup);
+								}
+								catch (Exception ex)
+								{
+									
+								}
+								
+							}
+
+							public void focusLost(FocusEvent arg0) {
+								selectedGroup = jGroupBox.getSelectedIndex();
+							}
+						});
 					}
 					{
 						jLabel4 = new JLabel();
 						jPanel1.add(jLabel4);
 						jLabel4.setText("Gruppe:");
 						jLabel4.setBounds(7, 42, 63, 21);
+					}
+					{
+						add_group = new JButton();
+						jPanel1.add(add_group);
+						add_group.setText("+");
+						add_group.setBounds(350, 42, 42, 21);
+						add_group.addMouseListener(this);
+					}
+					{
+						edit_group = new JButton();
+						jPanel1.add(edit_group);
+						edit_group.setText("...");
+						edit_group.setBounds(392, 42, 14, 21);
+						edit_group.addMouseListener(this);
 					}
 				}
 				{
@@ -476,6 +529,22 @@ public class EditTerminContainerFrame extends javax.swing.JFrame implements java
 			terminreihe.setTitle("Terminreihe hinzufügen");
 			terminreihe.setVisible(true);
 		}
+		if(arg0.getSource().equals(add_group)){
+			GenericEditFrame gef = new GenericEditFrame();
+			AttachableObjectKategorie obj = new AttachableObjectKategorie();
+			gef.setObjectToEdit(obj,true);
+			gef.setTableToEdit("Attachable_Object_Kategorie");
+			gef.setVisible(true);
+		}
+		if(arg0.getSource().equals(edit_group)){
+			GenericEditFrame gef = new GenericEditFrame();
+			if(jGroupBox.getSelectedIndex() != 0){
+			AttachableObjectKategorie obj = (AttachableObjectKategorie)group_data.get(jGroupBox.getSelectedIndex());
+			gef.setObjectToEdit(obj,false);
+			gef.setTableToEdit("Attachable_Object_Kategorie");
+			gef.setVisible(true);
+			}
+		}
 		
 	}
 
@@ -514,7 +583,12 @@ public class EditTerminContainerFrame extends javax.swing.JFrame implements java
 		if(arg0.getSource().equals(openTermin)){
 			jLabel7.setText("Sprung zum gewählten Termin im Kalender");
 		}
-		
+		if(arg0.getSource().equals(add_group)){
+			jLabel7.setText("Neue Gruppe erstellen");
+		}
+		if(arg0.getSource().equals(edit_group)){
+			jLabel7.setText("Gruppe bearbeiten");
+		}
 	}
 
 	public void mouseExited(MouseEvent arg0) {
@@ -540,6 +614,12 @@ public class EditTerminContainerFrame extends javax.swing.JFrame implements java
 			jLabel7.setText("");
 		}
 		if(arg0.getSource().equals(openTermin)){
+			jLabel7.setText("");
+		}
+		if(arg0.getSource().equals(add_group)){
+			jLabel7.setText("");
+		}
+		if(arg0.getSource().equals(edit_group)){
 			jLabel7.setText("");
 		}
 	}
