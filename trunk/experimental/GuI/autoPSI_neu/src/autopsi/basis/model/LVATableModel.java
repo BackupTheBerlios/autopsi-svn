@@ -46,7 +46,7 @@ public class LVATableModel extends AbstractTableModel {
 				this.lvas =  gdo.unsafeQuery(query, suchLva);
 			}
 		} catch (Exception e){
-			System.out.println("AAARGH;"+e.toString());
+			System.out.println("LVATableModel @ readData;"+e.toString());
 		}
 	}
 	
@@ -90,9 +90,14 @@ public class LVATableModel extends AbstractTableModel {
 	
 	public Object getValueAt(int row, int col) {
 		Lva lva = (Lva) lvas.get(row);
-		IGenericDAO gdo = new GenericDAO();
-		this.uni =  gdo.unsafeQuery("selet * FROM UNIVERSITAET WHERE ID="+lva.getGlobalId(), new Universitaet());
-		Universitaet u = (Universitaet) uni;
+		try {
+			IGenericDAO gdo = new GenericDAO();
+			this.uni =  gdo.unsafeQuery("selet * FROM UNIVERSITAET WHERE ID="+lva.getGlobalId(), new Universitaet());
+			
+		} catch (Exception e){
+			System.out.println("LVATableModel @ getValueAt;"+e.toString());
+		}
+		Universitaet u = (Universitaet) this.uni;
 		if (lva==null)
 			return null;
 		else if (col==0)
