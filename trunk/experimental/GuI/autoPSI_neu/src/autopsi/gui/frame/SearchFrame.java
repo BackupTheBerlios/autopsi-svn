@@ -5,21 +5,15 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
-import javax.swing.ComboBoxModel;
-import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
-import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.WindowConstants;
-import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableModel;
 import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -97,7 +91,7 @@ public class SearchFrame extends javax.swing.JFrame implements ActionListener {
 	private JTextField jVornameField, jNachnameField;
 	private JTextField jTelefonnummerField, jEmailField;
 	private JTextField jAdresseField, jPlzField, jOrtField;
-	private JTextField jTitelField, jLVANummerField, jBeschreibungField;
+	private JTextField jLVATitelField, jLVANummerField, jBeschreibungField;
 	private JTextField jTerminTitelField, jTerminBeschreibungField;
 	private JTextField jTerminContainerTitelField, jTerminContainerBeschreibungField;
 	private JTextField jLehrmittelNameField, jLehrmittelBeschreibungField;
@@ -379,9 +373,9 @@ public class SearchFrame extends javax.swing.JFrame implements ActionListener {
 
 	
 						
-						jTitelField = new JTextField();
-						jLVASuchePanel.add(jTitelField);
-						jTitelField.setBounds(105, 7, 210, 21);
+						jLVATitelField = new JTextField();
+						jLVASuchePanel.add(jLVATitelField);
+						jLVATitelField.setBounds(105, 7, 210, 21);
 
 
 						jLVANummerField = new JTextField();
@@ -957,13 +951,14 @@ public class SearchFrame extends javax.swing.JFrame implements ActionListener {
 					if (!jLVANummerField.getText().equals("")){
 						lva.setLvaNr(jLVANummerField.getText());
 					}
-					if (!jTitelField.getText().equals("")){
-						lva.setTitle(jTitelField.getText());
+					if (!jLVATitelField.getText().equals("")){
+						lva.setTitle(jLVATitelField.getText());
 					}
 					if (!jBeschreibungField.getText().equals("")){
 						lva.setDescription(jBeschreibungField.getText());
 					}
-					jLVATableModel.setGroup(jTerminGruppeComboBox.getSelectedItem().toString());
+					jLVATableModel.setType(jLVATypeComboBox.getSelectedItem().toString());
+					jLVATableModel.setGroup(jLVATypeComboBox.getSelectedItem().toString());
 					jLVATableModel.setSuchLVa(lva);
 				} else if (jLVAOnlineSuchenRadioButton.isSelected()) {
 					System.out.println("LVA wird online gesucht...");
