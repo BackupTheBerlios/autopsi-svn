@@ -74,6 +74,8 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 	 */
 	private static final long serialVersionUID = 7899036380605041556L;
 	private JTable table;
+	private JMenuItem menu_add_Notiz;
+	private JMenuItem menu_add_Lva;
 	private JLabel lblZeit;
 	private JPanel tab0;
 	private JLabel jLabel2;
@@ -705,6 +707,16 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 						menu_add_LM = new JMenuItem();
 						menu_add.add(menu_add_LM);
 						menu_add_LM.setText("Lehrmittel ...");
+					}
+					{
+						menu_add_Lva = new JMenuItem();
+						menu_add.add(menu_add_Lva);
+						menu_add_Lva.setText("Lva...");
+					}
+					{
+						menu_add_Notiz = new JMenuItem();
+						menu_add.add(menu_add_Notiz);
+						menu_add_Notiz.setText("Notiz...");
 					}
 				}
 				{
