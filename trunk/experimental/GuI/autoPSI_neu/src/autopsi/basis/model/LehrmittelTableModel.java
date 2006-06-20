@@ -38,6 +38,9 @@ public class LehrmittelTableModel extends AbstractTableModel {
 				if (this.type!=null){
 					query +=" AND kat.NAME = '"+this.type+"'";
 				}
+				if (this.group != null){
+					query += " AND ok.TITLE = '"+ this.group+"'";
+				}
 				System.out.println(query);
 				this.lvas =  gdo.unsafeQuery(query, suchLm);
 			}
