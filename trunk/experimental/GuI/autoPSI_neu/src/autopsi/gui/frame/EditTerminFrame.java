@@ -29,6 +29,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
@@ -100,6 +101,7 @@ public class EditTerminFrame extends javax.swing.JFrame implements java.awt.even
 	private JButton open_button;
 	private JButton jDelObjectButton;
 	private JButton jAddObjectButton;
+	private JScrollPane jScrollPane1;
 	private JButton editTC;
 	private JButton edit_Group_button;
 	private JButton edit_Type_button;
@@ -134,6 +136,7 @@ public class EditTerminFrame extends javax.swing.JFrame implements java.awt.even
 	private int selectedType;
 	private int selectedGroup;
 	private int selectedTC;
+	private JScrollPane attObPane;
 	
 	public EditTerminFrame(mainFrame owner, GregorianCalendar cal, Integer id) {
 		super();
@@ -556,14 +559,7 @@ public class EditTerminFrame extends javax.swing.JFrame implements java.awt.even
 					jPanel3.setBackground(new java.awt.Color(255,255,255));
 					jPanel3.setLayout(null);
 					{
-						ListModel jList1Model = new DefaultComboBoxModel(
-							new String[] { "Item One", "Item Two" });
-						jList1 = new JList();
-						jPanel3.add(jList1);
-						jList1.setModel(jList1Model);
-						jList1.setBounds(21, 14, 392, 210);
-						jList1.setBorder(new LineBorder(new java.awt.Color(0,0,0), 1, false));
-						jList1.setVisibleRowCount(1);
+
 					}
 					{
 						jAddObjectButton = new JButton();
@@ -585,6 +581,16 @@ public class EditTerminFrame extends javax.swing.JFrame implements java.awt.even
 						open_button.setText("Öffnen");
 						open_button.setBounds(21, 238, 70, 21);
 						open_button.addMouseListener(this);
+					}
+					{
+					
+						jList1 = new JList();
+						jList1.setBounds(21, 14, 392, 210);
+						jList1.setBorder(new LineBorder(new java.awt.Color(0,0,0), 1, false));
+						jList1.setVisibleRowCount(1);
+						jScrollPane1 = new JScrollPane(jList1);
+						jPanel3.add(jScrollPane1);
+						jScrollPane1.setBounds(7, 14, 413, 217);
 					}
 
 				}
