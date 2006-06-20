@@ -223,7 +223,7 @@ public class EditTerminContainerFrame extends javax.swing.JFrame implements java
 			if(konstruktor == 1) {if(owner!=null) owner.updateTCList();}
 			else {
 				System.out.println("aha 4");
-				owner2.updateInfoBar(true);
+				owner2.updateInfoBar();
 				owner2.updateTable();
 			}
 			
