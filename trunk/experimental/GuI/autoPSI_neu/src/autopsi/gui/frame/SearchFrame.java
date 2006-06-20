@@ -126,6 +126,7 @@ public class SearchFrame extends javax.swing.JFrame implements ActionListener {
 	private PruefungTableModel jPruefungTableModel;
 	
 	private JButton jKontaktSuchenButton, jTerminSuchenButton, jLVASuchenButton;
+	private JButton jPruefungLoeschenButton;
 	private JComboBox jGradeComboBox;
 	private JButton jTerminContainerSuchenButton, jLehrmittelSuchenButton;
 	private JButton jNotizSuchenButton, jPruefungSuchenButton;
@@ -961,7 +962,7 @@ public class SearchFrame extends javax.swing.JFrame implements ActionListener {
 						{
 							jPruefungScrollPane = new JScrollPane();
 							jPruefungSuchePanel.add(jPruefungScrollPane);
-							jPruefungScrollPane.setBounds(18, 147, 610, 203);
+							jPruefungScrollPane.setBounds(21, 147, 609, 175);
 							jPruefungScrollPane.setWheelScrollingEnabled(true);
 							jPruefungScrollPane.setBackground(new java.awt.Color(255,255,255));
 							{
@@ -975,6 +976,13 @@ public class SearchFrame extends javax.swing.JFrame implements ActionListener {
 								jPruefungTable.setShowGrid(true);
 								jPruefungTable.setGridColor(Color.LIGHT_GRAY);
 							}
+						}
+						{
+							jPruefungLoeschenButton = new JButton();
+							jPruefungSuchePanel.add(jPruefungLoeschenButton);
+							jPruefungLoeschenButton.setText("Prüfung Löschen");
+							jPruefungLoeschenButton.setBounds(21, 329, 112, 21);
+							jPruefungLoeschenButton.addActionListener(this);
 						}
 
 					}
@@ -1192,6 +1200,10 @@ public class SearchFrame extends javax.swing.JFrame implements ActionListener {
 					System.out.println("Prüfung wird online gesucht...");
 				}
 				
+			} else if(cmd.equals("Prüfung Löschen")) {
+				if (jPruefungTableModel.deleteSelectedRow(jPruefungTable)) {
+					System.out.println("GELÖSCHT!");	
+				}
 			}
 		} catch (ParseException ps) {
 			System.err.println("Parsererror: " + ps.getMessage());
