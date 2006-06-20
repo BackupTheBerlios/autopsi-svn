@@ -62,7 +62,7 @@ public class PruefungTableModel extends AbstractTableModel {
 	public PruefungTableModel (){
 	}
 	
-	public boolean deleteSelectedRow(JTable table) {
+	public void deleteSelectedRow(JTable table) {
 		
 		Pruefung p = new Pruefung();
 		boolean selected = false;
@@ -82,18 +82,14 @@ public class PruefungTableModel extends AbstractTableModel {
 	            		deleted = this.deletePruefung(p);
 	            		if (deleted) {
 	            			JOptionPane.showMessageDialog(null, "Die Prüfung wurde erfolgreich gelöscht." , "Gelöscht!" , JOptionPane.INFORMATION_MESSAGE);
-	            			return true;
 	            		} else {
 	            			JOptionPane.showMessageDialog(null, "Das Prüfung konnte nicht gelöscht werden." , "Löschen!" , JOptionPane.ERROR_MESSAGE);
-	            			return false;
 	            		}
 	            		
 	            	} else {
-	            		return false;
 	            	}
             	} else {
             		JOptionPane.showMessageDialog(null, "Diese Prüfung kann nicht gelöscht werden." , "Leser wurde nicht ausgewählt!" , JOptionPane.ERROR_MESSAGE);
-            		return false;
             	}
             	
             }
@@ -101,9 +97,7 @@ public class PruefungTableModel extends AbstractTableModel {
 	    
 	    if (selected == false) {
 	    	JOptionPane.showMessageDialog(null, "Bitte selektieren Sie eine Prüfung in der Tabelle", "Prüfung wurde nicht ausgewählt!" , JOptionPane.ERROR_MESSAGE);
-	    	return false;
 	    }
-	    return false;
 	}
 	
 	/**
