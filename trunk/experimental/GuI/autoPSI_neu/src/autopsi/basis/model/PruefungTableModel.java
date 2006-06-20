@@ -12,6 +12,7 @@ import autopsi.database.dao.GenericDataObject;
 import autopsi.database.dao.IGenericDAO;
 import autopsi.database.table.Pruefung;
 import autopsi.database.table.Lva;
+import autopsi.javaspace.*;
 
 public class PruefungTableModel extends AbstractTableModel {
 
@@ -20,6 +21,7 @@ public class PruefungTableModel extends AbstractTableModel {
 	public List <GenericDataObject> lva;
 	public Pruefung suchPruefung = null;
 	public IGenericDAO gdo = new GenericDAO();
+	public IServiceCommunicator ogdo = null;
 	public String tablename = "PRUEFUNG";
 	public List <GenericDataObject> lastDeletedObjects =  new ArrayList<GenericDataObject>();
 	
@@ -58,7 +60,15 @@ public class PruefungTableModel extends AbstractTableModel {
 		}
 	}
 	
+	public void readOnlineData () {
+		Pruefung temp =(Pruefung) ogdo.getObject(this.suchPruefung);
+		this.pruefungen.clear();
+		this.pruefungen.add(temp);
+	}
+	
 	public PruefungTableModel (){
+		this.ogdo = new ServiceCommunicator();
+		this.pruefungen = new ArrayList<GenericDataObject>();
 	}
 	
 	public void deleteSelectedRow(JTable table) {
@@ -151,7 +161,7 @@ public class PruefungTableModel extends AbstractTableModel {
 	
 	public void setSuchPruefung (Pruefung suchPruefung){
 		this.suchPruefung=suchPruefung;
-		fireDataChanged();
+		//fireDataChanged();
 	}
 	
 	public void setLvaName(String name){
@@ -162,6 +172,14 @@ public class PruefungTableModel extends AbstractTableModel {
 	}
 	public void fireDataChanged() {
 		readData();
+		fireTableDataChanged();
+	}
+	
+	public void fireOnlineDataChanged() {
+		System.out.println("Online Suche gestartet.");
+		readOnlineData();
+		System.out.println("Online Suche fertig.");
+		System.out.println("Online Data: " + this.pruefungen.size());
 		fireTableDataChanged();
 	}
 	
@@ -185,12 +203,11 @@ public class PruefungTableModel extends AbstractTableModel {
 	
 	public Object getValueAt(int row, int col) {
 		Pruefung p = null;
+		p = (Pruefung) pruefungen.get(row);
 		Lva l = null;
 		try{
 			IGenericDAO gdo = new GenericDAO();
-			p = (Pruefung) pruefungen.get(row);
 			this.lva = gdo.unsafeQuery("SELECT * FROM LVA WHERE GLOBAL_ID ="+p.getLvaId(), new Lva());
-			
 			l = (Lva) lva.get(0);
 		} catch (Exception e){
 			System.out.println("PruefungTableModel @ getValueAt;"+e.toString());
@@ -201,9 +218,9 @@ public class PruefungTableModel extends AbstractTableModel {
 		if (p==null)
 			return null;
 		else if (col==0)
-			return l.getLvaNr();
+			return "";
 		else if (col==1)
-			return l.getTitle();
+			return "";
 		else if (col==2)
 			return p.getExaminer();
 		else if (col==3)

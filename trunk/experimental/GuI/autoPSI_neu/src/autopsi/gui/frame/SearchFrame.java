@@ -1195,29 +1195,32 @@ public class SearchFrame extends javax.swing.JFrame implements ActionListener {
 				
 			}
 			else if(cmd.equals("Prüfung Suchen")) {
+				Pruefung p = new Pruefung();
+				if (!jPruefungLVAField.getText().equals("")) {
+					jPruefungTableModel.setLvaName(jPruefungLVAField.getText());
+				} else {
+					jPruefungTableModel.setLvaName(null);
+				}
+				if (!jPruefungExaminerField.getText().equals("")) {
+					p.setExaminer(jPruefungExaminerField.getText());
+				} else {
+					p.setExaminer(null);
+				}
+				if (!jGradeComboBox.getSelectedItem().toString().equals("-")) {
+					p.setGrade(new Integer(jGradeComboBox.getSelectedItem().toString()));
+				} else {
+					p.setGrade(null);
+				}
+				
+				jPruefungTableModel.setGroup(jPruefungGruppeComboBox.getSelectedItem().toString());
+				jPruefungTableModel.setSuchPruefung(p);
 				if (jPruefungLokalSuchenRadioButton.isSelected()){
 					System.out.println("Prüfung wird lokal gesucht...");
-					Pruefung p = new Pruefung();
-					if (!jPruefungLVAField.getText().equals("")) {
-						jPruefungTableModel.setLvaName(jPruefungLVAField.getText());
-					} else {
-						jPruefungTableModel.setLvaName(null);
-					}
-					if (!jPruefungExaminerField.getText().equals("")) {
-						p.setExaminer(jPruefungExaminerField.getText());
-					} else {
-						p.setExaminer(null);
-					}
-					if (!jGradeComboBox.getSelectedItem().toString().equals("-")) {
-						p.setGrade(new Integer(jGradeComboBox.getSelectedItem().toString()));
-					} else {
-						p.setGrade(null);
-					}
+					jPruefungTableModel.fireDataChanged();
 					
-					jPruefungTableModel.setGroup(jPruefungGruppeComboBox.getSelectedItem().toString());
-					jPruefungTableModel.setSuchPruefung(p);
 				} else if (jPruefungOnlineSuchenRadioButton.isSelected()) {
 					System.out.println("Prüfung wird online gesucht...");
+					jPruefungTableModel.fireOnlineDataChanged();
 				}
 				
 			} else if(cmd.equals("Prüfung Löschen")) {
