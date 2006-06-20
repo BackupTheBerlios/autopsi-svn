@@ -78,15 +78,21 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 	private JTable table;
 	private JLabel lblZeit;
 	private JButton jJumpToToday;
-	private JButton newTerminContainer;
 	private JPanel tab0;
 	private JLabel jLabel2;
 	private JTextField txtSuche;
 	private JPanel tab2;
 	private JTextPane lblBeschreibung;
 	private JTabbedPane infobar;
-	private JButton searchButton;
+	private JLabel button_editTC;
+	private JLabel button_deleteTC;
 	private JLabel jLabel4;
+	private JLabel button_newTC;
+	private JLabel separator1;
+	private JLabel button_deleteTermin;
+	private JLabel button_editTermin;
+	private JLabel button_newTermin;
+	private JLabel button_search;
 	private JLabel jLabel3;
 	private JTable timetable;
 	private JMenuItem view_dayNext;
@@ -111,9 +117,6 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 	private JToolBar toolbar;
 	private JButton dayNext;
 	private JButton dayBack;
-	private JPanel jPanel3;
-	private JButton deleteTC;
-	private JButton editTC;
 	private JPanel jPanel2;
 	private JCheckBox showTCObjects;
 	private JCheckBox showTObjects;
@@ -129,9 +132,6 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 	private JButton weekBack;
 	private JButton monthBack;
 	private JLabel lblMonth = new JLabel();
-	private JButton deleteTermin;
-	private JButton editTermin;
-	private JButton neuerTermin;
 	private JList listTC2;
 	private JLabel jLabel7;
 	private JLabel jLabel6;
@@ -181,7 +181,7 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 		MonatTM tablemodel = new MonatTM(tsBegin,tsEnd);
 		table.setModel(tablemodel);
 
-		table.setBounds(287, 35, 651, 483);
+		table.setBounds(287, 140, 651, 378);
 		table.setBorder(new LineBorder(new java.awt.Color(0,0,0), 1, false));
 		table.setRowSelectionAllowed(false);
 		table.setSelectionForeground(new java.awt.Color(0,0,0));
@@ -230,9 +230,9 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 				today = new JPanel();
 				today.setLayout(null);
 				getContentPane().add(today);
-				today.setBounds(0, 63, 252, 175);
-				today.setBorder(BorderFactory.createEtchedBorder(BevelBorder.LOWERED));
-				today.setBackground(new java.awt.Color(102,136,174));
+				today.setBounds(0, 53, 252, 175);
+				today.setBorder(new LineBorder(new java.awt.Color(0,0,0), 1, false));
+				today.setBackground(new java.awt.Color(60,80,120));
 				{
 					lblToday = new JLabel();
 					today.add(lblToday);
@@ -259,39 +259,12 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 			{
 				toolbar = new JToolBar();
 				getContentPane().add(toolbar);
-				toolbar.setBounds(0, 0, 938, 35);
+				toolbar.setBounds(266, 98, 938, 35);
 				toolbar.setFloatable(false);
 				toolbar.setLayout(null);
-				toolbar.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
+				toolbar.setBorder(new LineBorder(new java.awt.Color(0,0,0), 1, false));
 				toolbar.setBackground(new java.awt.Color(240,240,240));
 				toolbar.setOpaque(false);
-				{
-					neuerTermin = new JButton();
-					toolbar.add(neuerTermin);
-					neuerTermin.setIcon(new ImageIcon(
-						"src/images/newTermin.GIF"));
-					neuerTermin.setBounds(0, 0, 28, 28);
-					neuerTermin.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
-					neuerTermin.setOpaque(false);
-					neuerTermin.setBackground(new java.awt.Color(64,128,128));
-					neuerTermin.addMouseListener(this);
-				}
-				{
-					jPanel3 = new JPanel();
-					toolbar.add(jPanel3);
-					jPanel3.setBounds(84, 0, 28, 28);
-					jPanel3.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
-					jPanel3.setOpaque(false);
-				}
-				{
-					editTC = new JButton();
-					toolbar.add(editTC);
-					editTC.setIcon(new ImageIcon(
-						"src/images/editTerminContainer.GIF"));
-					editTC.setBounds(196, 0, 28, 28);
-					editTC.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
-					editTC.setOpaque(false);
-				}
 				{
 					weekBack = new JButton();
 					toolbar.add(weekBack);
@@ -412,58 +385,10 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 					monthBack.addMouseListener(this);
 				}
 				{
-					deleteTC = new JButton();
-					toolbar.add(deleteTC);
-					deleteTC.setIcon(new ImageIcon(
-						"src/images/deleteTerminContainer.GIF"));
-					deleteTC.setBounds(224, 0, 28, 28);
-					deleteTC.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
-					deleteTC.setOpaque(false);
-				}
-				{
-					newTerminContainer = new JButton();
-					toolbar.add(newTerminContainer);
-					newTerminContainer.setIcon(new ImageIcon(
-						"src/images/newTerminContainer.GIF"));
-					newTerminContainer.setBounds(168, 0, 28, 28);
-					newTerminContainer.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
-					newTerminContainer.setOpaque(false);
-					newTerminContainer.addMouseListener(this);
-				}
-				{
-					editTermin = new JButton();
-					toolbar.add(editTermin);
-					editTermin.setIcon(new ImageIcon(
-						"src/images/editTermin.GIF"));
-					editTermin.setBounds(28, 0, 28, 28);
-					editTermin.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
-					editTermin.setOpaque(false);
-					editTermin.addMouseListener(this);
-				}
-				{
-					deleteTermin = new JButton();
-					toolbar.add(deleteTermin);
-					deleteTermin.setIcon(new ImageIcon(
-						"src/images/deleteTermin.GIF"));
-					deleteTermin.setBounds(56, 0, 28, 28);
-					deleteTermin.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
-					deleteTermin.setOpaque(false);
-					deleteTermin.addMouseListener(this);
-				}
-				{
 					jPanel5 = new JPanel();
 					toolbar.add(jPanel5);
 					jPanel5.setBounds(777, 0, 21, 28);
 					jPanel5.setBorder(BorderFactory.createEtchedBorder(BevelBorder.LOWERED));
-				}
-				{
-					searchButton = new JButton();
-					toolbar.add(searchButton);
-					searchButton.setIcon(new ImageIcon("src/images/suche.GIF"));
-					searchButton.setBounds(112, 0, 28, 28);
-					searchButton.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
-					searchButton.setOpaque(false);
-					searchButton.addMouseListener(this);
 				}
 			}
 			{
@@ -517,7 +442,7 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 			{
 				infobar = new JTabbedPane();
 				getContentPane().add(infobar);
-				infobar.setBounds(0, 238, 252, 280);
+				infobar.setBounds(0, 259, 252, 259);
 				infobar.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
 				infobar.setBackground(new java.awt.Color(102, 136, 174));
 				{
@@ -525,10 +450,12 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 					infobar.addTab("Termin-Info" + "", null, tab0, null);
 					tab0.setLayout(null);
 					tab0.setPreferredSize(new java.awt.Dimension(224, 231));
+					tab0.setEnabled(false);
+					tab0.setBackground(new java.awt.Color(240,240,240));
 					{
 						lblBeschreibung = new JTextPane();
 						tab0.add(lblBeschreibung);
-						lblBeschreibung.setBounds(7, 98, 231, 147);
+						lblBeschreibung.setBounds(7, 98, 231, 126);
 						lblBeschreibung.setOpaque(false);
 						lblBeschreibung.setBorder(BorderFactory.createEtchedBorder(BevelBorder.LOWERED));
 					}
@@ -570,7 +497,7 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 					tab1 = new JPanel();
 					infobar.addTab("Objekte", null, tab1, null);
 					tab1.setLayout(null);
-					tab1.setBackground(new java.awt.Color(244, 244, 244));
+					tab1.setBackground(new java.awt.Color(240,240,240));
 					tab1.setPreferredSize(new java.awt.Dimension(220, 336));
 					{
 						txtSuche = new JTextField();
@@ -591,7 +518,7 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 					{
 						objectScroller = new JScrollPane();
 						tab1.add(objectScroller);
-						objectScroller.setBounds(7, 70, 231, 175);
+						objectScroller.setBounds(7, 70, 231, 154);
 						objectScroller.setBorder(new LineBorder(
 							new java.awt.Color(0, 0, 0),
 							1,
@@ -609,6 +536,7 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 						tab1.add(showTObjects);
 						showTObjects.setText("zeige Objekte des Termins");
 						showTObjects.setBounds(3, 35, 161, 14);
+						showTObjects.setOpaque(false);
 					}
 					{
 						showTCObjects = new JCheckBox();
@@ -616,12 +544,14 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 						showTCObjects
 							.setText("zeige Objekte des Termincontainers");
 						showTCObjects.setBounds(3, 52, 224, 14);
+						showTCObjects.setOpaque(false);
 					}
 				}
 				{
 					tab2 = new JPanel();
 					infobar.addTab("verwandte Termine", null, tab2, null);
 					tab2.setLayout(null);
+					tab2.setBackground(new java.awt.Color(240,240,240));
 					{
 						txtSuche2 = new JTextField();
 						tab2.add(txtSuche2);
@@ -670,7 +600,7 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 					{
 						TCterminScroller = new JScrollPane();
 						tab2.add(TCterminScroller);
-						TCterminScroller.setBounds(7, 49, 231, 196);
+						TCterminScroller.setBounds(7, 49, 231, 175);
 						TCterminScroller.setBackground(new java.awt.Color(
 							255,
 							255,
@@ -721,22 +651,87 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 			{
 				jLabel3 = new JLabel();
 				getContentPane().add(jLabel3);
-				jLabel3.setIcon(new ImageIcon("src/images/background.gif"));
-				jLabel3.setBounds(0, 21, 252, 56);
+				jLabel3.setIcon(new ImageIcon("src/images/infoBar.png"));
+				jLabel3.setBounds(-1, 19, 259, 56);
 				{
 					lblDatum = new JLabel();
 					jLabel3.add(lblDatum);
 					lblDatum.setText("Montag, 22. Mai 2006");
-					lblDatum.setBounds(7, 14, 210, 28);
+					lblDatum.setBounds(7, 8, 210, 28);
 					lblDatum.setFont(new java.awt.Font("Tahoma", 1, 14));
-					lblDatum.setForeground(new java.awt.Color(255, 255, 255));
+					lblDatum.setForeground(new java.awt.Color(0,0,0));
 				}
+			}
+			{
+				button_newTermin = new JLabel();
+				getContentPane().add(button_newTermin);
+				button_newTermin.setIcon(new ImageIcon("src/images/icons/neuerTermin.png"));
+				button_newTermin.setBounds(0, -7, 31, 35);
+				button_newTermin.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
+				button_newTermin.addMouseListener(this);
+			}
+			{
+				button_editTermin = new JLabel();
+				getContentPane().add(button_editTermin);
+				button_editTermin.setIcon(new ImageIcon("src/images/icons/editTermin.PNG"));
+				button_editTermin.setBounds(31, -7, 31, 35);
+				button_editTermin.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
+				button_editTermin.addMouseListener(this);
+			}
+			{
+				button_deleteTermin = new JLabel();
+				getContentPane().add(button_deleteTermin);
+				button_deleteTermin.setIcon(new ImageIcon("src/images/icons/deleteTermin.png"));
+				button_deleteTermin.setBounds(62, -7, 31, 35);
+				button_deleteTermin.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
+				button_deleteTermin.addMouseListener(this);
+			}
+			{
+				separator1 = new JLabel();
+				getContentPane().add(separator1);
+				separator1.setIcon(new ImageIcon("src/images/icons/emptyBox.png"));
+				separator1.setBounds(217, -7, 31, 35);
+			}
+			{
+				button_search = new JLabel();
+				getContentPane().add(button_search);
+				button_search.setIcon(new ImageIcon("src/images/icons/search.png"));
+				button_search.setBounds(248, -7, 31, 35);
+				button_search.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
+				button_search.addMouseListener(this);
+			}
+			{
+				separator1 = new JLabel();
+				getContentPane().add(separator1);
+				separator1.setIcon(new ImageIcon("src/images/icons/emptyBox.png"));
+				separator1.setBounds(93, -7, 31, 35);
+			}
+			{
+				button_newTC = new JLabel();
+				getContentPane().add(button_newTC);
+				button_newTC.setIcon(new ImageIcon("src/images/icons/neuerTC.png"));
+				button_newTC.setBounds(124, -7, 31, 35);
+				button_newTC.addMouseListener(this);
 			}
 			{
 				jLabel4 = new JLabel();
 				getContentPane().add(jLabel4);
-				jLabel4.setBounds(0, 0, 945, 35);
-				jLabel4.setIcon(new ImageIcon("src/images/banner.JPG"));
+				jLabel4.setIcon(new ImageIcon("src/images/infoBar2.png"));
+				jLabel4.setBounds(-1, 205, 259, 56);
+			}
+			{
+				button_editTC = new JLabel();
+				getContentPane().add(button_editTC);
+				button_editTC.setIcon(new ImageIcon("src/images/icons/editTC.png"));
+				button_editTC.setBounds(155, -7, 31, 35);
+				button_editTC.addMouseListener(this);
+			}
+			{
+				button_deleteTC = new JLabel();
+				getContentPane().add(button_deleteTC);
+				button_deleteTC.setIcon(new ImageIcon("src/images/icons/deleteTC.png"));
+				button_deleteTC.setBounds(186, -7, 31, 35);
+				button_deleteTC.addMouseListener(this);
 			}
 			{
 				mainMenu = new JMenuBar();
@@ -952,7 +947,7 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 			selection = todayList.getSelectedIndex();
 			loadTerminData(false);
 		}
-		if(arg0.getSource().equals(neuerTermin)) {
+		if(arg0.getSource().equals(button_newTermin)) {
 			EditTerminFrame newTermin = new EditTerminFrame(this,c_marker, null);
 			newTermin.setTitle("neuen Termin hinzufügen");
 			newTermin.setLocation(this.getLocation().x+30,this.getLocation().y+30);
@@ -960,7 +955,7 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 			updateTable();
 			updateInfoBar(false);
 		}
-		if(arg0.getSource().equals(newTerminContainer)) {
+		if(arg0.getSource().equals(button_newTC)) {
 			EditTerminContainerFrame frame = new EditTerminContainerFrame(this,-1);
 			frame.setLocation(this.getLocation().x+20,this.getLocation().y+20);
 			frame.setTitle("neuen Termincontainer hinzufügen");
@@ -968,7 +963,7 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 			updateTable();
 			updateInfoBar(false);
 		}
-		if(arg0.getSource().equals(editTermin)) {
+		if(arg0.getSource().equals(button_editTermin)) {
 			
 			if(terminId != -1){
 			EditTerminFrame newTermin = new EditTerminFrame(this,null, terminId);
@@ -979,7 +974,7 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 			}
 			
 		}
-		if(arg0.getSource().equals(searchButton)) {
+		if(arg0.getSource().equals(button_search)) {
 			
 			SearchFrame search = new SearchFrame();
 			
@@ -990,7 +985,7 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 			search.setVisible(true);
 		}
 		
-		if(arg0.getSource().equals(deleteTermin)) {
+		if(arg0.getSource().equals(button_deleteTermin)) {
 			System.out.println("++++ " + terminId);
 			GenericDAO gdo = new GenericDAO();
 			if(terminId != -1){
@@ -1086,14 +1081,33 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 			statusBar.setText("Klicken Sie auf einen Tag um ihn und dessen Termine in der Infobar anzuzeigen");
 			mouseEntered = true;
 		}
-		if(arg0.getSource().equals(neuerTermin)){
+		if(arg0.getSource().equals(button_newTermin)){
+			button_newTermin.setIcon(new ImageIcon("src/images/icons/neuerTermin_hover.png"));
 			statusBar.setText("Fügt einen neuen Termin hinzu. Wenn Sie vorher auf einen Tag klicken wird dieser automatisch in das Termindatum übernommen.");	
 		}
-		if(arg0.getSource().equals(editTermin)){
+		if(arg0.getSource().equals(button_editTermin)){
+			button_editTermin.setIcon(new ImageIcon("src/images/icons/editTermin_hover.png"));
 			statusBar.setText("Bearbeiten des gerade gewählten Termins.");	
 		}
-		if(arg0.getSource().equals(deleteTermin)){
+		if(arg0.getSource().equals(button_deleteTermin)){
+			button_deleteTermin.setIcon(new ImageIcon("src/images/icons/deleteTermin_hover.png"));
 			statusBar.setText("Löscht den gerade gewählten Termin.");	
+		}
+		if(arg0.getSource().equals(button_newTC)){
+			button_newTC.setIcon(new ImageIcon("src/images/icons/neuerTC_hover.png"));
+			statusBar.setText("Fügt einen neuen Termincontainer hinzu.");	
+		}
+		if(arg0.getSource().equals(button_editTC)){
+			button_editTC.setIcon(new ImageIcon("src/images/icons/editTC_hover.png"));
+			statusBar.setText("Bearbeitet einen Termincontainer.");	
+		}
+		if(arg0.getSource().equals(button_deleteTC)){
+			button_deleteTC.setIcon(new ImageIcon("src/images/icons/deleteTC_hover.png"));
+			statusBar.setText("Löscht einen Termincontainer.");	
+		}
+		if(arg0.getSource().equals(button_search)){
+			button_search.setIcon(new ImageIcon("src/images/icons/suche_hover.png"));
+			statusBar.setText("Sucht nach Terminen, Termincontainern und anderen Daten.");	
 		}
 		if(arg0.getSource().equals(zoomBox)){
 			statusBar.setText("Aktiviert/Deaktiviert die automatische Vergrößerung eines Tages in der Monatsansicht wenn der Mauszeiger darübergeführt wird.");	
@@ -1145,13 +1159,32 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 			layoutTable();
 			
 		}
-		if(arg0.getSource().equals(neuerTermin)){
+		if(arg0.getSource().equals(button_newTermin)){
+			button_newTermin.setIcon(new ImageIcon("src/images/icons/neuerTermin.png"));
 			statusBar.setText("");
 		}
-		if(arg0.getSource().equals(editTermin)){
+		if(arg0.getSource().equals(button_editTermin)){
+			button_editTermin.setIcon(new ImageIcon("src/images/icons/editTermin.png"));
 			statusBar.setText("");	
 		}
-		if(arg0.getSource().equals(deleteTermin)){
+		if(arg0.getSource().equals(button_deleteTermin)){
+			button_deleteTermin.setIcon(new ImageIcon("src/images/icons/deleteTermin.png"));
+			statusBar.setText("");	
+		}
+		if(arg0.getSource().equals(button_newTC)){
+			button_newTC.setIcon(new ImageIcon("src/images/icons/neuerTC.png"));
+			statusBar.setText("");	
+		}
+		if(arg0.getSource().equals(button_editTC)){
+			button_editTC.setIcon(new ImageIcon("src/images/icons/editTC.png"));
+			statusBar.setText("");	
+		}
+		if(arg0.getSource().equals(button_deleteTC)){
+			button_deleteTC.setIcon(new ImageIcon("src/images/icons/deleteTC.png"));
+			statusBar.setText("");	
+		}
+		if(arg0.getSource().equals(button_search)){
+			button_search.setIcon(new ImageIcon("src/images/icons/suche.png"));
 			statusBar.setText("");	
 		}
 		if(arg0.getSource().equals(zoomBox)){
