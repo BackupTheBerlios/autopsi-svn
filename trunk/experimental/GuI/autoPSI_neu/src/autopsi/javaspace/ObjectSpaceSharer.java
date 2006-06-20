@@ -47,31 +47,31 @@ public class ObjectSpaceSharer {
 			GenericDataObject lookupObj = null;
 			String tableName = aob.getTableName().toLowerCase();
 			if (tableName.equals("kontakt")){
-//				System.out.println("Ist ein Kontakt, globalId=="+aob.getId());
+				System.out.println("Ist ein Kontakt, globalId=="+aob.getId());
 				lookupObj = new Kontakt();
 				this.gdo.setCurrentTable("kontakt");
 				((Kontakt)lookupObj).setGlobalId(aob.getId());
 			}
 			if (tableName.equals("notiz")){
-//				System.out.println("Ist eine Notiz, globalId=="+aob.getId());
+				System.out.println("Ist eine Notiz, globalId=="+aob.getId());
 				lookupObj = new Notiz();
 				this.gdo.setCurrentTable("notiz");
 				((Notiz)lookupObj).setGlobalId(aob.getId());
 			}
 			if (tableName.equals("lva")){
-//				System.out.println("Ist eine Lva, globalId=="+aob.getId());
+				System.out.println("Ist eine Lva, globalId=="+aob.getId());
 				lookupObj = new Lva();
 				this.gdo.setCurrentTable("lva");
 				((Lva)lookupObj).setGlobalId(aob.getId());
 			}
 			if (tableName.equals("lehrmittel")){
-//				System.out.println("Ist ein Lehrmittel, globalId=="+aob.getId());
+				System.out.println("Ist ein Lehrmittel, globalId=="+aob.getId());
 				lookupObj = new Lehrmittel();
 				this.gdo.setCurrentTable("lehrmittel");
 				((Lehrmittel)lookupObj).setGlobalId(aob.getId());
 			}
 			if (tableName.equals("pruefung")){
-//				System.out.println("Ist eine Prüfung, globalId=="+aob.getId());
+				System.out.println("Ist eine Prüfung, globalId=="+aob.getId());
 				lookupObj = new Pruefung();
 				this.gdo.setCurrentTable("pruefung");
 				((Pruefung)lookupObj).setGlobalId(aob.getId());
