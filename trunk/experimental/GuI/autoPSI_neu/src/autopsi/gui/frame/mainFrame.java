@@ -1534,7 +1534,6 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 		for(int i = 0;i<currentValue.length-1;i++)
 		{
 			data[i]=currentValue[i+1].getDate().toString().substring(11,16) + " " + currentValue[i+1].getSecondaryTitle();
-		
 		}
 		loadList();
 		if(select) todayList.setSelectedIndex(selection);
