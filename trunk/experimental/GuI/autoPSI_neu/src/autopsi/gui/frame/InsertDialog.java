@@ -46,6 +46,7 @@ public class InsertDialog extends JDialog implements ActionListener {
 	
 	private Integer selectedId;
 	private String selectedTable;
+	private boolean isOk;
 
 	public InsertDialog(Frame owner){
 		super(owner, true);
@@ -95,6 +96,10 @@ public class InsertDialog extends JDialog implements ActionListener {
 
 	}
 	
+	public boolean getIsOk(){
+		return this.isOk;
+	}
+	
 	public Integer getAttachableObjectId(){
 		return this.selectedId;
 	}
@@ -139,10 +144,13 @@ public class InsertDialog extends JDialog implements ActionListener {
 					this.selectedId = ((Lehrmittel)obj).getGlobalId();
 				}
 			}
-			if (selectedId != null)
+			if (selectedId != null){
+				this.isOk = true;
 				this.dispose();
+			}
 		}
 		if (arg0.getSource().equals(cancelButton)){
+			this.isOk = false;
 			this.dispose();
 		}		
 	}

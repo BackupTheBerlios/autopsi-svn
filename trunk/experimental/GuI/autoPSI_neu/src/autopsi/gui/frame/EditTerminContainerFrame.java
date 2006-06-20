@@ -566,18 +566,21 @@ public class EditTerminContainerFrame extends javax.swing.JFrame implements java
 		}
 		if(arg0.getSource().equals(jAddObjectButton)){
 			InsertDialog id = new InsertDialog(this);
-			Integer globalId = id.getAttachableObjectId();
-			
-			String table = id.getAttachableObjectTableName();
-			this.gdo.setCurrentTable("anhaengen_termincontainer");
-			try {
-//				System.out.println("EditTerminFrame.jAddObjectButton::"+"INSERT INTO anhaengen_termin VALUES("+this.ID+","+globalId+","+table+")");
-				gdo.unsafeQuery("INSERT INTO anhaengen_termincontainer VALUES("+this.ID+","+globalId+",'"+table+"')",new Anhaengen_termincontainer());
+			if(id.getIsOk()){
+				Integer globalId = id.getAttachableObjectId();
 				
-			} catch (Exception e){
-				System.out.println("EditTerminCntainerFrame.mousePressed::Konnte Objekt nicht anhängen::"+e.toString());
+				String table = id.getAttachableObjectTableName();
+				this.gdo.setCurrentTable("anhaengen_termincontainer");
+				try {
+	//				System.out.println("EditTerminFrame.jAddObjectButton::"+"INSERT INTO anhaengen_termin VALUES("+this.ID+","+globalId+","+table+")");
+					gdo.unsafeQuery("INSERT INTO anhaengen_termincontainer VALUES("+this.ID+","+globalId+",'"+table+"')",new Anhaengen_termincontainer());
+					
+				} catch (Exception e){
+					System.out.println("EditTerminCntainerFrame.mousePressed::Konnte Objekt nicht anhängen::"+e.toString());
+				}
+				this.loadObjectList();
 			}
-			this.loadObjectList();
+			
 		}
 		if(arg0.getSource().equals(open_button)){
 			int index = jList1.getSelectedIndex();
