@@ -1,7 +1,10 @@
 package autopsi.basis.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.JOptionPane;
+import javax.swing.JTable;
 import javax.swing.table.AbstractTableModel;
 
 import autopsi.database.dao.GenericDAO;
@@ -18,6 +21,10 @@ public class LVATableModel extends AbstractTableModel {
 	public Lva suchLva = null;
 	public String group = null;
 	public String type = null;
+	
+	public IGenericDAO gdo = new GenericDAO();
+	public String tablename = "LVA";
+	public List <GenericDataObject> lastDeletedObjects =  new ArrayList<GenericDataObject>();
 	
 	private final String [] columnName = {"LVA-Nr","Titel", "Beschreibung", "UNI"};
 	
@@ -53,6 +60,92 @@ public class LVATableModel extends AbstractTableModel {
 	public LVATableModel (){
 	}
 	
+	public void deleteSelectedRow(JTable table) {
+		Lva p = new Lva();
+		boolean selected = false;
+		boolean deleted = false;
+		boolean first = true;
+		int auswahl = 0;
+		p = null;
+		//	 Check each cell in the range
+	    for (int r=0; r<this.getRowCount(); r++) {
+            if (table.isCellSelected(r, 1)) {
+            	selected = true;
+            	p=(Lva) this.getLvas().get(r);
+            	if (p.getGlobalId() != null ) {
+            		if (first) {
+            			auswahl = JOptionPane.showConfirmDialog(null, "Sind sie sicher dass sie alle markierte LVAs löschen wollen?", "Löschen?",JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.ERROR_MESSAGE);
+            		}
+	            	if (auswahl == JOptionPane.YES_OPTION) {
+	            		//weiter mit löschen
+	            		deleted = this.deleteLva(p);
+	            		if (deleted) {
+	            			if (first){
+	            				JOptionPane.showMessageDialog(null, "Die LVA wurden erfolgreich gelöscht." , "Gelöscht!" , JOptionPane.INFORMATION_MESSAGE);
+	            			}
+	            		} else {
+	            			JOptionPane.showMessageDialog(null, "Die LVA konnte nicht gelöscht werden." , "Löschen!" , JOptionPane.ERROR_MESSAGE);
+	            		}
+	            	}
+            	} else {
+            		JOptionPane.showMessageDialog(null, "Diese LVA kann nicht gelöscht werden." , "Null Object!" , JOptionPane.ERROR_MESSAGE);
+            	}
+            	first = false;
+            }    
+	    }
+	    
+	    if (selected == false) {
+	    	JOptionPane.showMessageDialog(null, "Bitte selektieren Sie mindestens eine LVA in der Tabelle", "LVA wurde nicht ausgewählt!" , JOptionPane.ERROR_MESSAGE);
+	    }
+	    if (deleted) {
+	    	this.fireDataChanged();
+	    }
+	}
+	
+	/**
+	 */
+	public boolean deleteLva(Lva p){
+		if (p == null)
+			return false;
+		
+		try{
+			IGenericDAO gdo = new GenericDAO();
+			//System.out.println("SELECT * FROM " + this.tablename+" WHERE GLOBAL_ID ="+p.getGlobalId());
+			List <GenericDataObject> loeschen = gdo.unsafeQuery("SELECT * FROM " + this.tablename+" WHERE GLOBAL_ID ="+p.getGlobalId(), new Lva());
+				lastDeletedObjects.add(loeschen.get(0));
+			loeschen = gdo.unsafeQuery("DELETE FROM " + this.tablename+" WHERE GLOBAL_ID ="+p.getGlobalId(), new Lva());
+			return true;
+		} catch (Exception e){
+			System.out.println("PruefungTableModel @ deletePruefung;"+e.toString());
+		}
+		return true;
+	}
+	
+	public void restoreLastDeletedObjects(){
+		if (this.lastDeletedObjects.size() != 0) {
+			for (int i=0;i<this.lastDeletedObjects.size();i++){
+				addPruefung(this.lastDeletedObjects.get(i));
+			}
+			JOptionPane.showMessageDialog(null, "Die gelöschten Objekte wurden erfolgreich wiederhergestellt." , "Wiederherstellung Erfolgreich!" , JOptionPane.INFORMATION_MESSAGE);
+		} else {
+			JOptionPane.showMessageDialog(null, "Sie haben bisher keine Objekte gelöscht." , "Keine gelöschten Objekte" , JOptionPane.INFORMATION_MESSAGE);
+		}
+		this.lastDeletedObjects.clear();
+		this.fireDataChanged();
+	}
+	
+	public void addPruefung(GenericDataObject p){
+		try{
+			if (p!=null){
+				gdo.setCurrentTable(this.tablename);
+				gdo.addDataObject(p);
+			} else {
+				System.out.println("NULLLL ELEMENTTTT!!!! :(((((((");
+			}
+		} catch (Exception e){
+			System.out.println("PruefungTableModel @ addPruefung;"+e.toString());
+		}
+	}
 	
 	public void setSuchLVa (Lva suchLva){
 		this.suchLva=suchLva;

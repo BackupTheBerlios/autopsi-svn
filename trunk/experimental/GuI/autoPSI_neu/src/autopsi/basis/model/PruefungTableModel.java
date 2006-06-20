@@ -1,8 +1,6 @@
 package autopsi.basis.model;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.JOptionPane;
@@ -20,8 +18,10 @@ public class PruefungTableModel extends AbstractTableModel {
 	private static final long serialVersionUID = 8737097029189851737L;
 	public List <GenericDataObject> pruefungen;
 	public List <GenericDataObject> lva;
-	public List <GenericDataObject> geloeschtePruefung;
 	public Pruefung suchPruefung = null;
+	public IGenericDAO gdo = new GenericDAO();
+	public String tablename = "PRUEFUNG";
+	public List <GenericDataObject> lastDeletedObjects =  new ArrayList<GenericDataObject>();
 	
 	public String lvaname = null;
 	public String group = null;
@@ -33,9 +33,8 @@ public class PruefungTableModel extends AbstractTableModel {
 	}
 	
 	private void readData() {
-		String query="select * from PRUEFUNG as p, LVA as l, ATTACHABLE_OBJECT as a, ATTACHABLE_OBJECT_KATEGORIE as ok where p.GLOBAL_ID=a.GLOBAL_ID AND a.KATEGORIE_ID=ok.ID AND p.LVA_ID = l.GLOBAL_ID";
+		String query="select * from "+this.tablename+" as p, LVA as l, ATTACHABLE_OBJECT as a, ATTACHABLE_OBJECT_KATEGORIE as ok where p.GLOBAL_ID=a.GLOBAL_ID AND a.KATEGORIE_ID=ok.ID AND p.LVA_ID = l.GLOBAL_ID";
 		try{
-			IGenericDAO gdo = new GenericDAO();
 			if (suchPruefung!=null) {
 				if (this.suchPruefung.getExaminer()!=null){
 					query +=" AND LOWER(p.EXAMINER) LIKE '%"+this.suchPruefung.getExaminer().toLowerCase()+"%'";
@@ -63,58 +62,90 @@ public class PruefungTableModel extends AbstractTableModel {
 	}
 	
 	public void deleteSelectedRow(JTable table) {
-		
 		Pruefung p = new Pruefung();
 		boolean selected = false;
 		boolean deleted = false;
+		boolean first = true;
+		int auswahl = 0;
 		p = null;
 		//	 Check each cell in the range
 	    for (int r=0; r<this.getRowCount(); r++) {
-        	
-	            if (table.isCellSelected(r, 1)) {
-	            	System.out.println("This row is selected: " +r);
-	            	selected = true;
-	            	p=(Pruefung) this.getPruefungen().get(r);
-	            	if (p.getGlobalId() != null && p.getGlobalId() != 0 ) {
-	            		int auswahl = JOptionPane.showConfirmDialog(null, "Sind sie sicher dass sie die selectierte(n) Prüfung(en) löschen wollen?", "Löschen?",JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.ERROR_MESSAGE);
-		            	if (auswahl == JOptionPane.YES_OPTION) {
-		            		//weiter mit löschen
-		            		deleted = this.deletePruefung(p);
-		            		if (deleted) {
-		            			JOptionPane.showMessageDialog(null, "Die Prüfung wurde erfolgreich gelöscht." , "Gelöscht!" , JOptionPane.INFORMATION_MESSAGE);
-		            		} else {
-		            			JOptionPane.showMessageDialog(null, "Das Prüfung konnte nicht gelöscht werden." , "Löschen!" , JOptionPane.ERROR_MESSAGE);
-		            		}
-		            	}
-	            	} else {
-	            		JOptionPane.showMessageDialog(null, "Diese Prüfung kann nicht gelöscht werden." , "Leser wurde nicht ausgewählt!" , JOptionPane.ERROR_MESSAGE);
+            if (table.isCellSelected(r, 1)) {
+            	selected = true;
+            	p=(Pruefung) this.getPruefungen().get(r);
+            	if (p.getGlobalId() != null) {
+            		if (first) {
+            			auswahl = JOptionPane.showConfirmDialog(null, "Sind sie sicher dass sie alle markierte Prüfungen löschen wollen?", "Löschen?",JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.ERROR_MESSAGE);
+            		}
+	            	if (auswahl == JOptionPane.YES_OPTION) {
+	            		//weiter mit löschen
+	            		deleted = this.deletePruefung(p);
+	            		if (deleted) {
+	            			if (first){
+	            				JOptionPane.showMessageDialog(null, "Die Prüfung wurde erfolgreich gelöscht." , "Gelöscht!" , JOptionPane.INFORMATION_MESSAGE);
+	            			}
+	            		} else {
+	            			JOptionPane.showMessageDialog(null, "Die Prüfungen konnten nicht gelöscht werden." , "Löschen!" , JOptionPane.ERROR_MESSAGE);
+	            		}
 	            	}
-	            	
-	            }
+            	} else {
+            		JOptionPane.showMessageDialog(null, "Diese Prüfung kann nicht gelöscht werden." , "Null Object!" , JOptionPane.ERROR_MESSAGE);
+            	}
+            	first = false;
+            }    
 	    }
 	    
 	    if (selected == false) {
-	    	JOptionPane.showMessageDialog(null, "Bitte selektieren Sie eine Prüfung in der Tabelle", "Prüfung wurde nicht ausgewählt!" , JOptionPane.ERROR_MESSAGE);
+	    	JOptionPane.showMessageDialog(null, "Bitte selektieren Sie mindestens eine Prüfung in der Tabelle", "Prüfung wurde nicht ausgewählt!" , JOptionPane.ERROR_MESSAGE);
 	    }
-	    this.fireDataChanged();
+	    if (deleted) {
+	    	this.fireDataChanged();
+	    }
 	}
 	
 	/**
 	 */
 	public boolean deletePruefung(Pruefung p){
-
 		if (p == null)
 			return false;
 		
 		try{
 			IGenericDAO gdo = new GenericDAO();
-			this.geloeschtePruefung = gdo.unsafeQuery("DELETE FROM PRUEFUNG WHERE GLOBAL_ID ="+p.getGlobalId(), new Pruefung());
+			//System.out.println("SELECT * FROM " + this.tablename+" WHERE GLOBAL_ID ="+p.getGlobalId());
+			List <GenericDataObject> loeschen = gdo.unsafeQuery("SELECT * FROM " + this.tablename+" WHERE GLOBAL_ID ="+p.getGlobalId(), new Pruefung());
+				lastDeletedObjects.add(loeschen.get(0));
+			loeschen = gdo.unsafeQuery("DELETE FROM " + this.tablename+" WHERE GLOBAL_ID ="+p.getGlobalId(), new Pruefung());
 			return true;
-
 		} catch (Exception e){
 			System.out.println("PruefungTableModel @ deletePruefung;"+e.toString());
 		}
 		return true;
+	}
+	
+	public void restoreLastDeletedObjects(){
+		if (this.lastDeletedObjects.size() != 0) {
+			for (int i=0;i<this.lastDeletedObjects.size();i++){
+				addPruefung(this.lastDeletedObjects.get(i));
+			}
+			JOptionPane.showMessageDialog(null, "Die gelöschten Objekte wurden erfolgreich wiederhergestellt." , "Wiederherstellung Erfolgreich!" , JOptionPane.INFORMATION_MESSAGE);
+		} else {
+			JOptionPane.showMessageDialog(null, "Sie haben bisher keine Objekte gelöscht." , "Keine gelöschten Objekte" , JOptionPane.INFORMATION_MESSAGE);
+		}
+		this.lastDeletedObjects.clear();
+		this.fireDataChanged();
+	}
+	
+	public void addPruefung(GenericDataObject p){
+		try{
+			if (p!=null){
+				gdo.setCurrentTable(this.tablename);
+				gdo.addDataObject(p);
+			} else {
+				System.out.println("NULLLL ELEMENTTTT!!!! :(((((((");
+			}
+		} catch (Exception e){
+			System.out.println("PruefungTableModel @ addPruefung;"+e.toString());
+		}
 	}
 	
 	
