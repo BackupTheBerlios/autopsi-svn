@@ -97,6 +97,7 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 	private JLabel button_monthNext;
 	private JLabel button_view1;
 	private JLabel button_view2;
+	private JLabel button_space;
 	private JLabel button_jumpToToday;
 	private JLabel jLabel3;
 	private JTable timetable;
@@ -639,6 +640,14 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 				button_view2.setBounds(706, -7, 51, 35);
 				button_view2.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
 				button_view2.addMouseListener(this);
+			}
+			{
+				button_space = new JLabel();
+				getContentPane().add(button_space);
+				button_space.setIcon(new ImageIcon("src/images/icons/space_offline.png"));
+				button_space.setBounds(872, -7, 68, 35);
+				button_space.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
+				button_space.addMouseListener(this);
 			}
 			
 			/*{
