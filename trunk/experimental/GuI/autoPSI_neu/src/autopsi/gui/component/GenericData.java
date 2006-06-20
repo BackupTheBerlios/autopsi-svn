@@ -1,8 +1,10 @@
 package autopsi.gui.component;
 
 
+import java.util.Iterator;
 import java.util.Map;
 import java.util.HashMap;
+import java.util.Set;
 import java.lang.reflect.Method;
 
 public class GenericData implements Cloneable{
@@ -16,6 +18,10 @@ public class GenericData implements Cloneable{
 		map.put(attribName, gsm);
 	}
 
+	protected void addAttribute(String attribName, GSMethod gsm){
+		map.put(attribName, gsm);
+	}
+	
 	public Object getAttrib(String name){
 		GSMethod gsm = map.get(name);
 		try{
@@ -26,6 +32,24 @@ public class GenericData implements Cloneable{
 		}
 		return null;
 	}
+//	
+//	public Map<String, GSMethodPrimary> getAllPrimary(){
+//		Map<String, GSMethodPrimary> result = new Map<String, GSMethodPrimary>();
+//		Set<String> s = map.keySet();
+//		Iterator<String> iter = s.iterator();
+//		while(iter.hasNext()){
+//			String key = iter.next();
+//			GSMethod meth = map.get(key);
+//			if (meth instanceof GSMethodPrimary)
+//				result.put(key, (GSMethodPrimary)meth);
+//		}
+//		return result;
+//	}
+//	
+//	public Map<String, GSMethodForeign> getAllForeign(){
+//		
+//	}
+	
 	
 	public Map<String, GSMethod> getAllAttribs(){
 		return map;
