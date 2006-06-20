@@ -79,6 +79,7 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 	private JPanel tab2;
 	private JTextPane lblBeschreibung;
 	private JTabbedPane infobar;
+	private JLabel toolBar;
 	private JCheckBox zoomBox;
 	private JLabel button_editTC;
 	private JLabel button_deleteTC;
@@ -135,6 +136,7 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 	private JLabel lblTerminContainer;
 	private JLabel lblOrt;
 	private JLabel lblDatum;
+	private JLabel lblDatumShadow;
 	private JLabel lblTermin;
 	private JPanel tab1;
 	private JMenuBar mainMenu;
@@ -517,6 +519,14 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 					lblDatum.setFont(new java.awt.Font("Tahoma",1,12));
 					lblDatum.setForeground(new java.awt.Color(0,0,0));
 				}
+				{
+					lblDatumShadow = new JLabel();
+					jLabel3.add(lblDatumShadow);
+					lblDatumShadow.setText("Montag, 22. Mai 2006");
+					lblDatumShadow.setBounds(8, 9, 210, 28);
+					lblDatumShadow.setFont(new java.awt.Font("Tahoma",1,12));
+					lblDatumShadow.setForeground(new java.awt.Color(170,170,170));
+				}
 			}
 			{
 				button_newTermin = new JLabel();
@@ -659,7 +669,7 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 			{
 				jLabel4 = new JLabel();
 				getContentPane().add(jLabel4);
-				jLabel4.setIcon(new ImageIcon("src/images/infoBar.png"));
+				jLabel4.setIcon(new ImageIcon("src/images/infoBar2.png"));
 				jLabel4.setBounds(2, 205, 252, 56);
 			}
 			{
@@ -675,6 +685,12 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 				button_deleteTC.setIcon(new ImageIcon("src/images/icons/deleteTC.png"));
 				button_deleteTC.setBounds(186, -7, 31, 35);
 				button_deleteTC.addMouseListener(this);
+			}
+			{
+				toolBar = new JLabel();
+				toolBar.setIcon(new ImageIcon("src/images/toolBar.png"));
+				getContentPane().add(toolBar);
+				toolBar.setBounds(0, -5, 950, 35);
 			}
 			{
 				mainMenu = new JMenuBar();
@@ -849,6 +865,7 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 	    		Date dat = new Date(cal2.getTimeInMillis());
 	    		String title = converter.toLong(dat.toString());
 	    		lblDatum.setText(title);
+	    		lblDatumShadow.setText(title);
 	    		loadList();
 
 	    		if(viewMonth) lblToday.setText("Heutige Termine:");
@@ -1642,6 +1659,7 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
     		Date dat = new Date(cal2.getTimeInMillis());
     		String title = converter.toLong(dat.toString());
     		lblDatum.setText(title);	
+    		lblDatumShadow.setText(title);
     		
     		for(int i = 0;i<7;i++)
     		{
