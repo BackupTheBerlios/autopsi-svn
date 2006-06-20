@@ -17,14 +17,14 @@ public class LehrmittelTableModel extends AbstractTableModel {
 	public Lehrmittel suchLm = null;
 	public String group = null;
 	
-	private final String [] columnName = {"Name", "Beschreibung"};
+	private final String [] columnName = {"Name", "Beschreibung", "File Link"};
 	
 	public List<GenericDataObject> getLvas() {
 		return this.lvas;
 	}
 	
 	private void readData() {
-		String query="select * from Lehrmittel as l, Lehrmittel_Kategorie as kat, ATTACHABLE_OBJECT as a, ATTACHABLE_OBJECT_KATEGORIE as ok where l.GLOBAL_ID=a.GLOBAL_ID AND a.KATEGORIE_ID=ok.ID AND l.KATEGORIE_ID=kat.ID";
+		String query="select * from Lehrmittel as l, Lehrmittel_Kategorie as kat, ATTACHABLE_OBJECT as a, ATTACHABLE_OBJECT_KATEGORIE as ok where l.GLOBAL_ID=a.GLOBAL_ID AND a.KATEGORIE_ID=ok.ID AND l.LEHRMITTEL_KATEGORIE_ID=kat.ID";
 		try{
 			IGenericDAO gdo = new GenericDAO();
 			if (suchLm!=null) {
@@ -83,6 +83,8 @@ public class LehrmittelTableModel extends AbstractTableModel {
 			return lm.getName();
 		else if (col==1)
 			return lm.getDescription();
+		else if (col==2)
+			return lm.getFileLink();
 		else return null;
 	}
 }
