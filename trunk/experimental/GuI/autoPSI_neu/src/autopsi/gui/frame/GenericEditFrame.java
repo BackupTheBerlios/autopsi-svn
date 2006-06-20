@@ -51,12 +51,12 @@ public class GenericEditFrame extends JDialog implements ActionListener {
 	}
 	
 	public void setObjectToEdit(GenericDataObject obj, boolean newObject){
-		System.out.println("GenericEditFrame.setObjectToEdit():1");
+//		System.out.println("GenericEditFrame.setObjectToEdit():1");
 		if (newObject){
 			try{
-				System.out.println("GenericEditFrame.setObjectToEdit():2a");
+//				System.out.println("GenericEditFrame.setObjectToEdit():2a");
 				editPanel.setObjectToEdit((GenericData)obj);
-				System.out.println("GenericEditFrame.setObjectToEdit():3a");
+//				System.out.println("GenericEditFrame.setObjectToEdit():3a");
 				this.lookupObject = null;
 			}
 			catch (Exception e){
