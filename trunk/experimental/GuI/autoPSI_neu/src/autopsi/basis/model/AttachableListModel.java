@@ -43,6 +43,7 @@ public class AttachableListModel implements ListModel {
 			}
 		}
 		if (this.tableName.equals("lva")){
+			System.out.println("AttachableListModel.setTableName(...)::lva");
 			try {
 				objs = this.gdao.getDataObjects(new Lva());
 			} catch (Exception e){
@@ -50,6 +51,7 @@ public class AttachableListModel implements ListModel {
 			}
 		}
 		if (this.tableName.equals("pruefung")){
+			System.out.println("AttachableListModel.setTableName(...)::pruefung");
 			try {
 				objs = this.gdao.getDataObjects(new Pruefung());
 			} catch (Exception e){
@@ -57,6 +59,7 @@ public class AttachableListModel implements ListModel {
 			}
 		}
 		if (this.tableName.equals("lehrmittel")){
+			System.out.println("AttachableListModel.setTableName(...)::lehrmittel");
 			try {
 				objs = this.gdao.getDataObjects(new Lehrmittel());
 			} catch (Exception e){
@@ -64,6 +67,7 @@ public class AttachableListModel implements ListModel {
 			}
 		}
 		if (this.tableName.equals("notiz")){
+			System.out.println("AttachableListModel.setTableName(...)::notiz");
 			try {
 				objs = this.gdao.getDataObjects(new Notiz());
 			} catch (Exception e){

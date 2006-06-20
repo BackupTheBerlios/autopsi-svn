@@ -567,6 +567,7 @@ public class EditTerminContainerFrame extends javax.swing.JFrame implements java
 		if(arg0.getSource().equals(jAddObjectButton)){
 			InsertDialog id = new InsertDialog(this);
 			Integer globalId = id.getAttachableObjectId();
+			
 			String table = id.getAttachableObjectTableName();
 			this.gdo.setCurrentTable("anhaengen_termincontainer");
 			try {
