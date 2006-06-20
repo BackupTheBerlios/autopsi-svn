@@ -40,6 +40,7 @@ import autopsi.basis.model.LehrmittelTableModel;
 import autopsi.basis.model.TerminContainerTableModel;
 import autopsi.basis.model.TerminTableModel;
 import autopsi.database.table.AttachableObjectKategorie;
+import autopsi.database.table.Lehrmittel;
 import autopsi.database.table.LehrmittelKategorie;
 import autopsi.database.table.Termin;
 import autopsi.database.table.Kontakt;
@@ -886,12 +887,12 @@ public class SearchFrame extends javax.swing.JFrame implements ActionListener {
 					jTerminTableModel.setGroup(jTerminGruppeComboBox.getSelectedItem().toString());
 					jTerminTableModel.setSuchTermin(ter);
 				} else if (jTerminOnlineSuchenRadioButton.isSelected()) {
-					System.out.println("Termint wird online gesucht...");
+					System.out.println("Termin wird online gesucht...");
 				}
 				
 			}  else if(cmd.equals("Termincontainer Suchen")) {
-				if (jTerminLokalSuchenRadioButton.isSelected()){
-					System.out.println("Termin wird lokal gesucht...");
+				if (jTerminContainerLokalSuchenRadioButton.isSelected()){
+					System.out.println("Termincontainer wird lokal gesucht...");
 					TerminContainer terc = new TerminContainer();
 					if (!jTerminTitelField.getText().equals("")) {
 						terc.setTitle(jTerminTitelField.getText());
@@ -905,8 +906,24 @@ public class SearchFrame extends javax.swing.JFrame implements ActionListener {
 					}
 					jTerminContainerTableModel.setGroup(jTerminContainerGruppeComboBox.getSelectedItem().toString());
 					jTerminContainerTableModel.setSuchTerminc(terc);
-				} else if (jTerminOnlineSuchenRadioButton.isSelected()) {
-					System.out.println("Termint wird online gesucht...");
+				} else if (jTerminContainerOnlineSuchenRadioButton.isSelected()) {
+					System.out.println("Termincontainer wird online gesucht...");
+				}
+				
+			} else if(cmd.equals("Lehrmittel Suchen")) {
+				if (jLehrmittelLokalSuchenRadioButton.isSelected()){
+					System.out.println("Lehrmittel wird lokal gesucht...");
+					Lehrmittel lm = new Lehrmittel();
+					if (!jLehrmittelNameField.getText().equals("")) {
+						lm.setName(jLehrmittelNameField.getText());
+					} else {
+						lm.setName(null);
+					}
+					
+					jLehrmittelTableModel.setGroup(jLehrmittelGruppeComboBox.getSelectedItem().toString());
+					jLehrmittelTableModel.setSuchLehrmittel(lm);
+				} else if (jLehrmittelOnlineSuchenRadioButton.isSelected()) {
+					System.out.println("Lehrmittel wird online gesucht...");
 				}
 				
 			}
