@@ -137,6 +137,9 @@ public class EditTerminFrame extends javax.swing.JFrame implements java.awt.even
 	private int selectedGroup;
 	private int selectedTC;
 	private JScrollPane attObPane;
+	ArrayList<String[]> queryList = new ArrayList<String[]>();
+	List<GenericDataObject> id_list;
+	private int lastID = 0;
 	
 	public EditTerminFrame(mainFrame owner, GregorianCalendar cal, Integer id) {
 		super();
@@ -267,11 +270,51 @@ public class EditTerminFrame extends javax.swing.JFrame implements java.awt.even
 			
 			
 			String query="";
-			if (ID==null) query = "insert into termin (GROUP_ID,TERMIN_KATEGORIE_ID, secondary_title, description, date, duration, place, termincontainer_id) values ('"+group_id+ ",'"+tkat+ "','"+sec_title+"','"+desc+"','"+date+"',"+duration+",'"+place+"',"+tc_id+")";
-			else query = "update termin  set GROUP_ID = " + group_id + ",TERMIN_KATEGORIE_ID = " + tkat + ", secondary_title='"+sec_title+"', description='"+desc+"', date='"+date+"',duration="+duration+",place='"+place+"',termincontainer_id="+tc_id+" where id="+ID;
+			
 			Termin vorlage = new Termin();
-			System.out.println(query);
+			
+			
+			
+			if (ID<0)
+			{
+				query = "insert into termin (GROUP_ID,TERMIN_KATEGORIE_ID, secondary_title, description, date, duration, place, termincontainer_id) values ('"+group_id+ ",'"+tkat+ "','"+sec_title+"','"+desc+"','"+date+"',"+duration+",'"+place+"',"+tc_id+")";
+			
+				gdo.unsafeQuery(query,vorlage);
+			
+				id_list = gdo.unsafeQuery("select * from termincontainer where id = (select max(id) from termincontainer)",vorlage);
+			System.out.println("aha 0");
+			try
+			{
+				lastID = ((TerminContainer)id_list.get(0)).getId();
+				System.out.println(lastID);
+				
+				
+			for(int j = 0;j<queryList.size();j++)
+			{
+				String query2 = "insert into anhaengen_termin values (" + lastID+","+ Integer.parseInt(queryList.get(j)[0]+",'"+queryList.get(j)[1])+"')";
+				gdo.unsafeQuery(query2,new Anhaengen_termin());
+				System.out.println("aha 2");
+			}
+			}
+			catch(Exception e)
+			{
+				
+			}
+			}
+		else 
+			{
+			
+			for(int j = 0;j<queryList.size();j++)
+			{
+				String query2 = "insert into anhaengen_termin values (" + ID+","+ Integer.parseInt(queryList.get(j)[0])+",'"+queryList.get(j)[1]+"')";
+				gdo.unsafeQuery(query2,new Anhaengen_termincontainer());
+				
+			}
+			
+			query = "update termin  set GROUP_ID = " + group_id + ",TERMIN_KATEGORIE_ID = " + tkat + ", secondary_title='"+sec_title+"', description='"+desc+"', date='"+date+"',duration="+duration+",place='"+place+"',termincontainer_id="+tc_id+" where id="+ID;
+			
 			gdo.unsafeQuery(query,vorlage);
+			}
 			ok = true;
 			owner.updateTable();
 			owner.updateInfoBar(true);
@@ -666,7 +709,9 @@ public class EditTerminFrame extends javax.swing.JFrame implements java.awt.even
 			this.setPreferredSize(new java.awt.Dimension(456, 387));
 			this.setResizable(false);
 			//if(ID==null) apply_button.setVisible(false);
-			if(ID!=null && cal==null) readData(ID);
+			if(ID!=null && cal==null) {readData(ID);}
+			else
+				apply_button.setVisible(false);
 			pack();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -700,7 +745,12 @@ public class EditTerminFrame extends javax.swing.JFrame implements java.awt.even
 			int index = jList1.getSelectedIndex();
 			GenericDataObject obj = null; 
 			if(index != -1){
-				obj = attachedObjects.get(index);
+				try{
+					obj = attachedObjects.get(index);
+					}catch(Exception e){
+						
+						System.out.println("Objekt ist noch nicht in der Datenbank");
+					}
 				GenericEditFrame gef = new GenericEditFrame();
 				if(obj instanceof Kontakt){
 					gef.setObjectToEdit((Kontakt)obj,false);
@@ -734,7 +784,13 @@ public class EditTerminFrame extends javax.swing.JFrame implements java.awt.even
 			System.out.println("EditTerminFrame.mousePressed(...)::Versuche angehängtes Objekt zu löschen");
 			GenericDataObject obj = null;
 			if(jList1.getSelectedIndex() != -1)
-				obj = attachedObjects.get(jList1.getSelectedIndex());
+				try{
+					obj = attachedObjects.get(jList1.getSelectedIndex());
+				}catch(Exception e){
+					
+					System.out.println("Objekt ist noch nicht in der Datenbank");
+				}
+			lm.removeElementAt(jList1.getSelectedIndex());
 			if(obj!= null){
 				
 				Anhaengen_termin at = new Anhaengen_termin();
@@ -773,25 +829,81 @@ public class EditTerminFrame extends javax.swing.JFrame implements java.awt.even
 					System.out.println("EditTerminFrame.mousePressed(...)::Konnte Attached_termin-Objekt nicht löschen::"+e.toString());
 				}
 				
-				this.loadObjectList();
+				
 			}
 		}
 		if (arg0.getSource().equals(this.jAddObjectButton)){
 			InsertDialog id = new InsertDialog(this);
-			if (id.getIsOk()){
+			if(id.getIsOk()){
 				Integer globalId = id.getAttachableObjectId();
+				List<GenericDataObject> list;
 				String table = id.getAttachableObjectTableName();
-				this.gdo.setCurrentTable("anhaengen_termin");
+				if(table.toLowerCase().equals("kontakt")){
+					try {
+						list = gdo.unsafeQuery("select * from " + table + " where global_id = "+ globalId,new Kontakt());
+						String kon = ((Kontakt)list.get(0)).getPrename()+" " + ((Kontakt)list.get(0)).getSurname();
+						lm.addElement(kon);
+					} catch (Exception e){
+						System.out.println("EditTerminFrame::jAddObjectButton:: "+ e.toString());
+					}
+				}
+				if(table.toLowerCase().equals("lva")){
+					try {
+						list = gdo.unsafeQuery("select * from " + table + " where global_id = "+ globalId,new Lva());
+						String lva = "LVA-Nr.: " + ((Lva)list.get(0)).getLvaNr()+",         Titel: " + ((Lva)list.get(0)).getTitle(); 
+						lm.addElement(lva);
+					} catch (Exception e){
+						System.out.println("EditTerminFrame::jAddObjectButton:: "+ e.toString());
+					}
+				}
+				if(table.toLowerCase().equals("notiz")){
+					try {
+						list = gdo.unsafeQuery("select * from " + table + " where global_id = "+ globalId,new Notiz());
+						String not = ((Notiz)list.get(0)).getTitle();
+						lm.addElement(not);
+					} catch (Exception e){
+						System.out.println("EditTerminFrame::jAddObjectButton:: "+ e.toString());
+					}
+				}
+				if(table.toLowerCase().equals("lehrmittel")){
+					try {
+						list = gdo.unsafeQuery("select * from " + table + " where global_id = "+ globalId,new Lehrmittel());
+						String leh = ((Lehrmittel)list.get(0)).getName();
+						lm.addElement(leh);
+					} catch (Exception e){
+						System.out.println("EditTerminFrame::jAddObjectButton:: "+ e.toString());
+					}
+				}
+				if(table.toLowerCase().equals("pruefung")){
+					try {
+						list = gdo.unsafeQuery("select * from " + table + " where global_id = "+ globalId,new Pruefung());
+						Lva l = new Lva();
+						Pruefung p = ((Pruefung)list.get(0));
+						list = gdo.unsafeQuery("select * from lva where global_id = " + p.getLvaId(),new Lva());
+						l= (Lva)list.get(0);
+						String pr = l.getLvaNr() + " - "  + l.getTitle() + " - "+ p.getExaminer()+ " : " + p.getGrade();
+						
+						
+						
+						lm.addElement(pr);
+					} catch (Exception e){
+						System.out.println("EditTerminFrame::jAddObjectButton:: "+ e.toString());
+					}
+				}
+				
 				try {
-	//				System.out.println("EditTerminFrame.jAddObjectButton::"+"INSERT INTO anhaengen_termin VALUES("+this.ID+","+globalId+","+table+")");
-					gdo.unsafeQuery("INSERT INTO anhaengen_termin VALUES("+this.ID+","+globalId+",'"+table+"')",new Anhaengen_termin());
+					String[] id_table = new String[2];
+					id_table[0] = globalId + "";
+					id_table[1] = table;
+					queryList.add(id_table);
+					
 					
 				} catch (Exception e){
 					System.out.println("EditTerminFrame.mousePressed::Konnte Objekt nicht anhängen::"+e.toString());
 				}
-				this.loadObjectList();
+				
 			}
-			
+
 		}
 		if(arg0.getSource().equals(type_add)){
 			GenericEditFrame gef = new GenericEditFrame();
@@ -1038,8 +1150,8 @@ public class EditTerminFrame extends javax.swing.JFrame implements java.awt.even
 					lm.addElement(l.getName());	
 				}
 			}
-			if(tableName.equals("Pruefung")){
-				gdo.setCurrentTable("Pruefung");
+			if(tableName.equals("pruefung")){
+				gdo.setCurrentTable("pruefung");
 				try {
 					ob = gdo.unsafeQuery("select * from pruefung where global_id="+globalId, new Pruefung());
 				} 
@@ -1053,7 +1165,15 @@ public class EditTerminFrame extends javax.swing.JFrame implements java.awt.even
 				{
 					p = (Pruefung) iter2.next();
 					this.attachedObjects.add(p);
-					lm.addElement(p.getLvaId() + " - " + p.getExaminer());	
+					List<GenericDataObject> list = null;
+					Lva l = new Lva();
+					try {
+						list = gdo.unsafeQuery("select * from lva where global_id = " + p.getLvaId(),new Lva());
+						l= (Lva)list.get(0);
+					} catch (Exception e){
+						System.out.println("EditTerminFrame.loadObjectList() Pruefunglist::"+e.toString());
+					}
+					lm.addElement(l.getLvaNr() + " - "  + l.getTitle() + " - "+ p.getExaminer()+ " : " + p.getGrade());	
 				}
 			}
 			
