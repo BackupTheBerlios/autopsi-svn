@@ -265,7 +265,7 @@ public class EditTerminFrame extends javax.swing.JFrame implements java.awt.even
 			
 			if(sec_title.length()<1) sec_title = tcTitle_box.getSelectedItem().toString();
 			
-			System.out.println(tcTitle_box.getSelectedItem().toString());
+			
 			String query="";
 			if (ID==null) query = "insert into termin (GROUP_ID,TERMIN_KATEGORIE_ID, secondary_title, description, date, duration, place, termincontainer_id) values ('"+group_id+ ",'"+tkat+ "','"+sec_title+"','"+desc+"','"+date+"',"+duration+",'"+place+"',"+tc_id+")";
 			else query = "update termin  set GROUP_ID = " + group_id + ",TERMIN_KATEGORIE_ID = " + tkat + ", secondary_title='"+sec_title+"', description='"+desc+"', date='"+date+"',duration="+duration+",place='"+place+"',termincontainer_id="+tc_id+" where id="+ID;
