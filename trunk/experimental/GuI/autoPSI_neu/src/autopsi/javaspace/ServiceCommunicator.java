@@ -16,9 +16,9 @@ public class ServiceCommunicator implements IServiceCommunicator, DesiredExpirat
 	protected List<Lease> leases = null;
 	protected static long renewalTime = 5000;
 	protected static long timeout = 5000;
-//	protected String adress = "jini://localhost";
-//	protected String adress = "jini://192.168.2.194:4160";
-	protected static String adress = "jini://192.168.2.101:3164";
+	protected static String adress = "jini://localhost";
+//	protected static String adress = "jini://192.168.2.194:4160";
+//	protected static String adress = "jini://192.168.2.101:3164";
 
 	
 	public ServiceCommunicator(){
