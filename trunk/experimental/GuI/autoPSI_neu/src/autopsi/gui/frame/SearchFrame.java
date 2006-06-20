@@ -11,6 +11,8 @@ import java.util.Date;
 
 import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
+import javax.swing.ComboBoxModel;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.WindowConstants;
@@ -32,12 +34,14 @@ import autopsi.basis.model.KontaktTableModel;
 import autopsi.basis.model.LVATableModel;
 import autopsi.basis.model.LehrmittelTableModel;
 import autopsi.basis.model.NotizTableModel;
+import autopsi.basis.model.PruefungTableModel;
 import autopsi.basis.model.TerminContainerTableModel;
 import autopsi.basis.model.TerminTableModel;
 import autopsi.database.table.AttachableObjectKategorie;
 import autopsi.database.table.Lehrmittel;
 import autopsi.database.table.LehrmittelKategorie;
 import autopsi.database.table.Notiz;
+import autopsi.database.table.Pruefung;
 import autopsi.database.table.Termin;
 import autopsi.database.table.Kontakt;
 import autopsi.database.table.TerminContainer;
@@ -77,7 +81,7 @@ public class SearchFrame extends javax.swing.JFrame implements ActionListener {
 	private JTabbedPane jTabbedSearchPane;
 	
 	private JPanel jkontaktSuchePanel;
-	private JPanel jLVASuchePanel;
+	private JPanel jLVASuchePanel, jPruefungSuchePanel;
 	private JPanel jTerminSuchePanel, jTerminContainerSuchePanel;
 	private JPanel jLehrmittelSuchePanel, jNotizSuchePanel;
 	
@@ -87,6 +91,7 @@ public class SearchFrame extends javax.swing.JFrame implements ActionListener {
 	private JScrollPane jTerminContainerScrollPane;
 	private JScrollPane jLehrmittelScrollPane;
 	private JScrollPane jNotizScrollPane;
+	private JScrollPane jPruefungScrollPane;
 		
 	private JTextField jVornameField, jNachnameField;
 	private JTextField jTelefonnummerField, jEmailField;
@@ -95,7 +100,8 @@ public class SearchFrame extends javax.swing.JFrame implements ActionListener {
 	private JTextField jTerminTitelField, jTerminBeschreibungField;
 	private JTextField jTerminContainerTitelField, jTerminContainerBeschreibungField;
 	private JTextField jLehrmittelNameField, jLehrmittelBeschreibungField;
-	private JTextField jNotizTitelField, jNotizNoteField;
+	private JTextField jNotizTitelField, jPruefungLVAField;
+	private JTextField jPruefungExaminerField, jNotizNoteField;
 	private JFormattedTextField jGeburtsdatumField, jDatumField;
 
 	private JLabel jVornameLabel, jNachnameLabel, jGeburtsdatumLabel;
@@ -106,9 +112,10 @@ public class SearchFrame extends javax.swing.JFrame implements ActionListener {
 	private JLabel jTerminContainerGruppeLabel;
 	private JLabel jLehrmittelNameLabel, jLehrmittelGruppeLabel;
 	private JLabel jNotizTitelLabel, jNotizNoteLabel, jNotizGruppeLabel;
+	private JLabel jPruefungLVALabel, jPruefungExaminerLabel, jPruefungGruppeLabel, jPruefungNoteLabel;
 	
 	private JTable jKontaktTable, jLVATable, jTerminTable, jTerminContainerTable, jLehrmittelTable;
-	private JTable jNotizTable;
+	private JTable jNotizTable, jPruefungTable;
 
 	private TerminTableModel jTerminTableModel;
 	private TerminContainerTableModel jTerminContainerTableModel;
@@ -116,26 +123,29 @@ public class SearchFrame extends javax.swing.JFrame implements ActionListener {
 	private LVATableModel jLVATableModel;
 	private LehrmittelTableModel jLehrmittelTableModel;
 	private NotizTableModel jNotizTableModel;
+	private PruefungTableModel jPruefungTableModel;
 	
 	private JButton jKontaktSuchenButton, jTerminSuchenButton, jLVASuchenButton;
+	private JComboBox jGradeComboBox;
 	private JButton jTerminContainerSuchenButton, jLehrmittelSuchenButton;
-	private JButton jNotizSuchenButton;
+	private JButton jNotizSuchenButton, jPruefungSuchenButton;
 	private ButtonGroup jKontaktSucheGroup,jLVASucheGroup, jTerminSucheGroup, jTerminContainerSucheGroup, jLehrmittelSucheGroup;
-	private ButtonGroup jNotizSucheGroup;
+	private ButtonGroup jNotizSucheGroup, jPruefungSucheGroup;
 	private JRadioButton jKontaktOnlineSuchenRadioButton, jKontaktLokalSuchenRadioButton;
 	private JRadioButton jLVAOnlineSuchenRadioButton, jLVALokalSuchenRadioButton;
 	private JRadioButton jTerminOnlineSuchenRadioButton, jTerminLokalSuchenRadioButton;
 	private JRadioButton jTerminContainerOnlineSuchenRadioButton, jTerminContainerLokalSuchenRadioButton;
 	private JRadioButton jLehrmittelLokalSuchenRadioButton, jLehrmittelOnlineSuchenRadioButton;
 	private JRadioButton jNotizLokalSuchenRadioButton, jNotizOnlineSuchenRadioButton;
+	private JRadioButton jPruefungLokalSuchenRadioButton, jPruefungOnlineSuchenRadioButton;
 	
-	private JSeparator jSeparator1,jSeparator2,jSeparator3,jSeparator4,jSeparator5,jSeparator6;
+	private JSeparator jSeparator1,jSeparator2,jSeparator3,jSeparator4,jSeparator5,jSeparator6,jSeparator7;
 	
 	
 	private JComboBox jLVATypeComboBox, jTerminTypeComboBox, jTerminContainerGruppeComboBox;
 	private JComboBox jKontaktGruppeComboBox, jLVAGruppeComboBox, jTerminGruppeComboBox;
 	private JComboBox jLehrmittelGruppeComboBox, jLehrmittelTypeComboBox;
-	private JComboBox jNotizGruppeComboBox;
+	private JComboBox jNotizGruppeComboBox, jPruefungGruppeComboBox;
 	/**
 	* Auto-generated main method to display this 
 	* JPanel inside a new JFrame.
@@ -281,7 +291,7 @@ public class SearchFrame extends javax.swing.JFrame implements ActionListener {
 						{
 							jSeparator1 = new JSeparator();
 							jkontaktSuchePanel.add(jSeparator1);
-							jSeparator1.setBounds(7, 140, 679, 7);
+							jSeparator1.setBounds(7, 140, 630, 7);
 						}
 						{
 							jKontaktSuchenButton = new JButton();
@@ -323,7 +333,7 @@ public class SearchFrame extends javax.swing.JFrame implements ActionListener {
 						{
 							jKontaktScrollPane = new JScrollPane();
 							jkontaktSuchePanel.add(jKontaktScrollPane);
-							jKontaktScrollPane.setBounds(18, 147, 658, 203);
+							jKontaktScrollPane.setBounds(18, 147, 610, 203);
 							jKontaktScrollPane.setWheelScrollingEnabled(true);
 							jKontaktScrollPane.setBackground(new java.awt.Color(255,255,255));
 							{
@@ -332,7 +342,7 @@ public class SearchFrame extends javax.swing.JFrame implements ActionListener {
 								jKontaktScrollPane
 									.setViewportView(jKontaktTable);
 								jKontaktTable.setModel(jKontaktTableModel);
-								jKontaktTable.setBounds(7, 252, 644, 56);
+								jKontaktTable.setBounds(7, 252, 610, 56);
 								jKontaktTable.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
 								jKontaktTable.setShowGrid(true);
 								jKontaktTable.setGridColor(Color.LIGHT_GRAY);
@@ -369,7 +379,7 @@ public class SearchFrame extends javax.swing.JFrame implements ActionListener {
 						jTypeLabel = new JLabel();
 						jLVASuchePanel.add(jTypeLabel);
 						jTypeLabel.setText("Type:");
-						jTypeLabel.setBounds(364, 13, 56, 14);
+						jTypeLabel.setBounds(385, 11, 35, 14);
 
 	
 						
@@ -395,7 +405,7 @@ public class SearchFrame extends javax.swing.JFrame implements ActionListener {
 						{
 							jSeparator2 = new JSeparator();
 							jLVASuchePanel.add(jSeparator2);
-							jSeparator2.setBounds(7, 140, 679, 7);
+							jSeparator2.setBounds(7, 140, 630, 7);
 						}
 						{
 							jLVASuchenButton = new JButton();
@@ -437,7 +447,7 @@ public class SearchFrame extends javax.swing.JFrame implements ActionListener {
 						{
 							jLVAScrollPane = new JScrollPane();
 							jLVASuchePanel.add(jLVAScrollPane);
-							jLVAScrollPane.setBounds(18, 147, 658, 203);
+							jLVAScrollPane.setBounds(18, 147, 610, 203);
 							jLVAScrollPane.setWheelScrollingEnabled(true);
 							jLVAScrollPane.setBackground(new java.awt.Color(255,255,255));
 							{
@@ -446,7 +456,7 @@ public class SearchFrame extends javax.swing.JFrame implements ActionListener {
 								jLVAScrollPane
 									.setViewportView(jLVATable);
 								jLVATable.setModel(jLVATableModel);
-								jLVATable.setBounds(7, 252, 644, 56);
+								jLVATable.setBounds(7, 252, 610, 56);
 								jLVATable.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
 								jLVATable.setShowGrid(true);
 								jLVATable.setGridColor(Color.LIGHT_GRAY);
@@ -511,7 +521,7 @@ public class SearchFrame extends javax.swing.JFrame implements ActionListener {
 						{
 							jSeparator3 = new JSeparator();
 							jTerminSuchePanel.add(jSeparator3);
-							jSeparator3.setBounds(7, 140, 679, 7);
+							jSeparator3.setBounds(7, 140, 630, 7);
 						}
 						{
 							jTerminSuchenButton = new JButton();
@@ -554,7 +564,7 @@ public class SearchFrame extends javax.swing.JFrame implements ActionListener {
 						{
 							jTerminScrollPane = new JScrollPane();
 							jTerminSuchePanel.add(jTerminScrollPane);
-							jTerminScrollPane.setBounds(18, 147, 658, 203);
+							jTerminScrollPane.setBounds(18, 147, 610, 203);
 							jTerminScrollPane.setWheelScrollingEnabled(true);
 							jTerminScrollPane.setBackground(new java.awt.Color(255,255,255));
 							{
@@ -562,7 +572,7 @@ public class SearchFrame extends javax.swing.JFrame implements ActionListener {
 								jTerminTable = new JTable();
 								jTerminScrollPane.setViewportView(jTerminTable);
 								jTerminTable.setModel(jTerminTableModel);
-								jTerminTable.setBounds(7, 252, 644, 56);
+								jTerminTable.setBounds(7, 252, 610, 56);
 								jTerminTable.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
 								jTerminTable.setShowGrid(true);
 								jTerminTable.setGridColor(Color.LIGHT_GRAY);
@@ -601,7 +611,7 @@ public class SearchFrame extends javax.swing.JFrame implements ActionListener {
 						{
 							jSeparator4 = new JSeparator();
 							jTerminContainerSuchePanel.add(jSeparator4);
-							jSeparator4.setBounds(7, 140, 679, 7);
+							jSeparator4.setBounds(7, 140, 630, 7);
 						}
 						{
 							jTerminContainerSuchenButton = new JButton();
@@ -644,7 +654,7 @@ public class SearchFrame extends javax.swing.JFrame implements ActionListener {
 						{
 							jTerminContainerScrollPane = new JScrollPane();
 							jTerminContainerSuchePanel.add(jTerminContainerScrollPane);
-							jTerminContainerScrollPane.setBounds(18, 147, 658, 203);
+							jTerminContainerScrollPane.setBounds(18, 147, 610, 203);
 							jTerminContainerScrollPane.setWheelScrollingEnabled(true);
 							jTerminContainerScrollPane.setBackground(new java.awt.Color(255,255,255));
 							{
@@ -652,7 +662,7 @@ public class SearchFrame extends javax.swing.JFrame implements ActionListener {
 								jTerminContainerTable = new JTable();
 								jTerminContainerScrollPane.setViewportView(jTerminContainerTable);
 								jTerminContainerTable.setModel(jTerminContainerTableModel);
-								jTerminContainerTable.setBounds(7, 252, 644, 56);
+								jTerminContainerTable.setBounds(7, 252, 610, 56);
 								jTerminContainerTable.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
 								jTerminContainerTable.setShowGrid(true);
 								jTerminContainerTable.setGridColor(Color.LIGHT_GRAY);
@@ -682,7 +692,7 @@ public class SearchFrame extends javax.swing.JFrame implements ActionListener {
 						jTypeLabel = new JLabel();
 						jLehrmittelSuchePanel.add(jTypeLabel);
 						jTypeLabel.setText("Type:");
-						jTypeLabel.setBounds(364, 13, 56, 14);
+						jTypeLabel.setBounds(384, 12, 35, 14);
 
 	
 						
@@ -704,7 +714,7 @@ public class SearchFrame extends javax.swing.JFrame implements ActionListener {
 						{
 							jSeparator5 = new JSeparator();
 							jLehrmittelSuchePanel.add(jSeparator5);
-							jSeparator5.setBounds(7, 140, 679, 7);
+							jSeparator5.setBounds(7, 140, 630, 7);
 						}
 						{
 							jLehrmittelSuchenButton = new JButton();
@@ -746,7 +756,7 @@ public class SearchFrame extends javax.swing.JFrame implements ActionListener {
 						{
 							jLehrmittelScrollPane = new JScrollPane();
 							jLehrmittelSuchePanel.add(jLehrmittelScrollPane);
-							jLehrmittelScrollPane.setBounds(18, 147, 658, 203);
+							jLehrmittelScrollPane.setBounds(18, 147, 610, 203);
 							jLehrmittelScrollPane.setWheelScrollingEnabled(true);
 							jLehrmittelScrollPane.setBackground(new java.awt.Color(255,255,255));
 							{
@@ -755,7 +765,7 @@ public class SearchFrame extends javax.swing.JFrame implements ActionListener {
 								jLehrmittelScrollPane
 									.setViewportView(jLehrmittelTable);
 								jLehrmittelTable.setModel(jLehrmittelTableModel);
-								jLehrmittelTable.setBounds(7, 252, 644, 56);
+								jLehrmittelTable.setBounds(7, 252, 610, 56);
 								jLehrmittelTable.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
 								jLehrmittelTable.setShowGrid(true);
 								jLehrmittelTable.setGridColor(Color.LIGHT_GRAY);
@@ -783,7 +793,7 @@ public class SearchFrame extends javax.swing.JFrame implements ActionListener {
 						jNotizNoteLabel = new JLabel();
 						jNotizSuchePanel.add(jNotizNoteLabel);
 						jNotizNoteLabel.setText("Notiz:");
-						jNotizNoteLabel.setBounds(30, 35, 70, 14);
+						jNotizNoteLabel.setBounds(70, 35, 35, 14);
 
 
 	
@@ -801,7 +811,7 @@ public class SearchFrame extends javax.swing.JFrame implements ActionListener {
 						{
 							jSeparator6 = new JSeparator();
 							jNotizSuchePanel.add(jSeparator6);
-							jSeparator6.setBounds(7, 140, 679, 7);
+							jSeparator6.setBounds(7, 140, 630, 7);
 						}
 						{
 							jNotizSuchenButton = new JButton();
@@ -843,7 +853,7 @@ public class SearchFrame extends javax.swing.JFrame implements ActionListener {
 						{
 							jNotizScrollPane = new JScrollPane();
 							jNotizSuchePanel.add(jNotizScrollPane);
-							jNotizScrollPane.setBounds(18, 147, 658, 203);
+							jNotizScrollPane.setBounds(18, 147, 610, 203);
 							jNotizScrollPane.setWheelScrollingEnabled(true);
 							jNotizScrollPane.setBackground(new java.awt.Color(255,255,255));
 							{
@@ -852,7 +862,7 @@ public class SearchFrame extends javax.swing.JFrame implements ActionListener {
 								jNotizScrollPane
 									.setViewportView(jNotizTable);
 								jNotizTable.setModel(jNotizTableModel);
-								jNotizTable.setBounds(7, 252, 644, 56);
+								jNotizTable.setBounds(7, 252, 610, 56);
 								jNotizTable.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
 								jNotizTable.setShowGrid(true);
 								jNotizTable.setGridColor(Color.LIGHT_GRAY);
@@ -864,7 +874,112 @@ public class SearchFrame extends javax.swing.JFrame implements ActionListener {
 					
 // #####################################################################					
 					
+// #####################################################################
 					
+					jPruefungSuchePanel = new JPanel();
+					jTabbedSearchPane.addTab("Pruefung Suche", null, jPruefungSuchePanel, null);
+					jPruefungSuchePanel.setPreferredSize(new java.awt.Dimension(671, 357));
+					jPruefungSuchePanel.setLayout(null);
+					jPruefungSuchePanel.setBackground(new java.awt.Color(255,255,255));
+					{
+						jPruefungLVALabel = new JLabel();
+						jPruefungSuchePanel.add(jPruefungLVALabel);
+						jPruefungLVALabel.setText("LVA:");
+						jPruefungLVALabel.setBounds(74, 12, 28, 14);
+
+						jPruefungExaminerLabel = new JLabel();
+						jPruefungSuchePanel.add(jPruefungExaminerLabel);
+						jPruefungExaminerLabel.setText("Prüfer:");
+						jPruefungExaminerLabel.setBounds(61, 35, 35, 14);
+						
+						jPruefungNoteLabel = new JLabel();
+						jPruefungSuchePanel.add(jPruefungNoteLabel);
+						jPruefungNoteLabel.setText("Note:");
+						jPruefungNoteLabel.setBounds(384, 11, 35, 14);
+						
+						jPruefungLVAField = new JTextField();
+						jPruefungSuchePanel.add(jPruefungLVAField);
+						jPruefungLVAField.setBounds(105, 7, 210, 21);
+
+
+						jPruefungExaminerField = new JTextField();
+						jPruefungSuchePanel.add(jPruefungExaminerField);
+						jPruefungExaminerField.setBounds(105, 30, 210, 21);	
+						
+						{
+							ComboBoxModel jGradeComboBoxModel = new DefaultComboBoxModel(
+								new String[] { "-", "1", "2", "3", "4", "5" });
+							jGradeComboBox = new JComboBox();
+							jPruefungSuchePanel.add(jGradeComboBox);
+							jGradeComboBox.setModel(jGradeComboBoxModel);
+							jGradeComboBox.setBounds(420, 7, 42, 21);
+						}
+
+
+						{
+							jSeparator7 = new JSeparator();
+							jPruefungSuchePanel.add(jSeparator7);
+							jSeparator7.setBounds(7, 140, 630, 7);
+						}
+						{
+							jPruefungSuchenButton = new JButton();
+							jPruefungSuchePanel.add(jPruefungSuchenButton);
+							jPruefungSuchenButton.setText("Prüfung Suchen");
+							jPruefungSuchenButton.setBounds(68, 105, 154, 28);
+							jPruefungSuchenButton.addActionListener(this);
+							
+							jPruefungLokalSuchenRadioButton = new JRadioButton();
+							jPruefungSuchePanel.add(jPruefungLokalSuchenRadioButton);
+							jPruefungLokalSuchenRadioButton.setText("Lokal Suchen");
+							jPruefungLokalSuchenRadioButton.setBounds(231, 105, 91, 14);
+	
+							jPruefungOnlineSuchenRadioButton = new JRadioButton();
+							jPruefungSuchePanel.add(jPruefungOnlineSuchenRadioButton);
+							jPruefungOnlineSuchenRadioButton.setText("Online Suchen");
+							jPruefungOnlineSuchenRadioButton.setBounds(231, 119, 98, 14);
+							
+							jPruefungLokalSuchenRadioButton.setSelected(true);
+							jPruefungSucheGroup = new ButtonGroup();
+							jPruefungSucheGroup.add(jPruefungLokalSuchenRadioButton);
+							jPruefungLokalSuchenRadioButton.setBackground(new java.awt.Color(255,255,255));
+							jPruefungSucheGroup.add(jPruefungOnlineSuchenRadioButton);				
+							jPruefungOnlineSuchenRadioButton.setBackground(new java.awt.Color(255,255,255));
+							
+							jPruefungGruppeLabel = new JLabel();
+							jPruefungSuchePanel.add(jPruefungGruppeLabel);
+							jPruefungGruppeLabel.setText("Gruppe:");
+							jPruefungGruppeLabel.setBounds(348, 112, 42, 14);
+		
+							KategorieComboBoxModel jPruefungGruppeComboBoxModel = new KategorieComboBoxModel("ATTACHABLE_OBJECT_KATEGORIE", new AttachableObjectKategorie());
+							jPruefungGruppeComboBox = new JComboBox();
+							jPruefungSuchePanel.add(jPruefungGruppeComboBox);
+							jPruefungGruppeComboBox
+								.setModel(jPruefungGruppeComboBoxModel);
+							jPruefungGruppeComboBox.setBounds(392, 109, 175, 21);
+						}
+
+						{
+							jPruefungScrollPane = new JScrollPane();
+							jPruefungSuchePanel.add(jPruefungScrollPane);
+							jPruefungScrollPane.setBounds(18, 147, 610, 203);
+							jPruefungScrollPane.setWheelScrollingEnabled(true);
+							jPruefungScrollPane.setBackground(new java.awt.Color(255,255,255));
+							{
+								jPruefungTableModel = new PruefungTableModel ();
+								jPruefungTable = new JTable();
+								jPruefungScrollPane
+									.setViewportView(jPruefungTable);
+								jPruefungTable.setModel(jPruefungTableModel);
+								jPruefungTable.setBounds(7, 252, 610, 56);
+								jPruefungTable.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
+								jPruefungTable.setShowGrid(true);
+								jPruefungTable.setGridColor(Color.LIGHT_GRAY);
+							}
+						}
+
+					}
+					
+// #####################################################################					
 					
 					
 					
@@ -1048,6 +1163,33 @@ public class SearchFrame extends javax.swing.JFrame implements ActionListener {
 					jNotizTableModel.setSuchNotiz(not);
 				} else if (jNotizOnlineSuchenRadioButton.isSelected()) {
 					System.out.println("Notiz wird online gesucht...");
+				}
+				
+			}
+			else if(cmd.equals("Prüfung Suchen")) {
+				if (jPruefungLokalSuchenRadioButton.isSelected()){
+					System.out.println("Prüfung wird lokal gesucht...");
+					Pruefung p = new Pruefung();
+					if (!jPruefungLVAField.getText().equals("")) {
+						jPruefungTableModel.setLvaName(jPruefungLVAField.getText());
+					} else {
+						jPruefungTableModel.setLvaName(null);
+					}
+					if (!jPruefungExaminerField.getText().equals("")) {
+						p.setExaminer(jPruefungExaminerField.getText());
+					} else {
+						p.setExaminer(null);
+					}
+					if (!jGradeComboBox.getSelectedItem().toString().equals("-")) {
+						p.setGrade(new Integer(jGradeComboBox.getSelectedItem().toString()));
+					} else {
+						p.setGrade(null);
+					}
+					
+					jPruefungTableModel.setGroup(jPruefungGruppeComboBox.getSelectedItem().toString());
+					jPruefungTableModel.setSuchPruefung(p);
+				} else if (jPruefungOnlineSuchenRadioButton.isSelected()) {
+					System.out.println("Prüfung wird online gesucht...");
 				}
 				
 			}
