@@ -28,7 +28,7 @@ public class Pruefung extends GenericData implements Entry,GenericDataObject {
 		}
 	}
 	
-	public int getGlobalId(){
+	public Integer getGlobalId(){
 		return this.global_id;
 	}
 	
@@ -44,7 +44,7 @@ public class Pruefung extends GenericData implements Entry,GenericDataObject {
 		this.kategorie_id = kategorieId;
 	}
 	
-	public int getLvaId(){
+	public Integer getLvaId(){
 		return this.lva_id;
 	}
 	
@@ -60,7 +60,7 @@ public class Pruefung extends GenericData implements Entry,GenericDataObject {
 		this.examiner = examiner;
 	}
 	
-	public int getGrade(){
+	public Integer getGrade(){
 		return this.grade;
 	}
 	
