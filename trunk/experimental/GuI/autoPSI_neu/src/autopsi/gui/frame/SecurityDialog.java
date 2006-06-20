@@ -107,7 +107,7 @@ public class SecurityDialog extends javax.swing.JDialog implements ActionListene
 	}
 	
 	public boolean getOk(){
-		//initGUI();
+		
 		return ok;
 	}
 
@@ -115,7 +115,7 @@ public class SecurityDialog extends javax.swing.JDialog implements ActionListene
 		if(arg0.getSource().equals(ok_button)){
 			owner.delete_ok = true;
 			enableOwner();
-			owner.updateInfoBar(true);
+			owner.updateInfoBar();
 			dispose();
 		}
 		if(arg0.getSource().equals(abort_button))
