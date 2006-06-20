@@ -133,6 +133,7 @@ public class EditTerminFrame extends javax.swing.JFrame implements java.awt.even
 	private JButton type_add;
 	private int selectedType;
 	private int selectedGroup;
+	private int selectedTC;
 	
 	public EditTerminFrame(mainFrame owner, GregorianCalendar cal, Integer id) {
 		super();
@@ -190,7 +191,7 @@ public class EditTerminFrame extends javax.swing.JFrame implements java.awt.even
 				break;
 		}
 		tcTitle_box.setSelectedIndex(i);
-		
+		selectedTC = i;
 		for(i = 0;i<group_data.size();i++){
 			if(((AttachableObjectKategorie)group_data.get(i)).getId() == ((Termin)list.get(0)).getGroupID())
 				break;
@@ -356,6 +357,39 @@ public class EditTerminFrame extends javax.swing.JFrame implements java.awt.even
 							cont = (TerminContainer)termin_cont_data.get(i);
 							tcTitle_box.addItem(cont.getTitle());
 						}
+						
+						tcTitle_box.addFocusListener(new FocusListener(){
+
+							public void focusGained(FocusEvent arg0) {
+								
+								List<GenericDataObject> tcList;
+								TerminContainer tc= new TerminContainer();
+																
+								tcTitle_box.setModel(new DefaultComboBoxModel());
+								try
+								{
+									tcList = gdo.unsafeQuery("select * from termincontainer order by id",tc);
+									for(int i = 0;i<tcList.size();i++)
+									{
+										tc = (TerminContainer)tcList.get(i);
+										tcTitle_box.addItem(tc.getTitle());
+										
+									}		
+									String query = "select * from termincontainer";
+									termin_cont_data = gdo.unsafeQuery(query,tc);
+									tcTitle_box.setSelectedIndex(selectedTC);
+								}
+								catch (Exception ex)
+								{
+									
+								}
+								
+							}
+
+							public void focusLost(FocusEvent arg0) {
+								selectedTC = tcTitle_box.getSelectedIndex();
+							}
+						});
 					}
 					{
 						place_field = new JTextField();
@@ -698,32 +732,28 @@ public class EditTerminFrame extends javax.swing.JFrame implements java.awt.even
 			if(obj!= null){
 				
 				Anhaengen_termin at = new Anhaengen_termin();
-				at.setTable_Name(null);
 				at.setTerminId(this.ID);
 				
-				if (obj instanceof Kontakt){
-					this.gdo.setCurrentTable("Kontakt");
-					at.setGlobalId(((Kontakt)obj).getGlobalId());
-				}
 				if (obj instanceof Notiz){
-					this.gdo.setCurrentTable("Notiz");
 					at.setGlobalId(((Notiz)obj).getGlobalId());
 				}
+				if (obj instanceof Kontakt){
+					at.setGlobalId(((Kontakt)obj).getGlobalId());
+				}
 				if (obj instanceof Lva){
-					this.gdo.setCurrentTable("Lva");
 					at.setGlobalId(((Lva)obj).getGlobalId());
 				}
 				if (obj instanceof Lehrmittel){
-					this.gdo.setCurrentTable("Lehrmittel");
 					at.setGlobalId(((Lehrmittel)obj).getGlobalId());
 				}
 				if (obj instanceof Pruefung){
-					this.gdo.setCurrentTable("Pruefung");
 					at.setGlobalId(((Pruefung)obj).getGlobalId());
 				}
 				
+				this.gdo.setCurrentTable("anhaengen_termin");
+				
 				try{
-					this.gdo.delDataObjects(obj);
+					this.gdo.delDataObjects(at);
 				}
 				catch (Exception e){
 					System.out.println("EditTerminFrame.mousePressed(...)::Konnte Attached Objekt nicht löschen::"+e.toString());
@@ -736,9 +766,23 @@ public class EditTerminFrame extends javax.swing.JFrame implements java.awt.even
 				catch (Exception e){
 					System.out.println("EditTerminFrame.mousePressed(...)::Konnte Attached_termin-Objekt nicht löschen::"+e.toString());
 				}
+				
+				this.loadObjectList();
 			}
 		}
 		if (arg0.getSource().equals(this.jAddObjectButton)){
+			InsertDialog id = new InsertDialog(this);
+			Integer globalId = id.getAttachableObjectId();
+			String table = id.getAttachableObjectTableName();
+			this.gdo.setCurrentTable("anhaengen_termin");
+			try {
+//				System.out.println("EditTerminFrame.jAddObjectButton::"+"INSERT INTO anhaengen_termin VALUES("+this.ID+","+globalId+","+table+")");
+				gdo.unsafeQuery("INSERT INTO anhaengen_termin VALUES("+this.ID+","+globalId+",'"+table+"')",new Anhaengen_termin());
+				
+			} catch (Exception e){
+				System.out.println("EditTerminFrame.mousePressed::Konnte Objekt nicht anhängen::"+e.toString());
+			}
+			this.loadObjectList();
 			
 		}
 		if(arg0.getSource().equals(type_add)){
@@ -886,6 +930,7 @@ public class EditTerminFrame extends javax.swing.JFrame implements java.awt.even
 			String query = "select * from termincontainer";
 			
 			termin_cont_data = gdo.unsafeQuery(query,cont);
+			tcTitle_box.setSelectedIndex(selectedTC);
 		}
 		catch (Exception ex)
 		{
@@ -895,6 +940,7 @@ public class EditTerminFrame extends javax.swing.JFrame implements java.awt.even
 	
 	public void loadObjectList(){
 		this.attachedObjects = new ArrayList<GenericDataObject>();
+		lm.clear();
 		List<GenericDataObject> objs = null;
 		gdo.setCurrentTable("anhaengen_termin");
 		try {
