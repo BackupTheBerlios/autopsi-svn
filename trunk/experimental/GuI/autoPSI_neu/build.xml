@@ -67,7 +67,7 @@
 	
 	<target name="Test:GenericEditFrame" depends="init,compile">
 		<javac srcdir="${src}" destdir="${build}" classpathref="classpath"/>
-		<java classpathref="classpath" classname="EditFrameTest" fork="true"/> 
+		<java classpathref="classpath" classname="GenericEditFrameTest" fork="true"/> 
 	</target>
 	
 	<target name="Test:JavaSpace" depends="init,compile">
@@ -83,7 +83,7 @@
 	
 	<target name="Test:EditTerminFrame" depends="init,compile">
 		<javac srcdir="${src}" destdir="${build}" classpathref="classpath"/>
-		<java classpathref="classpath" classname="SearchFrameTest" fork="true"/> 
+		<java classpathref="classpath" classname="EditTerminFrameTest" fork="true"/> 
 	</target>
 	
 	<target name="Test:EditTerminContainerFrame" depends="init,compile">
