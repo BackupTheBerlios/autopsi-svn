@@ -630,7 +630,7 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 				button_view1 = new JLabel();
 				getContentPane().add(button_view1);
 				button_view1.setIcon(new ImageIcon("src/images/icons/monatsansicht.png"));
-				button_view1.setBounds(675, -7, 51, 35);
+				button_view1.setBounds(675, -7, 31, 35);
 				button_view1.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
 				button_view1.addMouseListener(this);
 			}
@@ -638,7 +638,7 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 				button_view2 = new JLabel();
 				getContentPane().add(button_view2);
 				button_view2.setIcon(new ImageIcon("src/images/icons/wochenansicht.png"));
-				button_view2.setBounds(706, -7, 51, 35);
+				button_view2.setBounds(706, -7, 31, 35);
 				button_view2.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
 				button_view2.addMouseListener(this);
 			}
