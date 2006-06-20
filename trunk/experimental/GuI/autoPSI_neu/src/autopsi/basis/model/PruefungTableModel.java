@@ -91,13 +91,26 @@ public class PruefungTableModel extends AbstractTableModel {
 	}
 	
 	public Object getValueAt(int row, int col) {
-		Pruefung p = (Pruefung) pruefungen.get(row);
-		if (lva==null)
+		Pruefung p = null;
+		Lva l = null;
+		try{
+			IGenericDAO gdo = new GenericDAO();
+			p = (Pruefung) pruefungen.get(row);
+			this.lva = gdo.unsafeQuery("SELECT * FROM LVA WHERE GLOBAL_ID ="+p.getLvaId(), new Lva());
+			
+			l = (Lva) lva.get(0);
+		} catch (Exception e){
+			System.out.println("PruefungTableModel @ getValueAt;"+e.toString());
+		}
+				
+		
+		
+		if (p==null)
 			return null;
 		else if (col==0)
-			return p.getLvaId();
+			return l.getLvaNr();
 		else if (col==1)
-			return p.getLvaId();
+			return l.getTitle();
 		else if (col==2)
 			return p.getExaminer();
 		else if (col==3)
