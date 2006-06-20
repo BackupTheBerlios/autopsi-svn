@@ -496,7 +496,7 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 				timetable = new JTable();
 				getContentPane().add(timetable);
 				timetable.setModel(timetableModel);
-				timetable.setBounds(254, 53, 35, 465);
+				timetable.setBounds(255, 53, 35, 465);
 				timetable.setBorder(new LineBorder(new java.awt.Color(0,0,0), 1, false));
 				timetable.setVisible(false);
 			}
