@@ -13,8 +13,6 @@ import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 
 import javax.swing.JTable;
-import javax.swing.JToolBar;
-
 
 import javax.swing.WindowConstants;
 import javax.swing.border.BevelBorder;
@@ -534,17 +532,18 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 				button_deleteTermin.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
 				button_deleteTermin.addMouseListener(this);
 			}
-			{
+			/*{
 				separator1 = new JLabel();
 				getContentPane().add(separator1);
 				separator1.setIcon(new ImageIcon("src/images/icons/emptyBox.png"));
 				separator1.setBounds(217, -7, 31, 35);
-			}
+			}*/
 			{
 				zoomBox = new JCheckBox();
 				getContentPane().add(zoomBox);
-				zoomBox.setBounds(217, 259, 105, 42);
+				zoomBox.setBounds(742, 3, 63, 21);
 				zoomBox.setText("Zoom");
+				zoomBox.setOpaque(false);
 			}
 			{
 				button_search = new JLabel();
@@ -554,12 +553,12 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 				button_search.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
 				button_search.addMouseListener(this);
 			}
-			{
+			/*{
 				separator1 = new JLabel();
 				getContentPane().add(separator1);
 				separator1.setIcon(new ImageIcon("src/images/icons/emptyBox.png"));
 				separator1.setBounds(279, -7, 31, 35);
-			}
+			}*/
 			{
 				button_monthBack = new JLabel();
 				getContentPane().add(button_monthBack);
@@ -583,31 +582,16 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 				button_dayBack.setBounds(412, -7, 51, 35);
 				button_dayBack.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
 				button_dayBack.addMouseListener(this);
-			}
-			{
-				button_view1 = new JLabel();
-				getContentPane().add(button_view1);
-				button_view1.setIcon(new ImageIcon("src/images/icons/dayBack.png"));
-				button_view1.setBounds(412, -7, 51, 35);
-				button_view1.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
-				button_view1.addMouseListener(this);
-			}
-			{
-				button_view2 = new JLabel();
-				getContentPane().add(button_view2);
-				button_view2.setIcon(new ImageIcon("src/images/icons/dayBack.png"));
-				button_view2.setBounds(412, -7, 51, 35);
-				button_view2.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
-				button_view2.addMouseListener(this);
+				button_dayBack.setVisible(false);
 			}
 			{
 				button_jumpToToday = new JLabel();
 				getContentPane().add(button_jumpToToday);
-				button_jumpToToday.setIcon(new ImageIcon("src/images/icons/dayBack.png"));
-				button_jumpToToday.setBounds(412, -7, 31, 35);
+				button_jumpToToday.setIcon(new ImageIcon("src/images/icons/today.png"));
+				button_jumpToToday.setBounds(463, -7, 31, 35);
 				button_jumpToToday.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
 				button_jumpToToday.addMouseListener(this);
-			}
+			}	
 			{
 				tableBar = new JLabel();
 				getContentPane().add(tableBar);
@@ -619,15 +603,16 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 				button_dayNext = new JLabel();
 				getContentPane().add(button_dayNext);
 				button_dayNext.setIcon(new ImageIcon("src/images/icons/dayNext.png"));
-				button_dayNext.setBounds(813, -7, 51, 35);
+				button_dayNext.setBounds(494, -7, 51, 35);
 				button_dayNext.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
 				button_dayNext.addMouseListener(this);
+				button_dayNext.setVisible(false);
 			}
 			{
 				button_weekNext = new JLabel();
 				getContentPane().add(button_weekNext);
 				button_weekNext.setIcon(new ImageIcon("src/images/icons/weekNext.png"));
-				button_weekNext.setBounds(864, -7, 51, 35);
+				button_weekNext.setBounds(545, -7, 51, 35);
 				button_weekNext.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
 				button_weekNext.addMouseListener(this);
 			}
@@ -635,17 +620,33 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 				button_monthNext = new JLabel();
 				getContentPane().add(button_monthNext);
 				button_monthNext.setIcon(new ImageIcon("src/images/icons/monthNext.png"));
-				button_monthNext.setBounds(915, -7, 51, 35);
+				button_monthNext.setBounds(596, -7, 51, 35);
 				button_monthNext.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
 				button_monthNext.addMouseListener(this);
 			}
-			
 			{
+				button_view1 = new JLabel();
+				getContentPane().add(button_view1);
+				button_view1.setIcon(new ImageIcon("src/images/icons/monatsansicht.png"));
+				button_view1.setBounds(675, -7, 51, 35);
+				button_view1.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
+				button_view1.addMouseListener(this);
+			}
+			{
+				button_view2 = new JLabel();
+				getContentPane().add(button_view2);
+				button_view2.setIcon(new ImageIcon("src/images/icons/wochenansicht.png"));
+				button_view2.setBounds(706, -7, 51, 35);
+				button_view2.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
+				button_view2.addMouseListener(this);
+			}
+			
+			/*{
 				separator1 = new JLabel();
 				getContentPane().add(separator1);
 				separator1.setIcon(new ImageIcon("src/images/icons/emptyBox.png"));
 				separator1.setBounds(93, -7, 31, 35);
-			}
+			}*/
 			{
 				button_newTC = new JLabel();
 				getContentPane().add(button_newTC);
@@ -1069,9 +1070,21 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 			button_weekNext.setIcon(new ImageIcon("src/images/icons/weekNext_hover.png"));
 			statusBar.setText("Verschiebt die Ansicht um 1 Woche weiter.");	
 		}
-		if(arg0.getSource().equals(button_dayBack)){
+		if(arg0.getSource().equals(button_dayNext)){
 			button_dayNext.setIcon(new ImageIcon("src/images/icons/dayNext_hover.png"));
 			statusBar.setText("Verschiebt die Ansicht um 1 Tag weiter.");	
+		}
+		if(arg0.getSource().equals(button_jumpToToday)){
+			button_jumpToToday.setIcon(new ImageIcon("src/images/icons/today_hover.png"));
+			statusBar.setText("Setzt die Ansicht auf das heutige Datum.");	
+		}
+		if(arg0.getSource().equals(button_view1)){
+			button_view1.setIcon(new ImageIcon("src/images/icons/monatsansicht_hover.png"));
+			statusBar.setText("Wechselt auf die Monatsansicht.");	
+		}
+		if(arg0.getSource().equals(button_view2)){
+			button_view2.setIcon(new ImageIcon("src/images/icons/wochenansicht_hover.png"));
+			statusBar.setText("Wechselt auf die Wochenansicht.");	
 		}
 		if(arg0.getSource().equals(zoomBox)){
 			statusBar.setText("Aktiviert/Deaktiviert die automatische Vergrößerung eines Tages in der Monatsansicht wenn der Mauszeiger darübergeführt wird.");	
@@ -1157,7 +1170,18 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 			button_dayNext.setIcon(new ImageIcon("src/images/icons/dayNext.png"));
 			statusBar.setText("");	
 		}
-		
+		if(arg0.getSource().equals(button_jumpToToday)){
+			button_jumpToToday.setIcon(new ImageIcon("src/images/icons/today.png"));
+			statusBar.setText("");	
+		}
+		if(arg0.getSource().equals(button_view1)){
+			button_view1.setIcon(new ImageIcon("src/images/icons/monatsansicht.png"));
+			statusBar.setText("");	
+		}
+		if(arg0.getSource().equals(button_view2)){
+			button_view2.setIcon(new ImageIcon("src/images/icons/wochenansicht.png"));
+			statusBar.setText("");	
+		}
 		if(arg0.getSource().equals(zoomBox)){
 			statusBar.setText("");	
 		}
