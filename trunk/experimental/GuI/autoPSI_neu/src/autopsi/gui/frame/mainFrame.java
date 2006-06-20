@@ -843,7 +843,6 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 	    		Date dat = new Date(cal2.getTimeInMillis());
 	    		String title = converter.toLong(dat.toString());
 	    		lblDatum.setText(title);
-	    		todayListModel.removeAllElements();
 	    		loadList();
 
 	    		if(viewMonth) lblToday.setText("Heutige Termine:");
@@ -1470,7 +1469,7 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 					}
 					minuten = dauer;
 					
-					lblZeit.setText("Zeit: "+todayList.getSelectedValue().toString().substring(0,5)+"           Dauer "+stunden+":"+minuten);
+					lblZeit.setText("Zeit: "+showTermin.getDate().toString().substring(12,16)+"           Dauer "+stunden+":"+minuten);
 
 					
 					lblTermin.setText(showTermin.getSecondaryTitle());
@@ -1514,8 +1513,11 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 	private void loadList()
 	{
 		todayListModel.removeAllElements();
+		currentValue = (Termin[])table.getValueAt(currentCell.x,currentCell.y);
+
 		for(int i = 1;i<currentValue.length;i++)
 		{
+			System.out.println(currentValue[i].getSecondaryTitle());
 			String terminItem = currentValue[i].getDate().toString().substring(11,16) + 
 								" " + currentValue[i].getSecondaryTitle();
 			todayListModel.addElement(terminItem);
@@ -1524,9 +1526,9 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 	
 	public void updateInfoBar()
 	{
-		updateTable();
-		loadList();
-		loadTerminData();
+		//updateTable();
+		//loadList();
+		//loadTerminData();
 	}
 
 	public void windowOpened(WindowEvent arg0) {
@@ -1632,7 +1634,25 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
     		cal2.set(Integer.parseInt(currentValue[0].getDate().toString().substring(0,4)),Integer.parseInt(currentValue[0].getDate().toString().substring(5,7))-1,Integer.parseInt(currentValue[0].getDate().toString().substring(8,10)));
     		Date dat = new Date(cal2.getTimeInMillis());
     		String title = converter.toLong(dat.toString());
-    		lblDatum.setText(title);		
+    		lblDatum.setText(title);	
+    		
+    		for(int i = 0;i<7;i++)
+    		{
+    			for(int j = 0;j<5;j++)
+    			{
+    				try
+    				{
+    					Termin[] checkTermin = ((Termin[])table.getValueAt(i,j));
+        				if (checkTermin[0].getDate().toString().substring(0,10)==currentValue[0].getDate().toString().substring(0,10))
+        				{
+        					currentCell.x = i;
+        					currentCell.y = j;
+        				}
+    				}
+    				catch(Exception ex) {}
+    			}
+    		}
+    		
 		}
 		catch(Exception ex) {System.out.println(":::::  "+ex.toString());}
 	
