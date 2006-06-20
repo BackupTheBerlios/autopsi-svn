@@ -93,6 +93,12 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 	private JLabel button_editTermin;
 	private JLabel button_newTermin;
 	private JLabel button_search;
+	private JLabel button_monthBack;
+	private JLabel button_weekBack;
+	private JLabel button_dayBack;
+	private JLabel button_dayNext;
+	private JLabel button_weekNext;
+	private JLabel button_monthNext;
 	private JLabel jLabel3;
 	private JTable timetable;
 	private JMenuItem view_dayNext;
@@ -212,7 +218,7 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 		
 			setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 			getContentPane().setLayout(null);
-			getContentPane().setBackground(new java.awt.Color(240,240,240));
+			getContentPane().setBackground(new java.awt.Color(235,235,235));
 			this.setMaximumSize(new java.awt.Dimension(900, 653));
 			this.setResizable(false);
 			this.setTitle("autoPSI");
@@ -265,15 +271,7 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 				toolbar.setBorder(new LineBorder(new java.awt.Color(0,0,0), 1, false));
 				toolbar.setBackground(new java.awt.Color(240,240,240));
 				toolbar.setOpaque(false);
-				{
-					weekBack = new JButton();
-					toolbar.add(weekBack);
-					weekBack.setBounds(294, 0, 28, 28);
-					weekBack.setIcon(new ImageIcon("src/images/weekBack.GIF"));
-					weekBack.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
-					weekBack.setOpaque(false);
-					weekBack.addMouseListener(this);
-				}
+				
 				{
 					updateTable();
 					toolbar.add(lblMonth);
@@ -282,15 +280,6 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 					lblMonth.setHorizontalTextPosition(JLabel.CENTER);
 					lblMonth.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
 					lblMonth.setHorizontalAlignment(SwingConstants.CENTER);
-				}
-				{
-					weekNext = new JButton();
-					toolbar.add(weekNext);
-					weekNext.setBounds(721, 0, 28, 28);
-					weekNext.setIcon(new ImageIcon("src/images/weekNext.GIF"));
-					weekNext.setBorder(BorderFactory
-						.createEtchedBorder(BevelBorder.LOWERED));
-					weekNext.addMouseListener(this);
 				}
 				{
 					jJumpToToday = new JButton();
@@ -344,46 +333,9 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 					viewButton1.setBounds(882, 0, 28, 28);
 					viewButton1.setOpaque(false);
 				}
-				{
-					monthNext = new JButton();
-					toolbar.add(monthNext);
-					monthNext.setBounds(749, 0, 28, 28);
-					monthNext
-						.setIcon(new ImageIcon("src/images/monthNext.GIF"));
-					monthNext.setBorder(BorderFactory
-						.createEtchedBorder(BevelBorder.LOWERED));
-					monthNext.addMouseListener(this);
-				}
-				{
-					dayNext = new JButton();
-					toolbar.add(dayNext);
-					dayNext.setIcon(new ImageIcon("src/images/dayNext.GIF"));
-					dayNext.setBounds(693, 0, 28, 28);
-					dayNext.setBorder(BorderFactory
-						.createEtchedBorder(BevelBorder.LOWERED));
-					dayNext.setVisible(false);
-					dayNext.addMouseListener(this);
-				}
-				{
-					dayBack = new JButton();
-					toolbar.add(dayBack);
-					dayBack.setBounds(322, 0, 28, 28);
-					dayBack.setBorder(BorderFactory
-						.createEtchedBorder(BevelBorder.LOWERED));
-					dayBack.setIcon(new ImageIcon("src/images/dayBack.GIF"));
-					dayBack.setVisible(false);
-					dayBack.addMouseListener(this);
-				}
-				{
-					monthBack = new JButton();
-					toolbar.add(monthBack);
-					monthBack
-						.setIcon(new ImageIcon("src/images/monthBack.GIF"));
-					monthBack.setBounds(266, 0, 28, 28);
-					monthBack.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
-					monthBack.setOpaque(false);
-					monthBack.addMouseListener(this);
-				}
+				
+				
+				
 				{
 					jPanel5 = new JPanel();
 					toolbar.add(jPanel5);
@@ -695,10 +647,40 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 			{
 				button_search = new JLabel();
 				getContentPane().add(button_search);
-				button_search.setIcon(new ImageIcon("src/images/icons/search.png"));
+				button_search.setIcon(new ImageIcon("src/images/icons/suche.png"));
 				button_search.setBounds(248, -7, 31, 35);
 				button_search.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
 				button_search.addMouseListener(this);
+			}
+			{
+				separator1 = new JLabel();
+				getContentPane().add(separator1);
+				separator1.setIcon(new ImageIcon("src/images/icons/emptyBox.png"));
+				separator1.setBounds(279, -7, 31, 35);
+			}
+			{
+				button_monthBack = new JLabel();
+				getContentPane().add(button_monthBack);
+				button_monthBack.setIcon(new ImageIcon("src/images/icons/monthBack.png"));
+				button_monthBack.setBounds(310, -7, 51, 35);
+				button_monthBack.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
+				button_monthBack.addMouseListener(this);
+			}
+			{
+				button_weekBack = new JLabel();
+				getContentPane().add(button_weekBack);
+				button_weekBack.setIcon(new ImageIcon("src/images/icons/weekBack.png"));
+				button_weekBack.setBounds(361, -7, 51, 35);
+				button_weekBack.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
+				button_weekBack.addMouseListener(this);
+			}
+			{
+				button_dayBack = new JLabel();
+				getContentPane().add(button_dayBack);
+				button_dayBack.setIcon(new ImageIcon("src/images/icons/dayBack.png"));
+				button_dayBack.setBounds(412, -7, 51, 35);
+				button_dayBack.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
+				button_dayBack.addMouseListener(this);
 			}
 			{
 				separator1 = new JLabel();
@@ -910,32 +892,32 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 			catch(Exception ex){System.out.println(ex.toString());};
 					
 		}
-		if(arg0.getSource().equals(dayNext))
+		if(arg0.getSource().equals(button_dayNext))
 		{
 			calStart.set(Calendar.DAY_OF_MONTH, calStart.get(Calendar.DAY_OF_MONTH)+1);
 			setTimeSpace(calStart);
 		}
-		if(arg0.getSource().equals(dayBack))
+		if(arg0.getSource().equals(button_dayBack))
 		{
 			calStart.set(Calendar.DAY_OF_MONTH, calStart.get(Calendar.DAY_OF_MONTH)-1);
 			setTimeSpace(calStart);
 		}
-		if(arg0.getSource().equals(weekNext))
+		if(arg0.getSource().equals(button_weekNext))
 		{
 			calStart.set(Calendar.DAY_OF_MONTH, calStart.get(Calendar.DAY_OF_MONTH)+7);
 			setTimeSpace(calStart);
 		}
-		if(arg0.getSource().equals(weekBack))
+		if(arg0.getSource().equals(button_weekBack))
 		{
 			calStart.set(Calendar.DAY_OF_MONTH, calStart.get(Calendar.DAY_OF_MONTH)-7);
 			setTimeSpace(calStart);
 		}
-		if(arg0.getSource().equals(monthNext))
+		if(arg0.getSource().equals(button_monthNext))
 		{
 			calStart.set(Calendar.DAY_OF_MONTH, calStart.get(Calendar.DAY_OF_MONTH)+28);		
 			setTimeSpace(calStart);
 		}
-		if(arg0.getSource().equals(monthBack))
+		if(arg0.getSource().equals(button_monthBack))
 		{
 			calStart.set(Calendar.DAY_OF_MONTH, calStart.get(Calendar.DAY_OF_MONTH)-28);
 			setTimeSpace(calStart);
@@ -1036,32 +1018,32 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 			layoutTable();
 			timetable.setVisible(false);
 		}
-		if(arg0.getSource().equals(view_dayNext))
+		if(arg0.getSource().equals(button_dayNext))
 		{
 			calStart.set(Calendar.DAY_OF_MONTH, calStart.get(Calendar.DAY_OF_MONTH)+1);
 			setTimeSpace(calStart);
 		}
-		if(arg0.getSource().equals(view_dayBack))
+		if(arg0.getSource().equals(button_dayBack))
 		{
 			calStart.set(Calendar.DAY_OF_MONTH, calStart.get(Calendar.DAY_OF_MONTH)-1);
 			setTimeSpace(calStart);
 		}
-		if(arg0.getSource().equals(view_weekNext))
+		if(arg0.getSource().equals(button_weekNext))
 		{
 			calStart.set(Calendar.DAY_OF_MONTH, calStart.get(Calendar.DAY_OF_MONTH)+7);
 			setTimeSpace(calStart);
 		}
-		if(arg0.getSource().equals(view_weekBack))
+		if(arg0.getSource().equals(button_weekBack))
 		{
 			calStart.set(Calendar.DAY_OF_MONTH, calStart.get(Calendar.DAY_OF_MONTH)-7);
 			setTimeSpace(calStart);
 		}
-		if(arg0.getSource().equals(view_monthNext))
+		if(arg0.getSource().equals(button_monthNext))
 		{
 			calStart.set(Calendar.DAY_OF_MONTH, calStart.get(Calendar.DAY_OF_MONTH)+28);		
 			setTimeSpace(calStart);
 		}
-		if(arg0.getSource().equals(view_monthBack))
+		if(arg0.getSource().equals(button_monthBack))
 		{
 			calStart.set(Calendar.DAY_OF_MONTH, calStart.get(Calendar.DAY_OF_MONTH)-28);
 			setTimeSpace(calStart);
@@ -1109,28 +1091,22 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 			button_search.setIcon(new ImageIcon("src/images/icons/suche_hover.png"));
 			statusBar.setText("Sucht nach Terminen, Termincontainern und anderen Daten.");	
 		}
+		if(arg0.getSource().equals(button_monthBack)){
+			button_monthBack.setIcon(new ImageIcon("src/images/icons/monthBack_hover.png"));
+			statusBar.setText("Verschiebt die Ansicht um 4 Wochen zurück.");	
+		}
+		if(arg0.getSource().equals(button_weekBack)){
+			button_weekBack.setIcon(new ImageIcon("src/images/icons/weekBack_hover.png"));
+			statusBar.setText("Verschiebt die Ansicht um 1 Woche zurück.");	
+		}
+		if(arg0.getSource().equals(button_dayBack)){
+			button_dayBack.setIcon(new ImageIcon("src/images/icons/dayBack_hover.png"));
+			statusBar.setText("Verschiebt die Ansicht um 1 Tag zurück.");	
+		}
 		if(arg0.getSource().equals(zoomBox)){
 			statusBar.setText("Aktiviert/Deaktiviert die automatische Vergrößerung eines Tages in der Monatsansicht wenn der Mauszeiger darübergeführt wird.");	
 		}
 		
-		if(arg0.getSource().equals(monthBack)){
-			statusBar.setText("Verschiebt die Ansicht um 1 Monat (4 Wochen) zurück.");	
-		}
-		if(arg0.getSource().equals(weekBack)){
-			statusBar.setText("Verschiebt die Ansicht um 1 Woche zurück.");	
-		}
-		if(arg0.getSource().equals(dayBack)){
-			statusBar.setText("Verschiebt die Ansicht um 1 Tag zurück.");	
-		}
-		if(arg0.getSource().equals(dayNext)){
-			statusBar.setText("Verschiebt die Ansicht um 1 Tag nach vor.");	
-		}
-		if(arg0.getSource().equals(weekNext)){
-			statusBar.setText("Verschiebt die Ansicht um 1 Woche nach vor.");	
-		}
-		if(arg0.getSource().equals(monthNext)){
-			statusBar.setText("Verschiebt die Ansicht um 1 Monat (4 Wochen) nach vor.");	
-		}
 		if(arg0.getSource().equals(listTC2)) {
 			statusBar.setText("Klicken Sie auf einen Termin um ihn in der Infobar anzuzeigen.");
 		}
@@ -1187,26 +1163,19 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 			button_search.setIcon(new ImageIcon("src/images/icons/suche.png"));
 			statusBar.setText("");	
 		}
+		if(arg0.getSource().equals(button_monthBack)){
+			button_monthBack.setIcon(new ImageIcon("src/images/icons/monthBack.png"));
+			statusBar.setText("");	
+		}
+		if(arg0.getSource().equals(button_weekBack)){
+			button_weekBack.setIcon(new ImageIcon("src/images/icons/weekBack.png"));
+			statusBar.setText("");	
+		}
+		if(arg0.getSource().equals(button_dayBack)){
+			button_dayBack.setIcon(new ImageIcon("src/images/icons/dayBack.png"));
+			statusBar.setText("");	
+		}
 		if(arg0.getSource().equals(zoomBox)){
-			statusBar.setText("");	
-		}
-		
-		if(arg0.getSource().equals(monthBack)){
-			statusBar.setText("");	
-		}
-		if(arg0.getSource().equals(weekBack)){
-			statusBar.setText("");	
-		}
-		if(arg0.getSource().equals(dayBack)){
-			statusBar.setText("");	
-		}
-		if(arg0.getSource().equals(dayNext)){
-			statusBar.setText("");	
-		}
-		if(arg0.getSource().equals(weekNext)){
-			statusBar.setText("");	
-		}
-		if(arg0.getSource().equals(monthNext)){
 			statusBar.setText("");	
 		}
 		if(arg0.getSource().equals(listTC2)) {
