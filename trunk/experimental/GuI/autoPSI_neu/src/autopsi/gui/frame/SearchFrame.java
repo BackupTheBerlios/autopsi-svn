@@ -37,11 +37,13 @@ import javax.swing.text.PlainDocument;
 import autopsi.basis.model.KontaktTableModel;
 import autopsi.basis.model.LVATableModel;
 import autopsi.basis.model.LehrmittelTableModel;
+import autopsi.basis.model.NotizTableModel;
 import autopsi.basis.model.TerminContainerTableModel;
 import autopsi.basis.model.TerminTableModel;
 import autopsi.database.table.AttachableObjectKategorie;
 import autopsi.database.table.Lehrmittel;
 import autopsi.database.table.LehrmittelKategorie;
+import autopsi.database.table.Notiz;
 import autopsi.database.table.Termin;
 import autopsi.database.table.Kontakt;
 import autopsi.database.table.TerminContainer;
@@ -83,13 +85,14 @@ public class SearchFrame extends javax.swing.JFrame implements ActionListener {
 	private JPanel jkontaktSuchePanel;
 	private JPanel jLVASuchePanel;
 	private JPanel jTerminSuchePanel, jTerminContainerSuchePanel;
-	private JPanel jLehrmittelSuchePanel;
+	private JPanel jLehrmittelSuchePanel, jNotizSuchePanel;
 	
 	private JScrollPane jKontaktScrollPane;
 	private JScrollPane jLVAScrollPane;
 	private JScrollPane jTerminScrollPane;
 	private JScrollPane jTerminContainerScrollPane;
 	private JScrollPane jLehrmittelScrollPane;
+	private JScrollPane jNotizScrollPane;
 		
 	private JTextField jVornameField, jNachnameField;
 	private JTextField jTelefonnummerField, jEmailField;
@@ -98,6 +101,7 @@ public class SearchFrame extends javax.swing.JFrame implements ActionListener {
 	private JTextField jTerminTitelField, jTerminBeschreibungField;
 	private JTextField jTerminContainerTitelField, jTerminContainerBeschreibungField;
 	private JTextField jLehrmittelNameField, jLehrmittelBeschreibungField;
+	private JTextField jNotizTitelField, jNotizNoteField;
 	private JFormattedTextField jGeburtsdatumField, jDatumField;
 
 	private JLabel jVornameLabel, jNachnameLabel, jGeburtsdatumLabel;
@@ -107,31 +111,37 @@ public class SearchFrame extends javax.swing.JFrame implements ActionListener {
 	private JLabel jKontaktGruppeLabel, jLVAGruppeLabel, jTerminGruppeLabel;
 	private JLabel jTerminContainerGruppeLabel;
 	private JLabel jLehrmittelNameLabel, jLehrmittelGruppeLabel;
+	private JLabel jNotizTitelLabel, jNotizNoteLabel, jNotizGruppeLabel;
 	
 	private JTable jKontaktTable, jLVATable, jTerminTable, jTerminContainerTable, jLehrmittelTable;
-	
+	private JTable jNotizTable;
+
 	private TerminTableModel jTerminTableModel;
 	private TerminContainerTableModel jTerminContainerTableModel;
 	private KontaktTableModel jKontaktTableModel;
 	private LVATableModel jLVATableModel;
 	private LehrmittelTableModel jLehrmittelTableModel;
+	private NotizTableModel jNotizTableModel;
 	
 	private JButton jKontaktSuchenButton, jTerminSuchenButton, jLVASuchenButton;
 	private JButton jTerminContainerSuchenButton, jLehrmittelSuchenButton;
+	private JButton jNotizSuchenButton;
 	private ButtonGroup jKontaktSucheGroup,jLVASucheGroup, jTerminSucheGroup, jTerminContainerSucheGroup, jLehrmittelSucheGroup;
+	private ButtonGroup jNotizSucheGroup;
 	private JRadioButton jKontaktOnlineSuchenRadioButton, jKontaktLokalSuchenRadioButton;
 	private JRadioButton jLVAOnlineSuchenRadioButton, jLVALokalSuchenRadioButton;
 	private JRadioButton jTerminOnlineSuchenRadioButton, jTerminLokalSuchenRadioButton;
 	private JRadioButton jTerminContainerOnlineSuchenRadioButton, jTerminContainerLokalSuchenRadioButton;
 	private JRadioButton jLehrmittelLokalSuchenRadioButton, jLehrmittelOnlineSuchenRadioButton;
+	private JRadioButton jNotizLokalSuchenRadioButton, jNotizOnlineSuchenRadioButton;
 	
-	
-	private JSeparator jSeparator1,jSeparator2,jSeparator3,jSeparator4,jSeparator5;
+	private JSeparator jSeparator1,jSeparator2,jSeparator3,jSeparator4,jSeparator5,jSeparator6;
 	
 	
 	private JComboBox jLVATypeComboBox, jTerminTypeComboBox, jTerminContainerGruppeComboBox;
 	private JComboBox jKontaktGruppeComboBox, jLVAGruppeComboBox, jTerminGruppeComboBox;
 	private JComboBox jLehrmittelGruppeComboBox, jLehrmittelTypeComboBox;
+	private JComboBox jNotizGruppeComboBox;
 	/**
 	* Auto-generated main method to display this 
 	* JPanel inside a new JFrame.
@@ -673,7 +683,7 @@ public class SearchFrame extends javax.swing.JFrame implements ActionListener {
 						jBeschreibungLabel = new JLabel();
 						jLehrmittelSuchePanel.add(jNummerLabel);
 						jNummerLabel.setText("Beschreibung:");
-						jNummerLabel.setBounds(54, 35, 49, 14);
+						jNummerLabel.setBounds(30, 35, 70, 14);
 
 						jTypeLabel = new JLabel();
 						jLehrmittelSuchePanel.add(jTypeLabel);
@@ -689,8 +699,7 @@ public class SearchFrame extends javax.swing.JFrame implements ActionListener {
 
 						jLehrmittelBeschreibungField = new JTextField();
 						jLehrmittelSuchePanel.add(jLehrmittelBeschreibungField);
-						jLehrmittelBeschreibungField.setBounds(105, 30, 210, 21);
-;		
+						jLehrmittelBeschreibungField.setBounds(105, 30, 210, 21);	
 						
 						KategorieComboBoxModel jLehrmittelTypeComboBoxModel = new KategorieComboBoxModel("Lehrmittel_KATEGORIE", new LehrmittelKategorie());
 						jLehrmittelTypeComboBox = new JComboBox();
@@ -764,7 +773,102 @@ public class SearchFrame extends javax.swing.JFrame implements ActionListener {
 					
 // #####################################################################
 					
+// #####################################################################
 					
+					jNotizSuchePanel = new JPanel();
+					jTabbedSearchPane.addTab("Notiz Suche", null, jNotizSuchePanel, null);
+					jNotizSuchePanel.setPreferredSize(new java.awt.Dimension(671, 357));
+					jNotizSuchePanel.setLayout(null);
+					jNotizSuchePanel.setBackground(new java.awt.Color(255,255,255));
+					{
+						jNotizTitelLabel = new JLabel();
+						jNotizSuchePanel.add(jNotizTitelLabel);
+						jNotizTitelLabel.setText("Titel:");
+						jNotizTitelLabel.setBounds(74, 12, 28, 14);
+
+						jNotizNoteLabel = new JLabel();
+						jNotizSuchePanel.add(jNotizNoteLabel);
+						jNotizNoteLabel.setText("Beschreibung:");
+						jNotizNoteLabel.setBounds(30, 35, 70, 14);
+
+
+	
+						
+						jNotizTitelField = new JTextField();
+						jNotizSuchePanel.add(jNotizTitelField);
+						jNotizTitelField.setBounds(105, 7, 210, 21);
+
+
+						jNotizNoteField = new JTextField();
+						jNotizSuchePanel.add(jNotizNoteField);
+						jNotizNoteField.setBounds(105, 30, 210, 21);		
+
+
+						{
+							jSeparator6 = new JSeparator();
+							jNotizSuchePanel.add(jSeparator6);
+							jSeparator6.setBounds(7, 140, 679, 7);
+						}
+						{
+							jNotizSuchenButton = new JButton();
+							jNotizSuchePanel.add(jNotizSuchenButton);
+							jNotizSuchenButton.setText("Notiz Suchen");
+							jNotizSuchenButton.setBounds(68, 105, 154, 28);
+							jNotizSuchenButton.addActionListener(this);
+							
+							jNotizLokalSuchenRadioButton = new JRadioButton();
+							jNotizSuchePanel.add(jNotizLokalSuchenRadioButton);
+							jNotizLokalSuchenRadioButton.setText("Lokal Suchen");
+							jNotizLokalSuchenRadioButton.setBounds(231, 105, 91, 14);
+	
+							jNotizOnlineSuchenRadioButton = new JRadioButton();
+							jNotizSuchePanel.add(jNotizOnlineSuchenRadioButton);
+							jNotizOnlineSuchenRadioButton.setText("Online Suchen");
+							jNotizOnlineSuchenRadioButton.setBounds(231, 119, 98, 14);
+							
+							jNotizLokalSuchenRadioButton.setSelected(true);
+							jNotizSucheGroup = new ButtonGroup();
+							jNotizSucheGroup.add(jNotizLokalSuchenRadioButton);
+							jNotizLokalSuchenRadioButton.setBackground(new java.awt.Color(255,255,255));
+							jNotizSucheGroup.add(jNotizOnlineSuchenRadioButton);				
+							jNotizOnlineSuchenRadioButton.setBackground(new java.awt.Color(255,255,255));
+							
+							jNotizGruppeLabel = new JLabel();
+							jNotizSuchePanel.add(jNotizGruppeLabel);
+							jNotizGruppeLabel.setText("Gruppe:");
+							jNotizGruppeLabel.setBounds(348, 112, 42, 14);
+		
+							KategorieComboBoxModel jNotizGruppeComboBoxModel = new KategorieComboBoxModel("ATTACHABLE_OBJECT_KATEGORIE", new AttachableObjectKategorie());
+							jNotizGruppeComboBox = new JComboBox();
+							jNotizSuchePanel.add(jNotizGruppeComboBox);
+							jNotizGruppeComboBox
+								.setModel(jNotizGruppeComboBoxModel);
+							jNotizGruppeComboBox.setBounds(392, 109, 175, 21);
+						}
+
+						{
+							jNotizScrollPane = new JScrollPane();
+							jNotizSuchePanel.add(jNotizScrollPane);
+							jNotizScrollPane.setBounds(18, 147, 658, 203);
+							jNotizScrollPane.setWheelScrollingEnabled(true);
+							jNotizScrollPane.setBackground(new java.awt.Color(255,255,255));
+							{
+								jNotizTableModel = new NotizTableModel ();
+								jNotizTable = new JTable();
+								jNotizScrollPane
+									.setViewportView(jNotizTable);
+								jNotizTable.setModel(jNotizTableModel);
+								jNotizTable.setBounds(7, 252, 644, 56);
+								jNotizTable.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
+								jNotizTable.setShowGrid(true);
+								jNotizTable.setGridColor(Color.LIGHT_GRAY);
+							}
+						}
+						
+
+					}
+					
+// #####################################################################					
 					
 					
 					
@@ -894,13 +998,13 @@ public class SearchFrame extends javax.swing.JFrame implements ActionListener {
 				if (jTerminContainerLokalSuchenRadioButton.isSelected()){
 					System.out.println("Termincontainer wird lokal gesucht...");
 					TerminContainer terc = new TerminContainer();
-					if (!jTerminTitelField.getText().equals("")) {
-						terc.setTitle(jTerminTitelField.getText());
+					if (!jTerminContainerTitelField.getText().equals("")) {
+						terc.setTitle(jTerminContainerTitelField.getText());
 					} else {
 						terc.setTitle(null);
 					}
-					if (!jTerminBeschreibungField.getText().equals("")){
-						terc.setDescription(jTerminBeschreibungField.getText());
+					if (!jTerminContainerBeschreibungField.getText().equals("")){
+						terc.setDescription(jTerminContainerBeschreibungField.getText());
 					} else {
 						terc.setDescription(null);
 					}
@@ -919,11 +1023,36 @@ public class SearchFrame extends javax.swing.JFrame implements ActionListener {
 					} else {
 						lm.setName(null);
 					}
-					
+					if (!jLehrmittelBeschreibungField.getText().equals("")) {
+						lm.setDescription(jLehrmittelBeschreibungField.getText());
+					} else {
+						lm.setDescription(null);
+					}
+					jLehrmittelTableModel.setType(jLehrmittelGruppeComboBox.getSelectedItem().toString());
 					jLehrmittelTableModel.setGroup(jLehrmittelGruppeComboBox.getSelectedItem().toString());
 					jLehrmittelTableModel.setSuchLehrmittel(lm);
 				} else if (jLehrmittelOnlineSuchenRadioButton.isSelected()) {
 					System.out.println("Lehrmittel wird online gesucht...");
+				}
+				
+			}  else if(cmd.equals("Notiz Suchen")) {
+				if (jNotizLokalSuchenRadioButton.isSelected()){
+					System.out.println("Notiz wird lokal gesucht...");
+					Notiz not = new Notiz();
+					if (!jNotizTitelField.getText().equals("")) {
+						not.setTitle(jNotizTitelField.getText());
+					} else {
+						not.setTitle(null);
+					}
+					if (!jNotizNoteField.getText().equals("")) {
+						not.setNote(jNotizNoteField.getText());
+					} else {
+						not.setNote(null);
+					}
+					jNotizTableModel.setGroup(jNotizGruppeComboBox.getSelectedItem().toString());
+					jNotizTableModel.setSuchNotiz(not);
+				} else if (jNotizOnlineSuchenRadioButton.isSelected()) {
+					System.out.println("Notiz wird online gesucht...");
 				}
 				
 			}
