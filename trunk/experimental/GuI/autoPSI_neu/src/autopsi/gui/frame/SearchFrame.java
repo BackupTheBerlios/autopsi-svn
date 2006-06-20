@@ -1035,57 +1035,61 @@ public class SearchFrame extends javax.swing.JFrame implements ActionListener {
 	public void starteSuche (String cmd){
 		try {
 			if (cmd.equals("Kontakt Suchen")) {
+				//System.out.println("Kontakt wird lokal gesucht...");
+				Kontakt kont = new Kontakt();
+				if (!jVornameField.getText().equals("")){
+					kont.setPrename(jVornameField.getText());
+				} else {
+					kont.setPrename(null);
+				} 
+				if (!jNachnameField.getText().equals("")) {
+					kont.setSurname(jNachnameField.getText());
+				} else {
+					kont.setSurname(null);
+				}
+				if (!jGeburtsdatumField.getText().equals("  -  -    ")){
+					SimpleDateFormat sf = new SimpleDateFormat("dd-MM-yyyy");
+					Date geburtsdatum = sf.parse(jGeburtsdatumField.getText());
+					java.sql.Date sqlgeburtsdatum = new java.sql.Date( geburtsdatum.getTime());
+					kont.setBirthDate(sqlgeburtsdatum);
+				} else {
+					kont.setBirthDate(null);
+				}
+				if (!jTelefonnummerField.getText().equals("")){
+					kont.setTelBusiness(jTelefonnummerField.getText());
+				} else {
+					kont.setTelBusiness(null);
+				}
+				if (!jEmailField.getText().equals("")) {
+					kont.setFirstEmail(jEmailField.getText());
+				} else {
+					kont.setFirstEmail(null);
+				}
+				if (!jPlzField.getText().equals("")){
+					Integer plz = new Integer(jPlzField.getText());
+					kont.setAZipCode(plz);
+				} else {
+					kont.setAZipCode(null);
+				}
+				if (!jAdresseField.getText().equals("")){
+					kont.setAAdress(jAdresseField.getText());
+				} else {
+					kont.setAAdress(null);
+				}
+				if (!jOrtField.getText().equals("")) {
+					kont.setACity(jOrtField.getText());
+				} else {
+					kont.setACity(null);
+				}
+				jKontaktTableModel.setGroup(jKontaktGruppeComboBox.getSelectedItem().toString());
+				jKontaktTableModel.setSuchKontakt(kont);
 				if (jKontaktLokalSuchenRadioButton.isSelected()){
-					//System.out.println("Kontakt wird lokal gesucht...");
-					Kontakt kont = new Kontakt();
-					if (!jVornameField.getText().equals("")){
-						kont.setPrename(jVornameField.getText());
-					} else {
-						kont.setPrename(null);
-					} 
-					if (!jNachnameField.getText().equals("")) {
-						kont.setSurname(jNachnameField.getText());
-					} else {
-						kont.setSurname(null);
-					}
-					if (!jGeburtsdatumField.getText().equals("  -  -    ")){
-						SimpleDateFormat sf = new SimpleDateFormat("dd-MM-yyyy");
-						Date geburtsdatum = sf.parse(jGeburtsdatumField.getText());
-						java.sql.Date sqlgeburtsdatum = new java.sql.Date( geburtsdatum.getTime());
-						kont.setBirthDate(sqlgeburtsdatum);
-					} else {
-						kont.setBirthDate(null);
-					}
-					if (!jTelefonnummerField.getText().equals("")){
-						kont.setTelBusiness(jTelefonnummerField.getText());
-					} else {
-						kont.setTelBusiness(null);
-					}
-					if (!jEmailField.getText().equals("")) {
-						kont.setFirstEmail(jEmailField.getText());
-					} else {
-						kont.setFirstEmail(null);
-					}
-					if (!jPlzField.getText().equals("")){
-						Integer plz = new Integer(jPlzField.getText());
-						kont.setAZipCode(plz);
-					} else {
-						kont.setAZipCode(null);
-					}
-					if (!jAdresseField.getText().equals("")){
-						kont.setAAdress(jAdresseField.getText());
-					} else {
-						kont.setAAdress(null);
-					}
-					if (!jOrtField.getText().equals("")) {
-						kont.setACity(jOrtField.getText());
-					} else {
-						kont.setACity(null);
-					}
-					jKontaktTableModel.setGroup(jKontaktGruppeComboBox.getSelectedItem().toString());
-					jKontaktTableModel.setSuchKontakt(kont);
+					System.out.println("Kontakt wird lokal gesucht...");
+					jKontaktTableModel.fireDataChanged();
+					
 				} else if (jKontaktOnlineSuchenRadioButton.isSelected()) {
-					System.out.println("Kontakt wird online gesucht...");
+					System.out.println("KOntakt wird online gesucht...");
+					jKontaktTableModel.fireOnlineDataChanged();
 				}
 			} else if(cmd.equals("LVA Suchen")) {
 				if (jLVALokalSuchenRadioButton.isSelected()){
