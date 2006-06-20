@@ -1,5 +1,5 @@
 package autopsi.gui.frame;
-import java.awt.List;
+import java.util.List;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionListener;
@@ -12,10 +12,13 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import javax.swing.BorderFactory;
+import javax.swing.ComboBoxModel;
+import javax.swing.DefaultComboBoxModel;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
+import javax.swing.JComboBox;
 import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
 import javax.swing.JSeparator;
@@ -27,6 +30,8 @@ import javax.swing.border.LineBorder;
 import javax.swing.text.MaskFormatter;
 
 import autopsi.database.table.Termin;
+import autopsi.database.table.TerminKategorie;
+import autopsi.database.dao.*;
 
 /**
 * This code was edited or generated using CloudGarden's Jigloo
@@ -65,6 +70,8 @@ public class TerminReiheFrame extends javax.swing.JFrame implements java.awt.eve
 	private JTextField name_field;
 	private JLabel jLabel4;
 	private JLabel jLabel8;
+	private JLabel jLabel9;
+	private JComboBox typeBox;
 	private JTextArea desc_field;
 	private JButton ok_button;
 	private JButton abort_button;
@@ -88,6 +95,8 @@ public class TerminReiheFrame extends javax.swing.JFrame implements java.awt.eve
 	
 	private EditTerminContainerFrame owner;
 	private ArrayList<Termin> termine; //Die erstellten Termine
+	private List<GenericDataObject> termin_kat_data;
+	private IGenericDAO gdo = new GenericDAO();
 
 	public TerminReiheFrame(EditTerminContainerFrame owner, String title) {
 		super();
@@ -245,12 +254,6 @@ public class TerminReiheFrame extends javax.swing.JFrame implements java.awt.eve
 				
 			}
 			{
-				infoLabel = new JLabel();
-				getContentPane().add(infoLabel);
-				infoLabel.setIcon(new ImageIcon("src/images/info.GIF"));
-				infoLabel.setBounds(7, 448, 420, 21);
-			}
-			{
 				abort_button = new JButton();
 				getContentPane().add(abort_button);
 				abort_button.setText("Abbrechen");
@@ -286,6 +289,35 @@ public class TerminReiheFrame extends javax.swing.JFrame implements java.awt.eve
 				getContentPane().add(jLabel8);
 				jLabel8.setText("Beschreibung:");
 				jLabel8.setBounds(7, 322, 91, 14);
+			}
+			{
+				ComboBoxModel typeBoxModel = new DefaultComboBoxModel();
+				typeBox = new JComboBox();
+				getContentPane().add(typeBox);
+				typeBox.setModel(typeBoxModel);
+				typeBox.setBounds(70, 427, 140, 21);
+				
+				String query = "select * from termin_kategorie";
+				TerminKategorie kat = new TerminKategorie();
+				
+				termin_kat_data = gdo.unsafeQuery(query,kat);
+				
+				for(int i = 0; i < termin_kat_data.size();i++){
+					kat = (TerminKategorie)termin_kat_data.get(i);
+					typeBox.addItem(kat.getName());
+				}
+			}
+			{
+				jLabel9 = new JLabel();
+				getContentPane().add(jLabel9);
+				jLabel9.setText("Termintyp:");
+				jLabel9.setBounds(7, 428, 77, 21);
+				{
+					infoLabel = new JLabel();
+					jLabel9.add(infoLabel);
+					infoLabel.setIcon(new ImageIcon("src/images/info.GIF"));
+					infoLabel.setBounds(-14, 7, 420, 21);
+				}
 			}
 			pack();
 			this.setSize(449, 506);
@@ -429,6 +461,7 @@ public class TerminReiheFrame extends javax.swing.JFrame implements java.awt.eve
 						ter.setDuration(Integer.parseInt(dauerArray[0].getText()));
 						ter.setPlace(ortArray[0].getText());
 						ter.setDescription(desc_field.getText());
+						ter.setTerminKategorieId(((TerminKategorie)(termin_kat_data.get(typeBox.getSelectedIndex()))).getId());
 						termine.add(ter);
 	
 				}
@@ -444,6 +477,7 @@ public class TerminReiheFrame extends javax.swing.JFrame implements java.awt.eve
 						ter.setDuration(Integer.parseInt(dauerArray[1].getText()));
 						ter.setPlace(ortArray[1].getText());
 						ter.setDescription(desc_field.getText());
+						ter.setTerminKategorieId(((TerminKategorie)(termin_kat_data.get(typeBox.getSelectedIndex()))).getId());
 						termine.add(ter);		
 				}
 				if(checkArray[2].getSelectedObjects()!=null && counter.getTime().toString().contains("Wed"))
@@ -458,6 +492,7 @@ public class TerminReiheFrame extends javax.swing.JFrame implements java.awt.eve
 						ter.setDuration(Integer.parseInt(dauerArray[2].getText()));
 						ter.setPlace(ortArray[2].getText());
 						ter.setDescription(desc_field.getText());
+						ter.setTerminKategorieId(((TerminKategorie)(termin_kat_data.get(typeBox.getSelectedIndex()))).getId());
 						termine.add(ter);
 				}
 				if(checkArray[3].getSelectedObjects()!=null && counter.getTime().toString().contains("Thu"))
@@ -472,6 +507,7 @@ public class TerminReiheFrame extends javax.swing.JFrame implements java.awt.eve
 						ter.setDuration(Integer.parseInt(dauerArray[3].getText()));
 						ter.setPlace(ortArray[3].getText());
 						ter.setDescription(desc_field.getText());
+						ter.setTerminKategorieId(((TerminKategorie)(termin_kat_data.get(typeBox.getSelectedIndex()))).getId());
 						termine.add(ter);	
 				}
 				if(checkArray[4].getSelectedObjects()!=null && counter.getTime().toString().contains("Fri"))
@@ -486,6 +522,7 @@ public class TerminReiheFrame extends javax.swing.JFrame implements java.awt.eve
 						ter.setDuration(Integer.parseInt(dauerArray[4].getText()));
 						ter.setPlace(ortArray[4].getText());
 						ter.setDescription(desc_field.getText());
+						ter.setTerminKategorieId(((TerminKategorie)(termin_kat_data.get(typeBox.getSelectedIndex()))).getId());
 						termine.add(ter);
 				}
 				if(checkArray[5].getSelectedObjects()!=null && counter.getTime().toString().contains("Sat"))
@@ -500,6 +537,7 @@ public class TerminReiheFrame extends javax.swing.JFrame implements java.awt.eve
 						ter.setDuration(Integer.parseInt(dauerArray[5].getText()));
 						ter.setPlace(ortArray[5].getText());
 						ter.setDescription(desc_field.getText());
+						ter.setTerminKategorieId(((TerminKategorie)(termin_kat_data.get(typeBox.getSelectedIndex()))).getId());
 						termine.add(ter);
 				}
 				if(checkArray[6].getSelectedObjects()!=null && counter.getTime().toString().contains("Sun"))
@@ -514,6 +552,7 @@ public class TerminReiheFrame extends javax.swing.JFrame implements java.awt.eve
 						ter.setDuration(Integer.parseInt(dauerArray[6].getText()));
 						ter.setPlace(ortArray[6].getText());
 						ter.setDescription(desc_field.getText());
+						ter.setTerminKategorieId(((TerminKategorie)(termin_kat_data.get(typeBox.getSelectedIndex()))).getId());
 						termine.add(ter);
 				}
 			}
@@ -526,6 +565,7 @@ public class TerminReiheFrame extends javax.swing.JFrame implements java.awt.eve
 		catch(Exception ex)
 		{
 			ShowErrorDialog("Ungültige Eingabe!","Felder wurden ungültig oder nicht ausgefüllt.");
+			System.out.println(ex.toString());
 		}
 }
 	private void ShowErrorDialog(String title, String text)
