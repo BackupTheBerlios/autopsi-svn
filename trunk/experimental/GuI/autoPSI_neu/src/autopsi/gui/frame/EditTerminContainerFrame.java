@@ -118,6 +118,7 @@ public class EditTerminContainerFrame extends javax.swing.JFrame implements java
 	private int konstruktor = 0;
 	private int selectedGroup;
 	DefaultComboBoxModel terminModel = new DefaultComboBoxModel();
+	private JScrollPane jScrollPane;
 	
 	
 	private void readData(int id) throws EDatabaseConnection, EAttributeNotFound, EDatabase{
@@ -331,14 +332,14 @@ public class EditTerminContainerFrame extends javax.swing.JFrame implements java
 					jPanel3.setBackground(new java.awt.Color(255,255,255));
 					jPanel3.setLayout(null);
 					{
-						ListModel jList1Model = new DefaultComboBoxModel(
-							new String[] { "Item One", "Item Two" });
 						jList1 = new JList();
-						jPanel3.add(jList1);
-						jList1.setModel(jList1Model);
 						jList1.setBounds(21, 14, 392, 210);
 						jList1.setBorder(new LineBorder(new java.awt.Color(0,0,0), 1, false));
 						jList1.setVisibleRowCount(1);
+						jList1.setModel(new AttachableListModel());
+						jScrollPane = new JScrollPane(jList1);
+						jScrollPane.setBounds(21,14,392,210);
+						jPanel3.add(jScrollPane);
 					}
 					{
 						jButton4 = new JButton();
