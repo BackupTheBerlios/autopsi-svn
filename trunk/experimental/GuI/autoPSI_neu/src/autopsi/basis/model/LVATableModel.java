@@ -32,10 +32,10 @@ public class LVATableModel extends AbstractTableModel {
 					query +=" AND LVA_NR ="+this.suchLva.getLvaNr()+"";
 				}
 				if (this.suchLva.getTitle()!=null){
-					query +=" AND Lower(TITLE) Like '%"+this.suchLva.getTitle().toLowerCase()+"%!";
+					query +=" AND Lower(TITLE) Like '%"+this.suchLva.getTitle().toLowerCase()+"%'";
 				}
 				if (this.suchLva.getDescription()!=null){
-					query +=" AND Lower(DESCRIPTION) Like '%"+this.suchLva.getDescription().toLowerCase()+"%!";
+					query +=" AND Lower(DESCRIPTION) Like '%"+this.suchLva.getDescription().toLowerCase()+"%'";
 				}
 				if (this.type!=null){
 					query +=" AND kat.NAME = '"+this.type+"'";
