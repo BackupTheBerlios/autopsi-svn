@@ -24,7 +24,7 @@ public class LehrmittelTableModel extends AbstractTableModel {
 	}
 	
 	private void readData() {
-		String query="select * from Lehrmittel as l, Lehrmittel_Kategorie as kat, ATTACHABLE_OBJECT as a, ATTACHABLE_OBJECT_KATEGORIE as ok where l.GLOBAL_ID=a.GLOBAL_ID AND a.GLOBAL_ID=ok.ID AND l.KATEGORIE_ID=kat.ID";
+		String query="select * from Lehrmittel as l, Lehrmittel_Kategorie as kat, ATTACHABLE_OBJECT as a, ATTACHABLE_OBJECT_KATEGORIE as ok where l.GLOBAL_ID=a.GLOBAL_ID AND a.KATEGORIE_ID=ok.ID AND l.KATEGORIE_ID=kat.ID";
 		try{
 			IGenericDAO gdo = new GenericDAO();
 			if (suchLm!=null) {

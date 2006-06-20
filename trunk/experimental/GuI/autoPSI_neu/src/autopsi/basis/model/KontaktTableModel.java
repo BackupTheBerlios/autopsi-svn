@@ -22,7 +22,7 @@ public class KontaktTableModel extends AbstractTableModel{
 	}
 	
 	private void readData() {
-		String query="select * from Kontakt as k, ATTACHABLE_OBJECT as a, ATTACHABLE_OBJECT_KATEGORIE as ok where k.GLOBAL_ID=a.GLOBAL_ID AND a.GLOBAL_ID=ok.ID";
+		String query="select * from Kontakt as k, ATTACHABLE_OBJECT as a, ATTACHABLE_OBJECT_KATEGORIE as ok where k.GLOBAL_ID=a.GLOBAL_ID AND a.KATEGORIE_ID=ok.ID";
 		try{
 			IGenericDAO gdo = new GenericDAO();
 			if (suchKontakt!=null) {
@@ -56,7 +56,7 @@ public class KontaktTableModel extends AbstractTableModel{
 				if (suchKontakt.getAAdress()!=null) {
 					query += " AND A_ADRESS LIKE '%" + suchKontakt.getAAdress()+"%'";
 				}
-				System.out.println(suchKontakt.toString());
+				System.out.println(query);
 				this.kontakte =  gdo.unsafeQuery(query, suchKontakt);
 			}
 		} catch (Exception e){
