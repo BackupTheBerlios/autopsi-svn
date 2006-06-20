@@ -125,13 +125,17 @@ public class EditTerminContainerFrame extends javax.swing.JFrame implements java
 	private int ID;
 	private EditTerminFrame owner;
 	List<GenericDataObject> group_data;
+	List<GenericDataObject> id_list;
+	List<Termin> container_termine = new ArrayList<Termin>();
 	private mainFrame owner2;
 	private int konstruktor = 0;
 	private int selectedGroup;
 	DefaultComboBoxModel terminModel = new DefaultComboBoxModel();
 	private JScrollPane jScrollPane;
 	private DefaultListModel lm;
+	private int lastID = 0;
 	
+	ArrayList<String[]> queryList = new ArrayList<String[]>();
 	
 	private void readData(int id) throws EDatabaseConnection, EAttributeNotFound, EDatabase{
 		
@@ -159,21 +163,55 @@ public class EditTerminContainerFrame extends javax.swing.JFrame implements java
 		try{
 			String query="";
 			int group_id = ((AttachableObjectKategorie)(group_data.get(jGroupBox.getSelectedIndex()))).getId();
-			if (ID<0) query = "insert into termincontainer (title,group_id, description) values ('"+title_field.getText()+ "',"+group_id+",'"+desc_area.getText()+"')";
-			else query = "update termincontainer  set title = '" + title_field.getText() + "', group_id = " + group_id  + ", description='"+desc_area.getText()+"' where id="+ID;
-			TerminContainer vorlage = new TerminContainer();
-			System.out.println(query);
-			gdo.unsafeQuery(query,vorlage);
+			if (ID<0)
+				{
+				query = "insert into termincontainer (title,group_id, description) values ('"+title_field.getText()+ "',"+group_id+",'"+desc_area.getText()+"')";
+				TerminContainer vorlage = new TerminContainer();
+				gdo.unsafeQuery(query,vorlage);
+				
+				id_list = gdo.unsafeQuery("select * from termincontainer where id = (select max(id) from termincontainer)",vorlage);
+				System.out.println("aha 0");
+				try
+				{
+					lastID = ((TerminContainer)id_list.get(0)).getId();
+					System.out.println(lastID);
+					for(int i = 0;i<container_termine.size();i++)
+					{
+						container_termine.get(i).setTerminContainerID(lastID);
+						gdo.unsafeQuery("insert into termin (GROUP_ID,TERMIN_KATEGORIE_ID, secondary_title, description, date, duration, place, termincontainer_id) values ("+group_id+ ","+container_termine.get(i).getTerminKategorieId()+ ",'"+container_termine.get(i).getSecondaryTitle()+"','"+container_termine.get(i).getDescription()+"','"+container_termine.get(i).getDate()+"',"+container_termine.get(i).getDuration()+",'"+container_termine.get(i).getPlace()+"',"+lastID+")",new Termin());
+						System.out.println("aha 1");
+					}
+					
+				for(int j = 0;j<queryList.size();j++)
+				{
+					String query2 = "insert into anhaengen_termincontainer values (" + lastID+","+ Integer.parseInt(queryList.get(j)[0]+",'"+queryList.get(j)[1]);
+					gdo.unsafeQuery(query2,new Anhaengen_termincontainer());
+					System.out.println("aha 2");
+				}
+				}
+				catch(Exception e)
+				{
+					
+				}
+				}
+			else 
+				{
+				query = "update termincontainer  set title = '" + title_field.getText() + "', group_id = " + group_id  + ", description='"+desc_area.getText()+"' where id="+ID;
+				}
 			
+			
+			
+			System.out.println("aha 3");
 			if(konstruktor == 1) {if(owner!=null) owner.updateTCList();}
 			else {
+				System.out.println("aha 4");
 				owner2.updateInfoBar(true);
 				owner2.updateTable();
 			}
 			
 		}
 		catch (Exception e){
-			System.out.println("Exception beim Updaten=="+e.toString());
+			System.out.println("Exception hier beim Updaten=="+e.toString());
 		}
 	}
 	
@@ -542,7 +580,7 @@ public class EditTerminContainerFrame extends javax.swing.JFrame implements java
 			update();
 		}
 		if(arg0.getSource().equals(newTerminReihe)){
-			TerminReiheFrame terminreihe = new TerminReiheFrame(this, "Titel");
+			TerminReiheFrame terminreihe = new TerminReiheFrame(this, title_field.getText());
 			terminreihe.setLocation(this.getLocation().x+20,this.getLocation().y+20);
 			terminreihe.setTitle("Terminreihe hinzufügen");
 			terminreihe.setVisible(true);
@@ -572,8 +610,11 @@ public class EditTerminContainerFrame extends javax.swing.JFrame implements java
 				String table = id.getAttachableObjectTableName();
 				this.gdo.setCurrentTable("anhaengen_termincontainer");
 				try {
-	//				System.out.println("EditTerminFrame.jAddObjectButton::"+"INSERT INTO anhaengen_termin VALUES("+this.ID+","+globalId+","+table+")");
-					gdo.unsafeQuery("INSERT INTO anhaengen_termincontainer VALUES("+this.ID+","+globalId+",'"+table+"')",new Anhaengen_termincontainer());
+					String[] id_table = new String[2];
+					id_table[0] = globalId + "";
+					id_table[1] = table;
+					queryList.add(id_table);
+					
 					
 				} catch (Exception e){
 					System.out.println("EditTerminCntainerFrame.mousePressed::Konnte Objekt nicht anhängen::"+e.toString());
@@ -665,6 +706,7 @@ public class EditTerminContainerFrame extends javax.swing.JFrame implements java
 		
 	}
 
+	
 	public void mousePressed(MouseEvent arg0) {
 		// TODO Auto-generated method stub
 		
@@ -750,6 +792,8 @@ public class EditTerminContainerFrame extends javax.swing.JFrame implements java
 			Date dat = new Date(termine.get(i).getDate().getTime());
 			String datum = converter.toShortYear(dat.toString());
 			String termin = datum+": "+termine.get(i).getSecondaryTitle()+",    Ort: "+termine.get(i).getPlace();
+			
+			container_termine.add(termine.get(i));
 			terminModel.addElement(termin);		
 		}
 	}
