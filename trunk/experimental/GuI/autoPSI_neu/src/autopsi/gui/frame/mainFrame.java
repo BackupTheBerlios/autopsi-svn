@@ -140,7 +140,7 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 	private JMenuBar mainMenu;
 	private JLabel statusBar;
 	private int terminId=-1;
-	private Termin[] currentValue = null;
+	private Termin[] currentValue;
 	String[] data;
 	private Point currentCell = new Point();
 	private int selection;
@@ -821,17 +821,19 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 		}
 		if(arg0.getSource().equals(table))
 		{ //zeigt den angeklickten Tag in der Infobar an
+			
 			if(zoomBox.getSelectedObjects()!=null) tableZoom();
 			currentCell.x = table.rowAtPoint(table.getMousePosition());
 			currentCell.y = table.columnAtPoint(table.getMousePosition());
+			
 			try
 			{
 				currentValue = (Termin[])table.getValueAt(table.rowAtPoint(table.getMousePosition()),table.columnAtPoint(table.getMousePosition()));
-
-				c_marker.set(Integer.parseInt(currentValue[0].getSecondaryTitle().substring(0,4)),Integer.parseInt(currentValue[0].getSecondaryTitle().substring(5,7))-1,Integer.parseInt(currentValue[0].getSecondaryTitle().substring(8,10)));
+				
+				c_marker.set(Integer.parseInt(currentValue[0].getDate().toString().substring(0,4)),Integer.parseInt(currentValue[0].getDate().toString().substring(5,7))-1,Integer.parseInt(currentValue[0].getDate().toString().substring(8,10)));
 			}
 			catch(Exception ex) {System.out.println(ex.toString());}; 
-
+			
 			try
 			{		
 				Calendar cal2 = new GregorianCalendar();
@@ -1357,8 +1359,8 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 	{
 		for(int i = 1;i<currentValue.length;i++)
 		{
-			String terminItem = currentValue[i+1].getDate().toString().substring(11,16) + 
-								" " + currentValue[i+1].getSecondaryTitle();
+			String terminItem = currentValue[i].getDate().toString().substring(11,16) + 
+								" " + currentValue[i].getSecondaryTitle();
 			todayListModel.addElement(terminItem);
 		}
 		
@@ -1457,7 +1459,7 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 		try
 		{	Termin showTermin;
 		
-			showTermin = currentValue[selection+1];
+			showTermin = currentValue[selection];
 		
 			if(update) 
 			{
@@ -1465,7 +1467,7 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 				String  query = "select * from termin where id="+showTermin.getId();
 				List<GenericDataObject> data = igdao.unsafeQuery(query,new Termin());					
 				showTermin = (Termin)data.get(0);
-				currentValue[selection+1] = showTermin;			
+				currentValue[selection] = showTermin;			
 			}
 			
 			
@@ -1528,10 +1530,7 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 	{
 		currentValue = (Termin[])table.getValueAt(currentCell.x,currentCell.y);
 		data = new String[currentValue.length-1];
-	
-	
-		
-	
+
 		for(int i = 0;i<currentValue.length-1;i++)
 		{
 			data[i]=currentValue[i+1].getDate().toString().substring(11,16) + " " + currentValue[i+1].getSecondaryTitle();
@@ -1636,14 +1635,23 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 			
 			termine = gdo.unsafeQuery("select * from termin where date > '"+ h1.toString()+"' and date < '"+ h2.toString()+"'",new Termin());
 			currentValue = new Termin[termine.size()+1];
-			currentValue[0].setDate(h1);
-			System.out.println("jo");
+			Termin datTermin = new Termin();
+			datTermin.setDate(h1);
+			currentValue[0] = datTermin;
+		
 			for(int i  = 0;i<termine.size();i++)
 			{
 				Termin ter = (Termin)termine.get(i);
 				currentValue[i+1] = ter;
 				todayListModel.addElement(ter.getDate().toString().substring(11,16)+" "+ter.getSecondaryTitle());
 			}
+			
+			Calendar cal2 = new GregorianCalendar();
+    		cal2.set(Integer.parseInt(currentValue[0].getDate().toString().substring(0,4)),Integer.parseInt(currentValue[0].getDate().toString().substring(5,7))-1,Integer.parseInt(currentValue[0].getDate().toString().substring(8,10)));
+    		Date dat = new Date(cal2.getTimeInMillis());
+    		String title = converter.toLong(dat.toString());
+    		lblDatum.setText(title);
+			
 			
 		}
 		catch(Exception ex) {System.out.println(":::::  "+ex.toString());}
