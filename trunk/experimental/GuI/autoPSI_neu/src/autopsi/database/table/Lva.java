@@ -32,7 +32,7 @@ public class Lva extends GenericData implements Entry,GenericDataObject {
 		}
 	}
 	
-	public int getGlobalId(){
+	public Integer getGlobalId(){
 		return this.global_id;
 	}
 	
@@ -80,7 +80,7 @@ public class Lva extends GenericData implements Entry,GenericDataObject {
 		this.lva_nr = lvaNr;
 	}
 	
-	public int getUniId(){
+	public Integer getUniId(){
 		return this.uni_id;
 	}
 	
