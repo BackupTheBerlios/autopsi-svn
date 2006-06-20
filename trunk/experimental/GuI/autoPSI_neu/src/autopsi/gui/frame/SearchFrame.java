@@ -1201,9 +1201,7 @@ public class SearchFrame extends javax.swing.JFrame implements ActionListener {
 				}
 				
 			} else if(cmd.equals("Prüfung Löschen")) {
-				if (jPruefungTableModel.deleteSelectedRow(jPruefungTable)) {
-					System.out.println("GELÖSCHT!");	
-				}
+				jPruefungTableModel.deleteSelectedRow(jPruefungTable);
 			}
 		} catch (ParseException ps) {
 			System.err.println("Parsererror: " + ps.getMessage());
