@@ -146,6 +146,7 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 	String[] data;
 	private Point currentCell = new Point();
 	private int selection;
+	private boolean online = false;
 	
 	boolean mouseEntered,mouseDown = false;
 	Date datum = new Date();
@@ -491,7 +492,7 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 				timetable = new JTable();
 				getContentPane().add(timetable);
 				timetable.setModel(timetableModel);
-				timetable.setBounds(253, 35, 35, 483);
+				timetable.setBounds(252, 53, 35, 465);
 				timetable.setBorder(new LineBorder(new java.awt.Color(0,0,0), 1, false));
 				timetable.setVisible(false);
 			}
@@ -645,7 +646,7 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 				button_space = new JLabel();
 				getContentPane().add(button_space);
 				button_space.setIcon(new ImageIcon("src/images/icons/space_offline.png"));
-				button_space.setBounds(872, -7, 68, 35);
+				button_space.setBounds(870, -7, 68, 35);
 				button_space.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
 				button_space.addMouseListener(this);
 			}
@@ -893,6 +894,9 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 		if(arg0.getSource().equals(button_jumpToToday)) {
 			setTimeSpace(new GregorianCalendar());
 		}
+		if(arg0.getSource().equals(button_space)){
+			space();
+		}
 		if(arg0.getSource().equals(todayList)) {
 			selection = todayList.getSelectedIndex();
 			loadTerminData(false);
@@ -1095,6 +1099,11 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 			button_view2.setIcon(new ImageIcon("src/images/icons/wochenansicht_hover.png"));
 			statusBar.setText("Wechselt auf die Wochenansicht.");	
 		}
+		if(arg0.getSource().equals(button_space)){
+			if(!online) button_space.setIcon(new ImageIcon("src/images/icons/space_offline_hover.png"));
+			else button_space.setIcon(new ImageIcon("src/images/icons/space_online_hover.png"));
+			statusBar.setText("Verbindet oder trennt die Verbindung zum autoSpace Service.");	
+		}
 		if(arg0.getSource().equals(zoomBox)){
 			statusBar.setText("Aktiviert/Deaktiviert die automatische Vergrößerung eines Tages in der Monatsansicht wenn der Mauszeiger darübergeführt wird.");	
 		}
@@ -1189,6 +1198,11 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 		}
 		if(arg0.getSource().equals(button_view2)){
 			button_view2.setIcon(new ImageIcon("src/images/icons/wochenansicht.png"));
+			statusBar.setText("");	
+		}
+		if(arg0.getSource().equals(button_space)){
+			if(!online) button_space.setIcon(new ImageIcon("src/images/icons/space_offline.png"));
+			else button_space.setIcon(new ImageIcon("src/images/icons/space_online.png"));
 			statusBar.setText("");	
 		}
 		if(arg0.getSource().equals(zoomBox)){
@@ -1563,6 +1577,21 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 	public void windowDeactivated(WindowEvent arg0) {
 		// TODO Auto-generated method stub
 		
+	}
+	
+	//Setzt die Space-Einstellungen
+	private void space()
+	{
+		if(!online)
+			{
+			online=true;
+			button_space.setIcon(new ImageIcon("src/images/icons/space_online_hover.png"));
+			}
+		else 
+			{
+			online = false;
+			button_space.setIcon(new ImageIcon("src/images/icons/space_offline.png"));
+			}
 	}
 
 }
