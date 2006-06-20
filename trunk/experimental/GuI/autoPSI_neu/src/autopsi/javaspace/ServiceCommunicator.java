@@ -22,7 +22,8 @@ public class ServiceCommunicator implements IServiceCommunicator, DesiredExpirat
 	protected List<Lease> leases = null;
 	protected long renewalTime = 5000;
 	protected long timeout = 5000;
-	protected String adress = "jini://localhost";
+//	protected String adress = "jini://localhost";
+	protected String adress = "jini://192.168.2.194:4160";
 
 	
 	public ServiceCommunicator(){
@@ -81,7 +82,7 @@ public class ServiceCommunicator implements IServiceCommunicator, DesiredExpirat
 			}
 			lrm.renewUntil(newLease, Lease.FOREVER, this.renewalTime, this);
 		}
-		this.space = null;
+//		this.space = null;
 
 	}
 
