@@ -101,7 +101,7 @@ public class SearchFrame extends javax.swing.JFrame implements ActionListener {
 	private JLabel jVornameLabel, jNachnameLabel, jGeburtsdatumLabel;
 	private JLabel jTelefonnummerLabel, jEmailLabel, jAdresseLabel, jOrtLabel, jPlzLabel;
 	private JLabel jTitelLabel, jNummerLabel, jBeschreibungLabel;
-	private JLabel jTypeLabel, jDatumLabel;
+	private JLabel jTypeLabel, jDatumLabel, jLehrmittelBeschreibungLabel;
 	private JLabel jKontaktGruppeLabel, jLVAGruppeLabel, jTerminGruppeLabel;
 	private JLabel jTerminContainerGruppeLabel;
 	private JLabel jLehrmittelNameLabel, jLehrmittelGruppeLabel;
@@ -674,10 +674,10 @@ public class SearchFrame extends javax.swing.JFrame implements ActionListener {
 						jLehrmittelNameLabel.setText("Titel:");
 						jLehrmittelNameLabel.setBounds(74, 12, 28, 14);
 
-						jBeschreibungLabel = new JLabel();
-						jLehrmittelSuchePanel.add(jNummerLabel);
-						jNummerLabel.setText("Beschreibung:");
-						jNummerLabel.setBounds(30, 35, 70, 14);
+						jLehrmittelBeschreibungLabel = new JLabel();
+						jLehrmittelSuchePanel.add(jLehrmittelBeschreibungLabel);
+						jLehrmittelBeschreibungLabel.setText("Beschreibung:");
+						jLehrmittelBeschreibungLabel.setBounds(30, 35, 70, 14);
 
 						jTypeLabel = new JLabel();
 						jLehrmittelSuchePanel.add(jTypeLabel);
@@ -782,7 +782,7 @@ public class SearchFrame extends javax.swing.JFrame implements ActionListener {
 
 						jNotizNoteLabel = new JLabel();
 						jNotizSuchePanel.add(jNotizNoteLabel);
-						jNotizNoteLabel.setText("Beschreibung:");
+						jNotizNoteLabel.setText("Notiz:");
 						jNotizNoteLabel.setBounds(30, 35, 70, 14);
 
 
@@ -1023,7 +1023,7 @@ public class SearchFrame extends javax.swing.JFrame implements ActionListener {
 					} else {
 						lm.setDescription(null);
 					}
-					jLehrmittelTableModel.setType(jLehrmittelGruppeComboBox.getSelectedItem().toString());
+					jLehrmittelTableModel.setType(jLehrmittelTypeComboBox.getSelectedItem().toString());
 					jLehrmittelTableModel.setGroup(jLehrmittelGruppeComboBox.getSelectedItem().toString());
 					jLehrmittelTableModel.setSuchLehrmittel(lm);
 				} else if (jLehrmittelOnlineSuchenRadioButton.isSelected()) {
