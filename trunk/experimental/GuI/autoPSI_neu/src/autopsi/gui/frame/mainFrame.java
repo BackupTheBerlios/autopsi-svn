@@ -146,6 +146,7 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 	private int selection;
 	private boolean online = false;
 	private JLabel lblMonth = new JLabel("tutu");
+	private JLabel lblMonthShadow = new JLabel("tutu");
 	boolean mouseEntered,mouseDown = false;
 	Date datum = new Date();
 	int x = 0;
@@ -619,7 +620,9 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 				getContentPane().add(tableBar);
 				tableBar.setIcon(new ImageIcon("src/images/tableBar.png"));
 				tableBar.setBounds(289, 30, 651, 35);
+				
 				tableBar.add(lblMonth);
+				tableBar.add(lblMonthShadow);
 
 			}
 			{
@@ -656,7 +659,7 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 			{
 				jLabel4 = new JLabel();
 				getContentPane().add(jLabel4);
-				jLabel4.setIcon(new ImageIcon("src/images/infoBar2.png"));
+				jLabel4.setIcon(new ImageIcon("src/images/infoBar.png"));
 				jLabel4.setBounds(2, 205, 252, 56);
 			}
 			{
@@ -778,8 +781,11 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 						view_monthNext.addMouseListener(this);
 					}
 					
-					lblMonth.setBounds(7, -7, 273, 35);
-					lblMonth.setFont(new java.awt.Font("Tahoma",1,12));
+					lblMonth.setBounds(50, -6, 399, 35);
+					lblMonthShadow.setBounds(52, -4, 399, 35);
+					lblMonthShadow.setForeground(new java.awt.Color(170,170,170));
+					lblMonth.setFont(new java.awt.Font("Tahoma",1,13));
+					lblMonthShadow.setFont(new java.awt.Font("Tahoma",1,13));
 					/*todayList.addFocusListener(new FocusListener(){
 
 						public void focusGained(FocusEvent arg0) {
@@ -1345,6 +1351,7 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 		Date dat2 = new Date(tsEnd.getTime());
 		DateConverter converter = new DateConverter();
 		lblMonth.setText(converter.toShortYear(dat.toString())+ " - " + converter.toShortYear(dat2.toString()));
+		lblMonthShadow.setText(converter.toShortYear(dat.toString())+ " - " + converter.toShortYear(dat2.toString()));
 		this.setTitle("autoPSI | " + lblMonth.getText());
 	}
 	
