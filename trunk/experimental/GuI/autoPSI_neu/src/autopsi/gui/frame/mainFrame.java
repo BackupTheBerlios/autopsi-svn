@@ -68,10 +68,6 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 		}
 	}
 
-
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 7899036380605041556L;
 	private JTable table;
 	private JMenuItem menu_add_Notiz;
@@ -162,7 +158,7 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 	GregorianCalendar calEnd= new GregorianCalendar(); //Das Enddatum
 	GregorianCalendar c = new GregorianCalendar();
 	GregorianCalendar c_marker = new GregorianCalendar();
-	
+	DefaultComboBoxModel todayListModel = new DefaultComboBoxModel();
 	ListModel listTC2Model = new DefaultComboBoxModel(); //Listmodel für verwandte Termine
 	public boolean delete_ok = false;
 	protected ObjectSpaceSharer oss;
@@ -171,7 +167,8 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 	
 	public mainFrame() {
 		super();
-		initGUI();		
+		initGUI();	
+		loadFirstTerminInfo();
 	}
 	
 	private void setTable()
@@ -256,6 +253,7 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 						todayList = new JList();
 						todayList.addMouseListener(this);
 						todayScrollPane.setViewportView(todayList);
+						todayList.setModel(todayListModel);
 					
 					}
 				}
@@ -1369,8 +1367,8 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 	private void loadList(String[] data)
 	
 	{
-		ListModel listmodel = new DefaultComboBoxModel(data);
-		todayList.setModel(listmodel);
+		todayListModel = new DefaultComboBoxModel(data);
+		todayList.setModel(todayListModel);
 	}
 	
 	/* Diese Methode berechnet das Startdatum für die Monatsansicht.
@@ -1464,15 +1462,23 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 	public void loadTerminData(boolean update)
 	{
 		try
-		{
-			currentValue = (Termin[])table.getValueAt(currentCell.x,currentCell.y);
-			if(todayList.getModel().getSize()>0) {
-				IGenericDAO igdao = new GenericDAO();
-				Termin termin = new Termin();
+		{	Termin showTermin;
 		
-				String  query = "select * from termin where date='" +currentValue[0].getSecondaryTitle().toString()+" "+todayList.getSelectedValue().toString().substring(0,5)+":000'";
+			showTermin = currentValue[selection];
+		
+			if(update) 
+			{
+				IGenericDAO igdao = new GenericDAO();
+		
+				String  query = "select * from termin where id="+showTermin.getId();
 				List<GenericDataObject> data = igdao.unsafeQuery(query,termin);					
-				termin = (Termin)data.get(0);
+				showTermin = (Termin)data.get(0);
+				currentValue[selection] = showTermin;			
+			}
+			
+			
+			if(todayList.getModel().getSize()>0) {
+				
 			
 				int dauer = termin.getDuration();
 				terminId = termin.getId();
@@ -1513,7 +1519,7 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 			
 		}
 		catch(Exception ex) {System.out.println("error: " + ex.toString());}			
-}
+		}
 
 	protected MaskFormatter createFormatter(String s) {
 		 MaskFormatter formatter = null;
@@ -1524,6 +1530,8 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 		}
 		return formatter;
 	}
+	
+	
 	public void updateInfoBar(boolean select)
 	{
 		currentValue = (Termin[])table.getValueAt(currentCell.x,currentCell.y);
@@ -1617,4 +1625,34 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 		}
 	}
 
+	private void loadFirstTerminInfo()
+	{
+		List<GenericDataObject> termine;
+		IGenericDAO gdo = new GenericDAO();
+		try
+		{
+			GregorianCalendar heute1 = new GregorianCalendar();
+			heute1.set(Calendar.HOUR_OF_DAY,0);
+			heute1.set(Calendar.MINUTE,0);
+			heute1.set(Calendar.SECOND,1);
+			Timestamp h1 = new Timestamp(heute1.getTimeInMillis());
+			heute1.set(Calendar.HOUR_OF_DAY,23);
+			heute1.set(Calendar.MINUTE,59);
+			heute1.set(Calendar.SECOND,59);
+			Timestamp h2 = new Timestamp(heute1.getTimeInMillis());
+			
+			
+			termine = gdo.unsafeQuery("select * from termin where date > '"+ h1.toString()+"' and date < '"+ h2.toString()+"'",new Termin());
+			currentValue = new Termin[termine.size()];
+			for(int i  = 0;i<termine.size();i++)
+			{
+				Termin ter = (Termin)termine.get(i);
+				currentValue[i] = ter;
+				todayListModel.addElement(ter.getDate().toString().substring(11,16)+" "+ter.getSecondaryTitle());
+			}
+			
+		}
+		catch(Exception ex) {System.out.println(":::::  "+ex.toString());}
+	
+	}
 }
