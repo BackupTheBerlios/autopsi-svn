@@ -30,6 +30,8 @@ import autopsi.database.table.*;
 import autopsi.gui.DateConverter;
 import autopsi.gui.MonthRenderer;
 import autopsi.gui.WeekRenderer;
+import autopsi.javaspace.ObjectSpaceSharer;
+import autopsi.javaspace.ServiceCommunicator;
 
 import java.util.Date;
 import java.util.Calendar;
@@ -161,6 +163,7 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 	
 	ListModel listTC2Model = new DefaultComboBoxModel(); //Listmodel für verwandte Termine
 	public boolean delete_ok = false;
+	protected ObjectSpaceSharer oss;
 	
 	
 	
@@ -1539,12 +1542,16 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 	}
 
 	public void windowClosed(WindowEvent arg0) {
+		//closing all database connections
 		GenericDAO gdao = new GenericDAO();
 		try {
 			gdao.unsafeQuery("Shutdown immediately", new Notiz());
 		} catch (Exception e){
 			System.out.println("mainFrame.windowClosed(..)::Konnte Datenbankverbindungen nicht schließen::"+e.toString());
 		}
+		//deleting shared objects from JavaSpace
+		if (this.oss != null)
+			this.oss.unshareObjects();
 		
 	}
 
@@ -1572,15 +1579,30 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 	private void space()
 	{
 		if(!online)
-			{
+		{
+			
+			//loading all shared objects into JavaSpace
+			if (this.oss == null)
+				this.oss = new ObjectSpaceSharer();
+				
+			this.oss.shareObjects();
+
 			online=true;
 			button_space.setIcon(new ImageIcon("src/images/icons/space_online_hover.png"));
-			}
+		}
 		else 
-			{
+		{
+			
+			//stop lease renewal (means objects will be removed from JavaSpace)
+			if (this.oss != null){
+				System.out.println("mainFrame.space()::going offline");
+				this.oss.unshareObjects();
+			}
+			
+			
 			online = false;
 			button_space.setIcon(new ImageIcon("src/images/icons/space_offline.png"));
-			}
+		}
 	}
 
 }

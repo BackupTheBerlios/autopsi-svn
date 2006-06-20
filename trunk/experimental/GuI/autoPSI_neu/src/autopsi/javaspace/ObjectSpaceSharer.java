@@ -37,6 +37,11 @@ public class ObjectSpaceSharer {
 		}
 	}
 	
+	public void unshareObjects(){
+		com.delAllObjects();
+			
+	}
+	
 	private List<GenericDataObject> getSharedObjects(){
 		List<GenericDataObject> result = new ArrayList<GenericDataObject>();
 		List<AttachableObject> aobs = this.getAttachableObjects();

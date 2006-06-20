@@ -75,11 +75,13 @@ public class ServiceCommunicator implements IServiceCommunicator, DesiredExpirat
 			Lease newLease = null; 
 			try {
 				newLease = space.write(newObject, null, this.renewalTime);
+				leases.add(newLease);
 			} catch (Exception e){
 				System.out.println("ServiceCommunicator.addObject::Konnte Objekt nicht in den JavaSpace schreiben::"+e.toString());
 			}
 			lrm.renewUntil(newLease, Lease.FOREVER, this.renewalTime, this);
 		}
+		this.space = null;
 
 	}
 
@@ -118,15 +120,8 @@ public class ServiceCommunicator implements IServiceCommunicator, DesiredExpirat
 	}
 
 	public void delAllObjects() {
-		Iterator<Lease> iter = leases.iterator();
-		while(iter.hasNext()){
-			Lease toRemove = iter.next();
-			try {
-				lrm.cancel(toRemove);
-			} catch (Exception e){
-				System.out.println("ServiceCommunicator.delAllObjects::Konnte Objekt durch Lease-Objekt nicht löschen::"+e.toString());
-			}
-		}
+		//don't renew leases so objects can be deleted
+		this.lrm.clear();
 
 	}
 
