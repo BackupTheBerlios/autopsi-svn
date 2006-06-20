@@ -176,10 +176,7 @@ public class PruefungTableModel extends AbstractTableModel {
 	}
 	
 	public void fireOnlineDataChanged() {
-		System.out.println("Online Suche gestartet.");
 		readOnlineData();
-		System.out.println("Online Suche fertig.");
-		System.out.println("Online Data: " + this.pruefungen.size());
 		fireTableDataChanged();
 	}
 	
