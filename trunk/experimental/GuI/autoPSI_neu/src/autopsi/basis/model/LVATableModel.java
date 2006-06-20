@@ -89,15 +89,20 @@ public class LVATableModel extends AbstractTableModel {
 	}
 	
 	public Object getValueAt(int row, int col) {
+		Universitaet u = new Universitaet();
 		Lva lva = (Lva) lvas.get(row);
 		try {
 			IGenericDAO gdo = new GenericDAO();
-			this.uni =  gdo.unsafeQuery("selet * FROM UNIVERSITAET WHERE ID="+lva.getGlobalId(), new Universitaet());
+			this.uni =  gdo.unsafeQuery("select * FROM UNIVERSITAET WHERE ID="+lva.getGlobalId(), new Universitaet());
 			
 		} catch (Exception e){
 			System.out.println("LVATableModel @ getValueAt;"+e.toString());
 		}
-		Universitaet u = (Universitaet) this.uni;
+		if (! this.uni.isEmpty()) {
+			u = (Universitaet) this.uni.get(0);
+		} else {
+			u.setName("-");
+		}
 		if (lva==null)
 			return null;
 		else if (col==0)
