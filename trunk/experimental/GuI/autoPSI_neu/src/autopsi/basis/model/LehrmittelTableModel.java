@@ -36,7 +36,7 @@ public class LehrmittelTableModel extends AbstractTableModel {
 					query +=" AND LOWER(l.NAME) LIKE '%"+this.suchLm.getDescription().toLowerCase()+"%'";
 				}
 				if (this.type!=null){
-					query +=" AND kat.NAME = '"+this.type+"'";
+					query +=" AND kat.TITLE = '"+this.type+"'";
 				}
 				if (this.group != null){
 					query += " AND ok.TITLE = '"+ this.group+"'";

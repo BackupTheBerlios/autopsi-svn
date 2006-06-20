@@ -24,7 +24,7 @@ public class LVATableModel extends AbstractTableModel {
 	}
 	
 	private void readData() {
-		String query="select * from LVA as l, ATTACHABLE_OBJECT as a, ATTACHABLE_OBJECT_KATEGORIE as ok where l.GLOBAL_ID=a.GLOBAL_ID AND a.KATEGORIE_ID=ok.ID";
+		String query="select * from LVA as l, LVA_KATEGORIE as kat, ATTACHABLE_OBJECT as a, ATTACHABLE_OBJECT_KATEGORIE as ok where l.GLOBAL_ID=a.GLOBAL_ID AND a.KATEGORIE_ID=ok.ID AND l.TYPE = kat.id";
 		try{
 			IGenericDAO gdo = new GenericDAO();
 			if (suchLva!=null) {
