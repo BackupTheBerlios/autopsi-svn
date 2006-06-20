@@ -16,6 +16,7 @@ public class LehrmittelTableModel extends AbstractTableModel {
 	public List <GenericDataObject> lvas;
 	public Lehrmittel suchLm = null;
 	public String group = null;
+	public String type = null;
 	
 	private final String [] columnName = {"Name", "Beschreibung", "File Link"};
 	
@@ -29,7 +30,13 @@ public class LehrmittelTableModel extends AbstractTableModel {
 			IGenericDAO gdo = new GenericDAO();
 			if (suchLm!=null) {
 				if (this.suchLm.getName()!=null){
-					query +=" AND LOWER(l.NAME) ="+this.suchLm.getName()+"";
+					query +=" AND LOWER(l.NAME) Like '%"+this.suchLm.getName().toLowerCase()+"%'";
+				}
+				if (this.suchLm.getDescription()!=null){
+					query +=" AND LOWER(l.NAME) LIKE '%"+this.suchLm.getDescription().toLowerCase()+"%'";
+				}
+				if (this.type!=null){
+					query +=" AND kat.NAME = '"+this.type+"'";
 				}
 				System.out.println(query);
 				this.lvas =  gdo.unsafeQuery(query, suchLm);
@@ -50,6 +57,9 @@ public class LehrmittelTableModel extends AbstractTableModel {
 	
 	public void setGroup(String gruppe){
 		this.group = gruppe;
+	}
+	public void setType(String type){
+		this.type = type;
 	}
 	
 	public void fireDataChanged() {
