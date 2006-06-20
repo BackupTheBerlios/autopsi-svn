@@ -15,6 +15,7 @@ public class LVATableModel extends AbstractTableModel {
 	public List <GenericDataObject> lvas;
 	public Lva suchLva = null;
 	public String group = null;
+	public String type = null;
 	
 	private final String [] columnName = {"LVA-Nr","Titel", "Beschreibung", "UNI"};
 	
@@ -36,6 +37,9 @@ public class LVATableModel extends AbstractTableModel {
 				if (this.suchLva.getDescription()!=null){
 					query +=" AND Lower(DESCRIPTION) Like '%"+this.suchLva.getDescription().toLowerCase()+"%!";
 				}
+				if (this.type!=null){
+					query +=" AND kat.NAME = '"+this.type+"'";
+				}
 				System.out.println(query);
 				this.lvas =  gdo.unsafeQuery(query, suchLva);
 			}
@@ -56,7 +60,9 @@ public class LVATableModel extends AbstractTableModel {
 	public void setGroup(String gruppe){
 		this.group = gruppe;
 	}
-	
+	public void setType(String type){
+		this.type = type;
+	}
 	public void fireDataChanged() {
 		readData();
 		fireTableDataChanged();
