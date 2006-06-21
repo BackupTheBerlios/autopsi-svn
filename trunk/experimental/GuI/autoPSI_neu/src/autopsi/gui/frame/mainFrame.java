@@ -1682,6 +1682,7 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 			catch(Exception ex) {System.out.println("loadTerminList:: "+ex.toString());}
 
 	}
+	
 	public void loadTerminData()
 	{
 		Termin showTermin = new Termin();
