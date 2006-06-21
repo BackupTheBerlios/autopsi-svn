@@ -935,12 +935,13 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 		}
 		if(arg0.getSource().equals(button_editTermin)) {
 			
-			if(terminId != -1){
+			if(terminId != -1 && selection>=0){
 			EditTerminFrame newTermin = new EditTerminFrame(this,null, terminId);
 			newTermin.setTitle("Termin bearbeiten");
 			newTermin.setLocation(this.getLocation().x+30,this.getLocation().y+30);
 			newTermin.setVisible(true);
 			}
+			else showErrorDialog("Fehler!", "Kein Termin ausgewählt!");
 			
 		}
 		if(arg0.getSource().equals(button_search)) {
@@ -1466,75 +1467,7 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 	/*
 	 * Lädt Termindetails in den unteren Teil der InfoBar
 	 */
-	public void loadTerminData()
-	{
-		if(selection>=0)
-		{
-			try
-			{	
-				
-				Termin showTermin;
-				System.out.println("::::       "+currentValue[selection].getDate().toString());
-				showTermin = currentValue[selection];
-				IGenericDAO igdao = new GenericDAO();
-				String  query = "select * from termin where id="+showTermin.getId();
-				System.out.println("jojojo");
-				List<GenericDataObject> data = igdao.unsafeQuery(query,new Termin());		
-
-				showTermin = (Termin)data.get(0);
-				currentValue[selection] = showTermin;
-				
-				
-				if(currentValue.length>0) {
-					
-					int dauer = showTermin.getDuration();
-					terminId = showTermin.getId();
-					int stunden = 0;
-					int minuten = 0;
-					
-					while(dauer>59)
-					{
-					dauer = dauer -60;
-					stunden++;
-					}
-					minuten = dauer;
-					
-					lblZeit.setText("Zeit: "+showTermin.getDate().toString().substring(12,16)+"           Dauer "+stunden+":"+minuten);
-
-					
-					lblTermin.setText(showTermin.getSecondaryTitle());
-					
-					lblOrt.setText("Ort: "+showTermin.getPlace());
-					lblBeschreibung.setText(showTermin.getDescription());
-					
-					IGenericDAO gdo = new GenericDAO();
-					String query2 = "select * from termincontainer where id="+showTermin.getTerminContainerID();
-					TerminContainer cont = new TerminContainer();
-					List<GenericDataObject> dat = gdo.unsafeQuery(query2,cont);
-					
-					try
-					{
-						cont = (TerminContainer)dat.get(0);
-						lblTerminContainer.setText(cont.getTitle());
-					}
-					catch(Exception ex)
-					{
-						System.out.println("cast error");
-					}	
-				}		
-			}
-			catch(Exception ex) {System.out.println("error: " + ex.toString());}		
-		}	
-		else
-		{
-			lblZeit.setText("");
-			lblOrt.setText("");
-			lblBeschreibung.setText("");
-			lblTerminContainer.setText("");
-			lblTermin.setText("");
-		}
-	}
-
+	
 	protected MaskFormatter createFormatter(String s) {
 		 MaskFormatter formatter = null;
 		 try {
@@ -1705,7 +1638,74 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 			catch(Exception ex) {System.out.println("loadTerminList:: "+ex.toString());}
 
 	}
-	
+	public void loadTerminData()
+	{
+		if(selection>=0)
+		{
+			try
+			{	
+				Termin showTermin;
+				System.out.println("::::       "+currentValue[selection].getDate().toString());
+				showTermin = currentValue[selection];
+				IGenericDAO igdao = new GenericDAO();
+				String  query = "select * from termin where id="+showTermin.getId();
+				System.out.println("jojojo");
+				List<GenericDataObject> data = igdao.unsafeQuery(query,new Termin());		
+
+				showTermin = (Termin)data.get(0);
+				currentValue[selection] = showTermin;
+				
+				
+				if(currentValue.length>0) {
+					
+					int dauer = showTermin.getDuration();
+					terminId = showTermin.getId();
+					int stunden = 0;
+					int minuten = 0;
+					
+					while(dauer>59)
+					{
+					dauer = dauer -60;
+					stunden++;
+					}
+					minuten = dauer;
+					
+					lblZeit.setText("Zeit: "+showTermin.getDate().toString().substring(12,16)+"           Dauer "+stunden+":"+minuten);
+
+					
+					lblTermin.setText(showTermin.getSecondaryTitle());
+					
+					lblOrt.setText("Ort: "+showTermin.getPlace());
+					lblBeschreibung.setText(showTermin.getDescription());
+					
+					IGenericDAO gdo = new GenericDAO();
+					String query2 = "select * from termincontainer where id="+showTermin.getTerminContainerID();
+					TerminContainer cont = new TerminContainer();
+					List<GenericDataObject> dat = gdo.unsafeQuery(query2,cont);
+					
+					try
+					{
+						cont = (TerminContainer)dat.get(0);
+						lblTerminContainer.setText(cont.getTitle());
+					}
+					catch(Exception ex)
+					{
+						System.out.println("cast error");
+					}	
+				}		
+			}
+			catch(Exception ex) {System.out.println("error: " + ex.toString());}		
+		}	
+		else
+		{
+			lblZeit.setText("");
+			lblOrt.setText("");
+			lblBeschreibung.setText("");
+			lblTerminContainer.setText("");
+			lblTermin.setText("");
+		}
+	}
+
 	public void actionPerformed(ActionEvent arg0) {
 		if (arg0.getSource().equals(this.menu_add_Kontakt)){
 			System.out.println("Neuer Kontakt wird hinzugefügt...");
