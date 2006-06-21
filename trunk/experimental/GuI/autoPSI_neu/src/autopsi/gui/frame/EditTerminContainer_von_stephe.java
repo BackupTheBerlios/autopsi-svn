@@ -580,10 +580,10 @@ public class EditTerminContainer_von_stephe extends javax.swing.JFrame implement
 			update();
 		}
 		if(arg0.getSource().equals(newTerminReihe)){
-			TerminReiheFrame terminreihe = new TerminReiheFrame(this, title_field.getText());
-			terminreihe.setLocation(this.getLocation().x+20,this.getLocation().y+20);
-			terminreihe.setTitle("Terminreihe hinzufügen");
-			terminreihe.setVisible(true);
+//			TerminReiheFrame terminreihe = new TerminReiheFrame(this, title_field.getText());
+//			terminreihe.setLocation(this.getLocation().x+20,this.getLocation().y+20);
+//			terminreihe.setTitle("Terminreihe hinzufügen");
+//			terminreihe.setVisible(true);
 		}
 		if(arg0.getSource().equals(add_group)){
 			GenericEditFrame gef = new GenericEditFrame();

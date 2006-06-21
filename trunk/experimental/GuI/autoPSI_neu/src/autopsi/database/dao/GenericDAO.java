@@ -181,6 +181,7 @@ public class GenericDAO implements IGenericDAO{
 		SQLStatement sqlInsert = new SQLInsert(table, fields);
 		
 		String query = sqlInsert.getQuery();
+		System.out.println("GenericDAO.addDataObject::query=="+query);
 		try{
 			PreparedStatement ps = null;
 			try{

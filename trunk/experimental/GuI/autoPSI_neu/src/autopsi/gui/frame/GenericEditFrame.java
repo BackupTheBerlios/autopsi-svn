@@ -29,7 +29,7 @@ public class GenericEditFrame extends JDialog implements ActionListener {
 	public GenericEditFrame(){
 		gdao = new GenericDAO();
 		this.setLayout(new BorderLayout());
-		editPanel = new GenericEditPanel();
+		editPanel = new GenericEditPanel(this);
 		JPanel buttonPanel = new JPanel();
 		cancelButton = new JButton("abbrechen");
 		applyButton = new JButton("anwenden");
@@ -39,7 +39,7 @@ public class GenericEditFrame extends JDialog implements ActionListener {
 		buttonPanel.add(cancelButton);
 		buttonPanel.add(applyButton);
 		buttonPanel.add(okButton);
-		this.setSize(400, 400);
+		this.setSize(400, 600);
 		cancelButton.addActionListener(this);
 		okButton.addActionListener(this);
 		/*try{
@@ -104,7 +104,10 @@ public class GenericEditFrame extends JDialog implements ActionListener {
 			if (this.lookupObject == null){
 				try{
 					System.out.println("versuche neues objekt einzufügen");
-					gdao.addDataObject((GenericDataObject)editPanel.getEditedObject());
+					GenericData gData = (GenericData)editPanel.getEditedObject();
+					gData.onAdd();
+					GenericDataObject temp = (GenericDataObject)editPanel.getEditedObject();
+					gdao.addDataObject(temp);
 //					System.out.println("birthDate=="+((Kontakt)editPanel.getEditedObject()).getBirthDate().toString());
 				}
 				catch (Exception e){
@@ -115,7 +118,10 @@ public class GenericEditFrame extends JDialog implements ActionListener {
 				try{
 					System.out.println("versuche objekt upzudaten");
 					//System.out.println("updateObject::lookupObject.note=="+((Notiz)lookupObject).getNote());
-					gdao.updDataObjects(this.lookupObject, (GenericDataObject)editPanel.getEditedObject());
+					GenericData gData = (GenericData)editPanel.getEditedObject();
+					gData.onUpdate();
+					GenericDataObject temp = (GenericDataObject)editPanel.getEditedObject();
+					gdao.updDataObjects(this.lookupObject, temp);
 				}
 				catch (Exception e){
 					System.out.println("Konnte veränderte Daten nicht in die Tabelle einfügen::"+e.toString());

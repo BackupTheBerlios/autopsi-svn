@@ -13,7 +13,7 @@ public class GenericEditFrameTest {
 	 */
 	public static void main(String[] args) {
 		GenericEditFrame frame = new GenericEditFrame();
-		AttachableObject n = new AttachableObject();
+		Notiz n = new Notiz();
 		frame.setObjectToEdit(n, true);
 		frame.setTableToEdit("Notiz");
 		frame.setDefaultCloseOperation(javax.swing.JFrame.EXIT_ON_CLOSE);

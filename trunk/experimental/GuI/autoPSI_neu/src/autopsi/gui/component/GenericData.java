@@ -12,7 +12,7 @@ public class GenericData implements Cloneable{
 	protected Map<String, GSMethod> map = new HashMap<String, GSMethod>();
 	
 	protected void addAttribute(String attribName, Method getAttrib, Method setAttrib){
-		GSMethod gsm = new GSMethod();
+		GSMethodNormal gsm = new GSMethodNormal();
 		gsm.getMethod = getAttrib;
 		gsm.setMethod = setAttrib;
 		map.put(attribName, gsm);
@@ -77,6 +77,18 @@ public class GenericData implements Cloneable{
 			System.out.println("Konnte GenericDataObject nicht klonen!::"+e.toString());
 		}
 		return null;
+	}
+	
+	public void onAdd(){
+		
+	}
+	
+	public void onUpdate(){
+		
+	}
+	
+	public void onDelete(){
+		
 	}
 	
 }

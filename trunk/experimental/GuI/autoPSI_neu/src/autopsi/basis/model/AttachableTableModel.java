@@ -2,6 +2,8 @@ package autopsi.basis.model;
 
 
 
+import java.lang.reflect.AccessibleObject;
+import java.lang.reflect.Field;
 import java.util.List;
 
 import javax.swing.ListModel;
@@ -21,43 +23,49 @@ public class AttachableTableModel implements TableModel {
 	
 	protected GenericDAO gdao;
 	protected String tableName;
-	protected GenericDataObject gdPrototype;
+	protected String editedAttrib;
+	protected Class editedClass;
 	protected List<GenericDataObject> objs;
+	protected Field[] fields;
 	
 	public AttachableTableModel(){
 		this.gdao = new GenericDAO();
 	}
 	
-	public void setObjectType(String tableName, GenericDataObject gdPrototype){
+	public GenericDataObject getObject(int row){
+		return objs.get(row);
+	}
+	
+	public void setObjectType(String tableName, String editedAttrib, Class editedClass){
 		this.tableName = tableName;
-		this.gdPrototype = gdPrototype;
+		this.editedAttrib = editedAttrib;
+		this.editedClass = editedClass;
+		GenericDataObject gdPrototype = null;
+		try {
+			gdPrototype = (GenericDataObject)editedClass.newInstance();
+		} catch (Exception e){
+			System.out.println("AttachableTableModel.setObjectType()::Konnte keinen Prototypen erstellen");
+		}
+		fields = editedClass.getDeclaredFields();
+		AccessibleObject.setAccessible(fields, true);
 		this.gdao.setCurrentTable(this.tableName);
 		try {
-			objs = this.gdao.getDataObjects(this.gdPrototype);
-		} catch (EDatabaseConnection e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (EAttributeNotFound e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (EDatabase e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			objs = this.gdao.getDataObjects(gdPrototype);
+			if (objs == null)
+				System.out.println("null!!!");
+			else
+				System.out.println("not null!");
+		} catch (Exception e){
+			System.out.println("AttachableTableModel.setObjectType::Konnte DataObjects nicht bekommen::"+e.toString());
 		}
 	}
 
 	public int getRowCount() {
-		if (this.objs == null)
-			return 0;
-		else
-			return this.objs.size();
+		return this.objs.size();
 	}
 
 	public int getColumnCount() {
-		if (this.gdPrototype == null)
-			return 0;
-//		else return this.gdPrototype.getAttribCount();
-		return 0;
+		return fields.length;
 	}
 
 	public String getColumnName(int arg0) {
@@ -65,7 +73,7 @@ public class AttachableTableModel implements TableModel {
 	}
 
 	public Class<?> getColumnClass(int arg0) {
-		return null;
+		return fields[arg0].getClass();
 	}
 
 	public boolean isCellEditable(int arg0, int arg1) {
@@ -75,6 +83,11 @@ public class AttachableTableModel implements TableModel {
 
 	public Object getValueAt(int arg0, int arg1) {
 		// TODO Auto-generated method stub
+		try {
+			return fields[arg1].get(objs.get(arg0));
+		} catch (Exception e){
+			System.out.println("AttachableTableModel.getValueAt()::Exception::"+e.toString());
+		}
 		return null;
 	}
 

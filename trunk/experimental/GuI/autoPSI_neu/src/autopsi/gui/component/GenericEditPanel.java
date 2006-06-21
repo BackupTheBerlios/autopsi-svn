@@ -9,6 +9,9 @@ import java.util.Map;
 import java.util.HashMap;
 import java.util.Set;
 import java.awt.GridLayout;
+
+import javax.swing.JDialog;
+import javax.swing.JFrame;
 import javax.swing.JPanel;
 import autopsi.database.dao.GenericDataObject;
 
@@ -26,9 +29,11 @@ public class GenericEditPanel extends JPanel {
 	private Map<GSMethod, EditPlugin> methods = null;
 	private Map<Class, EditPlugin> plugins = new HashMap<Class, EditPlugin>();
 	private JPanel panel = null;
+	private JDialog parentFrame;
 	
-	public GenericEditPanel(){
+	public GenericEditPanel(JDialog parentFrame){
 		panel = new JPanel();
+		this.parentFrame = parentFrame;
 		this.add(panel);
 		panel.setLayout(new GridLayout(0, 1));
 		setDefaultEditors();
@@ -74,14 +79,25 @@ public class GenericEditPanel extends JPanel {
 		Iterator<GSMethod> iter = s.iterator();
 		while(iter.hasNext()){
 			GSMethod meth = iter.next();
-			try{
-//				System.out.println("GenericEditPanel::updateEditedObject::invoke");
-				meth.setMethod.invoke(this.editedObject, methods.get(meth).getValue());
-//				System.out.println("GenericEditPanel::methods.get(meth)::"+methods.get(meth).getValue().toString());
-			}
-			catch (Exception e){
-				System.out.println("updateEditedObject::"+e.toString());
-			}
+//			if (meth instanceof GSMethodNormal){
+				try{
+	//				System.out.println("GenericEditPanel::updateEditedObject::invoke");
+					meth.setMethod.invoke(this.editedObject, methods.get(meth).getValue());
+	//				System.out.println("GenericEditPanel::methods.get(meth)::"+methods.get(meth).getValue().toString());
+				}
+				catch (Exception e){
+					System.out.println("updateEditedObject::"+e.toString());
+				}
+//			}
+//			if (meth instanceof GSMethodPrimary){
+//				try{
+//					meth.setMethod.invoke(this.editedObject, new Object[] {});
+//					meth.setMethod.invoke(this.editedObject, methods.get(meth).getValue());
+//				}
+//				catch (Exception e){
+//					System.out.println("GenericEditPanel.updateEditedObject::Konnte Primary Key nicht updaten::"+e.toString());
+//				}
+//			}
 		}
 	}
 	
@@ -115,7 +131,17 @@ public class GenericEditPanel extends JPanel {
 					System.out.println("InvocationTargetException::"+((InvocationTargetException)e).getTargetException().toString());
 				System.out.println("Couldn' t set value in plugin::"+e.toString());
 			}
+			if (x instanceof GSMethodForeign){
+				EditPlugin original = plug;
+				plug = new ForeignKeyEditPlugin();
+				((ForeignKeyEditPlugin)plug).setEditPlugin(original);
+				((ForeignKeyEditPlugin)plug).setEditedTable(((GSMethodForeign)x).tableName);
+				((ForeignKeyEditPlugin)plug).setEditedAttrib(((GSMethodForeign)x).attribName);
+				((ForeignKeyEditPlugin)plug).setEditedClass(((GSMethodForeign)x).objectClass);
+				((ForeignKeyEditPlugin)plug).setParentFrame(this.parentFrame);
+			}
 			methods.put(x, plug);
+
 		}
 //		System.out.println("inspectEditedObject 3");
 	}
