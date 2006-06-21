@@ -227,7 +227,7 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 				statusBar.setBounds(7, 525, 672, 21);
 				statusBar.setBackground(new java.awt.Color(192,192,192));
 				statusBar.setIcon(new ImageIcon("src/images/info.GIF"));
-				statusBar.setBorder(BorderFactory.createTitledBorder(""));
+				statusBar.setBorder(BorderFactory.createBevelBorder(BevelBorder.LOWERED));
 			}
 			{
 				today = new JPanel();
@@ -271,6 +271,7 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 				getContentPane().add(dateJumper);
 				dateJumper.setText("");
 				dateJumper.setBounds(854, 525, 84, 21);
+				dateJumper.setBorder(new LineBorder(new java.awt.Color(0,0,0), 1, false));
 				dateJumper.addKeyListener(new KeyListener(){
 
 					public void keyTyped(KeyEvent arg0) {
@@ -785,6 +786,7 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 		}
 		if(arg0.getSource().equals(button_view2) )
 		{
+			zoomBox.setSelected(false);
 			setModel("week");
 			layoutTable();
 			timetable.setVisible(true);
