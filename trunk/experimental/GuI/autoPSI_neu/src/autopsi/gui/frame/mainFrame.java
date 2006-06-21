@@ -515,7 +515,7 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 				{
 					lblDatum = new JLabel();
 					jLabel3.add(lblDatum);
-					lblDatum.setText("Montag, 22. Mai 2006");
+					lblDatum.setText("");
 					lblDatum.setBounds(7, 8, 210, 28);
 					lblDatum.setFont(new java.awt.Font("Tahoma",1,12));
 					lblDatum.setForeground(new java.awt.Color(0,0,0));
@@ -523,7 +523,7 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 				{
 					lblDatumShadow = new JLabel();
 					jLabel3.add(lblDatumShadow);
-					lblDatumShadow.setText("Montag, 22. Mai 2006");
+					lblDatumShadow.setText("");
 					lblDatumShadow.setBounds(8, 9, 210, 28);
 					lblDatumShadow.setFont(new java.awt.Font("Tahoma",1,12));
 					lblDatumShadow.setForeground(new java.awt.Color(170,170,170));
