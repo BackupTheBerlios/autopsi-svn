@@ -1604,6 +1604,8 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 			//loading all shared objects into JavaSpace
 			if (this.oss == null)
 				this.oss = new ObjectSpaceSharer();
+			JSAdressDialog jsad = new JSAdressDialog(this);
+			this.oss.setAdress(jsad.getAdress());
 				SpaceThread thr = new SpaceThread(this.oss);
 
 

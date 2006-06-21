@@ -25,6 +25,14 @@ public class ObjectSpaceSharer {
 		gdo = new GenericDAO();
 	}
 	
+	public void setAdress(String newAdress){
+		com.setAdress(newAdress);
+	}
+	
+	public String getAdress(){
+		return com.getAdress();
+	}
+	
 	public void shareObjects(){
 		List<GenericDataObject> shOb = this.getSharedObjects();
 		Iterator<GenericDataObject> iter = shOb.iterator();
