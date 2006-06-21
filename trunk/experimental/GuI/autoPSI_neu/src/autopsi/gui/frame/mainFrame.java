@@ -166,7 +166,7 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 	ListModel listTC2Model = new DefaultComboBoxModel(); //Listmodel für verwandte Termine
 	public boolean delete_ok = false;
 	protected ObjectSpaceSharer oss;
-	
+	private String deletedObject = "";
 	
 	
 	public mainFrame() {
@@ -956,27 +956,29 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 		}
 		
 		if(arg0.getSource().equals(button_deleteTermin)) {
-			GenericDAO gdo = new GenericDAO();
-			if(terminId != -1){
-				String query = "delete from termin where id =" +terminId;
-				try {
-					SecurityDialog diag = new SecurityDialog(this,"Termin löschen","Wollen Sie den gewählten Termin wirklich löschen?");
-					diag.setLocation(this.getLocation().x+40,this.getLocation().y+40);
-					diag.setVisible(true);
-					if(delete_ok)					
-					gdo.unsafeQuery(query,null);
-					updateTable();
-					delete_ok = false;
-					//Liste muss noch geupdatet werden
-				} catch (EDatabaseConnection e) {
-					e.printStackTrace();
-				} catch (EAttributeNotFound e) {
-					e.printStackTrace();
-				} catch (EDatabase e) {
-					showErrorDialog("Fehler","Der Termin konnte nicht gelöscht werden");
-				}
+			if(terminId!=-1)
+			{
+				deletedObject = "termin";
+				SecurityDialog diag = new SecurityDialog(this,"Termin löschen","Wollen Sie den gewählten Termin wirklich löschen?");
+				diag.setLocation(this.getLocation().x+40,this.getLocation().y+40);
+				diag.setVisible(true);
+				
 			}
 			else showErrorDialog("Fehler!", "Kein Termin ausgewählt!");
+			
+			
+		}
+		if(arg0.getSource().equals(button_deleteTC)) {
+			if(terminId!=-1)
+			{
+				deletedObject = "termincontainer";
+				SecurityDialog diag = new SecurityDialog(this,"Termin löschen","Wollen Sie den gewählten Termincontainer wirklich löschen? Achtung: Dies löscht auch alle Termine in diesem Termincontainer!");
+				diag.setLocation(this.getLocation().x+40,this.getLocation().y+40);
+				diag.setVisible(true);
+				
+			}
+			else showErrorDialog("Fehler!", "Kein Termin ausgewählt!");
+		
 			
 		}
 	}
@@ -1497,16 +1499,48 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 	
 	public void updateInfoBar(boolean delete)
 	{
+		int tcID;
+		GenericDAO gdo = new GenericDAO();
 		if(delete)
 			{
 			todayListModel.removeAllElements();
 			System.out.println("removed all");
-			selection = -1;
-			terminId=-1;
 			
-			GenericDAO gdo = new GenericDAO();
+			if(deletedObject.equals("termincontainer"))
+			{
+				List<GenericDataObject> delTC;
+				try
+				{
+					delTC = gdo.unsafeQuery("select * from termin where id = " + terminId,new Termin());
+					tcID = ((Termin)delTC.get(0)).getTerminContainerID();
+				
+					String query = "delete from " + deletedObject + " where id =" +tcID;
+					System.out.println(query);
+					try {				
+						if(delete_ok)					
+						gdo.unsafeQuery(query,null);
+						updateTable();
+						delete_ok = false;
+						//Liste muss noch geupdatet werden
+					} catch (EDatabaseConnection e) {
+						e.printStackTrace();
+					} catch (EAttributeNotFound e) {
+						e.printStackTrace();
+					} catch (EDatabase e) {
+						showErrorDialog("Fehler","Der Termincontainer konnte nicht gelöscht werden");
+					}
+				
+					
+				query = "delete from termin where termincontainer_id = "+tcID;
+				gdo.unsafeQuery(query,null);
+				}
+				catch(Exception e) {System.out.println("get TC ID::: "+e.toString());}
+			}
+			
+			
+			
 			if(terminId != -1){
-				String query = "delete from termin where id =" +terminId;
+				String query = "delete from " + deletedObject + " where id =" +terminId;
 				try {				
 					if(delete_ok)					
 					gdo.unsafeQuery(query,null);
@@ -1522,6 +1556,8 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 				}
 			}	
 		}
+		selection = -1;
+		terminId=-1;
 		updateTable();
 		loadTerminList(false);
 		loadTerminData();
@@ -1537,7 +1573,7 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 		//closing all database connections
 		GenericDAO gdao = new GenericDAO();
 		try {
-			gdao.unsafeQuery("Shutdown immediately", new Notiz());
+			gdao.unsafeQuery("Shutdown compact", new Notiz());
 		} catch (Exception e){
 			System.out.println("mainFrame.windowClosed(..)::Konnte Datenbankverbindungen nicht schließen::"+e.toString());
 		}
