@@ -1,6 +1,9 @@
 package autopsi.gui.frame;
 
 import java.awt.BorderLayout;
+import java.awt.DisplayMode;
+import java.awt.GraphicsDevice;
+import java.awt.GraphicsEnvironment;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -18,6 +21,10 @@ public class JSAdressDialog extends JDialog implements ActionListener {
 		super(owner, true);
 		this.setSize(200,100);
 		this.setLayout(new BorderLayout());
+		GraphicsEnvironment env = GraphicsEnvironment.getLocalGraphicsEnvironment();
+		GraphicsDevice gd = env.getDefaultScreenDevice();
+		DisplayMode dm = gd.getDisplayMode();
+		this.setLocation((dm.getWidth()-this.getWidth())/2,(dm.getHeight()-this.getHeight())/2);
 		this.okButton = new JButton("connect");
 		this.okButton.addActionListener(this);
 		this.adressField = new JTextField("jini://localhost");
