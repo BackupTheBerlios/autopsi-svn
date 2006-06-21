@@ -1109,6 +1109,7 @@ public class SearchFrame extends javax.swing.JFrame implements ActionListener {
 					jLVATableModel.setSuchLVa(lva);
 				} else if (jLVAOnlineSuchenRadioButton.isSelected()) {
 					System.out.println("LVA wird online gesucht...");
+					this.jLVATableModel.fireOnlineDataChanged();
 				}
 			} else if(cmd.equals("Termin Suchen")) {
 				if (jTerminLokalSuchenRadioButton.isSelected()){
@@ -1134,6 +1135,7 @@ public class SearchFrame extends javax.swing.JFrame implements ActionListener {
 					jTerminTableModel.setSuchTermin(ter);
 				} else if (jTerminOnlineSuchenRadioButton.isSelected()) {
 					System.out.println("Termin wird online gesucht...");
+					this.jTerminTableModel.fireOnlineDataChanged();
 				}
 				
 			}  else if(cmd.equals("Termincontainer Suchen")) {
@@ -1154,6 +1156,7 @@ public class SearchFrame extends javax.swing.JFrame implements ActionListener {
 					jTerminContainerTableModel.setSuchTerminc(terc);
 				} else if (jTerminContainerOnlineSuchenRadioButton.isSelected()) {
 					System.out.println("Termincontainer wird online gesucht...");
+					this.jTerminContainerTableModel.fireOnlineDataChanged();
 				}
 				
 			} else if(cmd.equals("Lehrmittel Suchen")) {
@@ -1175,6 +1178,7 @@ public class SearchFrame extends javax.swing.JFrame implements ActionListener {
 					jLehrmittelTableModel.setSuchLehrmittel(lm);
 				} else if (jLehrmittelOnlineSuchenRadioButton.isSelected()) {
 					System.out.println("Lehrmittel wird online gesucht...");
+					this.jLehrmittelTableModel.fireOnlineDataChanged();
 				}
 				
 			}  else if(cmd.equals("Notiz Suchen")) {
@@ -1195,6 +1199,7 @@ public class SearchFrame extends javax.swing.JFrame implements ActionListener {
 					jNotizTableModel.setSuchNotiz(not);
 				} else if (jNotizOnlineSuchenRadioButton.isSelected()) {
 					System.out.println("Notiz wird online gesucht...");
+					this.jNotizTableModel.fireOnlineDataChanged();
 				}
 				
 			}

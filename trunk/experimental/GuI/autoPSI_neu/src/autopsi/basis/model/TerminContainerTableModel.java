@@ -1,5 +1,6 @@
 package autopsi.basis.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.table.AbstractTableModel;
@@ -7,7 +8,10 @@ import javax.swing.table.AbstractTableModel;
 import autopsi.database.dao.GenericDAO;
 import autopsi.database.dao.GenericDataObject;
 import autopsi.database.dao.IGenericDAO;
+import autopsi.database.table.Notiz;
 import autopsi.database.table.TerminContainer;
+import autopsi.javaspace.IServiceCommunicator;
+import autopsi.javaspace.ServiceCommunicator;
 
 public class TerminContainerTableModel extends AbstractTableModel{
 	private static final long serialVersionUID = 8737097029189851737L;
@@ -15,6 +19,7 @@ public class TerminContainerTableModel extends AbstractTableModel{
 	private List <GenericDataObject> termine;
 	private TerminContainer suchTerminc = null;
 	private String group=null;
+	private IServiceCommunicator ogdo = null;
 	
 	private final String [] columnName = {"Titel", "Beschreibung"};
 	
@@ -45,6 +50,7 @@ public class TerminContainerTableModel extends AbstractTableModel{
 	}
 	
 	public TerminContainerTableModel (){
+		this.ogdo = new ServiceCommunicator();
 	}
 	
 	
@@ -60,6 +66,17 @@ public class TerminContainerTableModel extends AbstractTableModel{
 	public void fireDataChanged() {
 		readData();
 		fireTableDataChanged();
+	}
+	
+	public void fireOnlineDataChanged(){
+		readOnlineData();
+		fireTableDataChanged();
+	}
+	
+	public void readOnlineData(){
+		TerminContainer temp = (TerminContainer)this.ogdo.getObject(this.suchTerminc);
+		this.termine = new ArrayList<GenericDataObject>();
+		this.termine.add(temp);
 	}
 	
 	public int getColumnCount() {

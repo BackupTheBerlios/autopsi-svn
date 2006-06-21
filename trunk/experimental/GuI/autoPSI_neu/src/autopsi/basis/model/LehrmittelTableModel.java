@@ -1,5 +1,6 @@
 package autopsi.basis.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.table.AbstractTableModel;
@@ -9,6 +10,9 @@ import autopsi.database.dao.GenericDataObject;
 import autopsi.database.dao.IGenericDAO;
 import autopsi.database.table.Lehrmittel;
 import autopsi.database.table.Lva;
+import autopsi.database.table.Notiz;
+import autopsi.javaspace.IServiceCommunicator;
+import autopsi.javaspace.ServiceCommunicator;
 
 public class LehrmittelTableModel extends AbstractTableModel {
 
@@ -17,6 +21,7 @@ public class LehrmittelTableModel extends AbstractTableModel {
 	public Lehrmittel suchLm = null;
 	public String group = null;
 	public String type = null;
+	private IServiceCommunicator ogdo = null;
 	
 	private final String [] columnName = {"Name", "Beschreibung", "File Link"};
 	
@@ -50,6 +55,7 @@ public class LehrmittelTableModel extends AbstractTableModel {
 	}
 	
 	public LehrmittelTableModel (){
+		this.ogdo = new ServiceCommunicator();
 	}
 	
 	
@@ -68,6 +74,17 @@ public class LehrmittelTableModel extends AbstractTableModel {
 	public void fireDataChanged() {
 		readData();
 		fireTableDataChanged();
+	}
+	
+	public void fireOnlineDataChanged(){
+		readOnlineData();
+		fireTableDataChanged();
+	}
+	
+	public void readOnlineData(){
+		Lehrmittel temp = (Lehrmittel)this.ogdo.getObject(this.suchLm);
+		this.lvas = new ArrayList<GenericDataObject>();
+		this.lvas.add(temp);
 	}
 	
 	public int getColumnCount() {

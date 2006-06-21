@@ -215,7 +215,7 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 	private void initGUI() {
 		try {
 			
-			setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+			setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 			getContentPane().setLayout(null);
 			getContentPane().setBackground(new java.awt.Color(235,235,235));
 			this.setMaximumSize(new java.awt.Dimension(900, 653));

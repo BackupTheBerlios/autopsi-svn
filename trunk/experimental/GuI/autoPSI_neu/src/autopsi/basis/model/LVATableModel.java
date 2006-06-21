@@ -11,7 +11,10 @@ import autopsi.database.dao.GenericDAO;
 import autopsi.database.dao.GenericDataObject;
 import autopsi.database.dao.IGenericDAO;
 import autopsi.database.table.Lva;
+import autopsi.database.table.Notiz;
 import autopsi.database.table.Universitaet;
+import autopsi.javaspace.IServiceCommunicator;
+import autopsi.javaspace.ServiceCommunicator;
 
 public class LVATableModel extends AbstractTableModel {
 
@@ -21,6 +24,7 @@ public class LVATableModel extends AbstractTableModel {
 	public Lva suchLva = null;
 	public String group = null;
 	public String type = null;
+	private IServiceCommunicator ogdo = null;
 	
 	public IGenericDAO gdo = new GenericDAO();
 	public String tablename = "LVA";
@@ -58,6 +62,7 @@ public class LVATableModel extends AbstractTableModel {
 	}
 	
 	public LVATableModel (){
+		this.ogdo = new ServiceCommunicator();
 	}
 	
 	public void deleteSelectedRow(JTable table) {
@@ -161,6 +166,17 @@ public class LVATableModel extends AbstractTableModel {
 	public void fireDataChanged() {
 		readData();
 		fireTableDataChanged();
+	}
+	
+	public void fireOnlineDataChanged(){
+		readOnlineData();
+		fireTableDataChanged();
+	}
+	
+	public void readOnlineData(){
+		Lva temp = (Lva)this.ogdo.getObject(this.suchLva);
+		this.lvas = new ArrayList<GenericDataObject>();
+		this.lvas.add(temp);
 	}
 	
 	public int getColumnCount() {

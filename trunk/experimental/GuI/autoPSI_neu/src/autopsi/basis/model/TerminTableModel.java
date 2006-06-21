@@ -2,6 +2,7 @@ package autopsi.basis.model;
 
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -14,6 +15,8 @@ import autopsi.database.dao.IGenericDAO;
 
 import autopsi.database.table.Termin;
 import autopsi.database.table.TerminContainer;
+import autopsi.javaspace.IServiceCommunicator;
+import autopsi.javaspace.ServiceCommunicator;
 
 public class TerminTableModel extends AbstractTableModel{
 	private static final long serialVersionUID = 8737097029189851737L;
@@ -23,6 +26,7 @@ public class TerminTableModel extends AbstractTableModel{
 	private String datum=null;
 	private String group=null;
 	private String type=null;
+	private IServiceCommunicator ogdo;
 	
 	private final String [] columnName = {"Titel", "Beschreibung", "Datum", "Dauer"};
 	
@@ -59,6 +63,7 @@ public class TerminTableModel extends AbstractTableModel{
 	}
 	
 	public TerminTableModel (){
+		this.ogdo = new ServiceCommunicator();
 	}
 	
 	
@@ -82,6 +87,17 @@ public class TerminTableModel extends AbstractTableModel{
 	public void fireDataChanged() {
 		readData();
 		fireTableDataChanged();
+	}
+	
+	public void fireOnlineDataChanged(){
+		readData();
+		fireTableDataChanged();
+	}
+	
+	public void readOnlineData(){
+		Termin temp = (Termin)this.ogdo.getObject(this.suchTermin);
+		this.termine = new ArrayList<GenericDataObject>();
+		this.termine.add(temp);
 	}
 	
 	public int getColumnCount() {

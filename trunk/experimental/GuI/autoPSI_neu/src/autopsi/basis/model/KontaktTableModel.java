@@ -76,7 +76,7 @@ public class KontaktTableModel extends AbstractTableModel{
 	
 	public void readOnlineData () {
 		Kontakt temp =(Kontakt) ogdo.getObject(this.suchKontakt);
-		this.kontakte.clear();
+		this.kontakte = new ArrayList<GenericDataObject>();
 		this.kontakte.add(temp);
 	}
 	

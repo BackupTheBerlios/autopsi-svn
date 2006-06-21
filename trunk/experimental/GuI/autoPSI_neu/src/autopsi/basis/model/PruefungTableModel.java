@@ -20,7 +20,7 @@ public class PruefungTableModel extends AbstractTableModel {
 	public List <GenericDataObject> pruefungen;
 	public List <GenericDataObject> lva;
 	public Pruefung suchPruefung = null;
-	public IGenericDAO gdo = new GenericDAO();
+	public IGenericDAO gdo;
 	public IServiceCommunicator ogdo = null;
 	public String tablename = "PRUEFUNG";
 	public List <GenericDataObject> lastDeletedObjects =  new ArrayList<GenericDataObject>();
@@ -62,13 +62,15 @@ public class PruefungTableModel extends AbstractTableModel {
 	
 	public void readOnlineData () {
 		Pruefung temp =(Pruefung) ogdo.getObject(this.suchPruefung);
-		this.pruefungen.clear();
-		this.pruefungen.add(temp);
+		this.pruefungen = new ArrayList<GenericDataObject>();
+		if (temp != null)
+			this.pruefungen.add(temp);
+		
 	}
 	
 	public PruefungTableModel (){
+		this.gdo = new GenericDAO();
 		this.ogdo = new ServiceCommunicator();
-		this.pruefungen = new ArrayList<GenericDataObject>();
 	}
 	
 	public void deleteSelectedRow(JTable table) {
@@ -203,7 +205,6 @@ public class PruefungTableModel extends AbstractTableModel {
 		p = (Pruefung) pruefungen.get(row);
 		Lva l = null;
 		try{
-			IGenericDAO gdo = new GenericDAO();
 			this.lva = gdo.unsafeQuery("SELECT * FROM LVA WHERE GLOBAL_ID ="+p.getLvaId(), new Lva());
 			l = (Lva) lva.get(0);
 		} catch (Exception e){
