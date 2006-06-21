@@ -1,0 +1,94 @@
+<project name="autoPSI" default="compile" basedir=".">
+
+	<property name="project_name" value="autoPSI"/>
+	<property name="basedir" value="."/>
+	<property name="build" value="class"/>
+	<property name="src" value="src"/>
+	<property name="doc" value="doc"/>
+	<property name="hsqldb_data" value="data"/>
+	
+
+	<property name="jdbc.username" value="SA"/>
+	<property name="jdbc.password" value="AB"/>
+	<property name="jdbc.url" value="jdbc:hsqldb:file:${hsqldb_data}/database"/>
+	
+	<path id="classpath">
+		<pathelement location="${build}"/>
+		<fileset dir="${basedir}/lib" id="lib">
+			<include name="*.jar"/>
+		</fileset>
+		
+	</path>
+	
+	<target name="clean">
+		<delete dir="${build}"/>
+	</target>
+		
+	<target name="init">
+		<mkdir dir="${build}"/>
+	</target>
+	
+	<target name="compile" depends="init">
+		<javac srcdir="${src}" destdir="${build}" classpathref="classpath"/>
+	</target>
+	
+	<target name="run">
+		<java classpathref="classpath" classname="autopsi.basis.Basis" fork="true"/> 
+	</target>
+	
+	<target name="javadoc">
+        <javadoc 
+            destdir="${doc}/api"
+            use="true"
+            author="true" version="true"
+            doctitle="${project_name}"
+            classpathref="classpath"
+        >
+            <packageset dir="${src}" defaultexcludes="yes">
+                <include name="autopsi/**"/>
+            </packageset>
+        </javadoc>
+	</target>
+	
+	<target name="runDBMan">
+        <java 
+            classpathref="classpath"
+            classname="org.hsqldb.util.DatabaseManagerSwing"
+            fork="true"
+        >
+        	<arg line="-url ${jdbc.url}"/>
+            <arg line="-user ${jdbc.username}" />
+            <arg line="-password ${jdbc.password}" />
+        </java>
+	</target>
+		
+	<target name="compile_and_run" depends="compile,run">
+	</target>
+	
+	<target name="Test:GenericEditFrame" depends="init,compile">
+		<javac srcdir="${src}" destdir="${build}" classpathref="classpath"/>
+		<java classpathref="classpath" classname="GenericEditFrameTest" fork="true"/> 
+	</target>
+	
+	<target name="Test:JavaSpace" depends="init,compile">
+		<java classpathref="classpath" classname="autopsi.javaspace.Main" fork="true">
+			<jvmarg value="-Djava.security.policy=policy.all"/>
+		</java>
+	</target>
+	
+	<target name="Test:SearchFrame" depends="init,compile">
+		<javac srcdir="${src}" destdir="${build}" classpathref="classpath"/>
+		<java classpathref="classpath" classname="SearchFrameTest" fork="true"/> 
+	</target>
+	
+	<target name="Test:EditTerminFrame" depends="init,compile">
+		<javac srcdir="${src}" destdir="${build}" classpathref="classpath"/>
+		<java classpathref="classpath" classname="EditTerminFrameTest" fork="true"/> 
+	</target>
+	
+	<target name="Test:EditTerminContainerFrame" depends="init,compile">
+		<javac srcdir="${src}" destdir="${build}" classpathref="classpath"/>
+		<java classpathref="classpath" classname="SearchFrameTest" fork="true"/> 
+	</target>
+	
+</project>
