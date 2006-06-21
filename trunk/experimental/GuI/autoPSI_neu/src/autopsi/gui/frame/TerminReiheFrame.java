@@ -440,7 +440,8 @@ public class TerminReiheFrame extends javax.swing.JFrame implements java.awt.eve
 			counter.setTime(begin.getTime());
 			
 			int[] count = {0,0,0,0,0,0,0}; 
-			
+			String name = name_field.getText();
+			name = name.replace("'".toCharArray()[0],'´');
 			Timestamp stamp;
 			
 			String stampstring ="";
@@ -457,7 +458,7 @@ public class TerminReiheFrame extends javax.swing.JFrame implements java.awt.eve
 						
 						Termin ter = new Termin();
 						ter.setDate(stamp);
-						ter.setSecondaryTitle(name_field.getText());
+						ter.setSecondaryTitle(name);
 						ter.setDuration(Integer.parseInt(dauerArray[0].getText()));
 						ter.setPlace(ortArray[0].getText());
 						ter.setDescription(desc_field.getText());
@@ -473,7 +474,7 @@ public class TerminReiheFrame extends javax.swing.JFrame implements java.awt.eve
 							
 						Termin ter = new Termin();
 						ter.setDate(stamp);
-						ter.setSecondaryTitle(name_field.getText());
+						ter.setSecondaryTitle(name);
 						ter.setDuration(Integer.parseInt(dauerArray[1].getText()));
 						ter.setPlace(ortArray[1].getText());
 						ter.setDescription(desc_field.getText());
@@ -488,7 +489,7 @@ public class TerminReiheFrame extends javax.swing.JFrame implements java.awt.eve
 							
 						Termin ter = new Termin();
 						ter.setDate(stamp);
-						ter.setSecondaryTitle(name_field.getText());
+						ter.setSecondaryTitle(name);
 						ter.setDuration(Integer.parseInt(dauerArray[2].getText()));
 						ter.setPlace(ortArray[2].getText());
 						ter.setDescription(desc_field.getText());
@@ -503,7 +504,7 @@ public class TerminReiheFrame extends javax.swing.JFrame implements java.awt.eve
 						
 						Termin ter = new Termin();
 						ter.setDate(stamp);
-						ter.setSecondaryTitle(name_field.getText());
+						ter.setSecondaryTitle(name);
 						ter.setDuration(Integer.parseInt(dauerArray[3].getText()));
 						ter.setPlace(ortArray[3].getText());
 						ter.setDescription(desc_field.getText());
@@ -518,7 +519,7 @@ public class TerminReiheFrame extends javax.swing.JFrame implements java.awt.eve
 							
 						Termin ter = new Termin();
 						ter.setDate(stamp);
-						ter.setSecondaryTitle(name_field.getText());
+						ter.setSecondaryTitle(name);
 						ter.setDuration(Integer.parseInt(dauerArray[4].getText()));
 						ter.setPlace(ortArray[4].getText());
 						ter.setDescription(desc_field.getText());
@@ -533,7 +534,7 @@ public class TerminReiheFrame extends javax.swing.JFrame implements java.awt.eve
 						
 						Termin ter = new Termin();
 						ter.setDate(stamp);
-						ter.setSecondaryTitle(name_field.getText());
+						ter.setSecondaryTitle(name);
 						ter.setDuration(Integer.parseInt(dauerArray[5].getText()));
 						ter.setPlace(ortArray[5].getText());
 						ter.setDescription(desc_field.getText());
@@ -548,7 +549,7 @@ public class TerminReiheFrame extends javax.swing.JFrame implements java.awt.eve
 						
 						Termin ter = new Termin();
 						ter.setDate(stamp);
-						ter.setSecondaryTitle(name_field.getText());
+						ter.setSecondaryTitle(name);
 						ter.setDuration(Integer.parseInt(dauerArray[6].getText()));
 						ter.setPlace(ortArray[6].getText());
 						ter.setDescription(desc_field.getText());
