@@ -115,6 +115,30 @@ public class GenericDAO implements IGenericDAO{
 		return fields;
 	}
 	
+	public SQLFields getSQLAllFields(GenericDataObject obj) throws EAttributeNotFound{
+		SQLFields fields = new SQLFields();
+		Field[] fd = obj.getClass().getDeclaredFields();
+		AccessibleObject.setAccessible(fd, true);
+		try{
+			for(int i=0;i<fd.length;i++){
+				SQLField field = null;
+				if(fd[i].get(obj) == null){
+					field = new SQLField(fd[i].getName(), "NULL");
+					fields.add(field);
+				}
+				else{
+					field = new SQLField(fd[i].getName(), fd[i].get(obj).toString());
+					fields.add(field);
+				}
+			}
+		}
+		catch (IllegalAccessException e){
+			System.out.println("GenericDAO: Couldn't get attributes through reflection");
+		}
+			
+		return fields;
+	}
+	
 	protected void checkAttributes(ResultSetMetaData metaData, GenericDataObject obj) throws EAttributeNotFound{
 		Field[] fd = obj.getClass().getDeclaredFields();
 		AccessibleObject.setAccessible(fd, true);
@@ -189,9 +213,8 @@ public class GenericDAO implements IGenericDAO{
 			throw new EDatabaseConnection();
 		
 		SQLTable table = new SQLTable(currentTable);
-		SQLFields fields = getSQLFields(newObj);
+		SQLFields fields = getSQLAllFields(newObj);
 		SQLStatement sqlInsert = new SQLInsert(table, fields);
-		
 		String query = sqlInsert.getQuery();
 		
 		if (this.debug)
@@ -203,6 +226,8 @@ public class GenericDAO implements IGenericDAO{
 				ps = dbCon.prepareStatement(query);
 			}
 			catch (SQLException e){
+				if (debug)
+					System.out.println("GenericDAO.addDataObject::Error bei Query, versuche testweise Query"+"SELECT * FROM "+currentTable);
 				ps = dbCon.prepareStatement("SELECT * FROM "+currentTable);
 				
 				if (ps == null){
@@ -244,6 +269,8 @@ public class GenericDAO implements IGenericDAO{
 				ps = dbCon.prepareCall(query);
 			}
 			catch (SQLException e){
+				if (debug)
+					System.out.println("GenericDAO.addDataObject::Error bei Query, versuche testweise Query"+"SELECT * FROM "+currentTable);
 				ps = dbCon.prepareStatement("SELECT * FROM "+currentTable);
 				
 				if (ps == null)
@@ -283,6 +310,8 @@ public class GenericDAO implements IGenericDAO{
 				ps = dbCon.prepareStatement(query);
 			}
 			catch (SQLException e){
+				if (debug)
+					System.out.println("GenericDAO.addDataObject::Error bei Query, versuche testweise Query"+"SELECT * FROM "+currentTable);
 				ps = dbCon.prepareStatement("SELECT * FROM "+currentTable);
 				
 				if (ps == null)
@@ -319,6 +348,8 @@ public class GenericDAO implements IGenericDAO{
 				ps = dbCon.prepareStatement(query);
 			}
 			catch (SQLException e){
+				if (debug)
+					System.out.println("GenericDAO.addDataObject::Error bei Query, versuche testweise Query"+"SELECT * FROM "+currentTable);
 				ps = dbCon.prepareStatement("SELECT * FROM "+currentTable);
 				
 				if (ps ==null)
@@ -380,6 +411,9 @@ public class GenericDAO implements IGenericDAO{
 			}
 			catch (SQLException e){
 				System.out.println("unsafeQuery::prepareStatement fehlgeschlagen::"+e.toString());
+				
+				if (debug)
+					System.out.println("GenericDAO.addDataObject::Error bei Query, versuche testweise Query"+"SELECT * FROM "+currentTable);
 				ps = dbCon.prepareStatement("SELECT * FROM "+currentTable);
 				
 				if (ps ==null)
