@@ -933,6 +933,7 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 		}
 		if(arg0.getSource().equals(listTC2)) {
 			doubleClickCounter++;
+			System.out.println("hohhohohohoho");
 			if(doubleClickCounter==2)
 			{
 				GregorianCalendar goToTermin = new GregorianCalendar();
