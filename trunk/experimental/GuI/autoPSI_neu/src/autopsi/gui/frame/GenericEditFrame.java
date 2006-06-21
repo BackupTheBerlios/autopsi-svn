@@ -22,12 +22,14 @@ public class GenericEditFrame extends JDialog implements ActionListener {
 //	protected JButton applyButton;
 	protected JButton okButton;
 	protected boolean canceled = false;
-	protected IGenericDAO gdao = null;
+	protected GenericDAO gdao = null;
 	protected GenericDataObject lookupObject = null;
+	protected JFrame owner;
 	
 	
 	public GenericEditFrame(){
 		gdao = new GenericDAO();
+		gdao.setDebug(true);
 		this.setLayout(new BorderLayout());
 		editPanel = new GenericEditPanel(this);
 		JPanel buttonPanel = new JPanel();
@@ -48,6 +50,26 @@ public class GenericEditFrame extends JDialog implements ActionListener {
 		catch (Exception e){
 			System.out.println("Exception blablabla :: "+e.toString());
 		}*/
+	}
+	
+	public GenericEditFrame(JFrame owner){
+		super(owner, true);
+		gdao = new GenericDAO();
+		gdao.setDebug(true);
+		this.setLayout(new BorderLayout());
+		editPanel = new GenericEditPanel(this);
+		JPanel buttonPanel = new JPanel();
+		cancelButton = new JButton("abbrechen");
+//		applyButton = new JButton("anwenden");
+		okButton = new JButton("ok");
+		this.add(editPanel, BorderLayout.CENTER);
+		this.add(buttonPanel, BorderLayout.SOUTH);
+		buttonPanel.add(cancelButton);
+//		buttonPanel.add(applyButton);
+		buttonPanel.add(okButton);
+		this.setSize(400, 600);
+		cancelButton.addActionListener(this);
+		okButton.addActionListener(this);
 	}
 	
 	public void setObjectToEdit(GenericDataObject obj, boolean newObject){

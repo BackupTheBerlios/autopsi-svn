@@ -57,7 +57,7 @@ import javax.swing.text.MaskFormatter;
 * THIS MACHINE, SO JIGLOO OR THIS CODE CANNOT BE USED
 * LEGALLY FOR ANY CORPORATE OR COMMERCIAL PURPOSE.
 */
-public class mainFrame extends javax.swing.JFrame implements java.awt.event.MouseListener,java.awt.event.MouseMotionListener,WindowListener{
+public class mainFrame extends javax.swing.JFrame implements java.awt.event.MouseListener,java.awt.event.MouseMotionListener,WindowListener, ActionListener{
 
 	{
 		//Set Look & Feel
@@ -715,6 +715,7 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 						menu_add_Kontakt = new JMenuItem();
 						menu_add.add(menu_add_Kontakt);
 						menu_add_Kontakt.setText("Kontakt ...");
+						menu_add_Kontakt.addActionListener(this);
 					}
 					{
 						menu_add_Pruefung = new JMenuItem();
@@ -735,6 +736,7 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 						menu_add_Notiz = new JMenuItem();
 						menu_add.add(menu_add_Notiz);
 						menu_add_Notiz.setText("Notiz...");
+						menu_add_Notiz.addActionListener(this);
 					}
 				}
 				{
@@ -1566,7 +1568,7 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 		//closing all database connections
 		GenericDAO gdao = new GenericDAO();
 		try {
-			gdao.unsafeQuery("Shutdown immediately", new Notiz());
+			gdao.unsafeQuery("Shutdown compact", new Notiz());
 		} catch (Exception e){
 			System.out.println("mainFrame.windowClosed(..)::Konnte Datenbankverbindungen nicht schließen::"+e.toString());
 		}
@@ -1685,4 +1687,41 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 		catch(Exception ex) {System.out.println(":::::  "+ex.toString());}
 	
 	}
+
+	public void actionPerformed(ActionEvent arg0) {
+		if (arg0.getSource().equals(this.menu_add_Kontakt)){
+			System.out.println("Neuer Kontakt wird hinzugefügt...");
+			GenericEditFrame gef = new GenericEditFrame(this);
+			
+			AttachableObject neuesObjekt = new AttachableObject();
+			gef.setObjectToEdit(neuesObjekt, true);
+			gef.setTableToEdit("attachable_object");
+			gef.setVisible(true);	
+			
+			gef = new GenericEditFrame(this);
+			Kontakt neuerKontakt = new Kontakt();
+			neuerKontakt.setGlobalId(neuesObjekt.getId());
+			gef.setObjectToEdit(neuerKontakt, true);
+			gef.setTableToEdit("kontakt");
+			gef.setVisible(true);
+		}
+		if (arg0.getSource().equals(this.menu_add_Notiz)){
+			System.out.println("Neue Notiz wird hinzugefügt...");
+			GenericEditFrame gef = new GenericEditFrame(this);
+			
+			AttachableObject neuesObjekt = new AttachableObject();
+			neuesObjekt.setTableName("Notiz");
+			gef.setObjectToEdit(neuesObjekt, true);
+			gef.setTableToEdit("attachable_object");
+			gef.setVisible(true);	
+			
+			gef = new GenericEditFrame(this);
+			Notiz neuerKontakt = new Notiz();
+			neuerKontakt.setGlobalId(neuesObjekt.getId());
+			gef.setObjectToEdit(neuerKontakt, true);
+			gef.setTableToEdit("notiz");
+			gef.setVisible(true);
+		}
+	}
+		
 }
