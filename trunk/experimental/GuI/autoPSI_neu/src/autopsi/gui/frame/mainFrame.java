@@ -871,9 +871,6 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 	    		lblDatumShadow.setText(title);
 	    		loadList();
 
-	    		if(viewMonth) lblToday.setText("Heutige Termine:");
-	    		else lblToday.setText("Heutige Termine zwischen "+(table.getSelectedRow()+6)+":00 und "+(table.getSelectedRow()+7)+":00");
-				
 	    		if(viewMonth) setModel("month");
 				else setModel("week");
 				
@@ -1496,7 +1493,15 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 			todayListModel.addElement(terminItem);
 		}	
 		if(viewMonth) lblToday.setText("heutige Termine:");
-		else lblToday.setText("Termine zwischen "+ table.getSelectedRow()+9+";00 und "+table.getSelectedRow()+10+":00");
+		else
+			{
+			int sel = table.getSelectedRow();
+			System.out.println(sel);
+			if(sel==1)lblToday.setText("Termine zwischen 00:00 und 8:00");
+			else if(sel==15) lblToday.setText("Termine ab 21:00");
+			else lblToday.setText("Termine zwischen "+ table.getSelectedRow()+9+";00 und "+table.getSelectedRow()+10+":00");
+			
+			}
 	}
 	
 	public void updateInfoBar(boolean delete)
