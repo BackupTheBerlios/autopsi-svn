@@ -13,9 +13,9 @@ public class GenericEditFrameTest {
 	 */
 	public static void main(String[] args) {
 		GenericEditFrame frame = new GenericEditFrame();
-		Notiz n = new Notiz();
+		Kontakt n = new Kontakt();
 		frame.setObjectToEdit(n, true);
-		frame.setTableToEdit("Notiz");
+		frame.setTableToEdit("Kontakt");
 		frame.setDefaultCloseOperation(javax.swing.JFrame.EXIT_ON_CLOSE);
 		frame.setVisible(true);
 
