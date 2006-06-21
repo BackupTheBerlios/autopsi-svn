@@ -172,7 +172,7 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 	public mainFrame() {
 		super();
 		initGUI();	
-		loadFirstTerminInfo();
+		loadTerminList(true);
 	}
 	
 	private void setTable()
@@ -1665,3 +1665,79 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 	}
 
 	private void loadTerminList(boolean first)
+	{
+			GregorianCalendar c1 = new GregorianCalendar();
+			if(!first)
+				{
+				c1.set(Calendar.YEAR,Integer.parseInt(currentValue[0].getDate().toString().substring(0,4)));
+				c1.set(Calendar.MONTH,Integer.parseInt(currentValue[0].getDate().toString().substring(5,7))-1);
+				c1.set(Calendar.DAY_OF_MONTH,Integer.parseInt(currentValue[0].getDate().toString().substring(8,10)));
+				}
+			c1.set(Calendar.HOUR_OF_DAY,0);
+			c1.set(Calendar.MINUTE,0);
+			c1.set(Calendar.SECOND,1);
+			Timestamp t1 = new Timestamp(c1.getTimeInMillis());
+			c1.set(Calendar.HOUR_OF_DAY,23);
+			c1.set(Calendar.MINUTE,59);
+			c1.set(Calendar.SECOND,59);
+			Timestamp t2 = new Timestamp(c1.getTimeInMillis());
+			
+			List<GenericDataObject> termine;
+			GenericDAO gdo = new GenericDAO();
+			try
+			{
+				termine = gdo.unsafeQuery("select * from termin where date>='"+t1.toString()+"' and date<='"+t2.toString()+"'",new Termin());
+				currentValue = new Termin[termine.size()];
+				Termin dayTermin = new Termin();
+				
+				todayListModel.removeAllElements();
+				
+				for(int i = 0;i<termine.size();i++)
+				{
+					Termin countTermin = (Termin)termine.get(i);
+					currentValue[i] = countTermin;
+				}
+				
+				
+				
+			}
+			catch(Exception ex) {System.out.println("loadTerminList:: "+ex.toString());}
+
+	}
+	
+	public void actionPerformed(ActionEvent arg0) {
+		if (arg0.getSource().equals(this.menu_add_Kontakt)){
+			System.out.println("Neuer Kontakt wird hinzugefügt...");
+			GenericEditFrame gef = new GenericEditFrame(this);
+			
+			AttachableObject neuesObjekt = new AttachableObject();
+			gef.setObjectToEdit(neuesObjekt, true);
+			gef.setTableToEdit("attachable_object");
+			gef.setVisible(true);	
+			
+			gef = new GenericEditFrame(this);
+			Kontakt neuerKontakt = new Kontakt();
+			neuerKontakt.setGlobalId(neuesObjekt.getId());
+			gef.setObjectToEdit(neuerKontakt, true);
+			gef.setTableToEdit("kontakt");
+			gef.setVisible(true);
+		}
+		if (arg0.getSource().equals(this.menu_add_Notiz)){
+			System.out.println("Neue Notiz wird hinzugefügt...");
+			GenericEditFrame gef = new GenericEditFrame(this);
+			
+			AttachableObject neuesObjekt = new AttachableObject();
+			neuesObjekt.setTableName("Notiz");
+			gef.setObjectToEdit(neuesObjekt, true);
+			gef.setTableToEdit("attachable_object");
+			gef.setVisible(true);	
+			
+			gef = new GenericEditFrame(this);
+			Notiz neuerKontakt = new Notiz();
+			neuerKontakt.setGlobalId(neuesObjekt.getId());
+			gef.setObjectToEdit(neuerKontakt, true);
+			gef.setTableToEdit("notiz");
+			gef.setVisible(true);
+		}
+	}
+}
