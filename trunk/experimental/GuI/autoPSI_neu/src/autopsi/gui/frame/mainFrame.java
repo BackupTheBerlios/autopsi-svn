@@ -30,6 +30,7 @@ import autopsi.database.table.*;
 import autopsi.gui.DateConverter;
 import autopsi.gui.MonthRenderer;
 import autopsi.gui.WeekRenderer;
+import autopsi.gui.AddAttachableObject;
 import autopsi.javaspace.ObjectSpaceSharer;
 import autopsi.javaspace.ServiceCommunicator;
 import autopsi.javaspace.SpaceThread;
@@ -653,11 +654,13 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 						menu_add_TC = new JMenuItem();
 						menu_add.add(menu_add_TC);
 						menu_add_TC.setText("Termincontainer ...");
+						menu_add_TC.addActionListener(this);
 					}
 					{
 						menu_add_T = new JMenuItem();
 						menu_add.add(menu_add_T);
 						menu_add_T.setText("Termin ...");
+						menu_add_T.addActionListener(this);
 					}
 					{
 						menu_add_Kontakt = new JMenuItem();
@@ -669,16 +672,19 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 						menu_add_Pruefung = new JMenuItem();
 						menu_add.add(menu_add_Pruefung);
 						menu_add_Pruefung.setText("Prüfung ...");
+						menu_add_Pruefung.addActionListener(this);
 					}
 					{
 						menu_add_LM = new JMenuItem();
 						menu_add.add(menu_add_LM);
 						menu_add_LM.setText("Lehrmittel ...");
+						menu_add_LM.addActionListener(this);
 					}
 					{
 						menu_add_Lva = new JMenuItem();
 						menu_add.add(menu_add_Lva);
 						menu_add_Lva.setText("Lva...");
+						menu_add_Lva.addActionListener(this);
 					}
 					{
 						menu_add_Notiz = new JMenuItem();
@@ -1214,6 +1220,10 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 		if(arg0.getSource().equals(showTObjects))
 		{	
 				loadTerminData();
+		}
+		if(arg0.getSource().equals(listTC2))
+		{	
+				this.doubleClickCounter = 0;
 		}
 	}
 	/* Zoom-Funktion für das Hovern über die Tabelle
@@ -1859,35 +1869,24 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 
 	public void actionPerformed(ActionEvent arg0) {
 		if (arg0.getSource().equals(this.menu_add_Kontakt)){
-			GenericEditFrame gef = new GenericEditFrame(this);
-			
-			AttachableObject neuesObjekt = new AttachableObject();
-			gef.setObjectToEdit(neuesObjekt, true);
-			gef.setTableToEdit("attachable_object");
-			gef.setVisible(true);	
-			
-			gef = new GenericEditFrame(this);
-			Kontakt neuerKontakt = new Kontakt();
-			neuerKontakt.setGlobalId(neuesObjekt.getId());
-			gef.setObjectToEdit(neuerKontakt, true);
-			gef.setTableToEdit("kontakt");
-			gef.setVisible(true);
+			System.out.println("mainFrame.actionPerformed()::füge Kontakt hinzu");
+			new AddAttachableObject(this, new Kontakt());
 		}
 		if (arg0.getSource().equals(this.menu_add_Notiz)){
-			GenericEditFrame gef = new GenericEditFrame(this);
-			
-			AttachableObject neuesObjekt = new AttachableObject();
-			neuesObjekt.setTableName("Notiz");
-			gef.setObjectToEdit(neuesObjekt, true);
-			gef.setTableToEdit("attachable_object");
-			gef.setVisible(true);	
-			
-			gef = new GenericEditFrame(this);
-			Notiz neuerKontakt = new Notiz();
-			neuerKontakt.setGlobalId(neuesObjekt.getId());
-			gef.setObjectToEdit(neuerKontakt, true);
-			gef.setTableToEdit("notiz");
-			gef.setVisible(true);
+			System.out.println("mainFrame.actionPerformed()::füge Notiz hinzu");
+			new AddAttachableObject(this, new Notiz());
+		}
+		if (arg0.getSource().equals(this.menu_add_LM)){
+			System.out.println("mainFrame.actionPerformed()::füge Lehrmittel hinzu");
+			new AddAttachableObject(this, new Lehrmittel());
+		}
+		if (arg0.getSource().equals(this.menu_add_Lva)){
+			System.out.println("mainFrame.actionPerformed()::füge LVA hinzu");
+			new AddAttachableObject(this, new Lva());
+		}
+		if (arg0.getSource().equals(this.menu_add_Pruefung)){
+			System.out.println("mainFrame.actionPerformed()::füge Prüfung hinzu");
+			new AddAttachableObject(this, new Pruefung());
 		}
 	}
 }
