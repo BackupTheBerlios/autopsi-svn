@@ -392,7 +392,7 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 						showTObjects.setBounds(3, 7, 161, 14);
 						showTObjects.setOpaque(false);
 						showTObjects.setSelected(true);
-						showTObjects.addMouseListener(this);
+						showTObjects.addMouseMotionListener(this);
 					}
 					{
 						showTCObjects = new JCheckBox();
@@ -402,7 +402,7 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 						showTCObjects.setBounds(3, 28, 224, 14);
 						showTCObjects.setOpaque(false);
 						showTCObjects.setSelected(true);
-						showTCObjects.addMouseListener(this);
+						showTCObjects.addMouseMotionListener(this);
 					}
 				}
 				{
@@ -864,7 +864,7 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 			loadTerminData();
 		}
 		if(arg0.getSource().equals(button_newTermin)) {
-			EditTerminFrame newTermin = new EditTerminFrame(this,c_marker, null);
+			EditTerminFrame newTermin = new EditTerminFrame(this,c_marker,-1);
 			newTermin.setTitle("neuen Termin hinzufügen");
 			newTermin.setLocation(this.getLocation().x+30,this.getLocation().y+30);
 			newTermin.setVisible(true);
@@ -1440,7 +1440,7 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 
 		for(int i = 1;i<currentValue.length;i++)
 		{
-			System.out.println(currentValue[i].getSecondaryTitle());
+			
 			String terminItem = currentValue[i].getDate().toString().substring(11,16) + 
 								" " + currentValue[i].getSecondaryTitle();
 			todayListModel.addElement(terminItem);
@@ -1474,7 +1474,7 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 		if(delete)
 			{
 			todayListModel.removeAllElements();
-			System.out.println("removed all");
+			
 			
 			if(deletedObject.equals("termincontainer"))
 			{
@@ -1484,7 +1484,7 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 					
 				
 					String query = "delete from " + deletedObject + " where id =" +tcID;
-					System.out.println(query);
+				
 					try {				
 						if(delete_ok)					
 						gdo.unsafeQuery(query,null);
@@ -1659,12 +1659,11 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 	}
 	public void loadTerminData()
 	{
+		Termin showTermin = new Termin();
 		if(selection>=0)
 		{
 			try
 			{	
-				Termin showTermin;
-				System.out.println("::::       "+currentValue[selection].getDate().toString());
 				showTermin = currentValue[selection];
 				IGenericDAO igdao = new GenericDAO();
 				String  query = "select * from termin where id="+showTermin.getId();
@@ -1782,8 +1781,7 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 						int globalID;
 						List<GenericDataObject> list1;
 						List<GenericDataObject> list2;
-						list1 = gdo.unsafeQuery("select * from anhaengen_termincontainer where termincontainer_id ="+tcID,new Anhaengen_termincontainer());
-						System.out.println(tcID + ";   showTCObject size::::"+list1.size());
+						list1 = gdo.unsafeQuery("select * from anhaengen_termincontainer where termincontainer_id ="+showTermin.getTerminContainerID(),new Anhaengen_termincontainer());
 						for(int i = 0;i<list1.size();i++)
 						{
 							Anhaengen_termincontainer at = (Anhaengen_termincontainer)list1.get(i);
@@ -1843,7 +1841,6 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 
 	public void actionPerformed(ActionEvent arg0) {
 		if (arg0.getSource().equals(this.menu_add_Kontakt)){
-			System.out.println("Neuer Kontakt wird hinzugefügt...");
 			GenericEditFrame gef = new GenericEditFrame(this);
 			
 			AttachableObject neuesObjekt = new AttachableObject();
@@ -1859,7 +1856,6 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 			gef.setVisible(true);
 		}
 		if (arg0.getSource().equals(this.menu_add_Notiz)){
-			System.out.println("Neue Notiz wird hinzugefügt...");
 			GenericEditFrame gef = new GenericEditFrame(this);
 			
 			AttachableObject neuesObjekt = new AttachableObject();
