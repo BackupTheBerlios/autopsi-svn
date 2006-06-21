@@ -1696,6 +1696,7 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 				{
 					Termin countTermin = (Termin)termine.get(i);
 					currentValue[i] = countTermin;
+					todayListModel.addElement(countTermin.getDate().toString().substring(12,16)+"  "+countTermin.getSecondaryTitle());
 				}
 				
 				
