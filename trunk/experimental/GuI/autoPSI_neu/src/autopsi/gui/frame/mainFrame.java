@@ -1632,7 +1632,15 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 					currentValue[i+1] = countTermin;
 					todayListModel.addElement(countTermin.getDate().toString().substring(11,16)+"  "+countTermin.getSecondaryTitle());
 				}
-				
+				if(first)
+				{
+					Calendar cal2 = new GregorianCalendar();
+		    		cal2.set(Integer.parseInt(currentValue[0].getDate().toString().substring(0,4)),Integer.parseInt(currentValue[0].getDate().toString().substring(5,7))-1,Integer.parseInt(currentValue[0].getDate().toString().substring(8,10)));
+		    		Date dat = new Date(cal2.getTimeInMillis());
+		    		String title = converter.toLong(dat.toString());
+		    		lblDatum.setText(title);
+		    		lblDatumShadow.setText(title);
+				}
 				if(first && termine.size()>0)
 				{
 					selection = 1;
