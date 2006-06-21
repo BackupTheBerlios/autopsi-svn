@@ -42,14 +42,14 @@ public class SecurityDialog extends javax.swing.JDialog implements ActionListene
 	private String text = "";
 	private JTextPane textpane;
 	private boolean ok = false;
-	private mainFrame owner;
+	private JFrame owner;
 
 	/**
 	* Auto-generated main method to display this JDialog
 	*/
 	
 	
-	public SecurityDialog(mainFrame owner,String title, String text) {
+	public SecurityDialog(JFrame owner,String title, String text) {
 		super(owner, true);
 		this.title = title;
 		this.text = text;
@@ -122,15 +122,17 @@ public class SecurityDialog extends javax.swing.JDialog implements ActionListene
 
 	public void actionPerformed(ActionEvent arg0) {
 		if(arg0.getSource().equals(ok_button)){
-			owner.delete_ok = true;
-			enableOwner();
-			owner.updateInfoBar(true);
+			if(owner instanceof mainFrame)
+			{
+				mainFrame owner2 = (mainFrame)owner;
+				owner2.delete_ok = true;
+				owner2.updateInfoBar(true);
+			}
+			enableOwner();		
 			dispose();
 		}
 		if(arg0.getSource().equals(abort_button))
 			enableOwner();
-			dispose();
-		
+			dispose();	
 	}
-
 }
