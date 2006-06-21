@@ -64,7 +64,7 @@ public class AddAttachableObject {
 				gef.setTableToEdit("attachable_object");
 				gef.setInsertIntoTable(false);
 				this.gdao.setCurrentTable("attachable_object");
-				this.gdao.setDebug(true);
+//				this.gdao.setDebug(true);
 				gef.setVisible(true);
 				neuesObjekt = (AttachableObject)gef.getObjectToEdit();
 				gdao.addDataObject(neuesObjekt);

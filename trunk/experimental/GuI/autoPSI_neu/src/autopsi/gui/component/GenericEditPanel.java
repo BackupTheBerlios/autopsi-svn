@@ -110,6 +110,8 @@ public class GenericEditPanel extends JPanel {
 			String key = iter.next();
 			GSMethod x = map.get(key);
 			EditPlugin plug = this.getNewPlugin(x.getMethod.getReturnType());
+			if (!x.show)
+				continue;
 			if (plug == null)
 				plug = this.getNewPlugin(Object.class);
 			plug.setName(key);
