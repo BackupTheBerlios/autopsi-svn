@@ -19,7 +19,8 @@ public class JSAdressDialog extends JDialog implements ActionListener {
 	
 	public JSAdressDialog(JFrame owner){
 		super(owner, true);
-		this.setSize(200,100);
+		this.setSize(200,80);
+		this.setTitle("JavaSpace-Server");
 		this.setLayout(new BorderLayout());
 		GraphicsEnvironment env = GraphicsEnvironment.getLocalGraphicsEnvironment();
 		GraphicsDevice gd = env.getDefaultScreenDevice();
