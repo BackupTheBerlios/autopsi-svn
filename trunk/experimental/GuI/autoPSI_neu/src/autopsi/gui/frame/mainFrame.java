@@ -852,7 +852,7 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 			selection = -1; 
 			currentCell.x = table.rowAtPoint(table.getMousePosition());
 			currentCell.y = table.columnAtPoint(table.getMousePosition());
-			
+			terminId=-1;
 			try
 			{
 				currentValue = (Termin[])table.getValueAt(table.rowAtPoint(table.getMousePosition()),table.columnAtPoint(table.getMousePosition()));
@@ -956,7 +956,6 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 		}
 		
 		if(arg0.getSource().equals(button_deleteTermin)) {
-			System.out.println("++++ " + terminId);
 			GenericDAO gdo = new GenericDAO();
 			if(terminId != -1){
 				String query = "delete from termin where id =" +terminId;
@@ -977,6 +976,7 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 					showErrorDialog("Fehler","Der Termin konnte nicht gelöscht werden");
 				}
 			}
+			else showErrorDialog("Fehler!", "Kein Termin ausgewählt!");
 			
 		}
 	}
@@ -1502,6 +1502,7 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 			todayListModel.removeAllElements();
 			System.out.println("removed all");
 			selection = -1;
+			terminId=-1;
 			
 			GenericDAO gdo = new GenericDAO();
 			if(terminId != -1){
