@@ -28,7 +28,16 @@ public class GenericDAO implements IGenericDAO{
 	private String currentTable;
 	private String username = "SA";
 	private String password = "AB";
+	private boolean debug = false;
 	
+	
+	public boolean getDebug(){
+		return this.debug;
+	}
+	
+	public void setDebug(boolean newDebug){
+		this.debug = newDebug;
+	}
 	
 	public void setDbUser(String userName, String userPassword){
 		this.username = userName;
@@ -128,7 +137,10 @@ public class GenericDAO implements IGenericDAO{
 		
 		SQLStatement sqlSelect = new SQLSelect(sqlTable, sqlFields);
 		String query = sqlSelect.getQuery();
-//		System.out.println("GenericDAO.getDataObjects(...)::query=="+query);
+		
+		if (this.debug)
+			System.out.println("GenericDAO.getDataObjects(...)::query=="+query);
+		
 		List<GenericDataObject> res = null;
 		try{
 			
@@ -181,7 +193,10 @@ public class GenericDAO implements IGenericDAO{
 		SQLStatement sqlInsert = new SQLInsert(table, fields);
 		
 		String query = sqlInsert.getQuery();
-		System.out.println("GenericDAO.addDataObject::query=="+query);
+		
+		if (this.debug)
+			System.out.println("GenericDAO.addDataObject::query=="+query);
+		
 		try{
 			PreparedStatement ps = null;
 			try{
@@ -220,6 +235,9 @@ public class GenericDAO implements IGenericDAO{
 		SQLStatement sqlDelete = new SQLDelete(sqlTable, sqlFields);
 		String query = sqlDelete.getQuery();
 		
+		if (this.debug)
+			System.out.println("GenericDAO.delDataObject::query=="+query);
+		
 		try{
 			PreparedStatement ps = null;
 			try{
@@ -256,6 +274,9 @@ public class GenericDAO implements IGenericDAO{
 		SQLStatement sqlUpdate = new SQLUpdate(sqlTable, sqlLookupFields, sqlNewFields);
 		String query = sqlUpdate.getQuery();
 		
+		if (this.debug)
+			System.out.println("GenericDAO.updDataObject::query=="+query);
+		
 		try{
 			PreparedStatement ps = null;
 			try{
@@ -288,61 +309,67 @@ public class GenericDAO implements IGenericDAO{
 		
 		List<GenericDataObject> res = null;
 		String query = stm.getQuery();
+		
+		if (this.debug)
+			System.out.println("GenericDAO.complexQuery::query=="+query);
 			
-			PreparedStatement ps = null;
+		PreparedStatement ps = null;
+		try{
 			try{
-				try{
-					ps = dbCon.prepareStatement(query);
-				}
-				catch (SQLException e){
-					ps = dbCon.prepareStatement("SELECT * FROM "+currentTable);
-					
-					if (ps ==null)
-						throw new EDatabase();
-					
-					this.checkAttributes(ps.getMetaData(), dataObjectTemplate);
-					throw new EDatabase();
-				}
-				
-				if (!ps.execute())
-					throw new EDatabase();
-				
-				ResultSet rs = ps.getResultSet();
-				res = new ArrayList<GenericDataObject>();
-				while (rs.next()){
-					GenericDataObject obj = dataObjectTemplate.getClass().newInstance();
-					Field[] fd = obj.getClass().getDeclaredFields();
-					AccessibleObject.setAccessible(fd, true);
-					for(int i=0;i<fd.length;i++){
-						Object dbObj = null;
-						dbObj = rs.getObject(fd[i].getName());	
-						fd[i].set(obj, dbObj);
-					}
-					res.add(obj);
-				}
+				ps = dbCon.prepareStatement(query);
 			}
 			catch (SQLException e){
-				System.out.println("Exception;"+e.toString());
+				ps = dbCon.prepareStatement("SELECT * FROM "+currentTable);
+				
+				if (ps ==null)
+					throw new EDatabase();
+				
+				this.checkAttributes(ps.getMetaData(), dataObjectTemplate);
 				throw new EDatabase();
 			}
-			catch (InstantiationException e){
-				System.out.println("Exception;"+e.toString());
+			
+			if (!ps.execute())
 				throw new EDatabase();
+			
+			ResultSet rs = ps.getResultSet();
+			res = new ArrayList<GenericDataObject>();
+			while (rs.next()){
+				GenericDataObject obj = dataObjectTemplate.getClass().newInstance();
+				Field[] fd = obj.getClass().getDeclaredFields();
+				AccessibleObject.setAccessible(fd, true);
+				for(int i=0;i<fd.length;i++){
+					Object dbObj = null;
+					dbObj = rs.getObject(fd[i].getName());	
+					fd[i].set(obj, dbObj);
+				}
+				res.add(obj);
 			}
-			catch (IllegalArgumentException e){
-				System.out.println("Exception;"+e.toString());
-				throw new EDatabase();
-			}
-			catch (IllegalAccessException e){
-				System.out.println("Exception;"+e.toString());
-				throw new EDatabase();
-			}
-			return res;
+		}
+		catch (SQLException e){
+			System.out.println("Exception;"+e.toString());
+			throw new EDatabase();
+		}
+		catch (InstantiationException e){
+			System.out.println("Exception;"+e.toString());
+			throw new EDatabase();
+		}
+		catch (IllegalArgumentException e){
+			System.out.println("Exception;"+e.toString());
+			throw new EDatabase();
+		}
+		catch (IllegalAccessException e){
+			System.out.println("Exception;"+e.toString());
+			throw new EDatabase();
+		}
+		return res;
 	}
 	
 	public List<GenericDataObject> unsafeQuery(String query, GenericDataObject prototype)  throws EDatabase, EDatabaseConnection, EAttributeNotFound{
 		if (connect() == null)
 			throw new EDatabaseConnection();
+		
+		if (this.debug)
+			System.out.println("GenericDAO.unsafeQuery::query=="+query);
 		
 		List<GenericDataObject> res = null;
 		try{

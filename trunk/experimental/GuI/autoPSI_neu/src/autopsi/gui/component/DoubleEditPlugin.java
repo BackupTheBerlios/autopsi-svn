@@ -20,7 +20,7 @@ public class DoubleEditPlugin extends EditPlugin implements FocusListener{
 	
 	
 	public DoubleEditPlugin(){
-		System.out.println("CREATED DoubleEditPlugin");
+//		System.out.println("CREATED DoubleEditPlugin");
 		panel = new JPanel();
 		label = new JLabel();
 		doubleEdit = new JTextField();

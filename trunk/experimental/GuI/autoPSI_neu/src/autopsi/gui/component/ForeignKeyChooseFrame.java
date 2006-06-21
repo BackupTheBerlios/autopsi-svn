@@ -63,21 +63,23 @@ public class ForeignKeyChooseFrame extends JDialog implements ActionListener{
 
 	public void actionPerformed(ActionEvent arg0) {
 		if (arg0.getSource().equals(this.chooseButton)){
+			if (this.objectTable.getSelectedRow() != -1){
 			
-			GenericDataObject obj = this.model.getObject(this.objectTable.getSelectedRow());
-			Field fd=null;
-			try {
-				fd = obj.getClass().getField(this.attribName);
-			} catch (Exception e){
-				System.out.println("ForeignKeyChooseFrame.actionPerformed()::Exception::"+e.toString());
+				GenericDataObject obj = this.model.getObject(this.objectTable.getSelectedRow());
+				Field fd=null;
+				try {
+					fd = obj.getClass().getField(this.attribName);
+				} catch (Exception e){
+					System.out.println("ForeignKeyChooseFrame.actionPerformed()::Exception::"+e.toString());
+				}
+				try {
+					this.value = fd.get(obj);
+				} catch (Exception e){
+					System.out.println("ForeignKeyChooseFrame.actionPerformed()::Exception::"+e.toString());
+				}
+	//			System.out.println("value=="+this.value.toString());
+				this.dispose();
 			}
-			try {
-				this.value = fd.get(obj);
-			} catch (Exception e){
-				System.out.println("ForeignKeyChooseFrame.actionPerformed()::Exception::"+e.toString());
-			}
-//			System.out.println("value=="+this.value.toString());
-			this.dispose();
 		}
 		
 	}

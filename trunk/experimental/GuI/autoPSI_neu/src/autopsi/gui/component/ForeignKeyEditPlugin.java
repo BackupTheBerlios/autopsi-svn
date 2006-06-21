@@ -105,10 +105,6 @@ public class ForeignKeyEditPlugin extends EditPlugin implements ActionListener {
 			ForeignKeyChooseFrame fkcd = new ForeignKeyChooseFrame(this.parentFrame, this.editedTable, this.editedAttrib, this.editedClass);
 //			fkcd.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 			fkcd.setVisible(true);
-			if (fkcd.getValue() == null)
-				System.out.println("fkcd==null!!");
-			else
-				System.out.println("Kein null in sicht");
 			this.setValue(fkcd.getValue());
 		}
 		

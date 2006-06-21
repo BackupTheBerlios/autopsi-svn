@@ -22,7 +22,7 @@ public class IntegerEditPlugin extends EditPlugin implements FocusListener {
 	
 	
 	public IntegerEditPlugin(){
-		System.out.println("CREATED IntegerEditPlugin");
+//		System.out.println("CREATED IntegerEditPlugin");
 		panel = new JPanel();
 		label = new JLabel();
 		doubleEdit = new JTextField();
@@ -49,11 +49,11 @@ public class IntegerEditPlugin extends EditPlugin implements FocusListener {
 
 	public void setValue(Object newValue) {
 		if (newValue!=null){
-			System.out.println("IntegerEditPlugin.setValue() newValue!=null");
+//			System.out.println("IntegerEditPlugin.setValue() newValue!=null");
 			this.value = (Integer)newValue;
 		}
 		else{
-			System.out.println("IntegerEditPlugin.setValue() newValue==null");
+//			System.out.println("IntegerEditPlugin.setValue() newValue==null");
 			this.value = 0;
 		}
 		this.doubleEdit.setText(this.value.toString());

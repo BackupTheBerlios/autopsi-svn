@@ -107,7 +107,7 @@ public class GenericEditPanel extends JPanel {
 		Map<String, GSMethod> map = this.editedObject.getAllAttribs();
 		Set<String> set = map.keySet();
 		Iterator<String> iter = set.iterator();
-		System.out.println("obj.size()=="+this.editedObject.getAttribCount());
+//		System.out.println("obj.size()=="+this.editedObject.getAttribCount());
 		while(iter.hasNext()){
 			String key = iter.next();
 			GSMethod x = map.get(key);
@@ -115,7 +115,7 @@ public class GenericEditPanel extends JPanel {
 			if (plug == null)
 				plug = this.getNewPlugin(Object.class);
 			plug.setName(key);
-			System.out.println("GenericEditPanel.inspectEditedObject()::key=="+key);
+//			System.out.println("GenericEditPanel.inspectEditedObject()::key=="+key);
 			try{
 				Object obj = null;
 				try{
