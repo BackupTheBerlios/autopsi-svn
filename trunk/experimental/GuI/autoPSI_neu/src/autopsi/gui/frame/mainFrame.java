@@ -159,7 +159,7 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 	GregorianCalendar c = new GregorianCalendar();
 	GregorianCalendar c_marker = new GregorianCalendar();
 	DefaultComboBoxModel todayListModel = new DefaultComboBoxModel();
-	DefaultComboBoxModel listTC2Model = new DefaultComboBoxModel(); //Listmodel für verwandte Termine
+	DefaultComboBoxModel listTC2Model = new DefaultComboBoxModel(); //Listmodel fï¿½r verwandte Termine
 	DefaultComboBoxModel objectListModel = new DefaultComboBoxModel();
 	public boolean delete_ok = false;
 	protected ObjectSpaceSharer oss;
@@ -648,7 +648,7 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 				{
 					menu_add = new JMenu();
 					mainMenu.add(menu_add);
-					menu_add.setText("Hinzufügen");
+					menu_add.setText("Hinzufï¿½gen");
 					{
 						menu_add_TC = new JMenuItem();
 						menu_add.add(menu_add_TC);
@@ -668,7 +668,7 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 					{
 						menu_add_Pruefung = new JMenuItem();
 						menu_add.add(menu_add_Pruefung);
-						menu_add_Pruefung.setText("Prüfung ...");
+						menu_add_Pruefung.setText("Prï¿½fung ...");
 					}
 					{
 						menu_add_LM = new JMenuItem();
@@ -711,19 +711,19 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 					{
 						view_monthBack = new JMenuItem();
 						view.add(view_monthBack);
-						view_monthBack.setText("4 Wochen zurück");
+						view_monthBack.setText("4 Wochen zurï¿½ck");
 						view_monthBack.addMouseListener(this);
 					}
 					{
 						view_weekBack = new JMenuItem();
 						view.add(view_weekBack);
-						view_weekBack.setText("1 Woche zurück");
+						view_weekBack.setText("1 Woche zurï¿½ck");
 						view_weekBack.addMouseListener(this);
 					}
 					{
 						view_dayBack = new JMenuItem();
 						view.add(view_dayBack);
-						view_dayBack.setText("1 Tag zurück");
+						view_dayBack.setText("1 Tag zurï¿½ck");
 						view_dayBack.addMouseListener(this);
 						view_dayBack.setVisible(false);
 					}
@@ -869,14 +869,14 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 		}
 		if(arg0.getSource().equals(button_newTermin)) {
 			EditTerminFrame newTermin = new EditTerminFrame(this,c_marker,-1);
-			newTermin.setTitle("neuen Termin hinzufügen");
+			newTermin.setTitle("neuen Termin hinzufï¿½gen");
 			newTermin.setLocation(this.getLocation().x+30,this.getLocation().y+30);
 			newTermin.setVisible(true);
 		}
 		if(arg0.getSource().equals(button_newTC)) {
 			EditTerminContainerFrame frame = new EditTerminContainerFrame(this,-1);
 			frame.setLocation(this.getLocation().x+20,this.getLocation().y+20);
-			frame.setTitle("neuen Termincontainer hinzufügen");
+			frame.setTitle("neuen Termincontainer hinzufï¿½gen");
 ;			frame.setVisible(true);
 		}
 		if(arg0.getSource().equals(button_editTermin)) {
@@ -887,7 +887,7 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 			newTermin.setLocation(this.getLocation().x+30,this.getLocation().y+30);
 			newTermin.setVisible(true);
 			}
-			else showErrorDialog("Fehler!", "Kein Termin ausgewählt!");
+			else showErrorDialog("Fehler!", "Kein Termin ausgewï¿½hlt!");
 			
 		}
 		if(arg0.getSource().equals(button_search)) {
@@ -905,12 +905,12 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 			if(terminId!=-1)
 			{
 				deletedObject = "termin";
-				SecurityDialog diag = new SecurityDialog(this,"Termin löschen","Wollen Sie den gewählten Termin wirklich löschen?");
+				SecurityDialog diag = new SecurityDialog(this,"Termin lï¿½schen","Wollen Sie den gewï¿½hlten Termin wirklich lï¿½schen?");
 				diag.setLocation(this.getLocation().x+40,this.getLocation().y+40);
 				diag.setVisible(true);
 				
 			}
-			else showErrorDialog("Fehler!", "Kein Termin ausgewählt!");
+			else showErrorDialog("Fehler!", "Kein Termin ausgewï¿½hlt!");
 			
 			
 		}
@@ -918,12 +918,12 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 			if(terminId!=-1)
 			{
 				deletedObject = "termincontainer";
-				SecurityDialog diag = new SecurityDialog(this,"Termin löschen","Wollen Sie den gewählten Termincontainer wirklich löschen? Achtung: Dies löscht auch alle Termine in diesem Termincontainer!");
+				SecurityDialog diag = new SecurityDialog(this,"Termin lï¿½schen","Wollen Sie den gewï¿½hlten Termincontainer wirklich lï¿½schen? Achtung: Dies lï¿½scht auch alle Termine in diesem Termincontainer!");
 				diag.setLocation(this.getLocation().x+40,this.getLocation().y+40);
 				diag.setVisible(true);
 				
 			}
-			else showErrorDialog("Fehler!", "Kein Termin ausgewählt!");
+			else showErrorDialog("Fehler!", "Kein Termin ausgewï¿½hlt!");
 		}
 		if(arg0.getSource().equals(listTC2)) {
 			doubleClickCounter++;
@@ -1015,19 +1015,19 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 		}
 		if(arg0.getSource().equals(button_newTermin)){
 			button_newTermin.setIcon(new ImageIcon("src/images/icons/neuerTermin_hover.png"));
-			statusBar.setText("Fügt einen neuen Termin hinzu. Wenn Sie vorher auf einen Tag klicken wird dieser automatisch in das Termindatum übernommen.");	
+			statusBar.setText("Fï¿½gt einen neuen Termin hinzu. Wenn Sie vorher auf einen Tag klicken wird dieser automatisch in das Termindatum ï¿½bernommen.");	
 		}
 		if(arg0.getSource().equals(button_editTermin)){
 			button_editTermin.setIcon(new ImageIcon("src/images/icons/editTermin_hover.png"));
-			statusBar.setText("Bearbeiten des gerade gewählten Termins.");	
+			statusBar.setText("Bearbeiten des gerade gewï¿½hlten Termins.");	
 		}
 		if(arg0.getSource().equals(button_deleteTermin)){
 			button_deleteTermin.setIcon(new ImageIcon("src/images/icons/deleteTermin_hover.png"));
-			statusBar.setText("Löscht den gerade gewählten Termin.");	
+			statusBar.setText("Lï¿½scht den gerade gewï¿½hlten Termin.");	
 		}
 		if(arg0.getSource().equals(button_newTC)){
 			button_newTC.setIcon(new ImageIcon("src/images/icons/neuerTC_hover.png"));
-			statusBar.setText("Fügt einen neuen Termincontainer hinzu.");	
+			statusBar.setText("Fï¿½gt einen neuen Termincontainer hinzu.");	
 		}
 		if(arg0.getSource().equals(button_editTC)){
 			button_editTC.setIcon(new ImageIcon("src/images/icons/editTC_hover.png"));
@@ -1035,7 +1035,7 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 		}
 		if(arg0.getSource().equals(button_deleteTC)){
 			button_deleteTC.setIcon(new ImageIcon("src/images/icons/deleteTC_hover.png"));
-			statusBar.setText("Löscht einen Termincontainer.");	
+			statusBar.setText("Lï¿½scht einen Termincontainer.");	
 		}
 		if(arg0.getSource().equals(button_search)){
 			button_search.setIcon(new ImageIcon("src/images/icons/suche_hover.png"));
@@ -1043,15 +1043,15 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 		}
 		if(arg0.getSource().equals(button_monthBack)){
 			button_monthBack.setIcon(new ImageIcon("src/images/icons/monthBack_hover.png"));
-			statusBar.setText("Verschiebt die Ansicht um 4 Wochen zurück.");	
+			statusBar.setText("Verschiebt die Ansicht um 4 Wochen zurï¿½ck.");	
 		}
 		if(arg0.getSource().equals(button_weekBack)){
 			button_weekBack.setIcon(new ImageIcon("src/images/icons/weekBack_hover.png"));
-			statusBar.setText("Verschiebt die Ansicht um 1 Woche zurück.");	
+			statusBar.setText("Verschiebt die Ansicht um 1 Woche zurï¿½ck.");	
 		}
 		if(arg0.getSource().equals(button_dayBack)){
 			button_dayBack.setIcon(new ImageIcon("src/images/icons/dayBack_hover.png"));
-			statusBar.setText("Verschiebt die Ansicht um 1 Tag zurück.");	
+			statusBar.setText("Verschiebt die Ansicht um 1 Tag zurï¿½ck.");	
 		}
 		if(arg0.getSource().equals(button_monthNext)){
 			button_monthNext.setIcon(new ImageIcon("src/images/icons/monthNext_hover.png"));
@@ -1083,20 +1083,20 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 			statusBar.setText("Verbindet oder trennt die Verbindung zum autoSpace Service.");	
 		}
 		if(arg0.getSource().equals(zoomBox)){
-			statusBar.setText("Aktiviert/Deaktiviert die automatische Vergrößerung eines Tages in der Monatsansicht wenn der Mauszeiger darübergeführt wird.");	
+			statusBar.setText("Aktiviert/Deaktiviert die automatische Vergrï¿½ï¿½erung eines Tages in der Monatsansicht wenn der Mauszeiger darï¿½bergefï¿½hrt wird.");	
 		}
 		
 		if(arg0.getSource().equals(listTC2)) {
-			statusBar.setText("Doppelklick auf einen Eintrag zeigt den zugehörigen Tag im Kalender an.");
+			statusBar.setText("Doppelklick auf einen Eintrag zeigt den zugehï¿½rigen Tag im Kalender an.");
 		}
 		if(arg0.getSource().equals(dateJumper)) {
-			statusBar.setText("Geben Sie ein Datum im Format TT.MM.JJJJ ein und bestätigen sie mit 'ENTER'");
+			statusBar.setText("Geben Sie ein Datum im Format TT.MM.JJJJ ein und bestï¿½tigen sie mit 'ENTER'");
 		}
 		if(arg0.getSource().equals(button_jumpToToday)) {
 			statusBar.setText("Setzt den Kalender auf das heutige Datum.");
 		}
 		if(arg0.getSource().equals(todayList)) {
-			statusBar.setText("Klick auf einen Termin öffnet dessen Details");
+			statusBar.setText("Klick auf einen Termin ï¿½ffnet dessen Details");
 		}
 	}
 
@@ -1215,13 +1215,17 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 		{	
 				loadTerminData();
 		}
+		if(arg0.getSource().equals(listTC2))
+		{	
+				doubleClickCounter = 0;
+		}
 	}
-	/* Zoom-Funktion für das Hovern über die Tabelle
+	/* Zoom-Funktion fï¿½r das Hovern ï¿½ber die Tabelle
 	 * 
 	 */
 	private void tableZoom()
-	/* Diese Methode vergrößert die Zelle, über der sich der Cursor befindet,
-	 * indem die jeweilige Reihenhöhe und Spaltenbreite erhöht werden.
+	/* Diese Methode vergrï¿½ï¿½ert die Zelle, ï¿½ber der sich der Cursor befindet,
+	 * indem die jeweilige Reihenhï¿½he und Spaltenbreite erhï¿½ht werden.
 	 */
 	{
 //		 TableZoom Engine (c) 2006 by Stephe ;-) ---------------------------
@@ -1244,9 +1248,9 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 					
 					for (i=0;i<5;i++)
 					{ 
-						if(i==j) { k=186; } //Reihe j ist die Reihe, über die gerade "gehovert" wird
+						if(i==j) { k=186; } //Reihe j ist die Reihe, ï¿½ber die gerade "gehovert" wird
 						else { k = 76; } //Die anderen Reihen werden verkleinert
-						table.setRowHeight(i,k); //Reihe i wird mit Höhe k versehen
+						table.setRowHeight(i,k); //Reihe i wird mit Hï¿½he k versehen
 						
 					}
 				}
@@ -1263,9 +1267,9 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 					
 						for (i=1;i<15;i++)
 						{ 
-							if(i==j) { k=150; } //Reihe j ist die Reihe, über die gerade "gehovert" wird
+							if(i==j) { k=150; } //Reihe j ist die Reihe, ï¿½ber die gerade "gehovert" wird
 							else { k = 29; } //Die anderen Reihen werden verkleinert
-							table.setRowHeight(i,k); //Reihe i wird mit Höhe k versehen
+							table.setRowHeight(i,k); //Reihe i wird mit Hï¿½he k versehen
 							timetable.setRowHeight(i,k);
 						}
 				}
@@ -1275,7 +1279,7 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 				j = table.columnAtPoint(table.getMousePosition());
 				for (i=0;i<7;i++)
 				{
-					if (i==j){ k = 200; } //Spalte j ist die Spalte, über die gerade "gehovert" wird
+					if (i==j){ k = 200; } //Spalte j ist die Spalte, ï¿½ber die gerade "gehovert" wird
 					else {k = 97; } //Die anderen Spalten werden verkleinert
 					
 					TableColumn col = new TableColumn(i, k);
@@ -1290,7 +1294,7 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 		}	
 	}
 	
-	/* Setzt das Layout für die Tabelle
+	/* Setzt das Layout fï¿½r die Tabelle
 	 * 
 	 */
 	private void layoutTable()
@@ -1313,7 +1317,7 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 		updateTable();
 	}
 	
-	/* Liest die Daten für die Tabelle ein
+	/* Liest die Daten fï¿½r die Tabelle ein
 	 * 
 	 */
 	public void updateTable()
@@ -1333,7 +1337,7 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 		}	
 	}
 
-	/* Erneuert die Anzeige für die angezeigte Zeitspanne
+	/* Erneuert die Anzeige fï¿½r die angezeigte Zeitspanne
 	 * 
 	 */
 	private void updateDateIndicator()
@@ -1346,8 +1350,8 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 		this.setTitle("autoPSI | " + lblMonth.getText());
 	}
 	
-	/* Diese Methode berechnet das Startdatum für die Monatsansicht.
-	 * Je nach übergebenem Datum wird das Startdatum so berechnet, dass es immer 
+	/* Diese Methode berechnet das Startdatum fï¿½r die Monatsansicht.
+	 * Je nach ï¿½bergebenem Datum wird das Startdatum so berechnet, dass es immer 
 	 * mit einem Montag beginnt.
 	 */
 	private void setTimeSpace(GregorianCalendar cal)
@@ -1406,7 +1410,7 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 	{
 		if (view.equals("week"))
 		{
-			//lblToday.setText("Keine Termine ausgewählt.");
+			//lblToday.setText("Keine Termine ausgewï¿½hlt.");
 			table.setDefaultRenderer(Termin[].class, new WeekRenderer(c_marker));
 			view_dayBack.setVisible(true);
 			view_dayNext.setVisible(true);
@@ -1435,7 +1439,7 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 	}
 	
 	/*
-	 * Lädt Termindetails in den unteren Teil der InfoBar
+	 * Lï¿½dt Termindetails in den unteren Teil der InfoBar
 	 */
 	
 	protected MaskFormatter createFormatter(String s) {
@@ -1448,7 +1452,7 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 		return formatter;
 	}
 	
-	/*Liest Termine aus einer Tag-Zelle aus und füllt sie in die Today-Liste
+	/*Liest Termine aus einer Tag-Zelle aus und fï¿½llt sie in die Today-Liste
 	 * 
 	 */
 	private void loadList()
@@ -1514,7 +1518,7 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 					} catch (EAttributeNotFound e) {
 						e.printStackTrace();
 					} catch (EDatabase e) {
-						showErrorDialog("Fehler","Der Termincontainer konnte nicht gelöscht werden");
+						showErrorDialog("Fehler","Der Termincontainer konnte nicht gelï¿½scht werden");
 					}
 				
 					
@@ -1539,7 +1543,7 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 				} catch (EAttributeNotFound e) {
 					e.printStackTrace();
 				} catch (EDatabase e) {
-					showErrorDialog("Fehler","Der Termin konnte nicht gelöscht werden");
+					showErrorDialog("Fehler","Der Termin konnte nicht gelï¿½scht werden");
 				}
 			}	
 		}
@@ -1563,7 +1567,7 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 		try {
 			gdao.unsafeQuery("Shutdown compact", new Notiz());
 		} catch (Exception e){
-			System.out.println("mainFrame.windowClosed(..)::Konnte Datenbankverbindungen nicht schließen::"+e.toString());
+			System.out.println("mainFrame.windowClosed(..)::Konnte Datenbankverbindungen nicht schlieï¿½en::"+e.toString());
 		}
 		//deleting shared objects from JavaSpace
 		if (this.oss != null)
