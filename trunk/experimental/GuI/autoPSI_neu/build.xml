@@ -81,14 +81,4 @@
 		<java classpathref="classpath" classname="SearchFrameTest" fork="true"/> 
 	</target>
 	
-	<target name="Test:EditTerminFrame" depends="init,compile">
-		<javac srcdir="${src}" destdir="${build}" classpathref="classpath"/>
-		<java classpathref="classpath" classname="EditTerminFrameTest" fork="true"/> 
-	</target>
-	
-	<target name="Test:EditTerminContainerFrame" depends="init,compile">
-		<javac srcdir="${src}" destdir="${build}" classpathref="classpath"/>
-		<java classpathref="classpath" classname="SearchFrameTest" fork="true"/> 
-	</target>
-	
 </project>
