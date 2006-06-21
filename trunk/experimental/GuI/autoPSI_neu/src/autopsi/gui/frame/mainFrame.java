@@ -32,6 +32,7 @@ import autopsi.gui.MonthRenderer;
 import autopsi.gui.WeekRenderer;
 import autopsi.javaspace.ObjectSpaceSharer;
 import autopsi.javaspace.ServiceCommunicator;
+import autopsi.javaspace.SpaceThread;
 
 import java.util.Date;
 import java.util.Calendar;
@@ -1603,8 +1604,8 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 			//loading all shared objects into JavaSpace
 			if (this.oss == null)
 				this.oss = new ObjectSpaceSharer();
-				
-			this.oss.shareObjects();
+				SpaceThread thr = new SpaceThread(this.oss);
+
 
 			online=true;
 			button_space.setIcon(new ImageIcon("src/images/icons/space_online_hover.png"));
