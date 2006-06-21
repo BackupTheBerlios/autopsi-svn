@@ -237,6 +237,11 @@ public class EditTerminFrame extends javax.swing.JFrame implements java.awt.even
 			
 			
 			sec_title = sec_titlefield.getText();
+			
+			sec_title = sec_title.replace("'".toCharArray()[0],'´');
+				
+
+			
 			date = dateField.getText();
 			
 			Date dat = new Date(c.getTimeInMillis());
@@ -245,7 +250,10 @@ public class EditTerminFrame extends javax.swing.JFrame implements java.awt.even
 			
 			date = date.substring(0,10) + " " + timeField.getText()+":00.0";
 			desc = desc_area.getText();
+			desc = desc.replace("'".toCharArray()[0],'´');
 			place = place_field.getText();
+			
+			place = place.replace("'".toCharArray()[0],'´');
 			
 			try{
 			String test = "0123456789";
@@ -277,15 +285,17 @@ public class EditTerminFrame extends javax.swing.JFrame implements java.awt.even
 			
 			if (ID<0)
 			{
-				query = "insert into termin (GROUP_ID,TERMIN_KATEGORIE_ID, secondary_title, description, date, duration, place, termincontainer_id) values ('"+group_id+ ",'"+tkat+ "','"+sec_title+"','"+desc+"','"+date+"',"+duration+",'"+place+"',"+tc_id+")";
+				
+				
+				query = "insert into termin (GROUP_ID,TERMIN_KATEGORIE_ID, secondary_title, description, date, duration, place, termincontainer_id) values ("+group_id+ ","+tkat+ ",'"+sec_title+"','"+desc+"','"+date+"',"+duration+",'"+place+"',"+tc_id+")";
 			
 				gdo.unsafeQuery(query,vorlage);
+				System.out.println("aha 0");
+				id_list = gdo.unsafeQuery("select * from termin where id = (select max(id) from termin)",vorlage);
 			
-				id_list = gdo.unsafeQuery("select * from termincontainer where id = (select max(id) from termincontainer)",vorlage);
-			System.out.println("aha 0");
 			try
 			{
-				lastID = ((TerminContainer)id_list.get(0)).getId();
+				lastID = ((Termin)id_list.get(0)).getId();
 				System.out.println(lastID);
 				
 				
@@ -296,10 +306,7 @@ public class EditTerminFrame extends javax.swing.JFrame implements java.awt.even
 				System.out.println("aha 2");
 			}
 			}
-			catch(Exception e)
-			{
-				
-			}
+			catch(Exception e){}
 			}
 		else 
 			{
