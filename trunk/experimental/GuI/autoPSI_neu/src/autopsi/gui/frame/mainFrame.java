@@ -859,7 +859,7 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 				
 				c_marker.set(Integer.parseInt(currentValue[0].getDate().toString().substring(0,4)),Integer.parseInt(currentValue[0].getDate().toString().substring(5,7))-1,Integer.parseInt(currentValue[0].getDate().toString().substring(8,10)));
 			}
-			catch(Exception ex) {System.out.println(ex.toString());}; 
+			catch(Exception ex) {System.out.println(" table click  "+ ex.toString());}; 
 			
 			try
 			{		
@@ -878,7 +878,7 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 				else setModel("week");
 				
 			}
-			catch(Exception ex){System.out.println(ex.toString());};
+			catch(Exception ex){System.out.println(" table click 2 " + ex.toString());};
 					
 		}
 		if(arg0.getSource().equals(button_dayNext))
@@ -1495,6 +1495,7 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 								" " + currentValue[i].getSecondaryTitle();
 			todayListModel.addElement(terminItem);
 		}	
+		if(viewMonth) lblToday.setText()
 	}
 	
 	public void updateInfoBar(boolean delete)
