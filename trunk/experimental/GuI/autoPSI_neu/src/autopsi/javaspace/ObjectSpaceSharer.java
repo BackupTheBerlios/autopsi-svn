@@ -13,6 +13,8 @@ import autopsi.database.table.Lehrmittel;
 import autopsi.database.table.Lva;
 import autopsi.database.table.Notiz;
 import autopsi.database.table.Pruefung;
+import autopsi.database.table.Termin;
+import autopsi.database.table.TerminContainer;
 
 public class ObjectSpaceSharer {
 
@@ -127,6 +129,38 @@ public class ObjectSpaceSharer {
 //				System.out.println("ObjectSpaceSharer.getSharedObjects()::obj==null");
 			result.add(obj);
 		}
+		
+		
+		List<GenericDataObject> list = null;
+
+		try{
+			this.gdo.setCurrentTable("termincontainer");
+			list = this.gdo.getDataObjects(new TerminContainer());
+		}
+		catch(Exception e){
+			System.out.println("ObjectSpaceSharer.gerSharedObjects()::Konnte Termincontainer nicht aus der Datenbank nicht bekommen::"+e.toString());
+		}
+		Iterator<GenericDataObject> iter = list.iterator();
+		while(iter.hasNext()){
+			GenericDataObject gObj = iter.next();
+			result.add(gObj);
+		}
+		
+		
+		try{
+			this.gdo.setCurrentTable("termin");
+			list = this.gdo.getDataObjects(new Termin());
+		}
+		catch(Exception e){
+			System.out.println("ObjectSpaceSharer.gerSharedObjects()::Konnte Termin nicht aus der Datenbank bekommen::"+e.toString());
+		}
+		iter = list.iterator();
+		while(iter.hasNext()){
+			GenericDataObject gObj = iter.next();
+			result.add(gObj);
+		}
+		
+		
 		return result;
 	}
 	
