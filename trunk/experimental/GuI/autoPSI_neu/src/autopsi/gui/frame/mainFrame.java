@@ -166,6 +166,7 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 	private String deletedObject = "";
 	private Termin[] relatedTermine = null;
 	private int tcID;
+	private int doubleClickCounter = 0;
 	
 	public mainFrame() {
 		super();
@@ -437,6 +438,7 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 							listTC2.setBounds(0, 0, 217, 119);
 							listTC2.setBorder(BorderFactory.createEmptyBorder(0,0,0,0));
 							listTC2.addMouseListener(this);
+							listTC2.addMouseMotionListener(this);
 						}
 					}
 				}
@@ -922,8 +924,22 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 				
 			}
 			else showErrorDialog("Fehler!", "Kein Termin ausgewählt!");
-		
-			
+		}
+		if(arg0.getSource().equals(listTC2)) {
+			doubleClickCounter++;
+			if(doubleClickCounter==2)
+			{
+				GregorianCalendar goToTermin = new GregorianCalendar();
+				goToTermin.set(Calendar.YEAR,Integer.parseInt(relatedTermine[listTC2.getSelectedIndex()].getDate().toString().substring(0,4)));
+				goToTermin.set(Calendar.MONTH,Integer.parseInt(relatedTermine[listTC2.getSelectedIndex()].getDate().toString().substring(5,7))-1);
+				goToTermin.set(Calendar.DAY_OF_MONTH,Integer.parseInt(relatedTermine[listTC2.getSelectedIndex()].getDate().toString().substring(8,10)));
+				goToTermin.set(Calendar.HOUR_OF_DAY,0);
+				goToTermin.set(Calendar.MINUTE,0);
+				goToTermin.set(Calendar.SECOND,0);
+				c_marker.setTimeInMillis(goToTermin.getTimeInMillis());
+				setTimeSpace(goToTermin);
+				layoutTable();	
+			}	
 		}
 	}
 
@@ -1071,7 +1087,7 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 		}
 		
 		if(arg0.getSource().equals(listTC2)) {
-			statusBar.setText("Klicken Sie auf einen Termin um ihn in der Infobar anzuzeigen.");
+			statusBar.setText("Doppelklick auf einen Eintrag zeigt den zugehörigen Tag im Kalender an.");
 		}
 		if(arg0.getSource().equals(dateJumper)) {
 			statusBar.setText("Geben Sie ein Datum im Format TT.MM.JJJJ ein und bestätigen sie mit 'ENTER'");
