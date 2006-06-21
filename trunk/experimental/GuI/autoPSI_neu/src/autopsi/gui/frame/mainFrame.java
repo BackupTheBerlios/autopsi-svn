@@ -1472,12 +1472,15 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 		{
 			try
 			{	
-				Termin showTermin;
-				showTermin = currentValue[selection];
 				
+				Termin showTermin;
+				System.out.println("::::       "+currentValue[selection].getDate().toString());
+				showTermin = currentValue[selection];
 				IGenericDAO igdao = new GenericDAO();
 				String  query = "select * from termin where id="+showTermin.getId();
-				List<GenericDataObject> data = igdao.unsafeQuery(query,new Termin());					
+				System.out.println("jojojo");
+				List<GenericDataObject> data = igdao.unsafeQuery(query,new Termin());		
+
 				showTermin = (Termin)data.get(0);
 				currentValue[selection] = showTermin;
 				
@@ -1521,7 +1524,15 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 				}		
 			}
 			catch(Exception ex) {System.out.println("error: " + ex.toString());}		
-		}		
+		}	
+		else
+		{
+			lblZeit.setText("");
+			lblOrt.setText("");
+			lblBeschreibung.setText("");
+			lblTerminContainer.setText("");
+			lblTermin.setText("");
+		}
 	}
 
 	protected MaskFormatter createFormatter(String s) {
@@ -1551,11 +1562,35 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 		}	
 	}
 	
-	public void updateInfoBar()
+	public void updateInfoBar(boolean delete)
 	{
-		//updateTable();
-		//loadList();
-		//loadTerminData();
+		if(delete)
+			{
+			todayListModel.removeAllElements();
+			System.out.println("removed all");
+			selection = -1;
+			
+			GenericDAO gdo = new GenericDAO();
+			if(terminId != -1){
+				String query = "delete from termin where id =" +terminId;
+				try {				
+					if(delete_ok)					
+					gdo.unsafeQuery(query,null);
+					updateTable();
+					delete_ok = false;
+					//Liste muss noch geupdatet werden
+				} catch (EDatabaseConnection e) {
+					e.printStackTrace();
+				} catch (EAttributeNotFound e) {
+					e.printStackTrace();
+				} catch (EDatabase e) {
+					showErrorDialog("Fehler","Der Termin konnte nicht gelöscht werden");
+				}
+			}	
+		}
+		updateTable();
+		loadTerminList(false);
+		loadTerminData();
 	}
 
 	public void windowOpened(WindowEvent arg0) {
@@ -1568,7 +1603,7 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 		//closing all database connections
 		GenericDAO gdao = new GenericDAO();
 		try {
-			gdao.unsafeQuery("Shutdown compact", new Notiz());
+			gdao.unsafeQuery("Shutdown immediately", new Notiz());
 		} catch (Exception e){
 			System.out.println("mainFrame.windowClosed(..)::Konnte Datenbankverbindungen nicht schließen::"+e.toString());
 		}
@@ -1629,99 +1664,4 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 		}
 	}
 
-	private void loadFirstTerminInfo()
-	{
-		List<GenericDataObject> termine;
-		IGenericDAO gdo = new GenericDAO();
-		try
-		{
-			GregorianCalendar heute1 = new GregorianCalendar();
-			heute1.set(Calendar.HOUR_OF_DAY,0);
-			heute1.set(Calendar.MINUTE,0);
-			heute1.set(Calendar.SECOND,1);
-			Timestamp h1 = new Timestamp(heute1.getTimeInMillis());
-			heute1.set(Calendar.HOUR_OF_DAY,23);
-			heute1.set(Calendar.MINUTE,59);
-			heute1.set(Calendar.SECOND,59);
-			Timestamp h2 = new Timestamp(heute1.getTimeInMillis());
-			
-			
-			termine = gdo.unsafeQuery("select * from termin where date > '"+ h1.toString()+"' and date < '"+ h2.toString()+"'",new Termin());
-			currentValue = new Termin[termine.size()+1];
-			Termin datTermin = new Termin();
-			datTermin.setDate(h1);
-			currentValue[0] = datTermin;
-		
-			for(int i  = 0;i<termine.size();i++)
-			{
-				Termin ter = (Termin)termine.get(i);
-				currentValue[i+1] = ter;
-				todayListModel.addElement(ter.getDate().toString().substring(11,16)+" "+ter.getSecondaryTitle());
-			}
-			
-			Calendar cal2 = new GregorianCalendar();
-    		cal2.set(Integer.parseInt(currentValue[0].getDate().toString().substring(0,4)),Integer.parseInt(currentValue[0].getDate().toString().substring(5,7))-1,Integer.parseInt(currentValue[0].getDate().toString().substring(8,10)));
-    		Date dat = new Date(cal2.getTimeInMillis());
-    		String title = converter.toLong(dat.toString());
-    		lblDatum.setText(title);	
-    		lblDatumShadow.setText(title);
-    		
-    		for(int i = 0;i<7;i++)
-    		{
-    			for(int j = 0;j<5;j++)
-    			{
-    				try
-    				{
-    					Termin[] checkTermin = ((Termin[])table.getValueAt(i,j));
-        				if (checkTermin[0].getDate().toString().substring(0,10)==currentValue[0].getDate().toString().substring(0,10))
-        				{
-        					currentCell.x = i;
-        					currentCell.y = j;
-        				}
-    				}
-    				catch(Exception ex) {}
-    			}
-    		}
-    		
-		}
-		catch(Exception ex) {System.out.println(":::::  "+ex.toString());}
-	
-	}
-
-	public void actionPerformed(ActionEvent arg0) {
-		if (arg0.getSource().equals(this.menu_add_Kontakt)){
-			System.out.println("Neuer Kontakt wird hinzugefügt...");
-			GenericEditFrame gef = new GenericEditFrame(this);
-			
-			AttachableObject neuesObjekt = new AttachableObject();
-			gef.setObjectToEdit(neuesObjekt, true);
-			gef.setTableToEdit("attachable_object");
-			gef.setVisible(true);	
-			
-			gef = new GenericEditFrame(this);
-			Kontakt neuerKontakt = new Kontakt();
-			neuerKontakt.setGlobalId(neuesObjekt.getId());
-			gef.setObjectToEdit(neuerKontakt, true);
-			gef.setTableToEdit("kontakt");
-			gef.setVisible(true);
-		}
-		if (arg0.getSource().equals(this.menu_add_Notiz)){
-			System.out.println("Neue Notiz wird hinzugefügt...");
-			GenericEditFrame gef = new GenericEditFrame(this);
-			
-			AttachableObject neuesObjekt = new AttachableObject();
-			neuesObjekt.setTableName("Notiz");
-			gef.setObjectToEdit(neuesObjekt, true);
-			gef.setTableToEdit("attachable_object");
-			gef.setVisible(true);	
-			
-			gef = new GenericEditFrame(this);
-			Notiz neuerKontakt = new Notiz();
-			neuerKontakt.setGlobalId(neuesObjekt.getId());
-			gef.setObjectToEdit(neuerKontakt, true);
-			gef.setTableToEdit("notiz");
-			gef.setVisible(true);
-		}
-	}
-		
-}
+	private void loadTerminList(boolean first)
