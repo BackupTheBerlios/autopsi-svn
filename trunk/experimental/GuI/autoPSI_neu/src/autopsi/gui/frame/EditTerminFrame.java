@@ -317,7 +317,7 @@ public class EditTerminFrame extends javax.swing.JFrame implements java.awt.even
 			}
 			ok = true;
 			owner.updateTable();
-			owner.updateInfoBar();
+			owner.updateInfoBar(false);
 			
 		}
 		catch (Exception e){
