@@ -181,7 +181,6 @@ public class EditTerminContainerFrame extends javax.swing.JFrame implements java
 					{
 						container_termine.get(i).setTerminContainerID(lastID);
 						gdo.unsafeQuery("insert into termin (GROUP_ID,TERMIN_KATEGORIE_ID, secondary_title, description, date, duration, place, termincontainer_id) values ("+group_id+ ","+container_termine.get(i).getTerminKategorieId()+ ",'"+container_termine.get(i).getSecondaryTitle()+"','"+container_termine.get(i).getDescription()+"','"+container_termine.get(i).getDate()+"',"+container_termine.get(i).getDuration()+",'"+container_termine.get(i).getPlace()+"',"+lastID+")",new Termin());
-						System.out.println("aha 1");
 					}
 					
 				for(int j = 0;j<queryList.size();j++)
@@ -200,7 +199,6 @@ public class EditTerminContainerFrame extends javax.swing.JFrame implements java
 				{
 				for(int i = 0;i<container_termine.size();i++)
 				{
-					System.out.println("aha 1");
 					container_termine.get(i).setTerminContainerID(lastID);
 					gdo.unsafeQuery("insert into termin (GROUP_ID,TERMIN_KATEGORIE_ID, secondary_title, description, date, duration, place, termincontainer_id) values ("+group_id+ ","+container_termine.get(i).getTerminKategorieId()+ ",'"+container_termine.get(i).getSecondaryTitle()+"','"+container_termine.get(i).getDescription()+"','"+container_termine.get(i).getDate()+"',"+container_termine.get(i).getDuration()+",'"+container_termine.get(i).getPlace()+"',"+ID+")",new Termin());
 					
@@ -219,10 +217,8 @@ public class EditTerminContainerFrame extends javax.swing.JFrame implements java
 			
 			
 			
-			System.out.println("aha 3");
 			if(konstruktor == 1) {if(owner!=null) owner.updateTCList();}
 			else {
-				System.out.println("aha 4");
 				owner2.updateInfoBar(false);
 				owner2.updateTable();
 			}
