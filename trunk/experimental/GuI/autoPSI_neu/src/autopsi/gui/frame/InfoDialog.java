@@ -5,7 +5,7 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 
 import javax.swing.JFrame;
-import javax.swing.JLabel;
+import javax.swing.JTextPane;
 
 /**
 * This code was edited or generated using CloudGarden's Jigloo
@@ -31,10 +31,10 @@ public class InfoDialog extends javax.swing.JDialog {
 	}
 
 	private JButton okbutton;
-	private JLabel textfield;
 	private JFrame owner;
 	String title = "";
 	String text = "";
+	private JTextPane textpane;
 
 	/**
 	* Auto-generated main method to display this JDialog
@@ -64,16 +64,15 @@ public class InfoDialog extends javax.swing.JDialog {
 						public void actionPerformed(ActionEvent arg0) {
 							owner.setEnabled(true);
 							dispose();
-						}
-						
+						}	
 					});
 				}
 				{
-					this.setTitle(title);
-					textfield = new JLabel();
-					getContentPane().add(textfield);
-					textfield.setBounds(7, 7, 266, 63);
-					textfield.setText(text);
+					textpane = new JTextPane();
+					getContentPane().add(textpane);
+					textpane.setText(text);
+					textpane.setBounds(7, 7, 266, 63);
+					textpane.setOpaque(false);
 				}
 			}
 			this.setSize(288, 135);
