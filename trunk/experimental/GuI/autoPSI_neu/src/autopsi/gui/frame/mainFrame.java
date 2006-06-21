@@ -143,7 +143,7 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 	private Termin[] currentValue;
 	String[] data;
 	private Point currentCell = new Point();
-	private int selection;
+	private int selection=-1;
 	private boolean online = false;
 	private JLabel lblMonth = new JLabel("tutu");
 	private JLabel lblMonthShadow = new JLabel("tutu");
@@ -933,7 +933,6 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 		}
 		if(arg0.getSource().equals(listTC2)) {
 			doubleClickCounter++;
-			System.out.println("hohhohohohoho");
 			if(doubleClickCounter==2)
 			{
 				GregorianCalendar goToTermin = new GregorianCalendar();
@@ -947,6 +946,14 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 				setTimeSpace(goToTermin);
 				layoutTable();	
 			}	
+		}
+		if(arg0.getSource().equals(showTObjects))
+		{	
+				loadTerminData();
+		}	
+		if(arg0.getSource().equals(showTCObjects))
+		{	
+				loadTerminData();
 		}
 	}
 
@@ -1214,10 +1221,7 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 		{	
 			if(zoomBox.getSelectedObjects()!=null) tableZoom();		
 		}
-		if(arg0.getSource().equals(showTObjects))
-		{	
-				loadTerminData();
-		}		
+			
 		if(arg0.getSource().equals(listTC2))
 		{	
 				this.doubleClickCounter = 0;
@@ -1686,7 +1690,8 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 	public void loadTerminData()
 	{
 		Termin showTermin = new Termin();
-		if(selection>=0)
+		System.out.println(selection);
+		if(selection>=0)	
 		{
 			try
 			{	
@@ -1792,15 +1797,10 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 							if(tablename.equals("lva")){
 								list2 = gdo.unsafeQuery("select * from lva where global_id = " + globalID,new Lva());
 								String lva = "LVA-Nr.: " + ((Lva)list2.get(0)).getLvaNr()+",         Titel: " + ((Lva)list2.get(0)).getTitle(); 
-								objectListModel.addElement(lva);
-								
+								objectListModel.addElement(lva);	
 							}
-						}
-					
-					
-					
-					
-					}
+						}	
+				    }
 					if(showTCObjects.getSelectedObjects()!=null)
 					{
 						String tablename="";
@@ -1848,8 +1848,7 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 					}
 					
 					
-					
-				}		
+			}
 			}
 			catch(Exception ex) {System.out.println("error: " + ex.toString());}		
 		}	
@@ -1864,6 +1863,7 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 			objectList.removeAll();
 		}
 	}
+	
 
 	public void actionPerformed(ActionEvent arg0) {
 		if (arg0.getSource().equals(this.menu_add_Kontakt)){
