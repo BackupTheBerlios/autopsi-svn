@@ -21,7 +21,10 @@ public class SQLInsert implements SQLStatement {
 			else
 				isFirst = false;
 			
-			ret=ret+"'"+fields.getCurrentValue()+"'";
+			if (fields.getCurrentValue().equals("NULL"))
+				ret=ret+"NULL";
+			else
+				ret=ret+"'"+fields.getCurrentValue()+"'";
 		}
 		ret=ret+")";
 		return ret;
