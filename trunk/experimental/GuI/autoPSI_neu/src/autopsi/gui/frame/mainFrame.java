@@ -1620,16 +1620,18 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 			try
 			{
 				termine = gdo.unsafeQuery("select * from termin where date>='"+t1.toString()+"' and date<='"+t2.toString()+"'",new Termin());
-				currentValue = new Termin[termine.size()];
+				currentValue = new Termin[termine.size()+1];
 				Termin dayTermin = new Termin();
-				
+				dayTermin.setDate(t1);
+				currentValue[0]=dayTermin;
 				todayListModel.removeAllElements();
 				
-				for(int i = 0;i<termine.size();i++)
+				for(int i = 1;i<termine.size();i++)
 				{
 					Termin countTermin = (Termin)termine.get(i);
 					currentValue[i] = countTermin;
-					todayListModel.addElement(countTermin.getDate().toString().substring(12,16)+"  "+countTermin.getSecondaryTitle());
+					todayListModel.addElement(countTermin.getDate().toString().substring(11,16)+"  "+countTermin.getSecondaryTitle());
+					System.out.println(currentValue[i].getDate().toString());
 				}
 				
 				
@@ -1651,7 +1653,6 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 				String  query = "select * from termin where id="+showTermin.getId();
 				System.out.println("jojojo");
 				List<GenericDataObject> data = igdao.unsafeQuery(query,new Termin());		
-
 				showTermin = (Termin)data.get(0);
 				currentValue[selection] = showTermin;
 				
