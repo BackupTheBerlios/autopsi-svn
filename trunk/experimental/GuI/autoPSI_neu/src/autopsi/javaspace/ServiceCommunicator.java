@@ -2,6 +2,8 @@ package autopsi.javaspace;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import autopsi.database.table.Notiz;
 import net.jini.core.entry.Entry;
 import net.jini.core.lease.Lease;
 import net.jini.lease.DesiredExpirationListener;
@@ -82,6 +84,7 @@ public class ServiceCommunicator implements IServiceCommunicator, DesiredExpirat
 	}
 
 	public Entry getObject(Entry lookupObject) {
+		System.out.println("ServiceCommunicator.getOBject::started");
 		Entry entry = null;
 		if (getSpace() == null){
 			System.out.println("ServiceCommunictor.getObject::Konnte JavaSpace nicht finden");

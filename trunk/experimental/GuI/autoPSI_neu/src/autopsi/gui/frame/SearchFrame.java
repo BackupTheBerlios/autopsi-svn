@@ -14,6 +14,7 @@ import javax.swing.ButtonGroup;
 import javax.swing.ComboBoxModel;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.WindowConstants;
 import javax.swing.JFormattedTextField;
@@ -126,6 +127,7 @@ public class SearchFrame extends javax.swing.JFrame implements ActionListener {
 	private PruefungTableModel jPruefungTableModel;
 	
 	private JButton jKontaktSuchenButton, jTerminSuchenButton, jLVASuchenButton;
+	private JCheckBox jUseGroup;
 	private JButton jPruefungLoeschenButton, jPruefungWiederherstellenButton;
 	private JButton jLVALoeschenButton, jLVAWiederherstellenButton;
 	private JComboBox jGradeComboBox;
@@ -1004,6 +1006,12 @@ public class SearchFrame extends javax.swing.JFrame implements ActionListener {
 							jPruefungWiederherstellenButton.setBounds(140, 329, 168, 21);
 							jPruefungWiederherstellenButton.addActionListener(this);
 						}
+						{
+							jUseGroup = new JCheckBox();
+							jPruefungSuchePanel.add(jUseGroup);
+							jUseGroup.setText("Gruppe in Suche einbeziehen");
+							jUseGroup.setBounds(343, 77, 224, 28);
+						}
 
 					}
 					
@@ -1083,6 +1091,7 @@ public class SearchFrame extends javax.swing.JFrame implements ActionListener {
 				}
 				jKontaktTableModel.setGroup(jKontaktGruppeComboBox.getSelectedItem().toString());
 				jKontaktTableModel.setSuchKontakt(kont);
+				
 				if (jKontaktLokalSuchenRadioButton.isSelected()){
 					System.out.println("Kontakt wird lokal gesucht...");
 					jKontaktTableModel.fireDataChanged();
@@ -1092,113 +1101,122 @@ public class SearchFrame extends javax.swing.JFrame implements ActionListener {
 					jKontaktTableModel.fireOnlineDataChanged();
 				}
 			} else if(cmd.equals("LVA Suchen")) {
+				Lva lva = new Lva();
+				if (!jLVANummerField.getText().equals("")){
+					lva.setLvaNr(jLVANummerField.getText());
+				}
+				if (!jLVATitelField.getText().equals("")){
+					lva.setTitle(jLVATitelField.getText());
+				}
+				if (!jBeschreibungField.getText().equals("")){
+					lva.setDescription(jBeschreibungField.getText());
+				}
+				jLVATableModel.setType(jLVATypeComboBox.getSelectedItem().toString());
+				jLVATableModel.setGroup(jLVATypeComboBox.getSelectedItem().toString());
+				jLVATableModel.setSuchLVa(lva);
+				
 				if (jLVALokalSuchenRadioButton.isSelected()){
 					System.out.println("LVA wird lokal gesucht...");
-					Lva lva = new Lva();
-					if (!jLVANummerField.getText().equals("")){
-						lva.setLvaNr(jLVANummerField.getText());
-					}
-					if (!jLVATitelField.getText().equals("")){
-						lva.setTitle(jLVATitelField.getText());
-					}
-					if (!jBeschreibungField.getText().equals("")){
-						lva.setDescription(jBeschreibungField.getText());
-					}
-					jLVATableModel.setType(jLVATypeComboBox.getSelectedItem().toString());
-					jLVATableModel.setGroup(jLVATypeComboBox.getSelectedItem().toString());
-					jLVATableModel.setSuchLVa(lva);
 				} else if (jLVAOnlineSuchenRadioButton.isSelected()) {
 					System.out.println("LVA wird online gesucht...");
 					this.jLVATableModel.fireOnlineDataChanged();
 				}
 			} else if(cmd.equals("Termin Suchen")) {
+				Termin ter = new Termin();
+				if (!jTerminTitelField.getText().equals("")) {
+					ter.setSecondaryTitle(jTerminTitelField.getText());
+				} else {
+					ter.setSecondaryTitle(null);
+				}
+				if (!jTerminBeschreibungField.getText().equals("")){
+					ter.setDescription(jTerminBeschreibungField.getText());
+				} else {
+					ter.setDescription(null);
+				}
+				if (!jDatumField.getText().equals("")){
+					jTerminTableModel.setDatum(jDatumField.getText());
+				} else {
+					jTerminTableModel.setDatum(null);
+				}
+				jTerminTableModel.setType(jTerminTypeComboBox.getSelectedItem().toString());
+				jTerminTableModel.setGroup(jTerminGruppeComboBox.getSelectedItem().toString());
+				jTerminTableModel.setSuchTermin(ter);
+				
 				if (jTerminLokalSuchenRadioButton.isSelected()){
 					System.out.println("Termin wird lokal gesucht...");
-					Termin ter = new Termin();
-					if (!jTerminTitelField.getText().equals("")) {
-						ter.setSecondaryTitle(jTerminTitelField.getText());
-					} else {
-						ter.setSecondaryTitle(null);
-					}
-					if (!jTerminBeschreibungField.getText().equals("")){
-						ter.setDescription(jTerminBeschreibungField.getText());
-					} else {
-						ter.setDescription(null);
-					}
-					if (!jDatumField.getText().equals("")){
-						jTerminTableModel.setDatum(jDatumField.getText());
-					} else {
-						jTerminTableModel.setDatum(null);
-					}
-					jTerminTableModel.setType(jTerminTypeComboBox.getSelectedItem().toString());
-					jTerminTableModel.setGroup(jTerminGruppeComboBox.getSelectedItem().toString());
-					jTerminTableModel.setSuchTermin(ter);
+					this.jTerminTableModel.fireDataChanged();
 				} else if (jTerminOnlineSuchenRadioButton.isSelected()) {
 					System.out.println("Termin wird online gesucht...");
 					this.jTerminTableModel.fireOnlineDataChanged();
 				}
 				
 			}  else if(cmd.equals("Termincontainer Suchen")) {
+				TerminContainer terc = new TerminContainer();
+				if (!jTerminContainerTitelField.getText().equals("")) {
+					terc.setTitle(jTerminContainerTitelField.getText());
+				} else {
+					terc.setTitle(null);
+				}
+				if (!jTerminContainerBeschreibungField.getText().equals("")){
+					terc.setDescription(jTerminContainerBeschreibungField.getText());
+				} else {
+					terc.setDescription(null);
+				}
+				jTerminContainerTableModel.setGroup(jTerminContainerGruppeComboBox.getSelectedItem().toString());
+				jTerminContainerTableModel.setSuchTerminc(terc);
+				
 				if (jTerminContainerLokalSuchenRadioButton.isSelected()){
 					System.out.println("Termincontainer wird lokal gesucht...");
-					TerminContainer terc = new TerminContainer();
-					if (!jTerminContainerTitelField.getText().equals("")) {
-						terc.setTitle(jTerminContainerTitelField.getText());
-					} else {
-						terc.setTitle(null);
-					}
-					if (!jTerminContainerBeschreibungField.getText().equals("")){
-						terc.setDescription(jTerminContainerBeschreibungField.getText());
-					} else {
-						terc.setDescription(null);
-					}
-					jTerminContainerTableModel.setGroup(jTerminContainerGruppeComboBox.getSelectedItem().toString());
-					jTerminContainerTableModel.setSuchTerminc(terc);
+					jTerminContainerTableModel.fireDataChanged();
 				} else if (jTerminContainerOnlineSuchenRadioButton.isSelected()) {
 					System.out.println("Termincontainer wird online gesucht...");
 					this.jTerminContainerTableModel.fireOnlineDataChanged();
 				}
 				
 			} else if(cmd.equals("Lehrmittel Suchen")) {
+				Lehrmittel lm = new Lehrmittel();
+				if (!jLehrmittelNameField.getText().equals("")) {
+					lm.setName(jLehrmittelNameField.getText());
+				} else {
+					lm.setName(null);
+				}
+				if (!jLehrmittelBeschreibungField.getText().equals("")) {
+					lm.setDescription(jLehrmittelBeschreibungField.getText());
+				} else {
+					lm.setDescription(null);
+				}
+				jLehrmittelTableModel.setType(jLehrmittelTypeComboBox.getSelectedItem().toString());
+				jLehrmittelTableModel.setGroup(jLehrmittelGruppeComboBox.getSelectedItem().toString());
+				jLehrmittelTableModel.setSuchLehrmittel(lm);
+				
 				if (jLehrmittelLokalSuchenRadioButton.isSelected()){
 					System.out.println("Lehrmittel wird lokal gesucht...");
-					Lehrmittel lm = new Lehrmittel();
-					if (!jLehrmittelNameField.getText().equals("")) {
-						lm.setName(jLehrmittelNameField.getText());
-					} else {
-						lm.setName(null);
-					}
-					if (!jLehrmittelBeschreibungField.getText().equals("")) {
-						lm.setDescription(jLehrmittelBeschreibungField.getText());
-					} else {
-						lm.setDescription(null);
-					}
-					jLehrmittelTableModel.setType(jLehrmittelTypeComboBox.getSelectedItem().toString());
-					jLehrmittelTableModel.setGroup(jLehrmittelGruppeComboBox.getSelectedItem().toString());
-					jLehrmittelTableModel.setSuchLehrmittel(lm);
+					jLehrmittelTableModel.fireDataChanged();
 				} else if (jLehrmittelOnlineSuchenRadioButton.isSelected()) {
 					System.out.println("Lehrmittel wird online gesucht...");
 					this.jLehrmittelTableModel.fireOnlineDataChanged();
 				}
 				
 			}  else if(cmd.equals("Notiz Suchen")) {
+				Notiz not = new Notiz();
+				if (!jNotizTitelField.getText().equals("")) {
+					not.setTitle(jNotizTitelField.getText());
+				} else {
+					not.setTitle(null);
+				}
+				if (!jNotizNoteField.getText().equals("")) {
+					not.setNote(jNotizNoteField.getText());
+				} else {
+					not.setNote(null);
+				}
+				jNotizTableModel.setGroup(jNotizGruppeComboBox.getSelectedItem().toString());
+				jNotizTableModel.setSuchNotiz(not);
 				if (jNotizLokalSuchenRadioButton.isSelected()){
 					System.out.println("Notiz wird lokal gesucht...");
-					Notiz not = new Notiz();
-					if (!jNotizTitelField.getText().equals("")) {
-						not.setTitle(jNotizTitelField.getText());
-					} else {
-						not.setTitle(null);
-					}
-					if (!jNotizNoteField.getText().equals("")) {
-						not.setNote(jNotizNoteField.getText());
-					} else {
-						not.setNote(null);
-					}
-					jNotizTableModel.setGroup(jNotizGruppeComboBox.getSelectedItem().toString());
-					jNotizTableModel.setSuchNotiz(not);
 				} else if (jNotizOnlineSuchenRadioButton.isSelected()) {
 					System.out.println("Notiz wird online gesucht...");
+					jNotizTableModel.setGroup(jNotizGruppeComboBox.getSelectedItem().toString());
+					jNotizTableModel.setSuchNotiz(not);
 					this.jNotizTableModel.fireOnlineDataChanged();
 				}
 				
@@ -1220,9 +1238,12 @@ public class SearchFrame extends javax.swing.JFrame implements ActionListener {
 				} else {
 					p.setGrade(null);
 				}
-				
-				jPruefungTableModel.setGroup(jPruefungGruppeComboBox.getSelectedItem().toString());
+				if (this.jUseGroup.isSelected())
+					jPruefungTableModel.setGroup(jPruefungGruppeComboBox.getSelectedItem().toString());
+				else
+					jPruefungTableModel.setGroup(null);
 				jPruefungTableModel.setSuchPruefung(p);
+				
 				if (jPruefungLokalSuchenRadioButton.isSelected()){
 					System.out.println("Prüfung wird lokal gesucht...");
 					jPruefungTableModel.fireDataChanged();

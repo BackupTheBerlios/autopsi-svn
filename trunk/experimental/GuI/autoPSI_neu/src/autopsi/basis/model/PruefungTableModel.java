@@ -54,6 +54,7 @@ public class PruefungTableModel extends AbstractTableModel {
 
 				System.out.println(query);
 				this.pruefungen =  gdo.unsafeQuery(query, suchPruefung);
+				System.out.println("pruefungsCount=="+pruefungen.size());
 			}
 		} catch (Exception e){
 			System.out.println("PruefungTableModel @ readData;"+e.toString());

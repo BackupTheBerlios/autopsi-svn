@@ -69,7 +69,6 @@ public class TerminTableModel extends AbstractTableModel{
 	
 	public void setSuchTermin (Termin suchtermin){
 		this.suchTermin=suchtermin;
-		fireDataChanged();
 	}
 	
 	public void setDatum (String datum){
@@ -90,7 +89,7 @@ public class TerminTableModel extends AbstractTableModel{
 	}
 	
 	public void fireOnlineDataChanged(){
-		readData();
+		readOnlineData();
 		fireTableDataChanged();
 	}
 	

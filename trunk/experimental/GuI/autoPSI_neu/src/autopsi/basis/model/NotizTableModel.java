@@ -73,11 +73,7 @@ public class NotizTableModel  extends AbstractTableModel {
 	public void readOnlineData(){
 		Notiz temp = null;
 		try{
-			GenericDataObject t = (GenericDataObject)this.ogdo.getObject(this.suchNotiz);
-//			temp = (Notiz)
-			if (t instanceof Termin)
-				System.out.println("Ist ein Termin!!");
-			temp = (Notiz)t;
+			temp = (Notiz)this.ogdo.getObject(this.suchNotiz);
 		}
 		catch (Exception e){
 			System.out.println("NotizTableModel @ readOnlineData::"+e.toString());
