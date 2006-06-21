@@ -75,7 +75,7 @@ public class DayCell extends javax.swing.JPanel {
 	}
 	public void setTab(String title2)
 	{
-	title.setText(title2);
+		title.setText(title2);
 	}
 	
 	 
@@ -90,22 +90,21 @@ public class DayCell extends javax.swing.JPanel {
 			this.setLayout(thisLayout);
 			this.setPreferredSize(new java.awt.Dimension(155, 116));
 			this.setSize(92,76);
-			this.setBackground(new java.awt.Color(0,0,80));
+			this.setBackground(new java.awt.Color(0,0,64));
 			this.setBorder(new LineBorder(new java.awt.Color(0,0,0), 1, false));
-			{
-				
+			{				
 					title.setLayout(null);
 					this.add(title);
 					title.setText("Datum2");
-					title.setBackground(new java.awt.Color(0,0,64));
+					title.setBackground(new java.awt.Color(100,100,64));
 					title.setForeground(new java.awt.Color(255,255,255));
 					title.setIcon(new ImageIcon("src/images/tag.GIF"));
-				
-				
+					title.setPreferredSize(new java.awt.Dimension(88, 14));
+
 				{
 					jScrollPane1 = new JScrollPane();
 					this.add(jScrollPane1);
-					jScrollPane1.setBorder(new LineBorder(new java.awt.Color(0,0,0), 1, false));
+					jScrollPane1.setBorder(new LineBorder(new java.awt.Color(0,0,0), 0, false));
 					jScrollPane1.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 					jScrollPane1.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_NEVER);
 					jScrollPane1.setBackground(new java.awt.Color(255,255,255));
@@ -115,9 +114,11 @@ public class DayCell extends javax.swing.JPanel {
 						jScrollPane1.setViewportView(list);
 						list.setBackground(new java.awt.Color(255,255,255));
 						list.setFont(new java.awt.Font("Tahoma",0,10));
+						list.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
+						list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 					}
 				}
-				title.setPreferredSize(new java.awt.Dimension(this.getSize().width, 14));				
+				//title.setPreferredSize(new java.awt.Dimension(this.getSize().width, 14));				
 			}
 
 		} catch (Exception e) {
