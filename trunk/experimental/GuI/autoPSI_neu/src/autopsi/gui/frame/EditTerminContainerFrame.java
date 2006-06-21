@@ -8,7 +8,6 @@ import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
@@ -22,7 +21,6 @@ import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
-import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
@@ -30,7 +28,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
-import javax.swing.ListModel;
+
 
 import javax.swing.WindowConstants;
 import javax.swing.border.LineBorder;
@@ -43,7 +41,6 @@ import autopsi.database.dao.IGenericDAO;
 import autopsi.database.exception.EAttributeNotFound;
 import autopsi.database.exception.EDatabase;
 import autopsi.database.exception.EDatabaseConnection;
-import autopsi.database.table.Anhaengen_termin;
 import autopsi.database.table.Anhaengen_termincontainer;
 import autopsi.database.table.AttachableObjectKategorie;
 import autopsi.database.table.Kontakt;
@@ -54,9 +51,6 @@ import autopsi.database.table.Pruefung;
 import autopsi.database.table.Termin;
 import autopsi.database.table.TerminContainer;
 import autopsi.gui.DateConverter;
-import autopsi.gui.MonthRenderer;
-import autopsi.gui.WeekRenderer;
-import autopsi.gui.component.GenericData;
 
 /**
 * This code was edited or generated using CloudGarden's Jigloo
@@ -160,10 +154,15 @@ public class EditTerminContainerFrame extends javax.swing.JFrame implements java
 	private void update(){
 		try{
 			String query="";
+			String title =title_field.getText();
+			title = title.replace("'".toCharArray()[0],'´');
+			String desc = desc_area.getText();
+			desc.replace("'".toCharArray()[0],'´');
+			
 			int group_id = ((AttachableObjectKategorie)(group_data.get(jGroupBox.getSelectedIndex()))).getId();
 			if (ID<0)
 				{
-				query = "insert into termincontainer (title,group_id, description) values ('"+title_field.getText()+ "',"+group_id+",'"+desc_area.getText()+"')";
+				query = "insert into termincontainer (title,group_id, description) values ('"+title+ "',"+group_id+",'"+desc+"')";
 				TerminContainer vorlage = new TerminContainer();
 				gdo.unsafeQuery(query,vorlage);
 				
@@ -205,7 +204,7 @@ public class EditTerminContainerFrame extends javax.swing.JFrame implements java
 					gdo.unsafeQuery(query2,new Anhaengen_termincontainer());
 					
 				}
-				query = "update termincontainer  set title = '" + title_field.getText() + "', group_id = " + group_id  + ", description='"+desc_area.getText()+"' where id="+ID;
+				query = "update termincontainer  set title = '" + title + "', group_id = " + group_id  + ", description='"+desc+"' where id="+ID;
 				
 				TerminContainer vorlage = new TerminContainer();
 				gdo.unsafeQuery(query,vorlage);
