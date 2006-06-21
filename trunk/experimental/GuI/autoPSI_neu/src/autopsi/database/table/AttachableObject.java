@@ -2,6 +2,8 @@ package autopsi.database.table;
 
 import net.jini.core.entry.Entry;
 import autopsi.database.dao.GenericDataObject;
+import autopsi.gui.component.GSMethodForeign;
+import autopsi.gui.component.GSMethodNormal;
 import autopsi.gui.component.GSMethodPrimary;
 import autopsi.gui.component.GenericData;
 
@@ -18,9 +20,26 @@ public class AttachableObject extends GenericData implements Entry,GenericDataOb
 			GSMethodPrimary primary = new GSMethodPrimary();
 			primary.getMethod = cl.getMethod("getId", new Class[] {});
 			primary.setMethod = cl.getMethod("setId", new Class[] {Integer.class} );
+			primary.show = false;
 			this.addAttribute("Id", primary);
-			this.addAttribute("KategorieId",cl.getMethod("getKategorieId", new Class[] {}), cl.getMethod("setKategorieId", new Class[] {Integer.class} ));
-			this.addAttribute("TableName",cl.getMethod("getTableName", new Class[] {}), cl.getMethod("setTableName", new Class[] {String.class} ));		}
+			
+			GSMethodForeign meth = new GSMethodForeign();
+			meth.getMethod = cl.getMethod("getKategorieId", new Class[] {});
+			meth.setMethod = cl.getMethod("setKategorieId", new Class[] {Integer.class} );
+			meth.tableName = "attachable_object_kategorie";
+			meth.attribName = "id";
+			meth.objectClass = AttachableObjectKategorie.class;
+			this.addAttribute("AttachableKategorieId", meth);
+//			this.addAttribute("KategorieId",cl.getMethod("getKategorieId", new Class[] {}), cl.getMethod("setKategorieId", new Class[] {Integer.class} ));
+		
+			GSMethodNormal normal = new GSMethodNormal();
+			normal.getMethod = cl.getMethod("getTableName", new Class[] {});
+			normal.setMethod = cl.getMethod("setTableName", new Class[] {String.class} );
+			normal.show = false;
+			this.addAttribute("Tabellename", primary);
+			
+//			this.addAttribute("TableName",cl.getMethod("getTableName", new Class[] {}), cl.getMethod("setTableName", new Class[] {String.class} ));		}
+		}
 		catch (Exception e){
 			System.out.println("Fehler beim Erstellen des Attachable-Objects::"+e.toString());
 		}

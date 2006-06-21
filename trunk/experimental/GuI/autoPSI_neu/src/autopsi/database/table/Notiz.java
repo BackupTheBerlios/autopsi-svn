@@ -24,7 +24,9 @@ public class Notiz extends GenericData implements Entry,GenericDataObject {
 			meth.tableName = "attachable_object";
 			meth.attribName = "global_id";
 			meth.objectClass = AttachableObject.class;
+			meth.show = false;
 			this.addAttribute("GlobalId", meth);
+			
 			this.addAttribute("Titel",cl.getMethod("getTitle", new Class[] {}), cl.getMethod("setTitle", new Class[] {String.class} ));
 			this.addAttribute("Notiz",cl.getMethod("getNote", new Class[] {}), cl.getMethod("setNote", new Class[] {String.class} ));
 

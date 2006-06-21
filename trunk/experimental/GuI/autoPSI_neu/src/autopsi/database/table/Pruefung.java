@@ -3,6 +3,7 @@ package autopsi.database.table;
 import net.jini.core.entry.Entry;
 
 import autopsi.database.dao.GenericDataObject;
+import autopsi.gui.component.GSMethodForeign;
 import autopsi.gui.component.GenericData;
 
 public class Pruefung extends GenericData implements Entry,GenericDataObject {
@@ -18,9 +19,27 @@ public class Pruefung extends GenericData implements Entry,GenericDataObject {
 	public Pruefung(){
 		Class cl = this.getClass();
 		try{
-			this.addAttribute("GlobalId",cl.getMethod("getGlobalId", new Class[] {}), cl.getMethod("setGlobalId", new Class[] {Integer.class} ));
+//			this.addAttribute("GlobalId",cl.getMethod("getGlobalId", new Class[] {}), cl.getMethod("setGlobalId", new Class[] {Integer.class} ));
+			GSMethodForeign meth = new GSMethodForeign();
+			meth.getMethod = cl.getMethod("getGlobalId", new Class[] {});
+			meth.setMethod = cl.getMethod("setGlobalId", new Class[] {Integer.class} );
+			meth.tableName = "attachable_object";
+			meth.attribName = "global_id";
+			meth.objectClass = AttachableObject.class;
+			meth.show = false;
+			this.addAttribute("GlobalId", meth);
+			
 //			this.addAttribute("KategorieId",cl.getMethod("getKategorieId", new Class[] {}), cl.getMethod("setKategorieId", new Class[] {Integer.class} ));
-			this.addAttribute("LvaId",cl.getMethod("getLvaId", new Class[] {}), cl.getMethod("setLvaId", new Class[] {Integer.class} ));
+
+//			this.addAttribute("LvaId",cl.getMethod("getLvaId", new Class[] {}), cl.getMethod("setLvaId", new Class[] {Integer.class} ));
+			meth = new GSMethodForeign();
+			meth.getMethod = cl.getMethod("getLvaId", new Class[] {});
+			meth.setMethod = cl.getMethod("setLvaId", new Class[] {Integer.class} );
+			meth.tableName = "lva";
+			meth.attribName = "global_id";
+			meth.objectClass = Lva.class;
+			this.addAttribute("Lva", meth);
+			
 			this.addAttribute("Prüfer",cl.getMethod("getExaminer", new Class[] {}), cl.getMethod("setExaminer", new Class[] {String.class} ));
 			this.addAttribute("Note",cl.getMethod("getGrade", new Class[] {}), cl.getMethod("setGrade", new Class[] {Integer.class} ));	}
 		catch (Exception e){

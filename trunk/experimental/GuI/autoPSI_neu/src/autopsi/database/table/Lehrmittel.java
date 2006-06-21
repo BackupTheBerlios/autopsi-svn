@@ -2,6 +2,7 @@ package autopsi.database.table;
 
 import net.jini.core.entry.Entry;
 import autopsi.database.dao.GenericDataObject;
+import autopsi.gui.component.GSMethodForeign;
 import autopsi.gui.component.GenericData;
 
 public class Lehrmittel extends GenericData implements Entry,GenericDataObject {
@@ -16,8 +17,25 @@ public class Lehrmittel extends GenericData implements Entry,GenericDataObject {
 	public Lehrmittel(){
 		Class cl = this.getClass();
 		try{
-			this.addAttribute("GlobalId",cl.getMethod("getGlobalId", new Class[] {}), cl.getMethod("setGlobalId", new Class[] {Integer.class} ));
-			this.addAttribute("LehrmittelKategorieId",cl.getMethod("getLehrmittelKategorieId", new Class[] {}), cl.getMethod("setLehrmittelKategorieId", new Class[] {Integer.class} ));
+//			this.addAttribute("GlobalId",cl.getMethod("getGlobalId", new Class[] {}), cl.getMethod("setGlobalId", new Class[] {Integer.class} ));
+			GSMethodForeign meth = new GSMethodForeign();
+			meth.getMethod = cl.getMethod("getGlobalId", new Class[] {});
+			meth.setMethod = cl.getMethod("setGlobalId", new Class[] {Integer.class} );
+			meth.tableName = "attachable_object";
+			meth.attribName = "global_id";
+			meth.objectClass = AttachableObject.class;
+			meth.show = false;
+			this.addAttribute("GlobalId", meth);
+
+//			this.addAttribute("LehrmittelKategorieId",cl.getMethod("getLehrmittelKategorieId", new Class[] {}), cl.getMethod("setLehrmittelKategorieId", new Class[] {Integer.class} ));
+			meth = new GSMethodForeign();
+			meth.getMethod = cl.getMethod("getLehrmittelKategorieId", new Class[] {});
+			meth.setMethod = cl.getMethod("setLehrmittelKategorieId", new Class[] {Integer.class} );
+			meth.tableName = "lehrmittel_kategorie";
+			meth.attribName = "id";
+			meth.objectClass = LehrmittelKategorie.class;
+			this.addAttribute("LehrmittelKategorie", meth);
+			
 			this.addAttribute("Name",cl.getMethod("getName", new Class[] {}), cl.getMethod("setName", new Class[] {String.class} ));
 			this.addAttribute("Beschreibung",cl.getMethod("getDescription", new Class[] {}), cl.getMethod("setDescription", new Class[] {String.class} ));
 			this.addAttribute("URL/File Link",cl.getMethod("getFileLink", new Class[] {}), cl.getMethod("setFileLink", new Class[] {String.class} ));

@@ -2,6 +2,7 @@ package autopsi.database.table;
 
 import net.jini.core.entry.Entry;
 import autopsi.database.dao.GenericDataObject;
+import autopsi.gui.component.GSMethodForeign;
 import autopsi.gui.component.GenericData;
 
 public class Lva extends GenericData implements Entry,GenericDataObject {
@@ -19,13 +20,41 @@ public class Lva extends GenericData implements Entry,GenericDataObject {
 	public Lva(){
 		Class cl = this.getClass();
 		try{
-			this.addAttribute("GlobalId",cl.getMethod("getGlobalId", new Class[] {}), cl.getMethod("setGlobalId", new Class[] {Integer.class} ));
-//			this.addAttribute("KategorieId",cl.getMethod("getKategorieId", new Class[] {}), cl.getMethod("setKategorieId", new Class[] {Integer.class} ));
+//			this.addAttribute("GlobalId",cl.getMethod("getGlobalId", new Class[] {}), cl.getMethod("setGlobalId", new Class[] {Integer.class} ));
+			GSMethodForeign meth = new GSMethodForeign();
+			meth.getMethod = cl.getMethod("getGlobalId", new Class[] {});
+			meth.setMethod = cl.getMethod("setGlobalId", new Class[] {Integer.class} );
+			meth.tableName = "attachable_object";
+			meth.attribName = "global_id";
+			meth.objectClass = AttachableObject.class;
+			meth.show = false;
+			this.addAttribute("GlobalId", meth);
+			
+			//			this.addAttribute("KategorieId",cl.getMethod("getKategorieId", new Class[] {}), cl.getMethod("setKategorieId", new Class[] {Integer.class} ));
 			this.addAttribute("Titel",cl.getMethod("getTitle", new Class[] {}), cl.getMethod("setTitle", new Class[] {String.class} ));
-			this.addAttribute("LVA-Typ",cl.getMethod("getType", new Class[] {}), cl.getMethod("setType", new Class[] {Integer.class} ));
+			
+			
+//			this.addAttribute("LVA-Typ",cl.getMethod("getType", new Class[] {}), cl.getMethod("setType", new Class[] {Integer.class} ));
+			meth = new GSMethodForeign();
+			meth.getMethod = cl.getMethod("getType", new Class[] {});
+			meth.setMethod = cl.getMethod("setType", new Class[] {Integer.class} );
+			meth.tableName = "lva_kategorie";
+			meth.attribName = "id";
+			meth.objectClass = LvaKategorie.class;
+			this.addAttribute("Lva Kategorie", meth);
+			
 			this.addAttribute("Beschreibung",cl.getMethod("getDescription", new Class[] {}), cl.getMethod("setDescription", new Class[] {String.class} ));
 			this.addAttribute("LVA-Nr.",cl.getMethod("getLvaNr", new Class[] {}), cl.getMethod("setLvaNr", new Class[] {String.class} ));
-			this.addAttribute("Uni-Id",cl.getMethod("getUniId", new Class[] {}), cl.getMethod("setUniId", new Class[] {Integer.class} ));
+			
+//			this.addAttribute("Uni-Id",cl.getMethod("getUniId", new Class[] {}), cl.getMethod("setUniId", new Class[] {Integer.class} ));
+			meth = new GSMethodForeign();
+			meth.getMethod = cl.getMethod("getUniId", new Class[] {});
+			meth.setMethod = cl.getMethod("setUniId", new Class[] {Integer.class} );
+			meth.tableName = "universitaet";
+			meth.attribName = "id";
+			meth.objectClass = Universitaet.class;
+			this.addAttribute("Universitaet", meth);
+			
 		}
 		catch (Exception e){
 			System.out.println("Fehler beim Erstellen des LVA-Objekts::"+e.toString());
