@@ -3,6 +3,7 @@ package autopsi.gui.component;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.sql.Array;
@@ -10,9 +11,12 @@ import java.sql.Date;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
+import javax.swing.BorderFactory;
+import javax.swing.BoxLayout;
 import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.border.Border;
 import javax.swing.text.MaskFormatter;
 
 public class DateEditPlugin extends EditPlugin implements FocusListener {
@@ -26,11 +30,11 @@ public class DateEditPlugin extends EditPlugin implements FocusListener {
 	
 	public DateEditPlugin(){
 		panel = new JPanel();
+		this.panel.setLayout(new FlowLayout(FlowLayout.LEADING));
 		this.panel.setAlignmentY(Component.LEFT_ALIGNMENT);
-		this.panel.setAlignmentX(Component.LEFT_ALIGNMENT);
-		this.panel.setBackground(new Color(255,0,0));
+//		this.panel.setBackground(new Color(255,0,0));
 		dateEdit = new JFormattedTextField(createFormatter("##-##-####"));
-		dateEdit.setPreferredSize(new Dimension(200, dateEdit.getPreferredSize().height));
+		dateEdit.setPreferredSize(new Dimension(100,dateEdit.getPreferredSize().height));
 		label = new JLabel();
 		dateEdit.addFocusListener(this);
 		panel.add(label);

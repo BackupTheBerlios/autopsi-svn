@@ -1,6 +1,8 @@
 package autopsi.gui.component;
 
 import java.awt.Component;
+
+import javax.swing.BoxLayout;
 import javax.swing.JTextField;
 import javax.swing.JPanel;
 import javax.swing.JLabel;
@@ -23,7 +25,7 @@ public class DoubleEditPlugin extends EditPlugin implements FocusListener{
 //		System.out.println("CREATED DoubleEditPlugin");
 		panel = new JPanel();
 		this.panel.setAlignmentY(Component.LEFT_ALIGNMENT);
-		this.panel.setAlignmentX(Component.LEFT_ALIGNMENT);
+		this.panel.setLayout(new BoxLayout(panel,BoxLayout.Y_AXIS));
 		this.panel.setBackground(new Color(255,0,0));
 		label = new JLabel();
 		doubleEdit = new JTextField();

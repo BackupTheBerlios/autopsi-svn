@@ -2,6 +2,8 @@ package autopsi.gui.component;
 
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.FlowLayout;
+
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
@@ -15,8 +17,8 @@ public class UnimplementedEditPlugin extends EditPlugin {
 	public UnimplementedEditPlugin(){
 		panel = new JPanel();
 		this.panel.setAlignmentY(Component.LEFT_ALIGNMENT);
-		this.panel.setAlignmentX(Component.LEFT_ALIGNMENT);
-		this.panel.setBackground(new Color(255,0,0));
+//		this.panel.setBackground(new Color(255,0,0));
+		this.panel.setLayout(new FlowLayout(FlowLayout.LEADING));
 		missingLabel = new JLabel();
 		panel.add(missingLabel);
 		missingLabel.setForeground(new Color(255,0,0));

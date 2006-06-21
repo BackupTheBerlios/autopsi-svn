@@ -1,11 +1,14 @@
 package autopsi.gui.component;
 
 import java.awt.Component;
+
+import javax.swing.BoxLayout;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.JLabel;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 
@@ -21,9 +24,10 @@ public class StringEditPlugin extends EditPlugin implements FocusListener{
 		panel = new JPanel();
 		this.label = new JLabel();
 		this.panel.add(this.label);
-//		this.panel.setAlignmentY(Component.LEFT_ALIGNMENT);
-//		this.panel.setAlignmentX(Component.LEFT_ALIGNMENT);
-		this.panel.setBackground(new Color(255,0,0));
+		this.panel.setLayout(new FlowLayout(FlowLayout.LEADING));
+		this.panel.setAlignmentY(Component.LEFT_ALIGNMENT);
+//		this.panel.setBackground(new Color(255,0,0));
+		this.panel.setLayout(new FlowLayout(FlowLayout.LEADING));
 		this.stringEdit = new JTextField(this.value);
 		stringEdit.setPreferredSize(new Dimension(200, stringEdit.getPreferredSize().height));
 		panel.add(this.stringEdit);

@@ -3,6 +3,7 @@ package autopsi.gui.component;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 
@@ -19,9 +20,9 @@ public class BooleanEditPlugin extends EditPlugin implements ItemListener{
 	
 	public BooleanEditPlugin(){
 		panel = new JPanel();
+		this.panel.setLayout(new FlowLayout(FlowLayout.LEADING));
 		this.panel.setAlignmentY(Component.LEFT_ALIGNMENT);
-		this.panel.setAlignmentX(Component.LEFT_ALIGNMENT);
-		this.panel.setBackground(new Color(255,0,0));
+//		this.panel.setBackground(new Color(255,0,0));
 		this.panel.setForeground(new Color(0,0,0));
 		checkBox = new JCheckBox();
 		panel.add(checkBox);

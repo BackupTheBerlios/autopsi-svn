@@ -2,6 +2,7 @@ package autopsi.gui.component;
 
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.FlowLayout;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
@@ -26,9 +27,9 @@ public class ForeignKeyEditPlugin extends EditPlugin implements ActionListener {
 	
 	public ForeignKeyEditPlugin(){
 		this.panel = new JPanel();
+		this.panel.setLayout(new FlowLayout(FlowLayout.LEADING));
 		this.panel.setAlignmentY(Component.LEFT_ALIGNMENT);
-		this.panel.setAlignmentX(Component.LEFT_ALIGNMENT);
-		this.panel.setBackground(new Color(255,0,0));
+//		this.panel.setBackground(new Color(255,0,0));
 		this.moreButton = new JButton("...");
 		this.moreButton.addActionListener(this);
 	}
