@@ -75,8 +75,6 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 	private JMenuItem menu_add_Lva;
 	private JLabel lblZeit;
 	private JPanel tab0;
-	private JLabel jLabel2;
-	private JTextField txtSuche;
 	private JPanel tab2;
 	private JTextPane lblBeschreibung;
 	private JTabbedPane infobar;
@@ -132,8 +130,6 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 	private JLabel tableBar;
 	private JList listTC2;
 	private JLabel jLabel7;
-	private JLabel jLabel6;
-	private JTextField txtSuche2;
 	private JLabel lblTerminContainer;
 	private JLabel lblOrt;
 	private JLabel lblDatum;
@@ -163,11 +159,13 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 	GregorianCalendar c = new GregorianCalendar();
 	GregorianCalendar c_marker = new GregorianCalendar();
 	DefaultComboBoxModel todayListModel = new DefaultComboBoxModel();
-	ListModel listTC2Model = new DefaultComboBoxModel(); //Listmodel für verwandte Termine
+	DefaultComboBoxModel listTC2Model = new DefaultComboBoxModel(); //Listmodel für verwandte Termine
+	DefaultComboBoxModel objectListModel = new DefaultComboBoxModel();
 	public boolean delete_ok = false;
 	protected ObjectSpaceSharer oss;
 	private String deletedObject = "";
-	
+	private Termin[] relatedTermine = null;
+	private int tcID;
 	
 	public mainFrame() {
 		super();
@@ -374,32 +372,14 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 					tab1.setBackground(new java.awt.Color(240,240,240));
 					tab1.setPreferredSize(new java.awt.Dimension(220, 336));
 					{
-						txtSuche = new JTextField();
-						tab1.add(txtSuche);
-						txtSuche.setBounds(70, 7, 168, 21);
-						txtSuche.setBorder(new LineBorder(new java.awt.Color(
-							0,
-							0,
-							0), 1, false));
-					}
-					{
-						jLabel2 = new JLabel();
-						tab1.add(jLabel2);
-						jLabel2.setText("Suche");
-						jLabel2.setBounds(7, 7, 56, 21);
-						jLabel2.setIcon(new ImageIcon("src/images/suche.GIF"));
-					}
-					{
 						objectScroller = new JScrollPane();
 						tab1.add(objectScroller);
-						objectScroller.setBounds(7, 70, 231, 154);
+						objectScroller.setBounds(7, 49, 231, 175);
 						objectScroller.setBorder(new LineBorder(
 							new java.awt.Color(0, 0, 0),
 							1,
 							false));
 						{
-							ListModel objectListModel = new DefaultComboBoxModel(
-								new String[] { "Item One", "Item Two" });
 							objectList = new JList();
 							objectScroller.setViewportView(objectList);
 							objectList.setModel(objectListModel);
@@ -409,16 +389,20 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 						showTObjects = new JCheckBox();
 						tab1.add(showTObjects);
 						showTObjects.setText("zeige Objekte des Termins");
-						showTObjects.setBounds(3, 35, 161, 14);
+						showTObjects.setBounds(3, 7, 161, 14);
 						showTObjects.setOpaque(false);
+						showTObjects.setSelected(true);
+						showTObjects.addMouseListener(this);
 					}
 					{
 						showTCObjects = new JCheckBox();
 						tab1.add(showTCObjects);
 						showTCObjects
 							.setText("zeige Objekte des Termincontainers");
-						showTCObjects.setBounds(3, 52, 224, 14);
+						showTCObjects.setBounds(3, 28, 224, 14);
 						showTCObjects.setOpaque(false);
+						showTCObjects.setSelected(true);
+						showTCObjects.addMouseListener(this);
 					}
 				}
 				{
@@ -427,54 +411,15 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 					tab2.setLayout(null);
 					tab2.setBackground(new java.awt.Color(240,240,240));
 					{
-						txtSuche2 = new JTextField();
-						tab2.add(txtSuche2);
-						txtSuche2.setBounds(70, 7, 168, 21);
-						txtSuche2.setBorder(new LineBorder(new java.awt.Color(0,0,0), 1, false));
-						txtSuche2.addKeyListener(new KeyListener() {
-
-							public void keyTyped(KeyEvent arg0) {
-								
-								ArrayList<String> liste = new ArrayList<String>();
-								listTC2.setModel(new DefaultComboBoxModel(new String[] {}));
-								for (int i = 0;i<listTC2Model.getSize();i++)
-								{
-									if(listTC2Model.getElementAt(i).toString().contains(txtSuche2.getText()))
-									{
-										liste.add(listTC2Model.getElementAt(i).toString());
-									}
-								}
-								String[] data = new String[liste.size()];
-								for (int j = 0;j<liste.size();j++)
-								{
-									data[j]=liste.get(j);
-								}		
-									listTC2.setModel(new DefaultComboBoxModel(data));	
-							}
-
-							public void keyPressed(KeyEvent arg0) {		
-							}
-
-							public void keyReleased(KeyEvent arg0) {	
-							}});
-					}
-					{
-						jLabel6 = new JLabel();
-						tab2.add(jLabel6);
-						jLabel6.setText("Suche");
-						jLabel6.setBounds(7, 7, 63, 21);
-						jLabel6.setIcon(new ImageIcon("src/images/suche.GIF"));
-					}
-					{
 						jLabel7 = new JLabel();
 						tab2.add(jLabel7);
 						jLabel7.setText("Termine dieses Termincontainers");
-						jLabel7.setBounds(7, 35, 182, 14);
+						jLabel7.setBounds(7, 7, 182, 14);
 					}
 					{
 						TCterminScroller = new JScrollPane();
 						tab2.add(TCterminScroller);
-						TCterminScroller.setBounds(7, 49, 231, 175);
+						TCterminScroller.setBounds(7, 28, 231, 196);
 						TCterminScroller.setBackground(new java.awt.Color(
 							255,
 							255,
@@ -1244,6 +1189,14 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 		{	
 			if(zoomBox.getSelectedObjects()!=null) tableZoom();		
 		}
+		if(arg0.getSource().equals(showTObjects))
+		{	
+				loadTerminData();
+		}
+		if(arg0.getSource().equals(showTObjects))
+		{	
+				loadTerminData();
+		}
 	}
 	/* Zoom-Funktion für das Hovern über die Tabelle
 	 * 
@@ -1506,8 +1459,18 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 	
 	public void updateInfoBar(boolean delete)
 	{
-		int tcID;
 		GenericDAO gdo = new GenericDAO();
+		List<GenericDataObject> delTC;
+		try
+		{
+			delTC = gdo.unsafeQuery("select * from termin where id = " + terminId,new Termin());
+			tcID = ((Termin)delTC.get(0)).getTerminContainerID();
+		}
+		catch(Exception e){}
+		
+		
+		
+	
 		if(delete)
 			{
 			todayListModel.removeAllElements();
@@ -1515,11 +1478,10 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 			
 			if(deletedObject.equals("termincontainer"))
 			{
-				List<GenericDataObject> delTC;
+				
 				try
 				{
-					delTC = gdo.unsafeQuery("select * from termin where id = " + terminId,new Termin());
-					tcID = ((Termin)delTC.get(0)).getTerminContainerID();
+					
 				
 					String query = "delete from " + deletedObject + " where id =" +tcID;
 					System.out.println(query);
@@ -1563,11 +1525,12 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 				}
 			}	
 		}
-		selection = -1;
-		terminId=-1;
+		
 		updateTable();
 		loadTerminList(false);
 		loadTerminData();
+		selection = -1;
+		terminId=-1;
 	}
 
 	public void windowOpened(WindowEvent arg0) {
@@ -1746,6 +1709,122 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 					{
 						System.out.println("cast error");
 					}	
+					
+					query = "select * from termin where termincontainer_id="+showTermin.getTerminContainerID()+" order by date";
+					data = igdao.unsafeQuery(query,new Termin());		
+					relatedTermine = new Termin[data.size()];
+					Termin rTermin;
+					
+					listTC2Model.removeAllElements();
+					for(int i=0;i<data.size();i++)
+					{
+						
+						rTermin = (Termin)data.get(i);
+						relatedTermine[i]=rTermin;
+						
+						String datum = rTermin.getDate().toString();
+						listTC2Model.addElement(datum.substring(8,10)+"-"+datum.substring(5,7)+"-"+datum.substring(0,4)+ ":  " +datum.substring(11,16)+"  "+rTermin.getSecondaryTitle().toString());
+					}
+					
+					objectListModel.removeAllElements();
+					if(showTObjects.getSelectedObjects()!=null)
+					{
+						String tablename="";
+						int globalID;
+						List<GenericDataObject> list1;
+						List<GenericDataObject> list2;
+						list1 = gdo.unsafeQuery("select * from anhaengen_termin where termin_id ="+terminId,new Anhaengen_termin());
+						for(int i = 0;i<list1.size();i++)
+						{
+							Anhaengen_termin at = (Anhaengen_termin)list1.get(i);
+							tablename = at.getTable_Name().toLowerCase();
+							globalID = at.getGlobalId();
+							if(tablename.equals("kontakt")){
+								list2 = gdo.unsafeQuery("select * from kontakt where global_id = " + globalID,new Kontakt());
+								Kontakt k = (Kontakt)list2.get(0);
+								objectListModel.addElement(k.getPrename() + " " + k.getSurname());
+							}
+							if(tablename.equals("notiz")){
+								list2 = gdo.unsafeQuery("select * from notiz where global_id = " + globalID,new Notiz());
+								Notiz n = (Notiz)list2.get(0);
+								objectListModel.addElement(n.getTitle() + ":   " + n.getNote());
+							}
+							if(tablename.equals("pruefung")){
+								list2 = gdo.unsafeQuery("select * from " + table + " where global_id = "+ globalID,new Pruefung());
+								Lva l = new Lva();
+								Pruefung p = ((Pruefung)list2.get(0));
+								list2 = gdo.unsafeQuery("select * from lva where global_id = " + p.getLvaId(),new Lva());
+								l= (Lva)list2.get(0);
+								String pr = l.getLvaNr() + " - "  + l.getTitle() + " - "+ p.getExaminer()+ " : " + p.getGrade();
+								
+								objectListModel.addElement(pr);
+							}
+							if(tablename.equals("lehrmittel")){
+								list2 = gdo.unsafeQuery("select * from lehrmittel where global_id = " + globalID,new Lehrmittel());
+								String leh = ((Lehrmittel)list2.get(0)).getName();
+								objectListModel.addElement(leh);
+							}
+							if(tablename.equals("lva")){
+								list2 = gdo.unsafeQuery("select * from lva where global_id = " + globalID,new Lva());
+								String lva = "LVA-Nr.: " + ((Lva)list2.get(0)).getLvaNr()+",         Titel: " + ((Lva)list2.get(0)).getTitle(); 
+								objectListModel.addElement(lva);
+								
+							}
+						}
+					
+					
+					
+					
+					}
+					if(showTCObjects.getSelectedObjects()!=null)
+					{
+						String tablename="";
+						int globalID;
+						List<GenericDataObject> list1;
+						List<GenericDataObject> list2;
+						list1 = gdo.unsafeQuery("select * from anhaengen_termincontainer where termincontainer_id ="+tcID,new Anhaengen_termincontainer());
+						System.out.println(tcID + ";   showTCObject size::::"+list1.size());
+						for(int i = 0;i<list1.size();i++)
+						{
+							Anhaengen_termincontainer at = (Anhaengen_termincontainer)list1.get(i);
+							tablename = at.getTable_Name().toLowerCase();
+							globalID = at.getGlobalId();
+							if(tablename.equals("kontakt")){
+								list2 = gdo.unsafeQuery("select * from kontakt where global_id = " + globalID,new Kontakt());
+								Kontakt k = (Kontakt)list2.get(0);
+								objectListModel.addElement(k.getPrename() + " " + k.getSurname());
+							}
+							if(tablename.equals("notiz")){
+								list2 = gdo.unsafeQuery("select * from notiz where global_id = " + globalID,new Notiz());
+								Notiz n = (Notiz)list2.get(0);
+								objectListModel.addElement(n.getTitle() + ":   " + n.getNote());
+							}
+							if(tablename.equals("pruefung")){
+								list2 = gdo.unsafeQuery("select * from " + table + " where global_id = "+ globalID,new Pruefung());
+								Lva l = new Lva();
+								Pruefung p = ((Pruefung)list2.get(0));
+								list2 = gdo.unsafeQuery("select * from lva where global_id = " + p.getLvaId(),new Lva());
+								l= (Lva)list2.get(0);
+								String pr = l.getLvaNr() + " - "  + l.getTitle() + " - "+ p.getExaminer()+ " : " + p.getGrade();
+								
+								objectListModel.addElement(pr);
+							}
+							if(tablename.equals("lehrmittel")){
+								list2 = gdo.unsafeQuery("select * from lehrmittel where global_id = " + globalID,new Lehrmittel());
+								String leh = ((Lehrmittel)list2.get(0)).getName();
+								objectListModel.addElement(leh);
+							}
+							if(tablename.equals("lva")){
+								list2 = gdo.unsafeQuery("select * from lva where global_id = " + globalID,new Lva());
+								String lva = "LVA-Nr.: " + ((Lva)list2.get(0)).getLvaNr()+",         Titel: " + ((Lva)list2.get(0)).getTitle(); 
+								objectListModel.addElement(lva);
+								
+							}
+						}
+					}
+					
+					
+					
 				}		
 			}
 			catch(Exception ex) {System.out.println("error: " + ex.toString());}		
@@ -1757,6 +1836,8 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 			lblBeschreibung.setText("");
 			lblTerminContainer.setText("");
 			lblTermin.setText("");
+			listTC2.removeAll();
+			objectList.removeAll();
 		}
 	}
 

@@ -97,8 +97,6 @@ public class EditTerminContainerFrame extends javax.swing.JFrame implements java
 	private JButton editTermin;
 	private JButton deleteTermin;
 	private JButton newTermin;
-	private JLabel jLabel6;
-	private JLabel jLabel5;
 	private JTextField sucheTermin_field;
 
 	private JButton open_button;
@@ -112,8 +110,6 @@ public class EditTerminContainerFrame extends javax.swing.JFrame implements java
 	private JButton add_group;
 	private JLabel jLabel4;
 	private JButton edit_group;
-	private JFormattedTextField endDate_field;
-	private JFormattedTextField beginDate_field;
 	private JComboBox jGroupBox;
 	private JLabel jLabel1;
 	private JPanel jPanel3;
@@ -466,18 +462,6 @@ public class EditTerminContainerFrame extends javax.swing.JFrame implements java
 						});
 					}
 					{
-						jLabel5 = new JLabel();
-						jPanel2.add(jLabel5);
-						jLabel5.setText("Datum eingrenzen von (TT-MM-JJJJ)");
-						jLabel5.setBounds(7, 32, 196, 28);
-					}
-					{
-						jLabel6 = new JLabel();
-						jPanel2.add(jLabel6);
-						jLabel6.setText("bis");
-						jLabel6.setBounds(294, 35, 14, 21);
-					}
-					{
 						newTermin = new JButton();
 						jPanel2.add(newTermin);
 						newTermin.setBounds(210, 238, 42, 28);
@@ -517,7 +501,7 @@ public class EditTerminContainerFrame extends javax.swing.JFrame implements java
 					{
 						jScrollPane1 = new JScrollPane();
 						jPanel2.add(jScrollPane1);
-						jScrollPane1.setBounds(7, 63, 406, 168);
+						jScrollPane1.setBounds(7, 35, 406, 196);
 						jScrollPane1.setBorder(new LineBorder(new java.awt.Color(0,0,0), 1, false));
 						jScrollPane1.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 						{
@@ -525,18 +509,6 @@ public class EditTerminContainerFrame extends javax.swing.JFrame implements java
 							jScrollPane1.setViewportView(terminList);
 							terminList.setModel(terminModel);
 						}
-					}
-					{
-						beginDate_field = new JFormattedTextField(createFormatter("##-##-####"));
-						jPanel2.add(beginDate_field);
-						beginDate_field.setBounds(189, 35, 98, 21);
-						beginDate_field.setBorder(new LineBorder(new java.awt.Color(0,0,0), 1, false));
-					}
-					{
-						endDate_field = new JFormattedTextField(createFormatter("##-##-####"));
-						jPanel2.add(endDate_field);
-						endDate_field.setBounds(315, 35, 98, 21);
-						endDate_field.setBorder(new LineBorder(new java.awt.Color(0,0,0), 1, false));
 					}
 				
 				}
