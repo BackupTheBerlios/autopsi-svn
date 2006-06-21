@@ -1,5 +1,6 @@
 package autopsi.gui.component;
 
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.event.ItemEvent;
@@ -18,6 +19,10 @@ public class BooleanEditPlugin extends EditPlugin implements ItemListener{
 	
 	public BooleanEditPlugin(){
 		panel = new JPanel();
+		this.panel.setAlignmentY(Component.LEFT_ALIGNMENT);
+		this.panel.setAlignmentX(Component.LEFT_ALIGNMENT);
+		this.panel.setBackground(new Color(255,0,0));
+		this.panel.setForeground(new Color(0,0,0));
 		checkBox = new JCheckBox();
 		panel.add(checkBox);
 		checkBox.addItemListener(this);

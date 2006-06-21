@@ -1,5 +1,6 @@
 package autopsi.gui.component;
 
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.event.FocusEvent;
@@ -25,6 +26,9 @@ public class TimestampEditPlugin extends EditPlugin implements FocusListener{
 	
 	public TimestampEditPlugin(){
 		panel = new JPanel();
+		this.panel.setAlignmentY(Component.LEFT_ALIGNMENT);
+		this.panel.setAlignmentX(Component.LEFT_ALIGNMENT);
+		this.panel.setBackground(new Color(255,0,0));
 		dateEdit = new JFormattedTextField(createFormatter("##:##,##-##-####"));
 		dateEdit.setPreferredSize(new Dimension(200, dateEdit.getPreferredSize().height));
 		label = new JLabel();

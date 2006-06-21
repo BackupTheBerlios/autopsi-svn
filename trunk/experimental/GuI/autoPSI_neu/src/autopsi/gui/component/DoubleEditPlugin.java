@@ -22,6 +22,9 @@ public class DoubleEditPlugin extends EditPlugin implements FocusListener{
 	public DoubleEditPlugin(){
 //		System.out.println("CREATED DoubleEditPlugin");
 		panel = new JPanel();
+		this.panel.setAlignmentY(Component.LEFT_ALIGNMENT);
+		this.panel.setAlignmentX(Component.LEFT_ALIGNMENT);
+		this.panel.setBackground(new Color(255,0,0));
 		label = new JLabel();
 		doubleEdit = new JTextField();
 		doubleEdit.setPreferredSize(new Dimension(200, doubleEdit.getPreferredSize().height));

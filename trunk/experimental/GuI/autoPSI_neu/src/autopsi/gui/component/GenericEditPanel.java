@@ -1,5 +1,6 @@
 package autopsi.gui.component;
 
+import java.awt.BorderLayout;
 import java.awt.Component;
 import java.sql.Timestamp;
 import java.util.Iterator;
@@ -10,6 +11,7 @@ import java.util.HashMap;
 import java.util.Set;
 import java.awt.GridLayout;
 
+import javax.swing.BoxLayout;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -35,7 +37,7 @@ public class GenericEditPanel extends JPanel {
 		panel = new JPanel();
 		this.parentFrame = parentFrame;
 		this.add(panel);
-		panel.setLayout(new GridLayout(0, 1));
+		panel.setLayout(new BoxLayout(panel,BoxLayout.Y_AXIS));
 		setDefaultEditors();
 	}
 	
@@ -191,7 +193,7 @@ public class GenericEditPanel extends JPanel {
 			while(iter.hasNext()){
 				GSMethod method = iter.next();
 				EditPlugin plugin = methods.get(method);
-				panel.add( plugin.getView() );
+				panel.add( plugin.getView());
 			}
 		}
 		catch (Exception e){

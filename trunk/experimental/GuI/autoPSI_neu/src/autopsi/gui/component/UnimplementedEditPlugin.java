@@ -14,6 +14,9 @@ public class UnimplementedEditPlugin extends EditPlugin {
 	
 	public UnimplementedEditPlugin(){
 		panel = new JPanel();
+		this.panel.setAlignmentY(Component.LEFT_ALIGNMENT);
+		this.panel.setAlignmentX(Component.LEFT_ALIGNMENT);
+		this.panel.setBackground(new Color(255,0,0));
 		missingLabel = new JLabel();
 		panel.add(missingLabel);
 		missingLabel.setForeground(new Color(255,0,0));

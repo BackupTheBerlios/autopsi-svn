@@ -21,6 +21,9 @@ public class StringEditPlugin extends EditPlugin implements FocusListener{
 		panel = new JPanel();
 		this.label = new JLabel();
 		this.panel.add(this.label);
+//		this.panel.setAlignmentY(Component.LEFT_ALIGNMENT);
+//		this.panel.setAlignmentX(Component.LEFT_ALIGNMENT);
+		this.panel.setBackground(new Color(255,0,0));
 		this.stringEdit = new JTextField(this.value);
 		stringEdit.setPreferredSize(new Dimension(200, stringEdit.getPreferredSize().height));
 		panel.add(this.stringEdit);
