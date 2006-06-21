@@ -1216,11 +1216,7 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 		if(arg0.getSource().equals(showTObjects))
 		{	
 				loadTerminData();
-		}
-		if(arg0.getSource().equals(showTObjects))
-		{	
-				loadTerminData();
-		}
+		}		
 		if(arg0.getSource().equals(listTC2))
 		{	
 				this.doubleClickCounter = 0;
