@@ -83,7 +83,7 @@ public class WocheTM extends AbstractTableModel {
 		
 		List<Termin> ret = new ArrayList<Termin>();
 		Termin ter = new Termin();
-		ter.setSecondaryTitle(stamp.toString().substring(0,10));
+		ter.setDate(stamp);
 		ret.add(ter);
 		
 		for (int i = 0;i<termine.size();i++)
