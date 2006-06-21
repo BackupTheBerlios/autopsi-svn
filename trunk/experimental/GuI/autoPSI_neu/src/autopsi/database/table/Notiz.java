@@ -18,14 +18,14 @@ public class Notiz extends GenericData implements Entry,GenericDataObject {
 	public Notiz(){
 		Class cl = this.getClass();
 		try{
-//			this.addAttribute("GlobalId",cl.getMethod("getGlobalId", new Class[] {}), cl.getMethod("setGlobalId", new Class[] {Integer.class} ));
-			GSMethodForeign meth = new GSMethodForeign();
-			meth.getMethod = cl.getMethod("getGlobalId", new Class[] {});
-			meth.setMethod = cl.getMethod("setGlobalId", new Class[] {Integer.class} );
-			meth.tableName = "attachable_object";
-			meth.attribName = "global_id";
-			meth.objectClass = AttachableObject.class;
-			this.addAttribute("GlobalId", meth);
+			this.addAttribute("GlobalId",cl.getMethod("getGlobalId", new Class[] {}), cl.getMethod("setGlobalId", new Class[] {Integer.class} ));
+//			GSMethodForeign meth = new GSMethodForeign();
+//			meth.getMethod = cl.getMethod("getGlobalId", new Class[] {});
+//			meth.setMethod = cl.getMethod("setGlobalId", new Class[] {Integer.class} );
+//			meth.tableName = "attachable_object";
+//			meth.attribName = "global_id";
+//			meth.objectClass = AttachableObject.class;
+//			this.addAttribute("GlobalId", meth);
 //			this.addAttribute("KategorieId", cl.getMethod("getKategorieId", new Class[] {}), cl.getMethod("setKategorieId", new Class[] {Integer.class}));
 			this.addAttribute("Titel",cl.getMethod("getTitle", new Class[] {}), cl.getMethod("setTitle", new Class[] {String.class} ));
 			this.addAttribute("Notiz",cl.getMethod("getNote", new Class[] {}), cl.getMethod("setNote", new Class[] {String.class} ));
