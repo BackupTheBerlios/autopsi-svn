@@ -47,7 +47,7 @@ public class WeekRenderer extends WeekDayCell implements TableCellRenderer
     		}
     	
     		Calendar cal = new GregorianCalendar();
-    		cal.set(Integer.parseInt(data[0].getSecondaryTitle().toString().substring(0,4)),Integer.parseInt(data[0].getSecondaryTitle().toString().substring(5,7))-1,Integer.parseInt(data[0].getSecondaryTitle().toString().substring(8,10)));
+    		cal.set(Integer.parseInt(data[0].getDate().toString().substring(0,4)),Integer.parseInt(data[0].getDate().toString().substring(5,7))-1,Integer.parseInt(data[0].getDate().toString().substring(8,10)));
     		Date dat = new Date(cal.getTimeInMillis());
     		String title = converter.toShort(dat.toString());
     		

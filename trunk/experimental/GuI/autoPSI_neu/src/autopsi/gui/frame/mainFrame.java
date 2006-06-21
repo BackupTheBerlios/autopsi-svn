@@ -1495,7 +1495,8 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 								" " + currentValue[i].getSecondaryTitle();
 			todayListModel.addElement(terminItem);
 		}	
-		if(viewMonth) lblToday.setText()
+		if(viewMonth) lblToday.setText("heutige Termine:");
+		else lblToday.setText("Termine zwischen "+ table.getSelectedRow()+9+";00 und "+table.getSelectedRow()+10+":00");
 	}
 	
 	public void updateInfoBar(boolean delete)
