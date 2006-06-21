@@ -10,7 +10,7 @@ import javax.swing.JButton;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-
+import javax.swing.JTextPane;
 
 /**
 * This code was edited or generated using CloudGarden's Jigloo
@@ -40,6 +40,7 @@ public class SecurityDialog extends javax.swing.JDialog implements ActionListene
 	private JButton abort_button;
 	private String title = "";
 	private String text = "";
+	private JTextPane textpane;
 	private boolean ok = false;
 	private mainFrame owner;
 
@@ -77,11 +78,11 @@ public class SecurityDialog extends javax.swing.JDialog implements ActionListene
 				this.setAlwaysOnTop(true);
 				this.setTitle(title);
 				getContentPane().setLayout(null);
+				getContentPane().setBackground(new java.awt.Color(255,255,255));
 				{
 					textField = new JLabel();
 					getContentPane().add(textField);
-					textField.setText(text);
-					textField.setBounds(7, 14, 357, 35);			
+					textField.setBounds(7, 14, 35, 35);			
 					textField.setIcon(new ImageIcon("src/images/warning.GIF"));
 					textField.setVisible(true);
 				}
@@ -98,6 +99,14 @@ public class SecurityDialog extends javax.swing.JDialog implements ActionListene
 					ok_button.setText("Ja");
 					ok_button.setBounds(301, 70, 63, 28);
 					ok_button.addActionListener(this);
+				}
+				{
+					textpane = new JTextPane();
+					getContentPane().add(textpane);
+					textpane.setBounds(49, 7, 315, 56);
+					textpane.setOpaque(false);
+					textpane.setText(text);
+					textpane.setEditable(false);
 				}
 			}
 			this.setSize(379, 135);
