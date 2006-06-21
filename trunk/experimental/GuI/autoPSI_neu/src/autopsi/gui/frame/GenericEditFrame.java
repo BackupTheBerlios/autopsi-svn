@@ -1,6 +1,7 @@
 package autopsi.gui.frame;
 
 import java.awt.BorderLayout;
+import java.util.List;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -25,6 +26,7 @@ public class GenericEditFrame extends JDialog implements ActionListener {
 	protected GenericDAO gdao = null;
 	protected GenericDataObject lookupObject = null;
 	protected JFrame owner;
+	protected boolean insertIntoTable = true;
 	
 	
 	public GenericEditFrame(){
@@ -70,6 +72,14 @@ public class GenericEditFrame extends JDialog implements ActionListener {
 		this.setSize(400, 600);
 		cancelButton.addActionListener(this);
 		okButton.addActionListener(this);
+	}
+	
+	public void setInsertIntoTable(boolean newInsertIntoTable){
+		this.insertIntoTable = newInsertIntoTable;
+	}
+	
+	public boolean getInsertIntoTable(){
+		return this.insertIntoTable;
 	}
 	
 	public void setObjectToEdit(GenericDataObject obj, boolean newObject){
@@ -122,6 +132,10 @@ public class GenericEditFrame extends JDialog implements ActionListener {
 			this.dispose();
 		}
 		if (arg0.getSource().equals(okButton)){
+			if (!this.insertIntoTable){
+				this.dispose();
+				return;
+			}
 			this.canceled = false;
 			if (this.lookupObject == null){
 				try{
