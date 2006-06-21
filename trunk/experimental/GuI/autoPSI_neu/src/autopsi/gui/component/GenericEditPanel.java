@@ -79,25 +79,23 @@ public class GenericEditPanel extends JPanel {
 		Iterator<GSMethod> iter = s.iterator();
 		while(iter.hasNext()){
 			GSMethod meth = iter.next();
-//			if (meth instanceof GSMethodNormal){
+			if ( (meth instanceof GSMethodNormal) || (meth instanceof GSMethodForeign)){
 				try{
-	//				System.out.println("GenericEditPanel::updateEditedObject::invoke");
 					meth.setMethod.invoke(this.editedObject, methods.get(meth).getValue());
-	//				System.out.println("GenericEditPanel::methods.get(meth)::"+methods.get(meth).getValue().toString());
 				}
 				catch (Exception e){
 					System.out.println("updateEditedObject::"+e.toString());
 				}
-//			}
-//			if (meth instanceof GSMethodPrimary){
-//				try{
-//					meth.setMethod.invoke(this.editedObject, new Object[] {});
+			}
+			if (meth instanceof GSMethodPrimary){
+				try{
+					meth.setMethod.invoke(this.editedObject, new Object[] {null});
 //					meth.setMethod.invoke(this.editedObject, methods.get(meth).getValue());
-//				}
-//				catch (Exception e){
-//					System.out.println("GenericEditPanel.updateEditedObject::Konnte Primary Key nicht updaten::"+e.toString());
-//				}
-//			}
+				}
+				catch (Exception e){
+					System.out.println("GenericEditPanel.updateEditedObject::Konnte Primary Key nicht updaten::"+e.toString());
+				}
+			}
 		}
 	}
 	
@@ -139,6 +137,9 @@ public class GenericEditPanel extends JPanel {
 				((ForeignKeyEditPlugin)plug).setEditedAttrib(((GSMethodForeign)x).attribName);
 				((ForeignKeyEditPlugin)plug).setEditedClass(((GSMethodForeign)x).objectClass);
 				((ForeignKeyEditPlugin)plug).setParentFrame(this.parentFrame);
+			}
+			if (x instanceof GSMethodPrimary){
+				//do nothing
 			}
 			methods.put(x, plug);
 
