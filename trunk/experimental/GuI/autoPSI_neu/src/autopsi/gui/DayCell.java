@@ -90,7 +90,7 @@ public class DayCell extends javax.swing.JPanel {
 			this.setLayout(thisLayout);
 			this.setPreferredSize(new java.awt.Dimension(155, 116));
 			this.setSize(92,76);
-			this.setBackground(new java.awt.Color(0,0,64));
+			this.setBackground(new java.awt.Color(0,0,80));
 			this.setBorder(new LineBorder(new java.awt.Color(0,0,0), 1, false));
 			{
 				
