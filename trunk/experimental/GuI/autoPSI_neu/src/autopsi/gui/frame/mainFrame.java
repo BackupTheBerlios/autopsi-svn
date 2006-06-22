@@ -79,6 +79,7 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 	private JPanel tab2;
 	private JTextPane lblBeschreibung;
 	private JTabbedPane infobar;
+	private JLabel tableBase;
 	private JLabel toolBar;
 	private JCheckBox zoomBox;
 	private JLabel button_editTC;
@@ -226,7 +227,7 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 			{
 				statusBar = new JLabel();
 				getContentPane().add(statusBar);
-				statusBar.setBounds(7, 525, 672, 21);
+				statusBar.setBounds(7, 553, 672, 21);
 				statusBar.setBackground(new java.awt.Color(192,192,192));
 				statusBar.setIcon(new ImageIcon("src/images/info.GIF"));
 				statusBar.setBorder(BorderFactory.createBevelBorder(BevelBorder.LOWERED));
@@ -242,14 +243,14 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 					lblToday = new JLabel();
 					today.add(lblToday);
 					lblToday.setText("heutige Termine:");
-					lblToday.setBounds(7, 7, 238, 14);
+					lblToday.setBounds(7, 0, 238, 14);
 					lblToday.setForeground(new java.awt.Color(255,255,255));
 				}
 				{
 					todayScrollPane = new JScrollPane();
 					
 					today.add(todayScrollPane);
-					todayScrollPane.setBounds(7, 21, 238, 133);
+					todayScrollPane.setBounds(7, 14, 238, 147);
 					todayScrollPane.setBackground(new java.awt.Color(255,255,255));
 					todayScrollPane.setBorder(new LineBorder(new java.awt.Color(0,0,0), 1, false));
 					{
@@ -266,13 +267,13 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 				jLabel1 = new JLabel();
 				getContentPane().add(jLabel1);
 				jLabel1.setText("Springe zu Datum: (TT-MM-JJJJ)");
-				jLabel1.setBounds(686, 525, 168, 21);
+				jLabel1.setBounds(686, 553, 168, 21);
 			}
 			{
 				dateJumper = new JFormattedTextField(createFormatter("##-##-####"));
 				getContentPane().add(dateJumper);
 				dateJumper.setText("");
-				dateJumper.setBounds(854, 525, 84, 21);
+				dateJumper.setBounds(854, 553, 84, 21);
 				dateJumper.setBorder(new LineBorder(new java.awt.Color(0,0,0), 1, false));
 				dateJumper.addKeyListener(new KeyListener(){
 
@@ -295,6 +296,8 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 								}			
 								setTimeSpace(c);
 								layoutTable();
+								loadTerminList(false,c);
+								updateDateIndicator();
 							}
 							catch(Exception ex)
 							{
@@ -317,9 +320,10 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 
 				infobar = new JTabbedPane();
 				getContentPane().add(infobar);
-				infobar.setBounds(2, 259, 252, 259);
-				infobar.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
-				infobar.setBackground(new java.awt.Color(102, 136, 174));
+				infobar.setBounds(2, 273, 252, 252);
+				infobar.setBorder(new LineBorder(new java.awt.Color(0,0,0), 1, false));
+				infobar.setBackground(new java.awt.Color(235,235,235));
+				infobar.setOpaque(true);
 				{
 					tab0 = new JPanel();
 					infobar.addTab("Termin-Info" + "", null, tab0, null);
@@ -330,7 +334,7 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 					{
 						lblBeschreibung = new JTextPane();
 						tab0.add(lblBeschreibung);
-						lblBeschreibung.setBounds(7, 112, 231, 112);
+						lblBeschreibung.setBounds(7, 112, 231, 84);
 						lblBeschreibung.setOpaque(false);
 						lblBeschreibung.setBorder(BorderFactory.createEtchedBorder(BevelBorder.LOWERED));
 					}
@@ -376,7 +380,7 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 					{
 						objectScroller = new JScrollPane();
 						tab1.add(objectScroller);
-						objectScroller.setBounds(7, 49, 231, 175);
+						objectScroller.setBounds(7, 49, 231, 140);
 						objectScroller.setBorder(new LineBorder(
 							new java.awt.Color(0, 0, 0),
 							1,
@@ -421,7 +425,7 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 					{
 						TCterminScroller = new JScrollPane();
 						tab2.add(TCterminScroller);
-						TCterminScroller.setBounds(7, 28, 231, 196);
+						TCterminScroller.setBounds(7, 28, 231, 161);
 						TCterminScroller.setBackground(new java.awt.Color(
 							255,
 							255,
@@ -461,21 +465,33 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 				jLabel3.setIcon(new ImageIcon("src/images/infoBar.png"));
 				jLabel3.setBounds(2, 19, 252, 56);
 				{
+					{
+						lblDatumShadow = new JLabel();
+					//	lblDatum.add(lblDatumShadow);
+						lblDatumShadow.setText("");
+						lblDatumShadow.setBounds(9, 9, 210, 28);
+						lblDatumShadow.setFont(new java.awt.Font("Tahoma",1,12));
+						lblDatumShadow.setForeground(new java.awt.Color(170,170,170));
+					}
 					lblDatum = new JLabel();
 					jLabel3.add(lblDatum);
-					lblDatum.setText("");
-					lblDatum.setBounds(7, 8, 210, 28);
-					lblDatum.setFont(new java.awt.Font("Tahoma",1,12));
-					lblDatum.setForeground(new java.awt.Color(0,0,0));
-				}
-				{
-					lblDatumShadow = new JLabel();
 					jLabel3.add(lblDatumShadow);
-					lblDatumShadow.setText("");
-					lblDatumShadow.setBounds(8, 9, 210, 28);
-					lblDatumShadow.setFont(new java.awt.Font("Tahoma",1,12));
-					lblDatumShadow.setForeground(new java.awt.Color(170,170,170));
+					lblDatum.setText("");
+					lblDatum.setBounds(8, 8, 210, 28);
+					lblDatum.setFont(new java.awt.Font("Tahoma", 1, 12));
+					lblDatum.setForeground(new java.awt.Color(0, 0, 0));
+					
 				}
+				
+				jLabel3 = new JLabel();
+				getContentPane().add(jLabel3);
+				jLabel3.setIcon(new ImageIcon("src/images/infoBar.png"));
+				jLabel3.setBounds(2, 247, 252, 56);
+				
+				jLabel3 = new JLabel();
+				getContentPane().add(jLabel3);
+				jLabel3.setIcon(new ImageIcon("src/images/infoBar2.png"));
+				jLabel3.setBounds(2, 496, 252, 56);
 			}
 			{
 				button_newTermin = new JLabel();
@@ -642,6 +658,12 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 				toolBar.setBounds(0, -5, 950, 35);
 			}
 			{
+				tableBase = new JLabel();
+				getContentPane().add(tableBase);
+				tableBase.setBounds(289, 503, 651, 42);
+				tableBase.setIcon(new ImageIcon("src/images/tableBar2.png"));
+			}
+			{
 				mainMenu = new JMenuBar();
 				setJMenuBar(mainMenu);
 				mainMenu.setPreferredSize(new java.awt.Dimension(892, 24));
@@ -778,7 +800,7 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 
 			}
 			pack();
-			this.setSize(950, 604);
+			this.setSize(953, 631);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -817,13 +839,8 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 			
 			try
 			{		
-				Calendar cal2 = new GregorianCalendar();
-	    		cal2.set(Integer.parseInt(currentValue[0].getDate().toString().substring(0,4)),Integer.parseInt(currentValue[0].getDate().toString().substring(5,7))-1,Integer.parseInt(currentValue[0].getDate().toString().substring(8,10)));
-	    		Date dat = new Date(cal2.getTimeInMillis());
-	    		String title = converter.toLong(dat.toString());
-	    		lblDatum.setText(title);
-	    		lblDatumShadow.setText(title);
-	    		loadList();
+				
+	    		loadTerminList(false,c_marker);
 
 	    		if(viewMonth) setModel("month");
 				else setModel("week");
@@ -1475,33 +1492,7 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 		}
 		return formatter;
 	}
-	
-	/*Liest Termine aus einer Tag-Zelle aus und füllt sie in die Today-Liste
-	 * 
-	 */
-	private void loadList()
-	{
-		todayListModel.removeAllElements();
-		currentValue = (Termin[])table.getValueAt(currentCell.x,currentCell.y);
 
-		for(int i = 1;i<currentValue.length;i++)
-		{
-			
-			String terminItem = currentValue[i].getDate().toString().substring(11,16) + 
-								" " + currentValue[i].getSecondaryTitle();
-			todayListModel.addElement(terminItem);
-		}	
-		if(viewMonth) lblToday.setText("heutige Termine:");
-		else
-			{
-			int sel = table.getSelectedRow();
-			if(sel==1)lblToday.setText("Termine zwischen 00:00 und 8:00");
-			else if(sel==15) lblToday.setText("Termine ab 21:00");
-			else lblToday.setText("Termine zwischen "+ (sel+6)+":00 und "+(sel+7)+":00");
-			
-			}
-	}
-	
 	public void updateInfoBar(boolean delete)
 	{
 		GenericDAO gdo = new GenericDAO();
@@ -1652,6 +1643,7 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 	public void loadTerminList(boolean first, GregorianCalendar g)
 	{
 		
+		
 			GregorianCalendar c1 = new GregorianCalendar();
 			
 			
@@ -1670,6 +1662,14 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 			c1.set(Calendar.MINUTE,59);
 			c1.set(Calendar.SECOND,59);
 			Timestamp t2 = new Timestamp(c1.getTimeInMillis());
+			
+			//Datumsanzeige setzen
+			Date d = new Date(c1.getTimeInMillis());
+			String t = converter.toLong(d.toString());
+			lblDatum.setText(t);
+			lblDatumShadow.setText(t);
+			
+			
 			
 			List<GenericDataObject> termine;
 			GenericDAO gdo = new GenericDAO();
