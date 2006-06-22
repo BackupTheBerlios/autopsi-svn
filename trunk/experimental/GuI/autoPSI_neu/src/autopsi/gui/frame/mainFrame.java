@@ -401,7 +401,8 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 						showTObjects.setBounds(3, 7, 161, 14);
 						showTObjects.setOpaque(false);
 						showTObjects.setSelected(true);
-						showTObjects.addMouseMotionListener(this);
+						showTObjects.addMouseListener(this);
+						
 					}
 					{
 						showTCObjects = new JCheckBox();
@@ -411,7 +412,7 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 						showTCObjects.setBounds(3, 28, 224, 14);
 						showTCObjects.setOpaque(false);
 						showTCObjects.setSelected(true);
-						showTCObjects.addMouseMotionListener(this);
+						showTCObjects.addMouseListener(this);
 					}
 				}
 				{
@@ -1821,9 +1822,12 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 						String datum = rTermin.getDate().toString();
 						listTC2Model.addElement(datum.substring(8,10)+"-"+datum.substring(5,7)+"-"+datum.substring(0,4)+ ":  " +datum.substring(11,16)+"  "+rTermin.getSecondaryTitle().toString());
 					}
+					
 					objectListModel.removeAllElements();
+					
 					if(showTObjects.getSelectedObjects()!=null)
 					{
+						System.out.println("show T Objects");
 						String tablename="";
 						int globalID;
 						List<GenericDataObject> list1;
@@ -1868,6 +1872,7 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 				    }
 					if(showTCObjects.getSelectedObjects()!=null)
 					{
+						System.out.println("show TC Objects");
 						String tablename="";
 						int globalID;
 						List<GenericDataObject> list1;
