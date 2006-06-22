@@ -1320,7 +1320,7 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 	/* Setzt das Layout für die Tabelle
 	 * 
 	 */
-	private void layoutTable()
+	public void layoutTable()
 	{
 		DefaultTableColumnModel cm = new DefaultTableColumnModel();
 		for (int i=0;i<7;i++)
@@ -1379,38 +1379,40 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 	 */
 	public void setTimeSpace(GregorianCalendar cal)
 	{
+		GregorianCalendar greg = new GregorianCalendar();
+		greg.setTime(cal.getTime());
 		Date dat = new Date(cal.getTimeInMillis());
 		if(viewMonth)
 		{
 			if(dat.toString().substring(0,3).equals("Tue"))
 			{
-				cal.set(Calendar.DAY_OF_MONTH, cal.get(Calendar.DAY_OF_MONTH)-1);
+				greg.set(Calendar.DAY_OF_MONTH, greg.get(Calendar.DAY_OF_MONTH)-1);
 			}
 			else if(dat.toString().substring(0,3).equals("Wed"))
 			{
-				cal.set(Calendar.DAY_OF_MONTH, cal.get(Calendar.DAY_OF_MONTH)-2);
+				greg.set(Calendar.DAY_OF_MONTH, greg.get(Calendar.DAY_OF_MONTH)-2);
 			}
 			else if(dat.toString().substring(0,3).equals("Thu"))
 			{
-				cal.set(Calendar.DAY_OF_MONTH, cal.get(Calendar.DAY_OF_MONTH)-3);
+				greg.set(Calendar.DAY_OF_MONTH, greg.get(Calendar.DAY_OF_MONTH)-3);
 			}
 			else if(dat.toString().substring(0,3).equals("Fri"))
 			{
-				cal.set(Calendar.DAY_OF_MONTH, cal.get(Calendar.DAY_OF_MONTH)-4);
+				greg.set(Calendar.DAY_OF_MONTH, greg.get(Calendar.DAY_OF_MONTH)-4);
 			}
 			else if(dat.toString().substring(0,3).equals("Sat"))
 			{
-				cal.set(Calendar.DAY_OF_MONTH, cal.get(Calendar.DAY_OF_MONTH)-5);
+				greg.set(Calendar.DAY_OF_MONTH, greg.get(Calendar.DAY_OF_MONTH)-5);
 			}
 			else if(dat.toString().substring(0,3).equals("Sun"))
 			{
-				cal.set(Calendar.DAY_OF_MONTH, cal.get(Calendar.DAY_OF_MONTH)-6);
+				greg.set(Calendar.DAY_OF_MONTH, greg.get(Calendar.DAY_OF_MONTH)-6);
 			}
 		}
-		cal.set(Calendar.HOUR_OF_DAY,0);
-		cal.set(Calendar.MINUTE,0);
-		tsBegin = new Timestamp(cal.getTimeInMillis());
-		calStart.setTime(cal.getTime());
+		greg.set(Calendar.HOUR_OF_DAY,0);
+		greg.set(Calendar.MINUTE,0);
+		tsBegin = new Timestamp(greg.getTimeInMillis());
+		calStart.setTime(greg.getTime());
 		calEnd.setTime(calStart.getTime()); //Endzeit auf Startzeit setzen
 		if(viewMonth) calEnd.set(Calendar.DAY_OF_MONTH, calStart.get(Calendar.DAY_OF_MONTH)+34); //Monatsansicht (35 Tage)
 		else calEnd.set(Calendar.DAY_OF_MONTH, calStart.get(Calendar.DAY_OF_MONTH)+6); //Wochenansicht (7 Tage)
@@ -1900,5 +1902,9 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 	public void setMarker(GregorianCalendar greg)
 	{
 		this.c_marker.setTime(greg.getTime());
+		c_marker.set(Calendar.HOUR_OF_DAY,0);
+		c_marker.set(Calendar.MINUTE,0);
+		c_marker.set(Calendar.SECOND,1);
+		System.out.println("c_marker set::: "+c_marker.getTime().toString());
 	}
 }
