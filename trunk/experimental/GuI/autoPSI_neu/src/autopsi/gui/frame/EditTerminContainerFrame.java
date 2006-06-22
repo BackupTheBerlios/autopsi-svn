@@ -366,17 +366,6 @@ public class EditTerminContainerFrame extends javax.swing.JFrame implements java
 					jPanel3.setBackground(new java.awt.Color(255,255,255));
 					jPanel3.setLayout(null);
 					{
-						jList1 = new JList();
-						jList1.setBounds(21, 14, 392, 210);
-						jList1.setBorder(new LineBorder(new java.awt.Color(0,0,0), 1, false));
-						jList1.setVisibleRowCount(1);
-						lm = new DefaultListModel();
-						jList1.setModel(lm);
-						jScrollPane = new JScrollPane(jList1);
-						jScrollPane.setBounds(21,14,392,210);
-						jPanel3.add(jScrollPane);
-					}
-					{
 						jAddObjectButton = new JButton();
 						jPanel3.add(jAddObjectButton);
 						jAddObjectButton.setText("Hinzufügen");
@@ -394,8 +383,23 @@ public class EditTerminContainerFrame extends javax.swing.JFrame implements java
 						open_button = new JButton();
 						jPanel3.add(open_button);
 						open_button.setText("Öffnen");
-						open_button.setBounds(21, 238, 70, 21);
+						open_button.setBounds(14, 238, 70, 21);
 						open_button.addMouseListener(this);
+					}
+					{
+						jList1 = new JList();
+						jPanel3.add(jList1);
+						jList1.setBounds(13, 15, 397, 208);
+						jList1.setBorder(new LineBorder(new java.awt.Color(
+							0,
+							0,
+							0), 1, false));
+						jList1.setVisibleRowCount(1);
+						lm = new DefaultListModel();
+						jList1.setModel(lm);
+						jScrollPane = new JScrollPane(jList1);
+						jScrollPane.setBounds(14, 14, 399, 210);
+						jPanel3.add(jScrollPane);
 					}
 
 				}
@@ -576,6 +580,7 @@ public class EditTerminContainerFrame extends javax.swing.JFrame implements java
 		if(arg0.getSource().equals(jAddObjectButton)){
 			InsertDialog id = new InsertDialog(this);
 			if(id.getIsOk()){
+				jDelObjectButton.setVisible(false);
 				Integer globalId = id.getAttachableObjectId();
 				List<GenericDataObject> list;
 				String table = id.getAttachableObjectTableName();
@@ -654,7 +659,7 @@ public class EditTerminContainerFrame extends javax.swing.JFrame implements java
 				obj = attachedObjects.get(index);
 				}catch(Exception e){
 					
-					System.out.println("Objekt ist noch nicht in der Datenbank");
+					showErrorDialog("Fehler!","Objekt konnte nicht geöffnet werden!");
 				}
 				GenericEditFrame gef = new GenericEditFrame();
 				if(obj instanceof Kontakt){
@@ -880,6 +885,14 @@ public class EditTerminContainerFrame extends javax.swing.JFrame implements java
 			System.err.println("formatter is bad: " + exc.getMessage());
 		}
 		return formatter;
+	}
+	
+	private void showErrorDialog(String title, String text)
+	{
+		InfoDialog info = new InfoDialog(this, title,text);
+		info.setLocation(this.getLocation().x+200,this.getLocation().y+200);
+		info.setModal(true);
+		info.setVisible(true);	
 	}
 	
 	public void loadObjectList(){
