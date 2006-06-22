@@ -127,7 +127,7 @@ public class EditTerminFrame extends javax.swing.JFrame implements java.awt.even
 	private boolean ok = false;
 	private GregorianCalendar cal=null;
 	private String tkat = "";
-	private mainFrame owner;
+	private JFrame owner;
 	List<GenericDataObject> group_data;
 	List<GenericDataObject> termin_kat_data;
 	List<GenericDataObject> termin_cont_data;
@@ -141,7 +141,7 @@ public class EditTerminFrame extends javax.swing.JFrame implements java.awt.even
 	List<GenericDataObject> id_list;
 	private int lastID = 0;
 	
-	public EditTerminFrame(mainFrame owner, GregorianCalendar cal, Integer id) {
+	public EditTerminFrame(JFrame owner, GregorianCalendar cal, Integer id) {
 		super();
 		this.ID = id;
 		this.cal = cal;
@@ -209,13 +209,14 @@ public class EditTerminFrame extends javax.swing.JFrame implements java.awt.even
 	
 	private void update(){
 		try{
+			
+			
 			try
 			{
 				SimpleDateFormat sf = new SimpleDateFormat("dd-MM-yyyy");
 				java.util.Date jumpDate = sf.parse(dateField.getText());
 				c = new GregorianCalendar();
-				c.setTime(jumpDate);
-			
+				c.setTime(jumpDate);		
 			}
 			catch(Exception ex)
 			{
@@ -282,7 +283,8 @@ public class EditTerminFrame extends javax.swing.JFrame implements java.awt.even
 			Termin vorlage = new Termin();
 			
 			
-			
+			if(owner instanceof mainFrame)
+			{
 			if (ID<0)
 			{
 				
@@ -323,8 +325,24 @@ public class EditTerminFrame extends javax.swing.JFrame implements java.awt.even
 			gdo.unsafeQuery(query,vorlage);
 			}
 			ok = true;
-			owner.updateTable();
-			owner.updateInfoBar(false);
+			
+				mainFrame actor = (mainFrame)owner;
+				actor.updateTable();
+				actor.updateInfoBar(false);
+		}
+	else if(owner instanceof EditTerminContainerFrame)
+	{
+		EditTerminContainerFrame actor = (EditTerminContainerFrame)owner;
+		Termin data = new Termin();
+		data.setSecondaryTitle(sec_title);
+		data.setDuration(duration);
+		data.setPlace(place);
+		data.setDescription(desc);
+		data.setDate(Timestamp.valueOf(date));
+		List<Termin> termine = new ArrayList<Termin>();
+		termine.add(data);
+		actor.updateTerminList(termine);
+	}
 			
 		}
 		catch (Exception e){
