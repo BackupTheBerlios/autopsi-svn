@@ -203,7 +203,6 @@ public class KontaktTableModel extends AbstractTableModel{
 	
 	public void setSuchKontakt (Kontakt suchKontakt){
 		this.suchKontakt=suchKontakt;
-		//fireDataChanged();
 	}
 	
 	public void setGroup(String gruppe){
@@ -211,7 +210,6 @@ public class KontaktTableModel extends AbstractTableModel{
 	}
 	
 	public int getColumnCount() {
-		System.out.println("colCount = " + columnName.length);
 		return columnName.length;
 	}
 	
@@ -223,12 +221,10 @@ public class KontaktTableModel extends AbstractTableModel{
 		}
 	}
 	public String getColumnName(int c) {
-		System.out.println("colName = " + columnName[c]);
 		return columnName[c];
 	}
 	
 	public Object getValueAt(int row, int col) {
-		//System.out.println("getValueAt: r="+row+", c="+col);
 		Kontakt kont = (Kontakt) kontakte.get(row);
 		if (kont==null)
 			return null;
