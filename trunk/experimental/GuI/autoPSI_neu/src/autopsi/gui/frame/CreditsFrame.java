@@ -67,6 +67,7 @@ public class CreditsFrame extends javax.swing.JDialog implements MouseListener {
 				getContentPane().setLayout(null);
 				this.setTitle("AutoPSI 1.0 - Personal Student Information v1.0");
 				getContentPane().setBackground(new java.awt.Color(0,0,64));
+				this.setResizable(false);
 				{
 					jLabel1 = new JLabel();
 					getContentPane().add(jLabel1);
