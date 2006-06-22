@@ -1022,7 +1022,7 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 			GraphicsEnvironment env = GraphicsEnvironment.getLocalGraphicsEnvironment();
 			GraphicsDevice gd = env.getDefaultScreenDevice();
 			DisplayMode dm = gd.getDisplayMode();
-			cf.setLocation(dm.getWidth()/2,dm.getHeight()/2);
+			cf.setLocation((dm.getWidth()-cf.getSize().width)/2,(dm.getHeight()-cf.getSize().height)/2);
 			cf.setVisible(true);
 		}
 		if(arg0.getSource().equals(table)){
