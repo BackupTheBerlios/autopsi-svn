@@ -17,7 +17,6 @@ import autopsi.javaspace.ServiceCommunicator;
 public class LehrmittelTableModel extends AbstractTableModel {
 
 	private static final long serialVersionUID = 8737097029189851737L;
-	public List <GenericDataObject> lehrmittels = new ArrayList<GenericDataObject>();
 	public List <GenericDataObject> lehrmittel = new ArrayList<GenericDataObject>();
 	public List <GenericDataObject> lastDeletedObjects =  new ArrayList<GenericDataObject>();
 	public IGenericDAO gdo;
@@ -34,7 +33,7 @@ public class LehrmittelTableModel extends AbstractTableModel {
 	private final String [] columnName = {"Name", "Beschreibung", "File Link"};
 	
 	public List<GenericDataObject> getLehrmittel() {
-		return this.lehrmittels;
+		return this.lehrmittel;
 	}
 	
 	private void readData() {
@@ -55,7 +54,7 @@ public class LehrmittelTableModel extends AbstractTableModel {
 					query += " AND ok.TITLE = '"+ this.group+"'";
 				}
 				//System.out.println(query);
-				this.lehrmittels =  gdo.unsafeQuery(query, suchLm);
+				this.lehrmittel =  gdo.unsafeQuery(query, suchLm);
 			}
 		} catch (Exception e){
 			System.out.println("AAARGH;"+e.toString());
@@ -63,10 +62,11 @@ public class LehrmittelTableModel extends AbstractTableModel {
 	}
 
 	public void readOnlineData(){
+		this.onlinesuche = true;
 		Lehrmittel temp = (Lehrmittel)this.ogdo.getObject(this.suchLm);
-		this.lehrmittels = new ArrayList<GenericDataObject>();
+		this.lehrmittel = new ArrayList<GenericDataObject>();
 		if (temp != null)
-			this.lehrmittels.add(temp);
+			this.lehrmittel.add(temp);
 	}
 	
 	public LehrmittelTableModel (){
@@ -161,9 +161,9 @@ public class LehrmittelTableModel extends AbstractTableModel {
 	}
 	
 	public void downloadObject(){
-		if (this.onlinesuche==true && this.lehrmittels.size() != 0) {
-			for (int i=0;i<this.lehrmittels.size();i++){
-				addLehrmittel(this.lehrmittels.get(i));
+		if (this.onlinesuche==true && this.lehrmittel.size() != 0) {
+			for (int i=0;i<this.lehrmittel.size();i++){
+				addLehrmittel(this.lehrmittel.get(i));
 			}
 			JOptionPane.showMessageDialog(null, "Das Objekt wurde heruntergeladen." , "Download abgeschlossen." , JOptionPane.INFORMATION_MESSAGE);
 		} else {
@@ -203,8 +203,8 @@ public class LehrmittelTableModel extends AbstractTableModel {
 	}
 	
 	public int getRowCount() {
-		if (lehrmittels != null) {
-			return lehrmittels.size();
+		if (lehrmittel != null) {
+			return lehrmittel.size();
 		} else {
 			return 0;
 		}
@@ -214,7 +214,7 @@ public class LehrmittelTableModel extends AbstractTableModel {
 	}
 	
 	public Object getValueAt(int row, int col) {
-		Lehrmittel lm = (Lehrmittel) lehrmittels.get(row);
+		Lehrmittel lm = (Lehrmittel) lehrmittel.get(row);
 		if (lm==null)
 			return null;
 		else if (col==0)
