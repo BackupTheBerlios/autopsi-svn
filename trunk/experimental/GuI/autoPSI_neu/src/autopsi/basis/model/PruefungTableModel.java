@@ -17,15 +17,14 @@ import autopsi.javaspace.*;
 public class PruefungTableModel extends AbstractTableModel {
 
 	private static final long serialVersionUID = 8737097029189851737L;
-	public List <GenericDataObject> pruefungen;
-	public List <GenericDataObject> lva;
-	public Pruefung suchPruefung = null;
-	public IGenericDAO gdo;
-	public IServiceCommunicator ogdo = null;
-	public String tablename = "PRUEFUNG";
+	public List <GenericDataObject> pruefungen = new ArrayList<GenericDataObject>();
+	public List <GenericDataObject> lva = new ArrayList<GenericDataObject>();
 	public List <GenericDataObject> lastDeletedObjects =  new ArrayList<GenericDataObject>();
+	public IGenericDAO gdo;
+	public ServiceCommunicator ogdo = null;
+	public Pruefung suchPruefung = null;
 	public boolean onlinesuche = false;
-	
+	public String tablename = "PRUEFUNG";
 	public String lvaname = null;
 	public String group = null;
 	
@@ -63,7 +62,6 @@ public class PruefungTableModel extends AbstractTableModel {
 	}
 	
 	public void readOnlineData () {
-		this.onlinesuche = true;
 		Pruefung temp =(Pruefung) ogdo.getObject(this.suchPruefung);
 		this.pruefungen = new ArrayList<GenericDataObject>();
 		if (temp != null)
@@ -74,6 +72,18 @@ public class PruefungTableModel extends AbstractTableModel {
 	public PruefungTableModel (){
 		this.gdo = new GenericDAO();
 		this.ogdo = new ServiceCommunicator();
+	}
+	
+	public void fireDataChanged() {
+		this.onlinesuche = false;
+		readData();
+		fireTableDataChanged();
+	}
+	
+	public void fireOnlineDataChanged() {
+		this.onlinesuche = true;
+		readOnlineData();
+		fireTableDataChanged();
 	}
 	
 	public void deleteSelectedRow(JTable table) {
@@ -164,9 +174,10 @@ public class PruefungTableModel extends AbstractTableModel {
 	public void addPruefung(GenericDataObject p){
 		try{
 			if (p!=null){
-				System.out.println("p=="+((Pruefung)p).getExaminer());
+				Pruefung pr = (Pruefung) p;
+				pr.setLvaId(0);
 				gdo.setCurrentTable(this.tablename);
-				gdo.addDataObject(p);
+				gdo.addDataObject(pr);
 			} else {
 				System.out.println("NULLLL ELEMENTTTT!!!! :(((((((");
 			}
@@ -186,15 +197,6 @@ public class PruefungTableModel extends AbstractTableModel {
 	}
 	public void setGroup(String group){
 		this.group = group;
-	}
-	public void fireDataChanged() {
-		readData();
-		fireTableDataChanged();
-	}
-	
-	public void fireOnlineDataChanged() {
-		readOnlineData();
-		fireTableDataChanged();
 	}
 	
 	public int getColumnCount() {
@@ -219,25 +221,36 @@ public class PruefungTableModel extends AbstractTableModel {
 		Pruefung p = null;
 		p = (Pruefung) pruefungen.get(row);
 		Lva l = null;
-		try{
-			this.lva = gdo.unsafeQuery("SELECT * FROM LVA WHERE GLOBAL_ID ="+p.getLvaId(), new Lva());
-			l = (Lva) lva.get(0);
-		} catch (Exception e){
-			System.out.println("PruefungTableModel @ getValueAt;"+e.toString());
-		}
-				
+		if (!this.onlinesuche) {
+			
+			try{
+				this.lva = gdo.unsafeQuery("SELECT * FROM LVA WHERE GLOBAL_ID ="+p.getLvaId(), new Lva());
+				if (lva != null){	
+					l = (Lva) lva.get(0);
+				}
+			} catch (Exception e){
+				System.out.println("PruefungTableModel @ getValueAt;"+e.toString());
+			}
+		}			
 		
 		
 		if (p==null)
 			return null;
-		else if (col==0)
-			return "";
-		else if (col==1)
-			return "";
+		else if (col==0) {
+			if (l==null)
+				return null;
+		}
+		else if (col==1) {
+			if (l==null)
+				return null;
+		}
 		else if (col==2)
 			return p.getExaminer();
 		else if (col==3)
 			return p.getGrade();
 		else return null;
+		
+		return null;
+
 	}
 }
