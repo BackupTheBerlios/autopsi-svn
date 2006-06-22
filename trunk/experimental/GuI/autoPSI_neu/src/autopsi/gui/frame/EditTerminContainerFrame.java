@@ -8,10 +8,8 @@ import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
+
 
 import javax.swing.BorderFactory;
 import javax.swing.ComboBoxModel;
@@ -145,10 +143,9 @@ public class EditTerminContainerFrame extends javax.swing.JFrame implements java
 		jGroupBox.setSelectedIndex(i);
 		selectedGroup = i;
 		loadObjectList();
-		firstUpdateTerminList();
-		
-		
+		firstUpdateTerminList();	
 	}
+	
 	private void update(){
 		try{
 			String query="";
@@ -224,7 +221,6 @@ public class EditTerminContainerFrame extends javax.swing.JFrame implements java
 			System.out.println("Exception hier beim Updaten=="+e.toString());
 		}
 	}
-	
 	
 	public EditTerminContainerFrame(JFrame owner, int id) { //Konstruktor für das EditTermin-Frame
 		super();
@@ -737,7 +733,24 @@ public class EditTerminContainerFrame extends javax.swing.JFrame implements java
 			}
 		}
 		if(arg0.getSource().equals(openTermin)){
-			
+			if(owner instanceof mainFrame)
+			{
+				mainFrame actor = (mainFrame)owner;
+				GregorianCalendar greg = new GregorianCalendar();
+				greg.set(Calendar.YEAR,Integer.parseInt(terminModel.getElementAt(terminList.getSelectedIndex()).toString().substring(6,10)));
+				greg.set(Calendar.MONTH,Integer.parseInt(terminModel.getElementAt(terminList.getSelectedIndex()).toString().substring(3,5))-1);
+				greg.set(Calendar.DAY_OF_MONTH,Integer.parseInt(terminModel.getElementAt(terminList.getSelectedIndex()).toString().substring(0,2)));
+				GregorianCalendar greg2 = new GregorianCalendar();
+				System.out.println(greg.getTime().toString());
+				greg2.setTime(greg.getTime());
+				System.out.println(greg2.getTime().toString());
+
+				actor.setMarker(greg2);
+				actor.setTimeSpace(greg);
+				actor.layoutTable();
+				
+				this.toFront();
+			}
 		}
 	}
 	
