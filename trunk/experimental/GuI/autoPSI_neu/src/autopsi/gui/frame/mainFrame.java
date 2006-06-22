@@ -1477,7 +1477,6 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 		else
 			{
 			int sel = table.getSelectedRow();
-			System.out.println(sel);
 			if(sel==1)lblToday.setText("Termine zwischen 00:00 und 8:00");
 			else if(sel==15) lblToday.setText("Termine ab 21:00");
 			else lblToday.setText("Termine zwischen "+ (sel+6)+":00 und "+(sel+7)+":00");
