@@ -4,6 +4,9 @@
 	<property name="basedir" value="."/>
 	<property name="build" value="class"/>
 	<property name="src" value="src"/>
+	<property name="dist" value="dist"/>
+	<property name="static" value="static"/>
+	<property name="lib" value="lib"/>
 	<property name="doc" value="doc"/>
 	<property name="hsqldb_data" value="data"/>
 	
@@ -14,27 +17,42 @@
 	
 	<path id="classpath">
 		<pathelement location="${build}"/>
-		<fileset dir="${basedir}/lib" id="lib">
+		<fileset dir="${basedir}/${lib}" id="lib">
 			<include name="*.jar"/>
 		</fileset>
 		
 	</path>
 	
-	<target name="clean">
-		<delete dir="${build}"/>
-	</target>
-		
-	<target name="init">
-		<mkdir dir="${build}"/>
-	</target>
 	
-	<target name="compile" depends="init">
-		<javac srcdir="${src}" destdir="${build}" classpathref="classpath"/>
-	</target>
 	
-	<target name="run">
-		<java classpathref="classpath" classname="Basis" fork="true"/> 
-	</target>
+	<!-- Make Distribution of project  -->
+	<target name="dist" depends=""> 
+
+		<!-- Copy Unix, OS X Shellscript to start application to dist -->
+		<copy file="${static}/autoPSI.bat" todir="${dist}/${project_name}"/>
+		<!--copy file="${static}//${project_name}.sh" todir="${dist}/${project_name}" /-->    
+		<!-- change Unix file permissions for start-shellscript -->
+        <!--chmod file="${dist}/${projname}/${project_name}.sh" perm="550"/-->
+		<!-- copy hsqldb data to distribution -->
+		<copy todir="${dist}/${project_name}/${hsqldb_data}">
+            <fileset dir="${hsqldb_data}">
+                <include name="*.script" />
+            </fileset>
+        </copy>
+     	<!-- create jar including project plus libraries -->
+		<jar destfile="${dist}/${project_name}/autoPSI.jar">
+			<fileset dir="${build}" />
+			<!-- 
+                these statements expand the library jars 
+                and include them into the distribution jar
+            -->
+			<zipgroupfileset refid="${lib}"/>
+		</jar>
+ 	   	<!-- create distribution archive -->
+     	<tar destfile="${dist}/${project_name}.tar.gz" basedir="${dist}" compression="gzip"></tar>
+ 
+    </target>
+
 	
 	<target name="javadoc">
         <javadoc 
@@ -49,6 +67,27 @@
             </packageset>
         </javadoc>
 	</target>
+	
+	
+	
+	<target name="clean">
+		<delete dir="${build}"/>
+		<delete dir="${dist}"/>
+	</target>
+		
+	<target name="init">
+		<mkdir dir="${build}"/>
+	</target>
+	
+	<target name="compile" depends="init">
+		<javac srcdir="${src}" destdir="${build}" classpathref="classpath"/>
+	</target>
+	
+	<target name="run">
+		<java classpathref="classpath" classname="Basis" fork="true"/> 
+	</target>
+	
+
 	
 	<target name="runDBMan">
         <java 
