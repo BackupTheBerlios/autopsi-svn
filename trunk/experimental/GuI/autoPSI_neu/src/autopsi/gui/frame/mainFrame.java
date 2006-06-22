@@ -230,7 +230,7 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 				statusBar.setBounds(7, 553, 672, 21);
 				statusBar.setBackground(new java.awt.Color(192,192,192));
 				statusBar.setIcon(new ImageIcon("src/images/info.GIF"));
-				statusBar.setBorder(BorderFactory.createBevelBorder(BevelBorder.LOWERED));
+				statusBar.setBorder(new LineBorder(new java.awt.Color(100,100,100), 1, false));
 			}
 			{
 				today = new JPanel();
