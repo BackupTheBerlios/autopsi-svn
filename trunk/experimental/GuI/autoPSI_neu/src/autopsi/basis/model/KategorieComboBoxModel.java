@@ -25,7 +25,7 @@ public class KategorieComboBoxModel extends DefaultComboBoxModel {
 		} catch (Exception e) {
 			System.out.println("KategoryComboBoxModel: "+ e.toString());
 		}
-		
+		this.addElement("-");
 		if (kategorien != null) {
 			for (int i = 0; i<kategorien.size();i++){
 				TerminKategorie kat1 = (TerminKategorie) kategorien.get(i);
@@ -42,7 +42,7 @@ public class KategorieComboBoxModel extends DefaultComboBoxModel {
 		} catch (Exception e) {
 			System.out.println("KategoryComboBoxModel: "+ e.toString());
 		}
-		
+		this.addElement("-");
 		if (kategorien != null) {
 			for (int i = 0; i<kategorien.size();i++){
 				LvaKategorie kat1 = (LvaKategorie) kategorien.get(i);
@@ -58,6 +58,7 @@ public class KategorieComboBoxModel extends DefaultComboBoxModel {
 		} catch (Exception e) {
 			System.out.println("KategoryComboBoxModel: "+ e.toString());
 		}
+		this.addElement("-");
 		if (kategorien != null) {
 			for (int i = 0; i<kategorien.size();i++){
 				AttachableObjectKategorie kat1 = (AttachableObjectKategorie) kategorien.get(i);
@@ -75,6 +76,7 @@ public class KategorieComboBoxModel extends DefaultComboBoxModel {
 		} catch (Exception e) {
 			System.out.println("KategoryComboBoxModel: "+ e.toString());
 		}
+		this.addElement("-");
 		if (kategorien != null) {
 			for (int i = 0; i<kategorien.size();i++){
 				LehrmittelKategorie kat1 = (LehrmittelKategorie) kategorien.get(i);

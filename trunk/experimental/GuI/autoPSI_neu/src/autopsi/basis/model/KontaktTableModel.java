@@ -24,6 +24,7 @@ public class KontaktTableModel extends AbstractTableModel{
 	public String tablename = "KONTAKT";
 	public List <GenericDataObject> lastDeletedObjects =  new ArrayList<GenericDataObject>();
 	public String group = null;
+	public boolean onlinesuche = false;
 	
 	private final String [] columnName = {"Vorname", "Nachname", "PLZ", "Ort"};
 	
@@ -54,7 +55,7 @@ public class KontaktTableModel extends AbstractTableModel{
 					query += " AND ( LOWER(FIRST_EMAIL) LIKE '%" + suchKontakt.getFirstEmail().toLowerCase() + "%' OR";
 					query += " LOWER(SECOND_EMAIL) LIKE '%" + suchKontakt.getFirstEmail().toLowerCase() +"%')";
 				}
-				if (this.group != null){
+				if (this.group != null && !this.group.equals("-")){
 					query += " AND ok.TITLE = '"+ this.group+"'";
 				}
 				if (suchKontakt.getAZipCode()!=null) {
@@ -75,6 +76,7 @@ public class KontaktTableModel extends AbstractTableModel{
 	}
 	
 	public void readOnlineData () {
+		this.onlinesuche = true;
 		Kontakt temp =(Kontakt) ogdo.getObject(this.suchKontakt);
 		this.kontakte = new ArrayList<GenericDataObject>();
 		this.kontakte.add(temp);
@@ -159,6 +161,17 @@ public class KontaktTableModel extends AbstractTableModel{
 		this.fireDataChanged();
 	}
 	
+	public void downloadObject(){
+		if (this.onlinesuche==true && this.kontakte.size() != 0) {
+			for (int i=0;i<this.kontakte.size();i++){
+				addKontakt(this.kontakte.get(i));
+			}
+			JOptionPane.showMessageDialog(null, "Die Prüfung wurde heruntergeladen." , "Download abgeschlossen." , JOptionPane.INFORMATION_MESSAGE);
+		} else {
+			JOptionPane.showMessageDialog(null, "Sie müssen zuerst nach eine Prüfung suchen." , "Keine Prüfung zum herunterladen." , JOptionPane.INFORMATION_MESSAGE);
+		}
+	}
+	
 	public void addKontakt(GenericDataObject p){
 		try{
 			if (p!=null){
@@ -188,17 +201,20 @@ public class KontaktTableModel extends AbstractTableModel{
 	}
 	
 	public void fireDataChanged() {
+		this.onlinesuche = false;
 		readData();
-		fireTableDataChanged();
+		System.out.println("Gefundene Elemente: "+this.kontakte.size());
+		this.fireTableDataChanged();
+		System.out.println("Gefundene Elemente: "+this.kontakte.size());
 	}
 	
 	public int getColumnCount() {
-		//System.out.println("colCount = " + columnName.length);
+		System.out.println("colCount = " + columnName.length);
 		return columnName.length;
 	}
 	
 	public int getRowCount() {
-		//System.out.println("rowcount = " + Lesers.size());
+		System.out.println("rowcount = " + kontakte.size());
 		if (kontakte != null) {
 			return kontakte.size();
 		} else {
@@ -206,11 +222,12 @@ public class KontaktTableModel extends AbstractTableModel{
 		}
 	}
 	public String getColumnName(int c) {
-		//System.out.println("colName = " + columnName[c]);
+		System.out.println("colName = " + columnName[c]);
 		return columnName[c];
 	}
 	
 	public Object getValueAt(int row, int col) {
+		System.out.println("getValueAt: r="+row+", c="+col);
 		Kontakt kont = (Kontakt) kontakte.get(row);
 		if (kont==null)
 			return null;
