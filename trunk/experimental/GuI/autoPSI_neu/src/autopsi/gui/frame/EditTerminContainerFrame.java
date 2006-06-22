@@ -185,7 +185,7 @@ public class EditTerminContainerFrame extends javax.swing.JFrame implements java
 					
 				}
 				}
-			else 
+			else      // Termincontainer wird upgedatet
 				{
 				for(int i = 0;i<container_termine.size();i++)
 				{
@@ -545,7 +545,8 @@ public class EditTerminContainerFrame extends javax.swing.JFrame implements java
 			update();
 		}
 		if(arg0.getSource().equals(newTermin)){
-			EditTerminFrame etframe = new EditTerminFrame(this,null, -1);
+			EditTerminFrame etframe = new EditTerminFrame(this,null, -1,true);
+			etframe.setVisible(true);
 			
 			
 		}

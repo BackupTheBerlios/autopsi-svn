@@ -897,7 +897,7 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 			
 		}
 		if(arg0.getSource().equals(button_newTermin)) {
-			EditTerminFrame newTermin = new EditTerminFrame(this,c_marker,-1);
+			EditTerminFrame newTermin = new EditTerminFrame(this,c_marker,-1, false);
 			newTermin.setTitle("neuen Termin hinzufügen");
 			newTermin.setLocation(this.getLocation().x+30,this.getLocation().y+30);
 			newTermin.setVisible(true);
@@ -917,7 +917,7 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 		if(arg0.getSource().equals(button_editTermin)) {
 			
 			if(terminId != -1 && selection>=0){
-			EditTerminFrame newTermin = new EditTerminFrame(this,null, terminId);
+			EditTerminFrame newTermin = new EditTerminFrame(this,null, terminId, false);
 			newTermin.setTitle("Termin bearbeiten");
 			newTermin.setLocation(this.getLocation().x+30,this.getLocation().y+30);
 			newTermin.setVisible(true);

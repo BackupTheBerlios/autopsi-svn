@@ -140,11 +140,13 @@ public class EditTerminFrame extends javax.swing.JFrame implements java.awt.even
 	ArrayList<String[]> queryList = new ArrayList<String[]>();
 	List<GenericDataObject> id_list;
 	private int lastID = 0;
+	private boolean newTCsender;
 	
-	public EditTerminFrame(JFrame owner, GregorianCalendar cal, Integer id) {
+	public EditTerminFrame(JFrame owner, GregorianCalendar cal, Integer id, boolean tcsender) {
 		super();
 		this.ID = id;
 		this.cal = cal;
+		this.newTCsender = tcsender;
 		this.owner = owner;
 		gdo = new GenericDAO();
 		gdo.setCurrentTable("termin");
@@ -734,7 +736,7 @@ public class EditTerminFrame extends javax.swing.JFrame implements java.awt.even
 			this.setPreferredSize(new java.awt.Dimension(456, 387));
 			this.setResizable(false);
 			//if(ID==null) apply_button.setVisible(false);
-			if(ID!=null && cal==null) {readData(ID);}
+			if(ID!=null && cal==null && !(owner instanceof EditTerminContainerFrame)) {readData(ID);}
 			else
 				apply_button.setVisible(false);
 			pack();
