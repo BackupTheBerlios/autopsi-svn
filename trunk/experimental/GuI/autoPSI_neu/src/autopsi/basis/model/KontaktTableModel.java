@@ -84,7 +84,7 @@ public class KontaktTableModel extends AbstractTableModel{
 	
 	public KontaktTableModel (){
 		this.ogdo = new ServiceCommunicator();
-		this.kontakte = new ArrayList<GenericDataObject>();
+		//this.kontakte = new ArrayList<GenericDataObject>();
 	}
 	
 	public void deleteSelectedRow(JTable table) {
@@ -203,9 +203,9 @@ public class KontaktTableModel extends AbstractTableModel{
 	public void fireDataChanged() {
 		this.onlinesuche = false;
 		readData();
-		System.out.println("Gefundene Elemente: "+this.kontakte.size());
+		//System.out.println("Gefundene Elemente: "+this.kontakte.size());
 		this.fireTableDataChanged();
-		System.out.println("Gefundene Elemente: "+this.kontakte.size());
+		//System.out.println("Gefundene Elemente: "+this.kontakte.size());
 	}
 	
 	public int getColumnCount() {
@@ -214,7 +214,6 @@ public class KontaktTableModel extends AbstractTableModel{
 	}
 	
 	public int getRowCount() {
-		System.out.println("rowcount = " + kontakte.size());
 		if (kontakte != null) {
 			return kontakte.size();
 		} else {
@@ -227,7 +226,7 @@ public class KontaktTableModel extends AbstractTableModel{
 	}
 	
 	public Object getValueAt(int row, int col) {
-		System.out.println("getValueAt: r="+row+", c="+col);
+		//System.out.println("getValueAt: r="+row+", c="+col);
 		Kontakt kont = (Kontakt) kontakte.get(row);
 		if (kont==null)
 			return null;
