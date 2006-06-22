@@ -1,4 +1,7 @@
 package autopsi.gui.frame;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 
@@ -43,6 +46,16 @@ public class CreditsFrame extends javax.swing.JDialog {
 	public CreditsFrame(JFrame frame) {
 		super(frame);
 		initGUI();
+		
+		addWindowListener(new WindowAdapter()
+				{
+				public void windowClosing(WindowEvent arg0)
+				{ //wird das Fenster über den X-Button rechts oben geschlossen
+				  //wird die Anwendung beendet.
+					super.windowClosing(arg0);
+					dispose();
+					}
+				});
 	}
 	
 	private void initGUI() {
@@ -54,7 +67,7 @@ public class CreditsFrame extends javax.swing.JDialog {
 				{
 					jLabel1 = new JLabel();
 					getContentPane().add(jLabel1);
-					jLabel1.setIcon(new ImageIcon(getClass().getClassLoader().getResource("images/credits.png")));
+					jLabel1.setIcon(new ImageIcon("src/images/credits.png"));
 					jLabel1.setBounds(0, -7, 399, 315);
 				}
 				{
