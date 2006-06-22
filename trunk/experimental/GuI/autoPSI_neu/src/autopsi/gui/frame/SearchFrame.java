@@ -14,7 +14,6 @@ import javax.swing.ButtonGroup;
 import javax.swing.ComboBoxModel;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
-import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.WindowConstants;
 import javax.swing.JFormattedTextField;
@@ -511,7 +510,7 @@ public class SearchFrame extends javax.swing.JFrame implements ActionListener {
 						{
 							jLVADownloadButton = new JButton();
 							jLVASuchePanel.add(jLVADownloadButton);
-							jLVADownloadButton.setText("LVA herunterladen");
+							jLVADownloadButton.setText("LVA Herunterladen");
 							jLVADownloadButton.setBounds(483, 329, 147, 21);
 							jLVADownloadButton.addActionListener(this);
 						}
@@ -1380,8 +1379,13 @@ public class SearchFrame extends javax.swing.JFrame implements ActionListener {
 			} else if(cmd.equals("Prüfung(en) Wiederherstellen")) {
 				jPruefungTableModel.restoreLastDeletedObjects();
 			} else if(cmd.equals("Prüfung Herunterladen")) {
-				System.out.println("prüfung down");
 				jPruefungTableModel.downloadObject();
+			} else if(cmd.equals("LVA(s) Löschen")) {
+				jLVATableModel.deleteSelectedRow(jLVATable);
+			} else if(cmd.equals("Gelöschte LVA(s) Wiederherstellen")) {
+				jLVATableModel.restoreLastDeletedObjects();
+			} else if(cmd.equals("LVA Herunterladen")) {
+				jLVATableModel.downloadObject();
 			}
 		} catch (ParseException ps) {
 			System.err.println("Parsererror: " + ps.getMessage());
