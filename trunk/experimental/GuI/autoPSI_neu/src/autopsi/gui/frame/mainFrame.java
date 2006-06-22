@@ -1897,7 +1897,7 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 		}
 	}
 	
-	private void setMarker(GregorianCalendar greg)
+	public void setMarker(GregorianCalendar greg)
 	{
 		this.c_marker.setTime(greg.getTime());
 	}
