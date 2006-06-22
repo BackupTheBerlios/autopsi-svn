@@ -21,6 +21,7 @@ import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
@@ -114,13 +115,11 @@ public class EditTerminContainerFrame extends javax.swing.JFrame implements java
 	private String desc = "";
 	private IGenericDAO gdo; 
 	private int ID;
-	private EditTerminFrame owner;
 	List<GenericDataObject> group_data;
 	List<GenericDataObject> id_list;
 	private List<GenericDataObject> termin_list;
 	List<Termin> container_termine = new ArrayList<Termin>();
-	private mainFrame owner2;
-	private int konstruktor = 0;
+	private JFrame owner;
 	private int selectedGroup;
 	DefaultComboBoxModel terminModel = new DefaultComboBoxModel();
 	private JScrollPane jScrollPane;
@@ -210,14 +209,17 @@ public class EditTerminContainerFrame extends javax.swing.JFrame implements java
 				gdo.unsafeQuery(query,vorlage);
 				}
 			
-			
-			
-			if(konstruktor == 1) {if(owner!=null) owner.updateTCList();}
-			else {
-				owner2.updateInfoBar(false);
-				owner2.updateTable();
+			if(owner instanceof mainFrame)
+			{
+				mainFrame actor = (mainFrame)owner;
+				actor.updateInfoBar(false);
+				actor.updateTable();
 			}
-			
+			else if(owner instanceof EditTerminFrame)
+			{
+				EditTerminFrame actor = (EditTerminFrame)owner;
+				actor.updateTCList();
+			}
 		}
 		catch (Exception e){
 			System.out.println("Exception hier beim Updaten=="+e.toString());
@@ -225,13 +227,12 @@ public class EditTerminContainerFrame extends javax.swing.JFrame implements java
 	}
 	
 	
-	public EditTerminContainerFrame(EditTerminFrame owner, int id) { //Konstruktor für das EditTermin-Frame
+	public EditTerminContainerFrame(JFrame owner, int id) { //Konstruktor für das EditTermin-Frame
 		super();
 		this.ID = id;
 		this.owner = owner;
 		gdo = new GenericDAO();
 		gdo.setCurrentTable("termincontainer");
-		this.konstruktor = 1;
 		initGUI();
 		
 		
@@ -245,28 +246,6 @@ public class EditTerminContainerFrame extends javax.swing.JFrame implements java
 					}
 				});
 	}
-	
-	public EditTerminContainerFrame(mainFrame owner, int id) { //Konstruktor für das MainFrame
-		super();
-		this.ID = id;
-		this.owner2 = owner;
-		gdo = new GenericDAO();
-		gdo.setCurrentTable("termincontainer");
-		this.konstruktor = 2;
-		initGUI();
-		
-		
-		addWindowListener(new WindowAdapter()
-				{
-				public void windowClosing(WindowEvent arg0)
-				{ //wird das Fenster über den X-Button rechts oben geschlossen
-				  //wird die Anwendung beendet.
-					super.windowClosing(arg0);
-					dispose();
-					}
-				});
-	}
-
 	
 	private void initGUI() {
 		try {
