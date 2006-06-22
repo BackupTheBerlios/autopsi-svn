@@ -356,7 +356,6 @@ public class SearchFrame extends javax.swing.JFrame implements ActionListener {
 								jKontaktTable.setShowGrid(true);
 								jKontaktTable.setGridColor(Color.LIGHT_GRAY);
 								jKontaktTable.setBackground(new java.awt.Color(255,255,255));
-								jKontaktTable.setPreferredSize(new java.awt.Dimension(609, 0));
 							}
 						}
 						
@@ -629,7 +628,6 @@ public class SearchFrame extends javax.swing.JFrame implements ActionListener {
 								jTerminTable.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
 								jTerminTable.setShowGrid(true);
 								jTerminTable.setGridColor(Color.LIGHT_GRAY);
-								
 							}
 						}
 						
@@ -1243,7 +1241,6 @@ public class SearchFrame extends javax.swing.JFrame implements ActionListener {
 				
 				if (jLVALokalSuchenRadioButton.isSelected()){
 					System.out.println("LVA wird lokal gesucht...");
-					jLVATableModel.fireDataChanged();
 				} else if (jLVAOnlineSuchenRadioButton.isSelected()) {
 					System.out.println("LVA wird online gesucht...");
 					this.jLVATableModel.fireOnlineDataChanged();
@@ -1378,18 +1375,13 @@ public class SearchFrame extends javax.swing.JFrame implements ActionListener {
 					jPruefungTableModel.fireOnlineDataChanged();
 				}
 				
-			} else if(cmd.equals("Prüfung(en) Löschen")) {
+			} else if(cmd.equals("Prüfung Löschen")) {
 				jPruefungTableModel.deleteSelectedRow(jPruefungTable);
-			} else if(cmd.equals("Gelöschte Prüfung(en) Wiederherstellen")) {
+			} else if(cmd.equals("Prüfung(en) Wiederherstellen")) {
 				jPruefungTableModel.restoreLastDeletedObjects();
 			} else if(cmd.equals("Prüfung Herunterladen")) {
+				System.out.println("prüfung down");
 				jPruefungTableModel.downloadObject();
-			} else if(cmd.equals("Kontakt(e) Löschen")) {
-				jKontaktTableModel.deleteSelectedRow(jKontaktTable);
-			} else if(cmd.equals("Gelöschte Kontakt(e) Wiederherstellen")) {
-				jKontaktTableModel.restoreLastDeletedObjects();
-			} else if(cmd.equals("Kontakt Herunterladen")) {
-				jKontaktTableModel.downloadObject();
 			}
 		} catch (ParseException ps) {
 			System.err.println("Parsererror: " + ps.getMessage());
