@@ -38,7 +38,7 @@ public class AttachableObjectKategorie extends GenericData implements Entry,Gene
 		return this.id;
 	}
 	
-	public void setId(Integer Id){
+	public void setId(Integer id){
 		this.id = Id;
 	}
 	
