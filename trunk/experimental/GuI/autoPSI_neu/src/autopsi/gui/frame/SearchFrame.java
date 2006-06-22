@@ -13,6 +13,7 @@ import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
 import javax.swing.ComboBoxModel;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.WindowConstants;
@@ -126,6 +127,7 @@ public class SearchFrame extends javax.swing.JFrame implements ActionListener {
 	private PruefungTableModel jPruefungTableModel;
 	
 	private JButton jKontaktSuchenButton, jTerminSuchenButton, jLVASuchenButton;
+	private JLabel lupe;
 	private JButton jPruefungDownloadButton, jPruefungLoeschenButton, jPruefungWiederherstellenButton;
 	private JButton jKontaktDownloadButton, jKontaktLoeschenButton, jKontaktWiederherstellenButton;
 	private JButton jLVADownloadButton, jLVALoeschenButton, jLVAWiederherstellenButton;
@@ -167,7 +169,7 @@ public class SearchFrame extends javax.swing.JFrame implements ActionListener {
 		//frame.getContentPane().add(this);
 		setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 		this.pack();
-		this.setSize(812, 430);
+		this.setSize(813, 463);
 
 		addWindowListener(new WindowAdapter()
 				{
@@ -183,14 +185,14 @@ public class SearchFrame extends javax.swing.JFrame implements ActionListener {
 	
 	private void initGUI() {
 		try {
-			this.setPreferredSize(new java.awt.Dimension(812, 430));
+			this.setPreferredSize(new java.awt.Dimension(813, 463));
 			this.setLayout(null);
 			{
 				jTabbedSearchPane = new JTabbedPane();
 				this.add(jTabbedSearchPane);
-				jTabbedSearchPane.setBounds(7, 7, 798, 392);
+				jTabbedSearchPane.setBounds(7, 7, 798, 420);
+				jTabbedSearchPane.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
 				jTabbedSearchPane.setTabPlacement(JTabbedPane.LEFT);
-				jTabbedSearchPane.setBorder(BorderFactory.createTitledBorder("Suche"));
 				{
 					jKontaktSuchePanel = new JPanel();
 					jTabbedSearchPane.addTab("Kontakt Suche", null, jKontaktSuchePanel, null);
@@ -1151,6 +1153,12 @@ public class SearchFrame extends javax.swing.JFrame implements ActionListener {
 					
 					
 				}
+			}
+			{
+				lupe = new JLabel();
+				getContentPane().add(lupe);
+				lupe.setIcon(new ImageIcon("src/images/icons/lupe.png"));
+				lupe.setBounds(7, 238, 196, 182);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
