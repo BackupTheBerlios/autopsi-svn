@@ -843,7 +843,7 @@ public class EditTerminContainerFrame extends javax.swing.JFrame implements java
 		}
 	}
 	
-	public void firstUpdateTerminList(){
+	private void firstUpdateTerminList(){
 		try {
 			termin_list = gdo.unsafeQuery("select * from termin where TERMINCONTAINER_ID = "+ID,new Termin());
 			
@@ -895,7 +895,7 @@ public class EditTerminContainerFrame extends javax.swing.JFrame implements java
 		info.setVisible(true);	
 	}
 	
-	public void loadObjectList(){
+	private void loadObjectList(){
 		this.attachedObjects = new ArrayList<GenericDataObject>();
 		lm.clear();
 		List<GenericDataObject> objs = null;

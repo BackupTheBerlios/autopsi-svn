@@ -1084,7 +1084,7 @@ public class EditTerminFrame extends javax.swing.JFrame implements java.awt.even
 		}
 	}
 	
-	public void loadObjectList(){
+	private void loadObjectList(){
 		this.attachedObjects = new ArrayList<GenericDataObject>();
 		lm.clear();
 		List<GenericDataObject> objs = null;
