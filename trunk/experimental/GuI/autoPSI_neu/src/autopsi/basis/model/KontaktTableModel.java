@@ -23,7 +23,7 @@ public class KontaktTableModel extends AbstractTableModel{
 	public IGenericDAO gdo;
 	public ServiceCommunicator ogdo = null;
 	public boolean onlinesuche = false;
-	public String tablename = "KONTAKT";
+	public String tablename = "kontakt";
 	public Kontakt suchKontakt = null;
 	public String group = null;
 	
@@ -128,7 +128,7 @@ public class KontaktTableModel extends AbstractTableModel{
 	            		}
 	            	}
             	} else {
-            		JOptionPane.showMessageDialog(null, "Diese Prüfung kann nicht gelöscht werden." , "Null Object!" , JOptionPane.ERROR_MESSAGE);
+            		JOptionPane.showMessageDialog(null, "Dieses Objekt kann nicht gelöscht werden." , "Null Object!" , JOptionPane.ERROR_MESSAGE);
             	}
             	first = false;
             }    
@@ -178,7 +178,7 @@ public class KontaktTableModel extends AbstractTableModel{
 			for (int i=0;i<this.kontakte.size();i++){
 				addKontakt(this.kontakte.get(i));
 			}
-			JOptionPane.showMessageDialog(null, "Die Prüfung wurde heruntergeladen." , "Download abgeschlossen." , JOptionPane.INFORMATION_MESSAGE);
+			JOptionPane.showMessageDialog(null, "Das ausgewählte Objekt wurde heruntergeladen." , "Download abgeschlossen." , JOptionPane.INFORMATION_MESSAGE);
 		} else {
 			JOptionPane.showMessageDialog(null, "Sie müssen zuerst ein Objekt auswählen." , "Kein Objekt zum herunterladen ausgewählt." , JOptionPane.INFORMATION_MESSAGE);
 		}
@@ -189,7 +189,7 @@ public class KontaktTableModel extends AbstractTableModel{
 			if (p!=null){
 				gdo.setCurrentTable("attachable_object");
 				AttachableObject a = new AttachableObject();
-				a.setTableName(this.tablename);
+				a.setTableName(this.tablename.toLowerCase());
 				a.setKategorieId(0);
 				gdo.addDataObject(a);
 				a = (AttachableObject)gdo.unsafeQuery("select * from attachable_object where global_id=identity()", new AttachableObject()).get(0);

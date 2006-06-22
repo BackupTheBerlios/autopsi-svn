@@ -9,9 +9,8 @@ import javax.swing.table.AbstractTableModel;
 
 import autopsi.database.dao.GenericDAO;
 import autopsi.database.dao.GenericDataObject;
-import autopsi.database.dao.IGenericDAO;
+import autopsi.database.table.AttachableObject;
 import autopsi.database.table.Lehrmittel;
-import autopsi.javaspace.IServiceCommunicator;
 import autopsi.javaspace.ServiceCommunicator;
 
 public class LehrmittelTableModel extends AbstractTableModel {
@@ -19,10 +18,10 @@ public class LehrmittelTableModel extends AbstractTableModel {
 	private static final long serialVersionUID = 8737097029189851737L;
 	public List <GenericDataObject> lehrmittel = new ArrayList<GenericDataObject>();
 	public List <GenericDataObject> lastDeletedObjects =  new ArrayList<GenericDataObject>();
-	public IGenericDAO gdo;
+	public GenericDAO gdo;
 	public ServiceCommunicator ogdo = null;
 	public boolean onlinesuche = false;
-	public String tablename = "LEHRMITTEL";
+	public String tablename = "lehrmittel";
 	public Lehrmittel suchLm = null;
 	public String group = null;
 	public String type = null;
@@ -39,7 +38,7 @@ public class LehrmittelTableModel extends AbstractTableModel {
 	private void readData() {
 		String query="select * from Lehrmittel as l, Lehrmittel_Kategorie as kat, ATTACHABLE_OBJECT as a, ATTACHABLE_OBJECT_KATEGORIE as ok where l.GLOBAL_ID=a.GLOBAL_ID AND a.KATEGORIE_ID=ok.ID AND l.LEHRMITTEL_KATEGORIE_ID=kat.ID";
 		try{
-			IGenericDAO gdo = new GenericDAO();
+			GenericDAO gdo = new GenericDAO();
 			if (suchLm!=null) {
 				if (this.suchLm.getName()!=null){
 					query +=" AND LOWER(l.NAME) Like '%"+this.suchLm.getName().toLowerCase()+"%'";
@@ -47,13 +46,13 @@ public class LehrmittelTableModel extends AbstractTableModel {
 				if (this.suchLm.getDescription()!=null){
 					query +=" AND LOWER(l.NAME) LIKE '%"+this.suchLm.getDescription().toLowerCase()+"%'";
 				}
-				if (this.type!=null && !this.group.equals("-")){
+				if (this.type!=null && !this.type.equals("-")){
 					query +=" AND kat.TITLE = '"+this.type+"'";
 				}
 				if (this.group != null && !this.group.equals("-")){
 					query += " AND ok.TITLE = '"+ this.group+"'";
 				}
-				//System.out.println(query);
+				System.out.println(query);
 				this.lehrmittel =  gdo.unsafeQuery(query, suchLm);
 			}
 		} catch (Exception e){
@@ -114,7 +113,7 @@ public class LehrmittelTableModel extends AbstractTableModel {
 	            		}
 	            	}
             	} else {
-            		JOptionPane.showMessageDialog(null, "Diese Prüfung kann nicht gelöscht werden." , "Null Object!" , JOptionPane.ERROR_MESSAGE);
+            		JOptionPane.showMessageDialog(null, "Dieses Objekt kann nicht gelöscht werden." , "Null Object!" , JOptionPane.ERROR_MESSAGE);
             	}
             	first = false;
             }    
@@ -135,7 +134,7 @@ public class LehrmittelTableModel extends AbstractTableModel {
 			return false;
 		
 		try{
-			IGenericDAO gdo = new GenericDAO();
+			GenericDAO gdo = new GenericDAO();
 			//System.out.println("SELECT * FROM " + this.tablename+" WHERE GLOBAL_ID ="+p.getGlobalId());
 			List <GenericDataObject> loeschen = gdo.unsafeQuery("SELECT * FROM " + this.tablename+" WHERE GLOBAL_ID ="+l.getGlobalId(), new Lehrmittel());
 				lastDeletedObjects.add(loeschen.get(0));
@@ -165,7 +164,7 @@ public class LehrmittelTableModel extends AbstractTableModel {
 			for (int i=0;i<this.lehrmittel.size();i++){
 				addLehrmittel(this.lehrmittel.get(i));
 			}
-			JOptionPane.showMessageDialog(null, "Das Objekt wurde heruntergeladen." , "Download abgeschlossen." , JOptionPane.INFORMATION_MESSAGE);
+			JOptionPane.showMessageDialog(null, "Das ausgewählte Objekt wurde heruntergeladen." , "Download abgeschlossen." , JOptionPane.INFORMATION_MESSAGE);
 		} else {
 			JOptionPane.showMessageDialog(null, "Sie müssen zuerst ein Objekt auswählen." , "Kein Objekt zum herunterladen ausgewählt." , JOptionPane.INFORMATION_MESSAGE);
 		}
@@ -174,7 +173,15 @@ public class LehrmittelTableModel extends AbstractTableModel {
 	public void addLehrmittel(GenericDataObject l){
 		try{
 			if (l!=null){
+				gdo.setCurrentTable("attachable_object");
+				AttachableObject a = new AttachableObject();
+				a.setTableName(this.tablename.toLowerCase());
+				a.setKategorieId(0);
+				gdo.addDataObject(a);
+				a = (AttachableObject)gdo.unsafeQuery("select * from attachable_object where global_id=identity()", new AttachableObject()).get(0);
 				Lehrmittel lm = (Lehrmittel) l;
+				lm.setGlobalId(a.getId());
+				System.out.println("ID :"+a.getId());
 				lm.setLehrmittelKategorieId(0);
 				gdo.setCurrentTable(this.tablename);
 				gdo.addDataObject(lm);
