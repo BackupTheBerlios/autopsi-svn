@@ -1951,6 +1951,19 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 			System.out.println("mainFrame.actionPerformed()::füge Prüfung hinzu");
 			new AddAttachableObject(this, new Pruefung());
 		}
+		if (arg0.getSource().equals(this.menu_add_T)){
+		EditTerminFrame newTermin = new EditTerminFrame(this,c_marker,-1, false);
+		newTermin.setTitle("neuen Termin hinzufügen");
+		newTermin.setLocation(this.getLocation().x+30,this.getLocation().y+30);
+		newTermin.setVisible(true);
+		}
+		if (arg0.getSource().equals(this.menu_add_TC)){
+			EditTerminContainerFrame frame = new EditTerminContainerFrame(this,-1);
+			frame.setLocation(this.getLocation().x+20,this.getLocation().y+20);
+			frame.setTitle("neuen Termincontainer hinzufügen");
+;			frame.setVisible(true);
+			}
+		
 	}
 	
 	public void setMarker(GregorianCalendar greg)
