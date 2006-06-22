@@ -229,7 +229,7 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 				getContentPane().add(statusBar);
 				statusBar.setBounds(7, 553, 672, 21);
 				statusBar.setBackground(new java.awt.Color(192,192,192));
-				statusBar.setIcon(new ImageIcon("src/images/info.GIF"));
+				statusBar.setIcon(new ImageIcon("src/images/info.png"));
 				statusBar.setBorder(new LineBorder(new java.awt.Color(100,100,100), 1, false));
 			}
 			{
@@ -320,7 +320,7 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 
 				infobar = new JTabbedPane();
 				getContentPane().add(infobar);
-				infobar.setBounds(2, 273, 252, 252);
+				infobar.setBounds(2, 280, 252, 238);
 				infobar.setBorder(new LineBorder(new java.awt.Color(0,0,0), 1, false));
 				infobar.setBackground(new java.awt.Color(235,235,235));
 				infobar.setOpaque(true);
