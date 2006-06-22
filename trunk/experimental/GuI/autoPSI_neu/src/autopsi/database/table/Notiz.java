@@ -70,12 +70,4 @@ public class Notiz extends GenericData implements Entry,GenericDataObject {
 		this.note = note;
 	}
 	
-	public void onAdd(){
-		System.out.println("Notiz.onAdd()");
-		GenericDAO gdao = new GenericDAO();
-		gdao.setCurrentTable("attachable_object");
-
-		
-	}
-	
 }
