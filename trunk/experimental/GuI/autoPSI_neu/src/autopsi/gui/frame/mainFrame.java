@@ -807,6 +807,7 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 					menu_show_info = new JMenuItem();
 					mainMenu.add(menu_show_info);
 					menu_show_info.setText("Info");
+					menu_show_info.setBackground(new java.awt.Color(255,255,255));
 					menu_show_info.setOpaque(false);
 					menu_show_info.addMouseListener(this);
 				}
