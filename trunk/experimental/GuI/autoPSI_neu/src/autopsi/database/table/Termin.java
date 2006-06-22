@@ -4,6 +4,8 @@ package autopsi.database.table;
 import net.jini.core.entry.Entry;
 import java.sql.Timestamp;
 import autopsi.database.dao.GenericDataObject;
+import autopsi.gui.component.GSMethodForeign;
+import autopsi.gui.component.GSMethodPrimary;
 import autopsi.gui.component.GenericData;
 
 
@@ -24,15 +26,45 @@ public class Termin extends GenericData implements Entry,GenericDataObject{
 		Class cl = this.getClass();
 		try{
 			this.setObjectName("Termin");
-			this.addAttribute("Id",cl.getMethod("getId", new Class[] {}), cl.getMethod("setId", new Class[] {Integer.class} ));
-			this.addAttribute("TerminKategorieId",cl.getMethod("getTerminKategorieId", new Class[] {}), cl.getMethod("setTerminKategorieId", new Class[] {Integer.class} ));	
-			this.addAttribute("TermincontainerId",cl.getMethod("getTerminContainerID", new Class[] {}), cl.getMethod("setTerminContainerID", new Class[] {Integer.class} ));
+			
+			GSMethodPrimary primary = new GSMethodPrimary();
+			primary.getMethod = cl.getMethod("getId", new Class[] {});
+			primary.setMethod = cl.getMethod("setId", new Class[] {Integer.class} );
+			primary.show = false;
+			this.addAttribute("Id", primary);
+//			this.addAttribute("Id",cl.getMethod("getId", new Class[] {}), cl.getMethod("setId", new Class[] {Integer.class} ));
+			
+			GSMethodForeign foreign = new GSMethodForeign();
+			foreign.getMethod = cl.getMethod("getTerminKategorieId", new Class[] {});
+			foreign.setMethod = cl.getMethod("setTerminKategorieId", new Class[] {Integer.class} );
+			foreign.tableName = "termin_kategorie";
+			foreign.attribName = "id";
+			foreign.objectClass = TerminKategorie.class;
+			this.addAttribute("Termin-Kategorie", foreign);
+//			this.addAttribute("TerminKategorieId",cl.getMethod("getTerminKategorieId", new Class[] {}), cl.getMethod("setTerminKategorieId", new Class[] {Integer.class} ));	
+			
+			foreign = new GSMethodForeign();
+			foreign.getMethod = cl.getMethod("getTerminContainerID", new Class[] {});
+			foreign.setMethod = cl.getMethod("setTerminContainerID", new Class[] {Integer.class} );
+			foreign.tableName = "termincontainer";
+			foreign.attribName = "id";
+			foreign.objectClass = TerminContainer.class;
+			this.addAttribute("Termin-Container", foreign);
+//			this.addAttribute("TermincontainerId",cl.getMethod("getTerminContainerID", new Class[] {}), cl.getMethod("setTerminContainerID", new Class[] {Integer.class} ));
 			this.addAttribute("Sekundärer Titel",cl.getMethod("getSecondaryTitle", new Class[] {}), cl.getMethod("setSecondaryTitle", new Class[] {String.class} ));	
 			this.addAttribute("Beschreibung",cl.getMethod("getDescription", new Class[] {}), cl.getMethod("setDescription", new Class[] {String.class} ));
 			this.addAttribute("Datum",cl.getMethod("getDate", new Class[] {}), cl.getMethod("setDate", new Class[] {Timestamp.class} ));	
 			this.addAttribute("Dauer",cl.getMethod("getDuration", new Class[] {}), cl.getMethod("setDuration", new Class[] {Integer.class} ));
 			this.addAttribute("Ort",cl.getMethod("getPlace", new Class[] {}), cl.getMethod("setPlace", new Class[] {String.class} ));
-			this.addAttribute("GruppenId",cl.getMethod("getGroupID", new Class[] {}), cl.getMethod("setGroupID", new Class[] {Integer.class} ));
+			
+			foreign = new GSMethodForeign();
+			foreign.getMethod = cl.getMethod("getTerminContainerID", new Class[] {});
+			foreign.setMethod = cl.getMethod("setTerminContainerID", new Class[] {Integer.class} );
+			foreign.tableName = "attachable_object_kategorie";
+			foreign.attribName = "id";
+			foreign.objectClass = AttachableObjectKategorie.class;
+			this.addAttribute("Gruppe", foreign);
+//			this.addAttribute("GruppenId",cl.getMethod("getGroupID", new Class[] {}), cl.getMethod("setGroupID", new Class[] {Integer.class} ));
 		}
 		catch (Exception e){
 			System.out.println("Fehler beim Erstellen des Termin-Kategorie-Objekts::"+e.toString());

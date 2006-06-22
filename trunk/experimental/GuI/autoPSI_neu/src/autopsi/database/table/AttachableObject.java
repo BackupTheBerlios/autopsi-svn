@@ -18,19 +18,20 @@ public class AttachableObject extends GenericData implements Entry,GenericDataOb
 		Class cl = this.getClass();
 		try{
 			this.setObjectName("Anhängbares Objekt");
+			
 			GSMethodPrimary primary = new GSMethodPrimary();
 			primary.getMethod = cl.getMethod("getId", new Class[] {});
 			primary.setMethod = cl.getMethod("setId", new Class[] {Integer.class} );
 			primary.show = false;
 			this.addAttribute("Id", primary);
 			
-			GSMethodForeign meth = new GSMethodForeign();
-			meth.getMethod = cl.getMethod("getKategorieId", new Class[] {});
-			meth.setMethod = cl.getMethod("setKategorieId", new Class[] {Integer.class} );
-			meth.tableName = "attachable_object_kategorie";
-			meth.attribName = "id";
-			meth.objectClass = AttachableObjectKategorie.class;
-			this.addAttribute("AttachableKategorieId", meth);
+			GSMethodForeign foreign = new GSMethodForeign();
+			foreign.getMethod = cl.getMethod("getKategorieId", new Class[] {});
+			foreign.setMethod = cl.getMethod("setKategorieId", new Class[] {Integer.class} );
+			foreign.tableName = "attachable_object_kategorie";
+			foreign.attribName = "id";
+			foreign.objectClass = AttachableObjectKategorie.class;
+			this.addAttribute("AttachableKategorieId", foreign);
 //			this.addAttribute("KategorieId",cl.getMethod("getKategorieId", new Class[] {}), cl.getMethod("setKategorieId", new Class[] {Integer.class} ));
 		
 			GSMethodNormal normal = new GSMethodNormal();

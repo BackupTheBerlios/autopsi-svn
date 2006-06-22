@@ -2,6 +2,7 @@ package autopsi.database.table;
 
 import net.jini.core.entry.Entry;
 import autopsi.database.dao.GenericDataObject;
+import autopsi.gui.component.GSMethodPrimary;
 import autopsi.gui.component.GenericData;
 
 public class AttachableObjectKategorie extends GenericData implements Entry,GenericDataObject {
@@ -16,7 +17,14 @@ public class AttachableObjectKategorie extends GenericData implements Entry,Gene
 		Class cl = this.getClass();
 		try{
 			this.setObjectName("Anhängbare Objekte - Kategorie");
-			this.addAttribute("Id",cl.getMethod("getId", new Class[] {}), cl.getMethod("setId", new Class[] {Integer.class} ));
+			
+			GSMethodPrimary primary = new GSMethodPrimary();
+			primary.getMethod = cl.getMethod("getId", new Class[] {});
+			primary.setMethod = cl.getMethod("setId", new Class[] {Integer.class} );
+			primary.show = false;
+			this.addAttribute("Id", primary);
+			
+//			this.addAttribute("Id",cl.getMethod("getId", new Class[] {}), cl.getMethod("setId", new Class[] {Integer.class} ));
 			this.addAttribute("Titel",cl.getMethod("getTitle", new Class[] {}), cl.getMethod("setTitle", new Class[] {String.class} ));
 			this.addAttribute("Beschreibung",cl.getMethod("getDescription", new Class[] {}), cl.getMethod("setDescription", new Class[] {String.class} ));		
 			this.addAttribute("Geshared",cl.getMethod("getShareable", new Class[] {}), cl.getMethod("setShareable", new Class[] {Boolean.class} ));	

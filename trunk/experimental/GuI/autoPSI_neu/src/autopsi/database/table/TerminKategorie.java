@@ -4,6 +4,7 @@ package autopsi.database.table;
 import net.jini.core.entry.Entry;
 
 import autopsi.database.dao.GenericDataObject;
+import autopsi.gui.component.GSMethodPrimary;
 import autopsi.gui.component.GenericData;
 
 public class TerminKategorie extends GenericData implements Entry,GenericDataObject{
@@ -16,7 +17,14 @@ public class TerminKategorie extends GenericData implements Entry,GenericDataObj
 		Class cl = this.getClass();
 		try{
 			this.setObjectName("Terminkategorie");
-			this.addAttribute("Id",cl.getMethod("getId", new Class[] {}), cl.getMethod("setId", new Class[] {Integer.class} ));
+			
+			GSMethodPrimary primary = new GSMethodPrimary();
+			primary.getMethod = cl.getMethod("getId", new Class[] {});
+			primary.setMethod = cl.getMethod("setId", new Class[] {Integer.class} );
+			primary.show = false;
+			this.addAttribute("Id", primary);
+//			this.addAttribute("Id",cl.getMethod("getId", new Class[] {}), cl.getMethod("setId", new Class[] {Integer.class} ));
+			
 			this.addAttribute("Kategoriename",cl.getMethod("getName", new Class[] {}), cl.getMethod("setName", new Class[] {String.class} ));	}
 		catch (Exception e){
 			System.out.println("Fehler beim Erstellen des Termin-Kategorie-Objekts::"+e.toString());
