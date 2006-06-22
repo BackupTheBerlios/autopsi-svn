@@ -941,9 +941,13 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 				goToTermin.set(Calendar.HOUR_OF_DAY,0);
 				goToTermin.set(Calendar.MINUTE,0);
 				goToTermin.set(Calendar.SECOND,0);
-				c_marker.setTimeInMillis(goToTermin.getTimeInMillis());
-				setTimeSpace(goToTermin);
+				c_marker.setTime(goToTermin.getTime());
+				System.out.println(c_marker.getTime().toString());
+				GregorianCalendar cld = new GregorianCalendar();
+				cld.setTime(c_marker.getTime());
+				setTimeSpace(cld);
 				layoutTable();	
+				loadTerminList(false);
 			}	
 		}
 		if(arg0.getSource().equals(showTObjects))
