@@ -172,7 +172,7 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 	public mainFrame() {
 		super();
 		initGUI();	
-		loadTerminList(true);
+		loadTerminList(true, null);
 	}
 	
 	private void setTable()
@@ -960,7 +960,7 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 				cld.setTime(c_marker.getTime());
 				setTimeSpace(cld);
 				layoutTable();	
-				loadTerminList(false);
+				loadTerminList(false, cld);
 			}	
 		}
 		if(arg0.getSource().equals(showTObjects))
@@ -1572,7 +1572,7 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 		}
 		
 		updateTable();
-		loadTerminList(false);
+		loadTerminList(false, null);
 		loadTerminData();
 		selection = -1;
 		terminId=-1;
@@ -1649,15 +1649,19 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 		}
 	}
 
-	private void loadTerminList(boolean first)
+	public void loadTerminList(boolean first, GregorianCalendar g)
 	{
+		
 			GregorianCalendar c1 = new GregorianCalendar();
+			
+			
 			if(!first)
 				{
 				c1.set(Calendar.YEAR,Integer.parseInt(currentValue[0].getDate().toString().substring(0,4)));
 				c1.set(Calendar.MONTH,Integer.parseInt(currentValue[0].getDate().toString().substring(5,7))-1);
 				c1.set(Calendar.DAY_OF_MONTH,Integer.parseInt(currentValue[0].getDate().toString().substring(8,10)));
 				}
+			if (g!=null) c1.setTime(g.getTime());
 			c1.set(Calendar.HOUR_OF_DAY,0);
 			c1.set(Calendar.MINUTE,0);
 			c1.set(Calendar.SECOND,1);
@@ -1732,7 +1736,7 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 					}
 					minuten = dauer;
 					
-					lblZeit.setText("Zeit: "+showTermin.getDate().toString().substring(12,16)+"           Dauer "+stunden+":"+minuten);
+					lblZeit.setText("Zeit: "+showTermin.getDate().toString().substring(11,16)+"           Dauer "+stunden+":"+minuten);
 
 					lblTermin.setText(showTermin.getSecondaryTitle());
 					
