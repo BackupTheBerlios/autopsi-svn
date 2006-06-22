@@ -377,7 +377,7 @@ public class SearchFrame extends javax.swing.JFrame implements ActionListener {
 						{
 							jKontaktDownloadButton = new JButton();
 							jKontaktSuchePanel.add(jKontaktDownloadButton);
-							jKontaktDownloadButton.setText("Kontakt herunterladen");
+							jKontaktDownloadButton.setText("Kontakt Herunterladen");
 							jKontaktDownloadButton.setBounds(483, 329, 147, 21);
 							jKontaktDownloadButton.addActionListener(this);
 						}
@@ -1382,7 +1382,7 @@ public class SearchFrame extends javax.swing.JFrame implements ActionListener {
 					jPruefungTableModel.fireOnlineDataChanged();
 				}
 				
-			} else if(cmd.equals("Prüfung Löschen")) {
+			} else if(cmd.equals("Prüfung(en) Löschen")) {
 				jPruefungTableModel.deleteSelectedRow(jPruefungTable);
 			} else if(cmd.equals("Prüfung(en) Wiederherstellen")) {
 				jPruefungTableModel.restoreLastDeletedObjects();
@@ -1394,6 +1394,12 @@ public class SearchFrame extends javax.swing.JFrame implements ActionListener {
 				jLVATableModel.restoreLastDeletedObjects();
 			} else if(cmd.equals("LVA Herunterladen")) {
 				jLVATableModel.downloadObject();
+			} else if(cmd.equals("Kontakt(e) Löschen")) {
+				jKontaktTableModel.deleteSelectedRow(jKontaktTable);
+			} else if(cmd.equals("Gelöschte Kontakt(e) Wiederherstellen")) {
+				jKontaktTableModel.restoreLastDeletedObjects();
+			} else if(cmd.equals("Kontakt Herunterladen")) {
+				jKontaktTableModel.downloadObject();
 			}
 		} catch (ParseException ps) {
 			System.err.println("Parsererror: " + ps.getMessage());
