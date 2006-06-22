@@ -47,16 +47,16 @@ public class Anhaengen_termincontainer extends GenericData implements Entry,Gene
 		return this.termincontainer_id;
 	}
 	
-	public void setTermincontainerId(Integer id){
-		termincontainer_id = id;
+	public void setTermincontainerId(Integer termincontainerId){
+		termincontainer_id = termincontainerId;
 	}
 	
 	public Integer getGlobalId(){
 		return this.global_id;
 	}
 	
-	public void setGlobalId(Integer id){
-		global_id = id;
+	public void setGlobalId(Integer termincontainerId){
+		global_id = termincontainerId;
 	}
 	
 	public String getTable_Name(){

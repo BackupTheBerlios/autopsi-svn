@@ -46,16 +46,16 @@ public class Anhaengen_termin extends GenericData implements Entry,GenericDataOb
 		return this.termin_id;
 	}
 	
-	public void setTerminId(Integer id){
-		termin_id = id;
+	public void setTerminId(Integer terminId){
+		termin_id = terminId;
 	}
 	
 	public int getGlobalId(){
 		return this.global_id;
 	}
 	
-	public void setGlobalId(Integer id){
-		global_id = id;
+	public void setGlobalId(Integer terminId){
+		global_id = terminId;
 	}
 	
 	public String getTable_Name(){

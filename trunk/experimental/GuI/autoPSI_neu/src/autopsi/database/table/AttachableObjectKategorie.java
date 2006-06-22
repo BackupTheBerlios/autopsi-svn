@@ -39,7 +39,7 @@ public class AttachableObjectKategorie extends GenericData implements Entry,Gene
 	}
 	
 	public void setId(Integer id){
-		this.id = Id;
+		this.id = id;
 	}
 	
 	public String getTitle(){

@@ -68,7 +68,7 @@ public class AttachableObject extends GenericData implements Entry,GenericDataOb
 	}
 	
 	public void setTableName(String tableName){
-		this.table_name = newTableName;
+		this.table_name = tableName;
 	}
 
 }

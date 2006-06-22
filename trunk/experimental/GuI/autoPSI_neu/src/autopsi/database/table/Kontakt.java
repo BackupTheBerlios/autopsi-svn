@@ -95,7 +95,7 @@ public class Kontakt extends GenericData implements Entry,GenericDataObject {
 	}
 	
 	public void setKategorieId(Integer kategorieId){
-		this.kategorie_id = newKategorieId;
+		this.kategorie_id = kategorieId;
 	}
 	
 	public Date getBirthDate(){
