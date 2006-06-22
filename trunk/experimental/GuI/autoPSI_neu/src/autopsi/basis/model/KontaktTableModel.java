@@ -9,7 +9,6 @@ import javax.swing.table.AbstractTableModel;
 
 import autopsi.database.dao.GenericDAO;
 import autopsi.database.dao.GenericDataObject;
-import autopsi.database.dao.IGenericDAO;
 
 import autopsi.database.table.AttachableObject;
 import autopsi.database.table.Kontakt;
@@ -20,7 +19,7 @@ public class KontaktTableModel extends AbstractTableModel{
 
 	public List <GenericDataObject> kontakte = new ArrayList<GenericDataObject>();
 	public List <GenericDataObject> lastDeletedObjects =  new ArrayList<GenericDataObject>();
-	public IGenericDAO gdo;
+	public GenericDAO gdo;
 	public ServiceCommunicator ogdo = null;
 	public boolean onlinesuche = false;
 	public String tablename = "kontakt";
@@ -36,7 +35,7 @@ public class KontaktTableModel extends AbstractTableModel{
 	private void readData() {
 		String query="select * from Kontakt as k, ATTACHABLE_OBJECT as a, ATTACHABLE_OBJECT_KATEGORIE as ok where k.GLOBAL_ID=a.GLOBAL_ID AND a.KATEGORIE_ID=ok.ID";
 		try{
-			IGenericDAO gdo = new GenericDAO();
+			GenericDAO gdo = new GenericDAO();
 			if (suchKontakt!=null) {
 				if (suchKontakt.getPrename()!=null) {
 					query += " AND LOWER(k.PRENAME) LIKE '%" + suchKontakt.getPrename().toLowerCase()+"%'";
@@ -148,7 +147,7 @@ public class KontaktTableModel extends AbstractTableModel{
 			return false;
 		
 		try{
-			IGenericDAO gdo = new GenericDAO();
+			GenericDAO gdo = new GenericDAO();
 			//System.out.println("SELECT * FROM " + this.tablename+" WHERE GLOBAL_ID ="+k.getGlobalId());
 			List <GenericDataObject> loeschen = gdo.unsafeQuery("SELECT * FROM " + this.tablename+" WHERE GLOBAL_ID ="+k.getGlobalId(), new Kontakt());
 				lastDeletedObjects.add(loeschen.get(0));
