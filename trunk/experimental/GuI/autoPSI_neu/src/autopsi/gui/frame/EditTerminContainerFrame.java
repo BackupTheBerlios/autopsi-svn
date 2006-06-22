@@ -748,7 +748,7 @@ public class EditTerminContainerFrame extends javax.swing.JFrame implements java
 				actor.setMarker(greg2);
 				actor.setTimeSpace(greg);
 				actor.layoutTable();
-				
+				actor.loadTerminList(false, greg);
 				this.toFront();
 			}
 		}
@@ -838,7 +838,7 @@ public class EditTerminContainerFrame extends javax.swing.JFrame implements java
 				Termin term = (Termin)termin_list.get(i);
 				String datum = term.getDate().toString().substring(8,10)+"-"+term.getDate().toString().substring(5,7)+"-"+
 				term.getDate().toString().substring(0,4);
-				String termin = datum+": "+((Termin)termin_list.get(i)).getSecondaryTitle() +",       Ort: " +((Termin)termin_list.get(i)).getPlace();
+				String termin = datum+": "+((Termin)termin_list.get(i)).getSecondaryTitle() +",     Ort: " +((Termin)termin_list.get(i)).getPlace();
 				
 				terminModel.addElement(termin);
 			}
