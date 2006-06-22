@@ -11,21 +11,19 @@ import autopsi.database.dao.GenericDAO;
 import autopsi.database.dao.GenericDataObject;
 import autopsi.database.dao.IGenericDAO;
 import autopsi.database.table.Lva;
-import autopsi.database.table.Notiz;
 import autopsi.database.table.Universitaet;
-import autopsi.javaspace.IServiceCommunicator;
 import autopsi.javaspace.ServiceCommunicator;
 
 public class LVATableModel extends AbstractTableModel {
 
 	private static final long serialVersionUID = 8737097029189851737L;
-	public List <GenericDataObject> lvas;
-	public List <GenericDataObject> uni;
+	public List <GenericDataObject> lvas = new ArrayList<GenericDataObject>();
+	public List <GenericDataObject> uni = new ArrayList<GenericDataObject>();
 	public Lva suchLva = null;
 	public String group = null;
 	public String type = null;
-	private IServiceCommunicator ogdo = null;
-	private boolean onlinesuche = false;
+	public ServiceCommunicator ogdo = null;
+	public boolean onlinesuche = false;
 	
 	public IGenericDAO gdo = new GenericDAO();
 	public String tablename = "LVA";
@@ -65,8 +63,22 @@ public class LVATableModel extends AbstractTableModel {
 		}
 	}
 	
+	public void fireOnlineDataChanged(){
+		this.onlinesuche = true;
+		readOnlineData();
+		fireTableDataChanged();
+	}
+	
 	public LVATableModel (){
 		this.ogdo = new ServiceCommunicator();
+		this.ogdo = new ServiceCommunicator();
+		this.lvas = new ArrayList<GenericDataObject>();
+	}
+	
+	public void readOnlineData(){
+		Lva temp = (Lva)this.ogdo.getObject(this.suchLva);
+		this.lvas = new ArrayList<GenericDataObject>();
+		this.lvas.add(temp);
 	}
 	
 	public void deleteSelectedRow(JTable table) {
@@ -133,7 +145,7 @@ public class LVATableModel extends AbstractTableModel {
 	public void restoreLastDeletedObjects(){
 		if (this.lastDeletedObjects.size() != 0) {
 			for (int i=0;i<this.lastDeletedObjects.size();i++){
-				addPruefung(this.lastDeletedObjects.get(i));
+				addLVA(this.lastDeletedObjects.get(i));
 			}
 			JOptionPane.showMessageDialog(null, "Die gelöschten Objekte wurden erfolgreich wiederhergestellt." , "Wiederherstellung Erfolgreich!" , JOptionPane.INFORMATION_MESSAGE);
 		} else {
@@ -143,7 +155,18 @@ public class LVATableModel extends AbstractTableModel {
 		this.fireDataChanged();
 	}
 	
-	public void addPruefung(GenericDataObject p){
+	public void downloadObject(){
+		if (this.onlinesuche==true && this.lvas.size() != 0) {
+			for (int i=0;i<this.lvas.size();i++){
+				addLVA(this.lvas.get(i));
+			}
+			JOptionPane.showMessageDialog(null, "Die Prüfung wurde heruntergeladen." , "Download abgeschlossen." , JOptionPane.INFORMATION_MESSAGE);
+		} else {
+			JOptionPane.showMessageDialog(null, "Sie müssen zuerst nach eine Prüfung suchen." , "Keine Prüfung zum herunterladen." , JOptionPane.INFORMATION_MESSAGE);
+		}
+	}
+	
+	public void addLVA(GenericDataObject p){
 		try{
 			if (p!=null){
 				gdo.setCurrentTable(this.tablename);
@@ -170,20 +193,7 @@ public class LVATableModel extends AbstractTableModel {
 	public void fireDataChanged() {
 		this.onlinesuche = false;
 		readData();
-		System.out.println("Gefundene Elemente: "+this.lvas.size());
 		this.fireTableDataChanged();
-		System.out.println("Gefundene Elemente: "+this.lvas.size());
-	}
-	
-	public void fireOnlineDataChanged(){
-		readOnlineData();
-		fireTableDataChanged();
-	}
-	
-	public void readOnlineData(){
-		Lva temp = (Lva)this.ogdo.getObject(this.suchLva);
-		this.lvas = new ArrayList<GenericDataObject>();
-		this.lvas.add(temp);
 	}
 	
 	public int getColumnCount() {
