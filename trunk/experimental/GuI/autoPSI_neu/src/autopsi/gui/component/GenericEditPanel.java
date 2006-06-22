@@ -25,6 +25,15 @@ import autopsi.gui.exceptions.EWrongMethod;
 import autopsi.gui.exceptions.EClassEditorMissing;
 import javax.swing.JButton;
 import autopsi.gui.component.GSMethod;
+import autopsi.gui.component.plugin.BooleanEditPlugin;
+import autopsi.gui.component.plugin.DateEditPlugin;
+import autopsi.gui.component.plugin.DoubleEditPlugin;
+import autopsi.gui.component.plugin.EditPlugin;
+import autopsi.gui.component.plugin.ForeignKeyEditPlugin;
+import autopsi.gui.component.plugin.IntegerEditPlugin;
+import autopsi.gui.component.plugin.StringEditPlugin;
+import autopsi.gui.component.plugin.TimestampEditPlugin;
+import autopsi.gui.component.plugin.UnimplementedEditPlugin;
 import autopsi.gui.frame.TestClass;
 
 public class GenericEditPanel extends JPanel {
