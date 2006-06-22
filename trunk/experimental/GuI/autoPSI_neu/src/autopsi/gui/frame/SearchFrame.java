@@ -886,7 +886,7 @@ public class SearchFrame extends javax.swing.JFrame implements ActionListener {
 						{
 							jLehrmittelDownloadButton = new JButton();
 							jLehrmittelSuchePanel.add(jLehrmittelDownloadButton);
-							jLehrmittelDownloadButton.setText("Lehrmittel herunterladen");
+							jLehrmittelDownloadButton.setText("Lehrmittel Herunterladen");
 							jLehrmittelDownloadButton.setBounds(476, 329, 154, 21);
 							jLehrmittelDownloadButton.addActionListener(this);
 						}
@@ -1400,6 +1400,12 @@ public class SearchFrame extends javax.swing.JFrame implements ActionListener {
 				jKontaktTableModel.restoreLastDeletedObjects();
 			} else if(cmd.equals("Kontakt Herunterladen")) {
 				jKontaktTableModel.downloadObject();
+			} else if(cmd.equals("Lehrmittel Löschen")) {
+				jLehrmittelTableModel.deleteSelectedRow(jLehrmittelTable);
+			} else if(cmd.equals("Gelöschte(s) Lehrmittel Wiederherstellen")) {
+				jLehrmittelTableModel.restoreLastDeletedObjects();
+			} else if(cmd.equals("Lehrmittel Herunterladen")) {
+				jLehrmittelTableModel.downloadObject();
 			}
 		} catch (ParseException ps) {
 			System.err.println("Parsererror: " + ps.getMessage());
