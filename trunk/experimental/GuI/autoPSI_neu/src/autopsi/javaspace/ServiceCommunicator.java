@@ -50,6 +50,7 @@ public class ServiceCommunicator implements IServiceCommunicator, DesiredExpirat
 	
 	public void setAdress(String newAdress){
 		this.adress = newAdress;
+		space = getSpace();
 	}
 	
 	protected static JavaSpace getSpace(){
