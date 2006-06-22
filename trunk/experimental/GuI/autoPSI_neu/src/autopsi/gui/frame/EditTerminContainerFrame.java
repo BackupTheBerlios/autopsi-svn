@@ -439,6 +439,7 @@ public class EditTerminContainerFrame extends javax.swing.JFrame implements java
 						jPanel2.add(newTermin);
 						newTermin.setBounds(210, 235, 42, 28);
 						newTermin.setIcon(new ImageIcon("src/images/newTermin.GIF"));
+						newTermin.addMouseListener(this);
 					}
 					{
 						deleteTermin = new JButton();
@@ -543,6 +544,12 @@ public class EditTerminContainerFrame extends javax.swing.JFrame implements java
 		if(arg0.getSource().equals(apply_button)){
 			update();
 		}
+		if(arg0.getSource().equals(newTermin)){
+			EditTerminFrame etframe = new EditTerminFrame(this,null, -1);
+			
+			
+		}
+		
 		if(arg0.getSource().equals(newTerminReihe)){
 			TerminReiheFrame terminreihe = new TerminReiheFrame(this, title_field.getText());
 			terminreihe.setLocation(this.getLocation().x+20,this.getLocation().y+20);
