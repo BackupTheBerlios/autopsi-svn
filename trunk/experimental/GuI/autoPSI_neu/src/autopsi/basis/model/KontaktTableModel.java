@@ -84,7 +84,7 @@ public class KontaktTableModel extends AbstractTableModel{
 	
 	public KontaktTableModel (){
 		this.ogdo = new ServiceCommunicator();
-		//this.kontakte = new ArrayList<GenericDataObject>();
+		this.kontakte = new ArrayList<GenericDataObject>();
 	}
 	
 	public void deleteSelectedRow(JTable table) {
@@ -203,9 +203,7 @@ public class KontaktTableModel extends AbstractTableModel{
 	public void fireDataChanged() {
 		this.onlinesuche = false;
 		readData();
-		//System.out.println("Gefundene Elemente: "+this.kontakte.size());
 		this.fireTableDataChanged();
-		//System.out.println("Gefundene Elemente: "+this.kontakte.size());
 	}
 	
 	public int getColumnCount() {
