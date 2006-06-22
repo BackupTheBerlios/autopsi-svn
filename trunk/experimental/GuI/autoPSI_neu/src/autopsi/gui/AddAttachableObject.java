@@ -56,6 +56,16 @@ public class AddAttachableObject {
 		if (dbObj instanceof Lehrmittel){
 			neuesObjekt.setTableName("Lehrmittel");
 		}
+		if (dbObj instanceof Universitaet){
+			neuesObjekt.setTableName("Universitaet");	
+		}
+		if (dbObj instanceof LehrmittelKategorie){
+			neuesObjekt.setTableName("Lehrmittel_Kategorie");
+		}
+		if (dbObj instanceof LvaKategorie){
+			neuesObjekt.setTableName("Lva_Kategorie");
+		}
+		
 		
 		try {
 			if(this.newObject){
