@@ -17,14 +17,15 @@ import autopsi.javaspace.ServiceCommunicator;
 
 public class KontaktTableModel extends AbstractTableModel{
 	private static final long serialVersionUID = 8737097029189851737L;
-	public List <GenericDataObject> kontakte;
-	public Kontakt suchKontakt = null;
-	public IGenericDAO gdo = new GenericDAO();
-	public IServiceCommunicator ogdo = null;
-	public String tablename = "KONTAKT";
+
+	public List <GenericDataObject> kontakte = new ArrayList<GenericDataObject>();
 	public List <GenericDataObject> lastDeletedObjects =  new ArrayList<GenericDataObject>();
-	public String group = null;
+	public IGenericDAO gdo;
+	public ServiceCommunicator ogdo = null;
 	public boolean onlinesuche = false;
+	public String tablename = "KONTAKT";
+	public Kontakt suchKontakt = null;
+	public String group = null;
 	
 	private final String [] columnName = {"Vorname", "Nachname", "PLZ", "Ort"};
 	
@@ -67,7 +68,7 @@ public class KontaktTableModel extends AbstractTableModel{
 				if (suchKontakt.getAAdress()!=null) {
 					query += " AND A_ADRESS LIKE '%" + suchKontakt.getAAdress()+"%'";
 				}
-				System.out.println(query);
+				//System.out.println(query);
 				this.kontakte =  gdo.unsafeQuery(query, suchKontakt);
 			}
 		} catch (Exception e){
@@ -83,8 +84,20 @@ public class KontaktTableModel extends AbstractTableModel{
 	}
 	
 	public KontaktTableModel (){
+		this.gdo = new GenericDAO();
 		this.ogdo = new ServiceCommunicator();
-		this.kontakte = new ArrayList<GenericDataObject>();
+	}
+	
+	public void fireDataChanged() {
+		this.onlinesuche = false;
+		readData();
+		fireTableDataChanged();
+	}
+	
+	public void fireOnlineDataChanged() {
+		this.onlinesuche = true;
+		readOnlineData();
+		fireTableDataChanged();
 	}
 	
 	public void deleteSelectedRow(JTable table) {
@@ -101,34 +114,33 @@ public class KontaktTableModel extends AbstractTableModel{
             	k=(Kontakt) this.getKontakte().get(r);
             	if (k.getGlobalId() != null) {
             		if (first) {
-            			auswahl = JOptionPane.showConfirmDialog(null, "Sind sie sicher dass sie alle markierte Kontakte löschen wollen?", "Löschen?",JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.ERROR_MESSAGE);
+            			auswahl = JOptionPane.showConfirmDialog(null, "Sind sie sicher dass sie alle markierten Objekte löschen wollen?", "Löschen?",JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.ERROR_MESSAGE);
             		}
 	            	if (auswahl == JOptionPane.YES_OPTION) {
 	            		//weiter mit löschen
 	            		deleted = this.deleteKontakt(k);
 	            		if (deleted) {
 	            			if (first){
-	            				JOptionPane.showMessageDialog(null, "Die markierten Kontakte wurden erfolgreich gelöscht." , "Gelöscht!" , JOptionPane.INFORMATION_MESSAGE);
+	            				JOptionPane.showMessageDialog(null, "Das Löschvorgang war erfolgreich." , "Gelöscht!" , JOptionPane.INFORMATION_MESSAGE);
 	            			}
 	            		} else {
-	            			JOptionPane.showMessageDialog(null, "Der markierte Kontakt konnte nicht gelöscht werden." , "Löschen!" , JOptionPane.ERROR_MESSAGE);
+	            			JOptionPane.showMessageDialog(null, "Das Objekt konnte nicht gelöscht werden." , "Löschen!" , JOptionPane.ERROR_MESSAGE);
 	            		}
 	            	}
             	} else {
-            		JOptionPane.showMessageDialog(null, "Dieser Kontakt kann nicht gelöscht werden." , "Null Object!" , JOptionPane.ERROR_MESSAGE);
+            		JOptionPane.showMessageDialog(null, "Diese Prüfung kann nicht gelöscht werden." , "Null Object!" , JOptionPane.ERROR_MESSAGE);
             	}
             	first = false;
             }    
 	    }
 	    
 	    if (selected == false) {
-	    	JOptionPane.showMessageDialog(null, "Bitte selektieren Sie mindestens eine Prüfung in der Tabelle", "Prüfung wurde nicht ausgewählt!" , JOptionPane.ERROR_MESSAGE);
+	    	JOptionPane.showMessageDialog(null, "Bitte selektieren Sie mindestens eine Reihe in der Tabelle", "Data wurde nicht ausgewählt!" , JOptionPane.ERROR_MESSAGE);
 	    }
 	    if (deleted) {
 	    	this.fireDataChanged();
 	    }
 	}
-	
 	/**
 	 */
 	public boolean deleteKontakt(Kontakt k){
@@ -168,27 +180,25 @@ public class KontaktTableModel extends AbstractTableModel{
 			}
 			JOptionPane.showMessageDialog(null, "Die Prüfung wurde heruntergeladen." , "Download abgeschlossen." , JOptionPane.INFORMATION_MESSAGE);
 		} else {
-			JOptionPane.showMessageDialog(null, "Sie müssen zuerst nach eine Prüfung suchen." , "Keine Prüfung zum herunterladen." , JOptionPane.INFORMATION_MESSAGE);
+			JOptionPane.showMessageDialog(null, "Sie müssen zuerst ein Objekt auswählen." , "Kein Objekt zum herunterladen ausgewählt." , JOptionPane.INFORMATION_MESSAGE);
 		}
 	}
 	
 	public void addKontakt(GenericDataObject p){
 		try{
 			if (p!=null){
+				Kontakt k = (Kontakt) p;
+				k.setKategorieId(0);
 				gdo.setCurrentTable(this.tablename);
-				gdo.addDataObject(p);
+				gdo.addDataObject(k);
 			} else {
 				System.out.println("NULLLL ELEMENTTTT!!!! :(((((((");
 			}
 		} catch (Exception e){
-			System.out.println("PruefungTableModel @ addPruefung;"+e.toString());
+			System.out.println("KontaktTableModel @ addPruefung;"+e.toString());
 		}
 	}
 	
-	public void fireOnlineDataChanged() {
-		readOnlineData();
-		fireTableDataChanged();
-	}
 	
 	
 	public void setSuchKontakt (Kontakt suchKontakt){
@@ -198,12 +208,6 @@ public class KontaktTableModel extends AbstractTableModel{
 	
 	public void setGroup(String gruppe){
 		this.group = gruppe;
-	}
-	
-	public void fireDataChanged() {
-		this.onlinesuche = false;
-		readData();
-		this.fireTableDataChanged();
 	}
 	
 	public int getColumnCount() {
