@@ -339,6 +339,7 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 						lblBeschreibung.setBounds(7, 112, 231, 84);
 						lblBeschreibung.setOpaque(false);
 						lblBeschreibung.setBorder(BorderFactory.createEtchedBorder(BevelBorder.LOWERED));
+						lblBeschreibung.setEditable(false);
 					}
 					{
 						lblTerminContainer = new JLabel();
@@ -844,7 +845,7 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 				
 	    		loadTerminList(false,c_marker);
 
-	    		if(viewMonth)
+	    	/*	if(viewMonth)
 	    			{
 	    			setModel("month");
 	    			lblToday.setText("heutige Termine:");
@@ -857,7 +858,7 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 					else if (rownumber>=15) lblToday.setText("Termine zwischen 21:00 und 24:00");
 					else lblToday.setText("Termine zwischen " + (rownumber+6) + ":00 und "+ (rownumber+7)+":00");
 					setModel("week");
-					}
+					}*/
 				
 			}
 			catch(Exception ex){System.out.println(" table click 2 " + ex.toString());};
@@ -1687,20 +1688,31 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 			
 			List<GenericDataObject> termine;
 			GenericDAO gdo = new GenericDAO();
+			
+			
+		
 			try
 			{
-				termine = gdo.unsafeQuery("select * from termin where date>='"+t1.toString()+"' and date<='"+t2.toString()+"' order by date",new Termin());
-				currentValue = new Termin[termine.size()+1];
-				Termin dayTermin = new Termin();
-				dayTermin.setDate(t1);
-				currentValue[0]=dayTermin;
+				
+					termine = gdo.unsafeQuery("select * from termin where date>='"+t1.toString()+"' and date<='"+t2.toString()+"' order by date",new Termin());
+					currentValue = new Termin[termine.size()+1];
+					Termin dayTermin = new Termin();
+					dayTermin.setDate(t1);
+					currentValue[0]=dayTermin;
+					for(int i = 0;i<termine.size();i++)
+					{
+						Termin countTermin = (Termin)termine.get(i);
+						currentValue[i+1] = countTermin;
+						todayListModel.addElement(countTermin.getDate().toString().substring(11,16)+"  "+countTermin.getSecondaryTitle());
+					}
+					if(first && termine.size()>0)
+					{
+						selection = 1;
+						loadTerminData();
+					}
+				
 				todayListModel.removeAllElements();
-				for(int i = 0;i<termine.size();i++)
-				{
-					Termin countTermin = (Termin)termine.get(i);
-					currentValue[i+1] = countTermin;
-					todayListModel.addElement(countTermin.getDate().toString().substring(11,16)+"  "+countTermin.getSecondaryTitle());
-				}
+				
 				if(first)
 				{
 					Calendar cal2 = new GregorianCalendar();
@@ -1710,15 +1722,11 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 		    		lblDatum.setText(title);
 		    		lblDatumShadow.setText(title);
 				}
-				if(first && termine.size()>0)
-				{
-					selection = 1;
-					loadTerminData();
-				}
+				
 				
 			}
 			catch(Exception ex) {System.out.println("loadTerminList:: "+ex.toString());}
-
+			
 	}
 	
 	public void loadTerminData()
