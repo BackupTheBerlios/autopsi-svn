@@ -1017,6 +1017,14 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 
 	public void mouseReleased(MouseEvent arg0)
 	{	
+		if(arg0.getSource().equals(menu_show_info)){
+			CreditsFrame cf = new CreditsFrame(this);
+			GraphicsEnvironment env = GraphicsEnvironment.getLocalGraphicsEnvironment();
+			GraphicsDevice gd = env.getDefaultScreenDevice();
+			DisplayMode dm = gd.getDisplayMode();
+			cf.setLocation(dm.getWidth()/2,dm.getHeight()/2);
+			cf.setVisible(true);
+		}
 		if(arg0.getSource().equals(table)){
 			mouseDown = false;
 		}
