@@ -50,8 +50,11 @@ public class LVATableModel extends AbstractTableModel {
 				if (this.suchLva.getDescription()!=null){
 					query +=" AND Lower(DESCRIPTION) Like '%"+this.suchLva.getDescription().toLowerCase()+"%'";
 				}
-				if (this.type!=null){
+				if (this.type!=null && !this.type.equals("-")){
 					query +=" AND kat.NAME = '"+this.type+"'";
+				}
+				if (this.group != null && !this.group.equals("-")){
+					query += " AND ok.TITLE = '"+ this.group+"'";
 				}
 				System.out.println(query);
 				this.lvas =  gdo.unsafeQuery(query, suchLva);
