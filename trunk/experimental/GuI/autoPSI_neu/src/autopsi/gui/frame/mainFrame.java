@@ -79,6 +79,7 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 	private JPanel tab2;
 	private JTextPane lblBeschreibung;
 	private JTabbedPane infobar;
+	private JMenuItem menu_show_info;
 	private JLabel tableBase;
 	private JLabel toolBar;
 	private JCheckBox zoomBox;
@@ -801,6 +802,13 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 						}
 						
 					});*/
+				}
+				{
+					menu_show_info = new JMenuItem();
+					mainMenu.add(menu_show_info);
+					menu_show_info.setText("Info");
+					menu_show_info.setOpaque(false);
+					menu_show_info.addMouseListener(this);
 				}
 
 			}
