@@ -1750,6 +1750,8 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 					try
 					{
 						cont = (TerminContainer)dat.get(0);
+						if(cont.getId()==0) lblTerminContainer.setIcon(new ImageIcon("src/images/icons/noTerminContainerIcon.png"));
+						else lblTerminContainer.setIcon(new ImageIcon("src/images/icons/terminContainerIcon.png"));
 						lblTerminContainer.setText(cont.getTitle());
 						tcID = cont.getId();
 					}
