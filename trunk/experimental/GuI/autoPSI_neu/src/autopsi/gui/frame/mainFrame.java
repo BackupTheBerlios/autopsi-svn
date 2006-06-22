@@ -840,29 +840,21 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 			}
 			catch(Exception ex) {System.out.println(" table click  "+ ex.toString());}; 
 			
-			try
-			{		
 				
-	    		loadTerminList(false,c_marker);
+	    	loadTerminList(false,c_marker);
 
-	    	/*	if(viewMonth)
-	    			{
+	    	if(viewMonth)
+	    		{
 	    			setModel("month");
 	    			lblToday.setText("heutige Termine:");
-	    			
-	    			}
-				else 
-					{
-					int rownumber = table.getSelectedRow();
-					if(rownumber<2) lblToday.setText("Termine zwischen 00:00 und 8:00");
-					else if (rownumber>=15) lblToday.setText("Termine zwischen 21:00 und 24:00");
-					else lblToday.setText("Termine zwischen " + (rownumber+6) + ":00 und "+ (rownumber+7)+":00");
-					setModel("week");
-					}*/
-				
-			}
-			catch(Exception ex){System.out.println(" table click 2 " + ex.toString());};
-					
+	    		}
+			else {
+				int rownumber = table.getSelectedRow();
+				if(rownumber<2) lblToday.setText("Termine zwischen 00:00 und 8:00");
+				else if (rownumber>=15) lblToday.setText("Termine zwischen 21:00 und 24:00");
+				else lblToday.setText("Termine zwischen " + (rownumber+6) + ":00 und "+ (rownumber+7)+":00");
+				setModel("week");
+				}			
 		}
 		if(arg0.getSource().equals(button_dayNext))
 		{
@@ -1030,32 +1022,32 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 			layoutTable();
 			timetable.setVisible(false);
 		}
-		if(arg0.getSource().equals(button_dayNext))
+		if(arg0.getSource().equals(view_dayNext))
 		{
 			calStart.set(Calendar.DAY_OF_MONTH, calStart.get(Calendar.DAY_OF_MONTH)+1);
 			setTimeSpace(calStart);
 		}
-		if(arg0.getSource().equals(button_dayBack))
+		if(arg0.getSource().equals(view_dayBack))
 		{
 			calStart.set(Calendar.DAY_OF_MONTH, calStart.get(Calendar.DAY_OF_MONTH)-1);
 			setTimeSpace(calStart);
 		}
-		if(arg0.getSource().equals(button_weekNext))
+		if(arg0.getSource().equals(view_weekNext))
 		{
 			calStart.set(Calendar.DAY_OF_MONTH, calStart.get(Calendar.DAY_OF_MONTH)+7);
 			setTimeSpace(calStart);
 		}
-		if(arg0.getSource().equals(button_weekBack))
+		if(arg0.getSource().equals(view_weekBack))
 		{
 			calStart.set(Calendar.DAY_OF_MONTH, calStart.get(Calendar.DAY_OF_MONTH)-7);
 			setTimeSpace(calStart);
 		}
-		if(arg0.getSource().equals(button_monthNext))
+		if(arg0.getSource().equals(view_monthNext))
 		{
 			calStart.set(Calendar.DAY_OF_MONTH, calStart.get(Calendar.DAY_OF_MONTH)+28);		
 			setTimeSpace(calStart);
 		}
-		if(arg0.getSource().equals(button_monthBack))
+		if(arg0.getSource().equals(view_monthBack))
 		{
 			calStart.set(Calendar.DAY_OF_MONTH, calStart.get(Calendar.DAY_OF_MONTH)-28);
 			setTimeSpace(calStart);
@@ -1657,17 +1649,15 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 
 	public void loadTerminList(boolean first, GregorianCalendar g)
 	{
-		
-		
 			GregorianCalendar c1 = new GregorianCalendar();
-			
-			
+
 			if(!first)
 				{
 				c1.set(Calendar.YEAR,Integer.parseInt(currentValue[0].getDate().toString().substring(0,4)));
 				c1.set(Calendar.MONTH,Integer.parseInt(currentValue[0].getDate().toString().substring(5,7))-1);
 				c1.set(Calendar.DAY_OF_MONTH,Integer.parseInt(currentValue[0].getDate().toString().substring(8,10)));
 				}
+			
 			if (g!=null) c1.setTime(g.getTime());
 			c1.set(Calendar.HOUR_OF_DAY,0);
 			c1.set(Calendar.MINUTE,0);
@@ -1685,17 +1675,53 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 			lblDatumShadow.setText(t);
 			
 			
-			
+			todayListModel.removeAllElements();
 			List<GenericDataObject> termine;
 			GenericDAO gdo = new GenericDAO();
-			
-			
-		
 			try
 			{
-				
-					termine = gdo.unsafeQuery("select * from termin where date>='"+t1.toString()+"' and date<='"+t2.toString()+"' order by date",new Termin());
+					if(viewMonth) termine = gdo.unsafeQuery("select * from termin where date>='"+t1.toString()+"' and date<='"+t2.toString()+"' order by date",new Termin());
+					else
+					{
+						GregorianCalendar g1 = new GregorianCalendar();
+						GregorianCalendar g2 = new GregorianCalendar();
+						g1.setTimeInMillis(t1.getTime());
+						g2.setTimeInMillis(t1.getTime());
+						g1.set(Calendar.SECOND,0);
+						g1.set(Calendar.MILLISECOND,0);
+						g2.set(Calendar.SECOND,0);
+						g2.set(Calendar.MILLISECOND,0);
+						
+						if(table.getSelectedRow()<2)
+						{
+							g2.set(Calendar.HOUR_OF_DAY,8);
+							g2.set(Calendar.MINUTE,0);
+							t2 = new Timestamp(g2.getTimeInMillis());
+							termine = gdo.unsafeQuery("select * from termin where date>='"+t1.toString()+"' and date<='"+t2.toString()+"' order by date",new Termin());
+						}
+						else if(table.getSelectedRow()>14)
+						{
+							g2.set(Calendar.HOUR_OF_DAY,21);
+							g2.set(Calendar.MINUTE,0);
+							t1 = new Timestamp(g2.getTimeInMillis());
+							termine = gdo.unsafeQuery("select * from termin where date>='"+t1.toString()+"' and date<='"+t2.toString()+"' order by date",new Termin());
+						}
+						else
+						{
+							g1.set(Calendar.HOUR_OF_DAY,table.getSelectedRow()+6);
+							g1.set(Calendar.MINUTE,0);
+							g1.set(Calendar.SECOND,0);
+							g1.set(Calendar.MILLISECOND,0);
+							t1 = new Timestamp(g1.getTimeInMillis());
+							g2.set(Calendar.HOUR_OF_DAY,table.getSelectedRow()+7);
+							g2.set(Calendar.MINUTE,0);
+							t2 = new Timestamp(g2.getTimeInMillis());
+							termine = gdo.unsafeQuery("select * from termin where date>='"+t1.toString()+"' and date<='"+t2.toString()+"' order by date",new Termin());
+							
+						}
+							}
 					currentValue = new Termin[termine.size()+1];
+					System.out.println("terminesize::: "+termine.size());
 					Termin dayTermin = new Termin();
 					dayTermin.setDate(t1);
 					currentValue[0]=dayTermin;
@@ -1705,13 +1731,9 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 						currentValue[i+1] = countTermin;
 						todayListModel.addElement(countTermin.getDate().toString().substring(11,16)+"  "+countTermin.getSecondaryTitle());
 					}
-					if(first && termine.size()>0)
-					{
-						selection = 1;
-						loadTerminData();
-					}
+					
 				
-				todayListModel.removeAllElements();
+			
 				
 				if(first)
 				{
@@ -1723,10 +1745,13 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 		    		lblDatumShadow.setText(title);
 				}
 				
-				
+				if(first && termine.size()>0)
+				{
+					selection = 1;
+					loadTerminData();
+				}
 			}
 			catch(Exception ex) {System.out.println("loadTerminList:: "+ex.toString());}
-			
 	}
 	
 	public void loadTerminData()
