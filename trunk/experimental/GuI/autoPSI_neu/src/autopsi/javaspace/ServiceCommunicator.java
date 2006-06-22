@@ -38,8 +38,8 @@ public class ServiceCommunicator implements IServiceCommunicator, DesiredExpirat
 		return this.timeout;
 	}
 	
-	public void setTimeout(long newTimeout){
-		this.timeout = newTimeout;
+	public void setTimeout(long timeout){
+		this.timeout = timeout;
 	}
 	
 	public String getAdress(){
