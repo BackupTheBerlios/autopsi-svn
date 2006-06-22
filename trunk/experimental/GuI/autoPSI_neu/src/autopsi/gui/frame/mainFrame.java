@@ -173,6 +173,8 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 	public mainFrame() {
 		super();
 		initGUI();	
+		setMarker(new GregorianCalendar());
+		layoutTable();
 		loadTerminList(true, null);
 	}
 	
@@ -842,8 +844,20 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 				
 	    		loadTerminList(false,c_marker);
 
-	    		if(viewMonth) setModel("month");
-				else setModel("week");
+	    		if(viewMonth)
+	    			{
+	    			setModel("month");
+	    			lblToday.setText("heutige Termine:");
+	    			
+	    			}
+				else 
+					{
+					int rownumber = table.getSelectedRow();
+					if(rownumber<2) lblToday.setText("Termine zwischen 00:00 und 8:00");
+					else if (rownumber>=15) lblToday.setText("Termine zwischen 21:00 und 24:00");
+					else lblToday.setText("Termine zwischen " + (rownumber+6) + ":00 und "+ (rownumber+7)+":00");
+					setModel("week");
+					}
 				
 			}
 			catch(Exception ex){System.out.println(" table click 2 " + ex.toString());};
