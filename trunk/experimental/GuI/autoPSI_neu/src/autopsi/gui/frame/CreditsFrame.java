@@ -1,4 +1,7 @@
 package autopsi.gui.frame;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
@@ -20,7 +23,7 @@ import javax.swing.JLabel;
 * THIS MACHINE, SO JIGLOO OR THIS CODE CANNOT BE USED
 * LEGALLY FOR ANY CORPORATE OR COMMERCIAL PURPOSE.
 */
-public class CreditsFrame extends javax.swing.JDialog {
+public class CreditsFrame extends javax.swing.JDialog implements MouseListener {
 
 	{
 		//Set Look & Feel
@@ -76,12 +79,41 @@ public class CreditsFrame extends javax.swing.JDialog {
 					okbutton.setText("OK");
 					okbutton.setBounds(154, 307, 84, 21);
 					okbutton.setOpaque(false);
+					okbutton.addMouseListener(this);
 				}
 			}
 			this.setSize(407, 365);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+
+	public void mouseClicked(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+		if(arg0.getSource().equals(okbutton))
+		{
+			dispose();
+		}
+	}
+
+	public void mousePressed(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void mouseReleased(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void mouseEntered(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void mouseExited(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }
