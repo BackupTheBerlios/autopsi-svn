@@ -125,7 +125,7 @@ public class ServiceCommunicator implements IServiceCommunicator, DesiredExpirat
 	}
 
 	public void delAllOwnedObjects() {
-		//don't renew leases so objects can be deleted
+		//don't renew leases so that objects will be deleted after renewalTime or less
 		this.lrm.clear();
 
 	}

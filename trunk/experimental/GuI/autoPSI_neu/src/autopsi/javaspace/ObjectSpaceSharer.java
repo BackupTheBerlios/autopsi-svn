@@ -19,8 +19,8 @@ import autopsi.database.table.TerminContainer;
 public class ObjectSpaceSharer {
 
 	
-	protected ServiceCommunicator com = null;
-	protected GenericDAO gdo = null;
+	protected ServiceCommunicator com;
+	protected GenericDAO gdo;
 	
 	public ObjectSpaceSharer(){
 		com = new ServiceCommunicator();
