@@ -24,6 +24,7 @@ public class PruefungTableModel extends AbstractTableModel {
 	public IServiceCommunicator ogdo = null;
 	public String tablename = "PRUEFUNG";
 	public List <GenericDataObject> lastDeletedObjects =  new ArrayList<GenericDataObject>();
+	public boolean onlinesuche = false;
 	
 	public String lvaname = null;
 	public String group = null;
@@ -62,6 +63,7 @@ public class PruefungTableModel extends AbstractTableModel {
 	}
 	
 	public void readOnlineData () {
+		this.onlinesuche = true;
 		Pruefung temp =(Pruefung) ogdo.getObject(this.suchPruefung);
 		this.pruefungen = new ArrayList<GenericDataObject>();
 		if (temp != null)
@@ -148,9 +150,21 @@ public class PruefungTableModel extends AbstractTableModel {
 		this.fireDataChanged();
 	}
 	
+	public void downloadObject(){
+		if (this.onlinesuche==true && this.pruefungen.size() != 0) {
+			for (int i=0;i<this.pruefungen.size();i++){
+				addPruefung(this.pruefungen.get(i));
+			}
+			JOptionPane.showMessageDialog(null, "Die Prüfung wurde heruntergeladen." , "Download abgeschlossen." , JOptionPane.INFORMATION_MESSAGE);
+		} else {
+			JOptionPane.showMessageDialog(null, "Sie müssen zuerst nach eine Prüfung suchen." , "Keine Prüfung zum herunterladen." , JOptionPane.INFORMATION_MESSAGE);
+		}
+	}
+	
 	public void addPruefung(GenericDataObject p){
 		try{
 			if (p!=null){
+				System.out.println("p=="+((Pruefung)p).getExaminer());
 				gdo.setCurrentTable(this.tablename);
 				gdo.addDataObject(p);
 			} else {

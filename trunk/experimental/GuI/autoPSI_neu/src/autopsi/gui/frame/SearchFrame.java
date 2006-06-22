@@ -81,7 +81,7 @@ public class SearchFrame extends javax.swing.JFrame implements ActionListener {
 
 	private JTabbedPane jTabbedSearchPane;
 	
-	private JPanel jkontaktSuchePanel;
+	private JPanel jKontaktSuchePanel;
 	private JPanel jLVASuchePanel, jPruefungSuchePanel;
 	private JPanel jTerminSuchePanel, jTerminContainerSuchePanel;
 	private JPanel jLehrmittelSuchePanel, jNotizSuchePanel;
@@ -127,8 +127,14 @@ public class SearchFrame extends javax.swing.JFrame implements ActionListener {
 	private PruefungTableModel jPruefungTableModel;
 	
 	private JButton jKontaktSuchenButton, jTerminSuchenButton, jLVASuchenButton;
-	private JButton jPruefungLoeschenButton, jPruefungWiederherstellenButton;
-	private JButton jLVALoeschenButton, jLVAWiederherstellenButton;
+	private JButton jPruefungDownloadButton, jPruefungLoeschenButton, jPruefungWiederherstellenButton;
+	private JButton jKontaktDownloadButton, jKontaktLoeschenButton, jKontaktWiederherstellenButton;
+	private JButton jLVADownloadButton, jLVALoeschenButton, jLVAWiederherstellenButton;
+	private JButton jLehrmittelDownloadButton, jLehrmittelLoeschenButton, jLehrmittelWiederherstellenButton;
+	private JButton jTerminDownloadButton, jTerminLoeschenButton, jTerminWiederherstellenButton;
+	private JButton jTerminContainerDownloadButton, jTerminContainerLoeschenButton, jTerminContainerWiederherstellenButton;
+	private JButton jNotizDownloadButton, jNotizLoeschenButton, jNotizWiederherstellenButton;
+
 	private JComboBox jGradeComboBox;
 	private JButton jTerminContainerSuchenButton, jLehrmittelSuchenButton;
 	private JButton jNotizSuchenButton, jPruefungSuchenButton;
@@ -162,8 +168,8 @@ public class SearchFrame extends javax.swing.JFrame implements ActionListener {
 		//frame.getContentPane().add(this);
 		setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 		this.pack();
-		
-		
+		this.setSize(812, 430);
+
 		addWindowListener(new WindowAdapter()
 				{
 				public void windowClosing(WindowEvent arg0)
@@ -187,66 +193,66 @@ public class SearchFrame extends javax.swing.JFrame implements ActionListener {
 				jTabbedSearchPane.setTabPlacement(JTabbedPane.LEFT);
 				jTabbedSearchPane.setBorder(BorderFactory.createTitledBorder("Suche"));
 				{
-					jkontaktSuchePanel = new JPanel();
-					jTabbedSearchPane.addTab("Kontakt Suche", null, jkontaktSuchePanel, null);
-					jkontaktSuchePanel.setPreferredSize(new java.awt.Dimension(671, 357));
-					jkontaktSuchePanel.setLayout(null);
-					jkontaktSuchePanel.setBackground(new java.awt.Color(255,255,255));
+					jKontaktSuchePanel = new JPanel();
+					jTabbedSearchPane.addTab("Kontakt Suche", null, jKontaktSuchePanel, null);
+					jKontaktSuchePanel.setPreferredSize(new java.awt.Dimension(651, 336));
+					jKontaktSuchePanel.setLayout(null);
+					jKontaktSuchePanel.setBackground(new java.awt.Color(255,255,255));
 					{
 						jVornameLabel = new JLabel();
-						jkontaktSuchePanel.add(jVornameLabel);
+						jKontaktSuchePanel.add(jVornameLabel);
 						jVornameLabel.setText("Vorname:");
 						jVornameLabel.setBounds(52, 12, 49, 14);
 
 						jNachnameLabel = new JLabel();
-						jkontaktSuchePanel.add(jNachnameLabel);
+						jKontaktSuchePanel.add(jNachnameLabel);
 						jNachnameLabel.setText("Nachname:");
 						jNachnameLabel.setBounds(44, 34, 56, 14);
 
 						jGeburtsdatumLabel = new JLabel();
-						jkontaktSuchePanel.add(jGeburtsdatumLabel);
+						jKontaktSuchePanel.add(jGeburtsdatumLabel);
 						jGeburtsdatumLabel.setText("Geburtsdatum:");
 						jGeburtsdatumLabel.setBounds(26, 56, 77, 14);
 
 						jTelefonnummerLabel = new JLabel();
-						jkontaktSuchePanel.add(jTelefonnummerLabel);
+						jKontaktSuchePanel.add(jTelefonnummerLabel);
 						jTelefonnummerLabel.setText("Telefonnummer:");
 						jTelefonnummerLabel.setBounds(20, 81, 84, 14);
 
 						jAdresseLabel = new JLabel();
-						jkontaktSuchePanel.add(jAdresseLabel);
+						jKontaktSuchePanel.add(jAdresseLabel);
 						jAdresseLabel.setText("Adresse:");
 						jAdresseLabel.setBounds(372, 34, 49, 14);
 
 						jPlzLabel = new JLabel();
-						jkontaktSuchePanel.add(jPlzLabel);
+						jKontaktSuchePanel.add(jPlzLabel);
 						jPlzLabel.setText("Postleitzahl:");
 						jPlzLabel.setBounds(357, 56, 63, 14);
 
 						jOrtLabel = new JLabel();
-						jkontaktSuchePanel.add(jOrtLabel);
+						jKontaktSuchePanel.add(jOrtLabel);
 						jOrtLabel.setText("Ort:");
 						jOrtLabel.setBounds(395, 80, 21, 14);
 						
 						jEmailLabel = new JLabel();
-						jkontaktSuchePanel.add(jEmailLabel);
+						jKontaktSuchePanel.add(jEmailLabel);
 						jEmailLabel.setText("Email:");
 						jEmailLabel.setBounds(386, 12, 35, 14);
 
 						jVornameField = new JTextField();
-						jkontaktSuchePanel.add(jVornameField);
+						jKontaktSuchePanel.add(jVornameField);
 						jVornameField.setBounds(105, 7, 210, 21);
 
 						jNachnameField = new JTextField();
-						jkontaktSuchePanel.add(jNachnameField);
+						jKontaktSuchePanel.add(jNachnameField);
 						jNachnameField.setBounds(105, 30, 210, 21);
 
 						jGeburtsdatumField = new JFormattedTextField(createFormatter("##-##-####"));
-						jkontaktSuchePanel.add(jGeburtsdatumField);
+						jKontaktSuchePanel.add(jGeburtsdatumField);
 						jGeburtsdatumField.setBounds(105, 53, 210, 21);
 
 						jTelefonnummerField = new JTextField();
-						jkontaktSuchePanel.add(jTelefonnummerField);
+						jKontaktSuchePanel.add(jTelefonnummerField);
 						jTelefonnummerField.setBounds(105, 76, 210, 21);
 						jTelefonnummerField.setDocument(new PlainDocument() {
 					    	private static final long serialVersionUID = 8723098029189851737L;
@@ -263,15 +269,15 @@ public class SearchFrame extends javax.swing.JFrame implements ActionListener {
 						});
 						
 						jEmailField = new JTextField();
-						jkontaktSuchePanel.add(jEmailField);
+						jKontaktSuchePanel.add(jEmailField);
 						jEmailField.setBounds(420, 7, 210, 21);
 
 						jAdresseField = new JTextField();
-						jkontaktSuchePanel.add(jAdresseField);
+						jKontaktSuchePanel.add(jAdresseField);
 						jAdresseField.setBounds(420, 30, 210, 21);
 						
 						jPlzField = new JTextField();
-						jkontaktSuchePanel.add(jPlzField);
+						jKontaktSuchePanel.add(jPlzField);
 						jPlzField.setBounds(420, 53, 210, 21);
 						jPlzField.setDocument(new PlainDocument() {
 					    	private static final long serialVersionUID = 8723098029189851737L;
@@ -288,28 +294,28 @@ public class SearchFrame extends javax.swing.JFrame implements ActionListener {
 						});
 						
 						jOrtField = new JTextField();
-						jkontaktSuchePanel.add(jOrtField);
+						jKontaktSuchePanel.add(jOrtField);
 						jOrtField.setBounds(420, 76, 210, 21);
 						
 						{
 							jSeparator1 = new JSeparator();
-							jkontaktSuchePanel.add(jSeparator1);
+							jKontaktSuchePanel.add(jSeparator1);
 							jSeparator1.setBounds(7, 140, 630, 7);
 						}
 						{
 							jKontaktSuchenButton = new JButton();
-							jkontaktSuchePanel.add(jKontaktSuchenButton);
+							jKontaktSuchePanel.add(jKontaktSuchenButton);
 							jKontaktSuchenButton.setText("Kontakt Suchen");
 							jKontaktSuchenButton.setBounds(68, 105, 154, 28);
 							jKontaktSuchenButton.addActionListener(this);
 							
 							jKontaktLokalSuchenRadioButton = new JRadioButton();
-							jkontaktSuchePanel.add(jKontaktLokalSuchenRadioButton);
+							jKontaktSuchePanel.add(jKontaktLokalSuchenRadioButton);
 							jKontaktLokalSuchenRadioButton.setText("Lokal Suchen");
 							jKontaktLokalSuchenRadioButton.setBounds(231, 105, 91, 14);
 	
 							jKontaktOnlineSuchenRadioButton = new JRadioButton();
-							jkontaktSuchePanel.add(jKontaktOnlineSuchenRadioButton);
+							jKontaktSuchePanel.add(jKontaktOnlineSuchenRadioButton);
 							jKontaktOnlineSuchenRadioButton.setText("Online Suchen");
 							jKontaktOnlineSuchenRadioButton.setBounds(231, 119, 98, 14);
 							
@@ -321,13 +327,13 @@ public class SearchFrame extends javax.swing.JFrame implements ActionListener {
 							jKontaktOnlineSuchenRadioButton.setBackground(new java.awt.Color(255,255,255));
 							
 							jKontaktGruppeLabel = new JLabel();
-							jkontaktSuchePanel.add(jKontaktGruppeLabel);
+							jKontaktSuchePanel.add(jKontaktGruppeLabel);
 							jKontaktGruppeLabel.setText("Gruppe:");
 							jKontaktGruppeLabel.setBounds(348, 112, 42, 14);
 		
 							KategorieComboBoxModel jKontaktGruppeComboBoxModel = new KategorieComboBoxModel("ATTACHABLE_OBJECT_KATEGORIE", new AttachableObjectKategorie());
 							jKontaktGruppeComboBox = new JComboBox();
-							jkontaktSuchePanel.add(jKontaktGruppeComboBox);
+							jKontaktSuchePanel.add(jKontaktGruppeComboBox);
 							jKontaktGruppeComboBox
 								.setModel(jKontaktGruppeComboBoxModel);
 							jKontaktGruppeComboBox.setBounds(392, 109, 175, 21);
@@ -335,8 +341,8 @@ public class SearchFrame extends javax.swing.JFrame implements ActionListener {
 
 						{
 							jKontaktScrollPane = new JScrollPane();
-							jkontaktSuchePanel.add(jKontaktScrollPane);
-							jKontaktScrollPane.setBounds(18, 147, 610, 203);
+							jKontaktSuchePanel.add(jKontaktScrollPane);
+							jKontaktScrollPane.setBounds(21, 147, 609, 175);
 							jKontaktScrollPane.setWheelScrollingEnabled(true);
 							jKontaktScrollPane.setBackground(new java.awt.Color(255,255,255));
 							{
@@ -350,7 +356,30 @@ public class SearchFrame extends javax.swing.JFrame implements ActionListener {
 								jKontaktTable.setShowGrid(true);
 								jKontaktTable.setGridColor(Color.LIGHT_GRAY);
 								jKontaktTable.setBackground(new java.awt.Color(255,255,255));
+								jKontaktTable.setPreferredSize(new java.awt.Dimension(609, 0));
 							}
+						}
+						
+						{
+							jKontaktLoeschenButton = new JButton();
+							jKontaktSuchePanel.add(jKontaktLoeschenButton);
+							jKontaktLoeschenButton.setText("Kontakt(e) Löschen");
+							jKontaktLoeschenButton.setBounds(21, 329, 133, 21);
+							jKontaktLoeschenButton.addActionListener(this);
+						}
+						{
+							jKontaktWiederherstellenButton = new JButton();
+							jKontaktSuchePanel.add(jKontaktWiederherstellenButton);
+							jKontaktWiederherstellenButton.setText("Gelöschte Kontakt(e) Wiederherstellen");
+							jKontaktWiederherstellenButton.setBounds(161, 329, 231, 21);
+							jKontaktWiederherstellenButton.addActionListener(this);
+						}
+						{
+							jKontaktDownloadButton = new JButton();
+							jKontaktSuchePanel.add(jKontaktDownloadButton);
+							jKontaktDownloadButton.setText("Kontakt herunterladen");
+							jKontaktDownloadButton.setBounds(483, 329, 147, 21);
+							jKontaktDownloadButton.addActionListener(this);
 						}
 
 					}
@@ -465,6 +494,7 @@ public class SearchFrame extends javax.swing.JFrame implements ActionListener {
 								jLVATable.setGridColor(Color.LIGHT_GRAY);
 							}
 						}
+						
 						{
 							jLVALoeschenButton = new JButton();
 							jLVASuchePanel.add(jLVALoeschenButton);
@@ -475,9 +505,16 @@ public class SearchFrame extends javax.swing.JFrame implements ActionListener {
 						{
 							jLVAWiederherstellenButton = new JButton();
 							jLVASuchePanel.add(jLVAWiederherstellenButton);
-							jLVAWiederherstellenButton.setText("LVA(s) Wiederherstellen");
-							jLVAWiederherstellenButton.setBounds(140, 329, 168, 21);
+							jLVAWiederherstellenButton.setText("Gelöschte LVA(s) Wiederherstellen");
+							jLVAWiederherstellenButton.setBounds(140, 329, 231, 21);
 							jLVAWiederherstellenButton.addActionListener(this);
+						}
+						{
+							jLVADownloadButton = new JButton();
+							jLVASuchePanel.add(jLVADownloadButton);
+							jLVADownloadButton.setText("LVA herunterladen");
+							jLVADownloadButton.setBounds(483, 329, 147, 21);
+							jLVADownloadButton.addActionListener(this);
 						}
 
 					}
@@ -580,7 +617,7 @@ public class SearchFrame extends javax.swing.JFrame implements ActionListener {
 						{
 							jTerminScrollPane = new JScrollPane();
 							jTerminSuchePanel.add(jTerminScrollPane);
-							jTerminScrollPane.setBounds(18, 147, 610, 203);
+							jTerminScrollPane.setBounds(21, 147, 609, 175);
 							jTerminScrollPane.setWheelScrollingEnabled(true);
 							jTerminScrollPane.setBackground(new java.awt.Color(255,255,255));
 							{
@@ -593,6 +630,28 @@ public class SearchFrame extends javax.swing.JFrame implements ActionListener {
 								jTerminTable.setShowGrid(true);
 								jTerminTable.setGridColor(Color.LIGHT_GRAY);
 							}
+						}
+						
+						{
+							jTerminLoeschenButton = new JButton();
+							jTerminSuchePanel.add(jTerminLoeschenButton);
+							jTerminLoeschenButton.setText("Termin Löschen");
+							jTerminLoeschenButton.setBounds(21, 329, 112, 21);
+							jTerminLoeschenButton.addActionListener(this);
+						}
+						{
+							jTerminWiederherstellenButton = new JButton();
+							jTerminSuchePanel.add(jTerminWiederherstellenButton);
+							jTerminWiederherstellenButton.setText("Gelöschte(n) Termin(e) Wiederherstellen");
+							jTerminWiederherstellenButton.setBounds(140, 329, 231, 21);
+							jTerminWiederherstellenButton.addActionListener(this);
+						}
+						{
+							jTerminDownloadButton = new JButton();
+							jTerminSuchePanel.add(jTerminDownloadButton);
+							jTerminDownloadButton.setText("Termin herunterladen");
+							jTerminDownloadButton.setBounds(483, 329, 147, 21);
+							jTerminDownloadButton.addActionListener(this);
 						}
 
 					}
@@ -670,7 +729,7 @@ public class SearchFrame extends javax.swing.JFrame implements ActionListener {
 						{
 							jTerminContainerScrollPane = new JScrollPane();
 							jTerminContainerSuchePanel.add(jTerminContainerScrollPane);
-							jTerminContainerScrollPane.setBounds(18, 147, 610, 203);
+							jTerminContainerScrollPane.setBounds(21, 147, 609, 175);
 							jTerminContainerScrollPane.setWheelScrollingEnabled(true);
 							jTerminContainerScrollPane.setBackground(new java.awt.Color(255,255,255));
 							{
@@ -683,6 +742,28 @@ public class SearchFrame extends javax.swing.JFrame implements ActionListener {
 								jTerminContainerTable.setShowGrid(true);
 								jTerminContainerTable.setGridColor(Color.LIGHT_GRAY);
 							}
+						}
+						
+						{
+							jTerminContainerLoeschenButton = new JButton();
+							jTerminContainerSuchePanel.add(jTerminContainerLoeschenButton);
+							jTerminContainerLoeschenButton.setText("Termincontainer Löschen");
+							jTerminContainerLoeschenButton.setBounds(21, 329, 154, 21);
+							jTerminContainerLoeschenButton.addActionListener(this);
+						}
+						{
+							jTerminContainerWiederherstellenButton = new JButton();
+							jTerminContainerSuchePanel.add(jTerminContainerWiederherstellenButton);
+							jTerminContainerWiederherstellenButton.setText("Gelöschte(n) Termincontainer Wiederherstellen");
+							jTerminContainerWiederherstellenButton.setBounds(182, 329, 266, 21);
+							jTerminContainerWiederherstellenButton.addActionListener(this);
+						}
+						{
+							jTerminContainerDownloadButton = new JButton();
+							jTerminContainerSuchePanel.add(jTerminContainerDownloadButton);
+							jTerminContainerDownloadButton.setText("Termincontainer herunterladen");
+							jTerminContainerDownloadButton.setBounds(483, 329, 147, 21);
+							jTerminContainerDownloadButton.addActionListener(this);
 						}
 
 					}
@@ -772,7 +853,7 @@ public class SearchFrame extends javax.swing.JFrame implements ActionListener {
 						{
 							jLehrmittelScrollPane = new JScrollPane();
 							jLehrmittelSuchePanel.add(jLehrmittelScrollPane);
-							jLehrmittelScrollPane.setBounds(18, 147, 610, 203);
+							jLehrmittelScrollPane.setBounds(21, 147, 609, 175);
 							jLehrmittelScrollPane.setWheelScrollingEnabled(true);
 							jLehrmittelScrollPane.setBackground(new java.awt.Color(255,255,255));
 							{
@@ -788,6 +869,28 @@ public class SearchFrame extends javax.swing.JFrame implements ActionListener {
 							}
 						}
 						
+						{
+							jLehrmittelLoeschenButton = new JButton();
+							jLehrmittelSuchePanel.add(jLehrmittelLoeschenButton);
+							jLehrmittelLoeschenButton.setText("Lehrmittel Löschen");
+							jLehrmittelLoeschenButton.setBounds(21, 329, 126, 21);
+							jLehrmittelLoeschenButton.addActionListener(this);
+						}
+						{
+							jLehrmittelWiederherstellenButton = new JButton();
+							jLehrmittelSuchePanel.add(jLehrmittelWiederherstellenButton);
+							jLehrmittelWiederherstellenButton.setText("Gelöschte(s) Lehrmittel Wiederherstellen");
+							jLehrmittelWiederherstellenButton.setBounds(154, 329, 231, 21);
+							jLehrmittelWiederherstellenButton.addActionListener(this);
+						}
+						{
+							jLehrmittelDownloadButton = new JButton();
+							jLehrmittelSuchePanel.add(jLehrmittelDownloadButton);
+							jLehrmittelDownloadButton.setText("Lehrmittel herunterladen");
+							jLehrmittelDownloadButton.setBounds(476, 329, 154, 21);
+							jLehrmittelDownloadButton.addActionListener(this);
+						}
+						
 
 					}
 					
@@ -796,7 +899,6 @@ public class SearchFrame extends javax.swing.JFrame implements ActionListener {
 // #####################################################################
 					
 					jNotizSuchePanel = new JPanel();
-					jTabbedSearchPane.addTab("Notiz Suche", null, jNotizSuchePanel, null);
 					jNotizSuchePanel.setPreferredSize(new java.awt.Dimension(671, 357));
 					jNotizSuchePanel.setLayout(null);
 					jNotizSuchePanel.setBackground(new java.awt.Color(255,255,255));
@@ -869,7 +971,7 @@ public class SearchFrame extends javax.swing.JFrame implements ActionListener {
 						{
 							jNotizScrollPane = new JScrollPane();
 							jNotizSuchePanel.add(jNotizScrollPane);
-							jNotizScrollPane.setBounds(18, 147, 610, 203);
+							jNotizScrollPane.setBounds(21, 147, 609, 175);
 							jNotizScrollPane.setWheelScrollingEnabled(true);
 							jNotizScrollPane.setBackground(new java.awt.Color(255,255,255));
 							{
@@ -884,6 +986,28 @@ public class SearchFrame extends javax.swing.JFrame implements ActionListener {
 								jNotizTable.setGridColor(Color.LIGHT_GRAY);
 							}
 						}
+						
+						{
+							jNotizLoeschenButton = new JButton();
+							jNotizSuchePanel.add(jNotizLoeschenButton);
+							jNotizLoeschenButton.setText("Notiz(en) Löschen");
+							jNotizLoeschenButton.setBounds(21, 329, 119, 21);
+							jNotizLoeschenButton.addActionListener(this);
+						}
+						{
+							jNotizWiederherstellenButton = new JButton();
+							jNotizSuchePanel.add(jNotizWiederherstellenButton);
+							jNotizWiederherstellenButton.setText("Gelöschte Notiz(en) Wiederherstellen");
+							jNotizWiederherstellenButton.setBounds(147, 329, 231, 21);
+							jNotizWiederherstellenButton.addActionListener(this);
+						}
+						{
+							jNotizDownloadButton = new JButton();
+							jNotizSuchePanel.add(jNotizDownloadButton);
+							jNotizDownloadButton.setText("Notiz herunterladen");
+							jNotizDownloadButton.setBounds(483, 329, 147, 21);
+							jNotizDownloadButton.addActionListener(this);
+						}
 
 					}
 					
@@ -892,6 +1016,7 @@ public class SearchFrame extends javax.swing.JFrame implements ActionListener {
 // #####################################################################
 					
 					jPruefungSuchePanel = new JPanel();
+					jTabbedSearchPane.addTab("Notiz Suche", null, jNotizSuchePanel, null);
 					jTabbedSearchPane.addTab("Pruefung Suche", null, jPruefungSuchePanel, null);
 					jPruefungSuchePanel.setPreferredSize(new java.awt.Dimension(671, 357));
 					jPruefungSuchePanel.setLayout(null);
@@ -994,16 +1119,23 @@ public class SearchFrame extends javax.swing.JFrame implements ActionListener {
 						{
 							jPruefungLoeschenButton = new JButton();
 							jPruefungSuchePanel.add(jPruefungLoeschenButton);
-							jPruefungLoeschenButton.setText("Prüfung Löschen");
-							jPruefungLoeschenButton.setBounds(21, 329, 112, 21);
+							jPruefungLoeschenButton.setText("Prüfung(en) Löschen");
+							jPruefungLoeschenButton.setBounds(21, 329, 133, 21);
 							jPruefungLoeschenButton.addActionListener(this);
 						}
 						{
 							jPruefungWiederherstellenButton = new JButton();
 							jPruefungSuchePanel.add(jPruefungWiederherstellenButton);
-							jPruefungWiederherstellenButton.setText("Prüfung(en) Wiederherstellen");
-							jPruefungWiederherstellenButton.setBounds(140, 329, 168, 21);
+							jPruefungWiederherstellenButton.setText("Gelöschte Prüfung(en) Wiederherstellen");
+							jPruefungWiederherstellenButton.setBounds(162, 329, 231, 21);
 							jPruefungWiederherstellenButton.addActionListener(this);
+						}
+						{
+							jPruefungDownloadButton = new JButton();
+							jPruefungSuchePanel.add(jPruefungDownloadButton);
+							jPruefungDownloadButton.setText("Prüfung Herunterladen");
+							jPruefungDownloadButton.setBounds(483, 329, 147, 21);
+							jPruefungDownloadButton.addActionListener(this);
 						}
 
 					}
@@ -1248,10 +1380,9 @@ public class SearchFrame extends javax.swing.JFrame implements ActionListener {
 				jPruefungTableModel.deleteSelectedRow(jPruefungTable);
 			} else if(cmd.equals("Prüfung(en) Wiederherstellen")) {
 				jPruefungTableModel.restoreLastDeletedObjects();
-			} else if(cmd.equals("LVA(s) Löschen")) {
-				jLVATableModel.deleteSelectedRow(jLVATable);
-			} else if(cmd.equals("LVA(s) Wiederherstellen")) {
-				jLVATableModel.restoreLastDeletedObjects();
+			} else if(cmd.equals("Prüfung Herunterladen")) {
+				System.out.println("prüfung down");
+				jPruefungTableModel.downloadObject();
 			}
 		} catch (ParseException ps) {
 			System.err.println("Parsererror: " + ps.getMessage());

@@ -104,8 +104,10 @@ public class GenericEditFrame extends JDialog implements ActionListener {
 			catch (Exception e){
 				System.out.println("exception@GenericEditFrame.setObjectToEdit::"+e.toString());
 			}			
-		}
 	}
+	
+	this.pack();
+}
 	
 	public GenericData getObjectToEdit(){
 		System.out.println("GenericEditFrame::getObjectToEdit");
