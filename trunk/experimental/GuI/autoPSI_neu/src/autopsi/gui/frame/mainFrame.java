@@ -1785,9 +1785,7 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 					minuten = dauer;
 					
 					lblZeit.setText("Zeit: "+showTermin.getDate().toString().substring(11,16)+"           Dauer "+stunden+":"+minuten);
-
 					lblTermin.setText(showTermin.getSecondaryTitle());
-					
 					lblOrt.setText("Ort: "+showTermin.getPlace());
 					lblBeschreibung.setText(showTermin.getDescription());
 					
@@ -1827,7 +1825,6 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 					
 					if(showTObjects.getSelectedObjects()!=null)
 					{
-						System.out.println("show T Objects");
 						String tablename="";
 						int globalID;
 						List<GenericDataObject> list1;
@@ -1872,7 +1869,6 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 				    }
 					if(showTCObjects.getSelectedObjects()!=null)
 					{
-						System.out.println("show TC Objects");
 						String tablename="";
 						int globalID;
 						List<GenericDataObject> list1;
