@@ -10,24 +10,24 @@ import javax.swing.table.AbstractTableModel;
 import autopsi.database.dao.GenericDAO;
 import autopsi.database.dao.GenericDataObject;
 import autopsi.database.dao.IGenericDAO;
+import autopsi.database.table.AttachableObject;
 import autopsi.database.table.Lva;
 import autopsi.database.table.Universitaet;
 import autopsi.javaspace.ServiceCommunicator;
 
 public class LVATableModel extends AbstractTableModel {
 
-	private static final long serialVersionUID = 8737097029189851737L;
 	public List <GenericDataObject> lvas = new ArrayList<GenericDataObject>();
 	public List <GenericDataObject> uni = new ArrayList<GenericDataObject>();
+	public List <GenericDataObject> lastDeletedObjects =  new ArrayList<GenericDataObject>();
+	public GenericDAO gdo;
+	public ServiceCommunicator ogdo = null;
+	public boolean onlinesuche = false;
+	public String tablename = "LVA";
 	public Lva suchLva = null;
 	public String group = null;
 	public String type = null;
-	public ServiceCommunicator ogdo = null;
-	public boolean onlinesuche = false;
 	
-	public IGenericDAO gdo = new GenericDAO();
-	public String tablename = "LVA";
-	public List <GenericDataObject> lastDeletedObjects =  new ArrayList<GenericDataObject>();
 	
 	private final String [] columnName = {"LVA-Nr","Titel", "Beschreibung", "UNI"};
 	
@@ -63,23 +63,34 @@ public class LVATableModel extends AbstractTableModel {
 		}
 	}
 	
+	
+	public void readOnlineData(){
+		this.onlinesuche = true;
+		Lva temp = (Lva)this.ogdo.getObject(this.suchLva);
+		this.lvas = new ArrayList<GenericDataObject>();
+		this.lvas.add(temp);
+	}
+
+	
+	public LVATableModel (){
+		this.gdo = new GenericDAO();
+		this.ogdo = new ServiceCommunicator();
+	}
+	
+	
+	public void fireDataChanged() {
+		this.onlinesuche = false;
+		readData();
+		this.fireTableDataChanged();
+	}
+	
 	public void fireOnlineDataChanged(){
 		this.onlinesuche = true;
 		readOnlineData();
 		fireTableDataChanged();
 	}
 	
-	public LVATableModel (){
-		this.ogdo = new ServiceCommunicator();
-		this.ogdo = new ServiceCommunicator();
-		this.lvas = new ArrayList<GenericDataObject>();
-	}
-	
-	public void readOnlineData(){
-		Lva temp = (Lva)this.ogdo.getObject(this.suchLva);
-		this.lvas = new ArrayList<GenericDataObject>();
-		this.lvas.add(temp);
-	}
+
 	
 	public void deleteSelectedRow(JTable table) {
 		Lva p = new Lva();
@@ -95,28 +106,28 @@ public class LVATableModel extends AbstractTableModel {
             	p=(Lva) this.getLvas().get(r);
             	if (p.getGlobalId() != null ) {
             		if (first) {
-            			auswahl = JOptionPane.showConfirmDialog(null, "Sind sie sicher dass sie alle markierte LVAs löschen wollen?", "Löschen?",JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.ERROR_MESSAGE);
+            			auswahl = JOptionPane.showConfirmDialog(null, "Sind sie sicher dass sie alle markierten Objekte löschen wollen?", "Löschen?",JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.ERROR_MESSAGE);
             		}
 	            	if (auswahl == JOptionPane.YES_OPTION) {
 	            		//weiter mit löschen
 	            		deleted = this.deleteLva(p);
 	            		if (deleted) {
 	            			if (first){
-	            				JOptionPane.showMessageDialog(null, "Die LVA wurden erfolgreich gelöscht." , "Gelöscht!" , JOptionPane.INFORMATION_MESSAGE);
+	            				JOptionPane.showMessageDialog(null, "Das Löschvorgang war erfolgreich." , "Gelöscht!" , JOptionPane.INFORMATION_MESSAGE);
 	            			}
 	            		} else {
-	            			JOptionPane.showMessageDialog(null, "Die LVA konnte nicht gelöscht werden." , "Löschen!" , JOptionPane.ERROR_MESSAGE);
+	            			JOptionPane.showMessageDialog(null, "Das Objekt konnte nicht gelöscht werden." , "Löschen!" , JOptionPane.ERROR_MESSAGE);
 	            		}
 	            	}
             	} else {
-            		JOptionPane.showMessageDialog(null, "Diese LVA kann nicht gelöscht werden." , "Null Object!" , JOptionPane.ERROR_MESSAGE);
+            		JOptionPane.showMessageDialog(null, "Dieses Objekt kann nicht gelöscht werden." , "Null Object!" , JOptionPane.ERROR_MESSAGE);
             	}
             	first = false;
             }    
 	    }
 	    
 	    if (selected == false) {
-	    	JOptionPane.showMessageDialog(null, "Bitte selektieren Sie mindestens eine LVA in der Tabelle", "LVA wurde nicht ausgewählt!" , JOptionPane.ERROR_MESSAGE);
+	    	JOptionPane.showMessageDialog(null, "Bitte selektieren Sie mindestens eine Reihe in der Tabelle", "Data wurde nicht ausgewählt!" , JOptionPane.ERROR_MESSAGE);
 	    }
 	    if (deleted) {
 	    	this.fireDataChanged();
@@ -160,17 +171,28 @@ public class LVATableModel extends AbstractTableModel {
 			for (int i=0;i<this.lvas.size();i++){
 				addLVA(this.lvas.get(i));
 			}
-			JOptionPane.showMessageDialog(null, "Die Prüfung wurde heruntergeladen." , "Download abgeschlossen." , JOptionPane.INFORMATION_MESSAGE);
+			JOptionPane.showMessageDialog(null, "Das ausgewählte Objekt wurde heruntergeladen." , "Download abgeschlossen." , JOptionPane.INFORMATION_MESSAGE);
 		} else {
-			JOptionPane.showMessageDialog(null, "Sie müssen zuerst nach eine Prüfung suchen." , "Keine Prüfung zum herunterladen." , JOptionPane.INFORMATION_MESSAGE);
+			JOptionPane.showMessageDialog(null, "Sie müssen zuerst ein Objekt auswählen." , "Kein Objekt zum herunterladen ausgewählt." , JOptionPane.INFORMATION_MESSAGE);
 		}
 	}
 	
 	public void addLVA(GenericDataObject p){
 		try{
 			if (p!=null){
+				gdo.setCurrentTable("attachable_object");
+				AttachableObject a = new AttachableObject();
+				a.setTableName(this.tablename.toLowerCase());
+				a.setKategorieId(0);
+				gdo.addDataObject(a);
+				a = (AttachableObject)gdo.unsafeQuery("select * from attachable_object where global_id=identity()", new AttachableObject()).get(0);
+				Lva l = (Lva) p;
+				l.setGlobalId(a.getId());
+				l.setUniId(0);
 				gdo.setCurrentTable(this.tablename);
-				gdo.addDataObject(p);
+				gdo.addDataObject(l);
+				
+				
 			} else {
 				System.out.println("NULLLL ELEMENTTTT!!!! :(((((((");
 			}
@@ -189,11 +211,6 @@ public class LVATableModel extends AbstractTableModel {
 	}
 	public void setType(String type){
 		this.type = type;
-	}
-	public void fireDataChanged() {
-		this.onlinesuche = false;
-		readData();
-		this.fireTableDataChanged();
 	}
 	
 	public int getColumnCount() {
