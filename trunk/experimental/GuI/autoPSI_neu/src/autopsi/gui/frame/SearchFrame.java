@@ -31,6 +31,7 @@ import javax.swing.text.BadLocationException;
 import javax.swing.text.MaskFormatter;
 import javax.swing.text.PlainDocument;
 
+import autopsi.basis.model.KategorieComboBoxModel;
 import autopsi.basis.model.KontaktTableModel;
 import autopsi.basis.model.LVATableModel;
 import autopsi.basis.model.LehrmittelTableModel;
@@ -49,7 +50,6 @@ import autopsi.database.table.TerminContainer;
 import autopsi.database.table.TerminKategorie;
 import autopsi.database.table.Lva;
 import autopsi.database.table.LvaKategorie;
-import autopsi.gui.component.KategorieComboBoxModel;
 
 /**
 * This code was edited or generated using CloudGarden's Jigloo

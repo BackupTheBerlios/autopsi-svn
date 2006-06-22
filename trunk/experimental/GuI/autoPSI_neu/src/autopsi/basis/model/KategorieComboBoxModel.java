@@ -1,4 +1,4 @@
-package autopsi.gui.component;
+package autopsi.basis.model;
 import java.util.List;
 import javax.swing.DefaultComboBoxModel;
 import autopsi.database.dao.GenericDAO;
