@@ -73,6 +73,7 @@ public class InfoDialog extends javax.swing.JDialog {
 					textpane.setText(text);
 					textpane.setBounds(7, 7, 266, 63);
 					textpane.setOpaque(false);
+					textpane.setEditable(false);
 				}
 			}
 			this.setSize(288, 135);
