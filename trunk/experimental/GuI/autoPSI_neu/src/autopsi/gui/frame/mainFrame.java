@@ -181,6 +181,7 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 	private void setTable()
 	{
 		this.addWindowListener(this);
+		this.setIconImage(new ImageIcon("src/images/autopsi.png").getImage() );
 		table = new JTable();	
 		setTimeSpace(calStart);
 		
