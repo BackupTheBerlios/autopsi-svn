@@ -17,6 +17,7 @@ public class AttachableObject extends GenericData implements Entry,GenericDataOb
 	public AttachableObject(){
 		Class cl = this.getClass();
 		try{
+			this.setObjectName("Anhängbares Objekt");
 			GSMethodPrimary primary = new GSMethodPrimary();
 			primary.getMethod = cl.getMethod("getId", new Class[] {});
 			primary.setMethod = cl.getMethod("setId", new Class[] {Integer.class} );

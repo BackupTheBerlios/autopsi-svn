@@ -3,11 +3,13 @@ package autopsi.gui.component;
 import java.awt.BorderLayout;
 import java.awt.Component;
 import java.sql.Timestamp;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Map;
-import java.util.HashMap;
+import java.util.TreeMap;
 import java.util.Set;
 import java.awt.GridLayout;
 
@@ -29,11 +31,12 @@ public class GenericEditPanel extends JPanel {
 
 	private GenericData editedObject = null;
 	private Map<GSMethod, EditPlugin> methods = null;
-	private Map<Class, EditPlugin> plugins = new HashMap<Class, EditPlugin>();
+	private Map<Class, EditPlugin> plugins;
 	private JPanel panel = null;
 	private JDialog parentFrame;
 	
 	public GenericEditPanel(JDialog parentFrame){
+		plugins = new HashMap<Class, EditPlugin>();
 		panel = new JPanel();
 		this.parentFrame = parentFrame;
 		this.add(panel);
@@ -103,6 +106,7 @@ public class GenericEditPanel extends JPanel {
 	
 	private void inspectEditedObject() throws EClassEditorMissing{
 		Method[] tempMethods = editedObject.getClass().getDeclaredMethods();
+//		methods = new HashMap<GSMethod, EditPlugin>();
 		methods = new HashMap<GSMethod, EditPlugin>();
 		Map<String, GSMethod> map = this.editedObject.getAllAttribs();
 		Set<String> set = map.keySet();
@@ -188,13 +192,45 @@ public class GenericEditPanel extends JPanel {
 	private void createUI(){
 		try{
 			panel.removeAll();
-			Set<GSMethod> set = methods.keySet();
+			Set<GSMethod> set = this.methods.keySet();
+			Map<GSMethod, EditPlugin> localMethods = new HashMap<GSMethod, EditPlugin>();	
 			Iterator<GSMethod> iter = set.iterator();
+			List<GSMethod> sortedMethods = new ArrayList<GSMethod>();
+			
+			while(iter.hasNext()){
+				GSMethod meth = iter.next();
+				EditPlugin plugin = this.methods.get(meth);
+				localMethods.put(meth, plugin);
+			}
+				
+			set = localMethods.keySet();
+				
+			int size = set.size();
+			for(int i=0;i<size;i++){
+				set = localMethods.keySet();
+				iter = set.iterator();
+				GSMethod minMethod = null;
+				
+				while(iter.hasNext()){
+					GSMethod method = iter.next();
+					if (minMethod == null)
+						minMethod = method;
+					
+					if (method.methodId <= minMethod.methodId)
+						minMethod = method;
+				}
+				localMethods.remove(minMethod);
+				sortedMethods.add(minMethod);
+			}
+			
+			iter = sortedMethods.iterator();
 			while(iter.hasNext()){
 				GSMethod method = iter.next();
 				EditPlugin plugin = methods.get(method);
 				panel.add( plugin.getView());
 			}
+			
+			
 		}
 		catch (Exception e){
 			System.out.println("CreateUI, Exception :: "+e.toString());

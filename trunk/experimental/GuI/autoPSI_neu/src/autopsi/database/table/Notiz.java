@@ -17,6 +17,7 @@ public class Notiz extends GenericData implements Entry,GenericDataObject {
 	public Notiz(){
 		Class cl = this.getClass();
 		try{
+			this.setObjectName("Notiz");
 //			this.addAttribute("GlobalId",cl.getMethod("getGlobalId", new Class[] {}), cl.getMethod("setGlobalId", new Class[] {Integer.class} ));
 			GSMethodForeign meth = new GSMethodForeign();
 			meth.getMethod = cl.getMethod("getGlobalId", new Class[] {});

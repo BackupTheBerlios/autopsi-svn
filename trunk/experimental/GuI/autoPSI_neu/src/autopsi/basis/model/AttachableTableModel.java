@@ -43,6 +43,7 @@ public class AttachableTableModel implements TableModel {
 		GenericDataObject gdPrototype = null;
 		try {
 			gdPrototype = (GenericDataObject)editedClass.newInstance();
+			
 		} catch (Exception e){
 			System.out.println("AttachableTableModel.setObjectType()::Konnte keinen Prototypen erstellen");
 		}
@@ -69,7 +70,8 @@ public class AttachableTableModel implements TableModel {
 	}
 
 	public String getColumnName(int arg0) {
-		return "";
+		Field[] fd = this.editedClass.getDeclaredFields();
+		return fd[arg0].getName();
 	}
 
 	public Class<?> getColumnClass(int arg0) {

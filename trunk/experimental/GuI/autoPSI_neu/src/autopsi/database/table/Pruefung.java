@@ -19,6 +19,7 @@ public class Pruefung extends GenericData implements Entry,GenericDataObject {
 	public Pruefung(){
 		Class cl = this.getClass();
 		try{
+			this.setObjectName("Prüfung");
 //			this.addAttribute("GlobalId",cl.getMethod("getGlobalId", new Class[] {}), cl.getMethod("setGlobalId", new Class[] {Integer.class} ));
 			GSMethodForeign meth = new GSMethodForeign();
 			meth.getMethod = cl.getMethod("getGlobalId", new Class[] {});

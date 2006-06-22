@@ -12,6 +12,7 @@ public class LehrmittelKategorie extends GenericData implements Entry,GenericDat
 		public LehrmittelKategorie(){
 			Class cl = this.getClass();
 			try{
+				this.setObjectName("LehrmittelKategorie");
 				this.addAttribute("Id",cl.getMethod("getId", new Class[] {}), cl.getMethod("setId", new Class[] {Integer.class} ));
 				this.addAttribute("Kategoriename",cl.getMethod("getTitle", new Class[] {}), cl.getMethod("setTitle", new Class[] {String.class} ));	}
 			catch (Exception e){

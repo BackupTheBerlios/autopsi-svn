@@ -15,6 +15,7 @@ public class TerminKategorie extends GenericData implements Entry,GenericDataObj
 	public TerminKategorie(){
 		Class cl = this.getClass();
 		try{
+			this.setObjectName("Terminkategorie");
 			this.addAttribute("Id",cl.getMethod("getId", new Class[] {}), cl.getMethod("setId", new Class[] {Integer.class} ));
 			this.addAttribute("Kategoriename",cl.getMethod("getName", new Class[] {}), cl.getMethod("setName", new Class[] {String.class} ));	}
 		catch (Exception e){

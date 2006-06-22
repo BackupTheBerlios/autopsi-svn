@@ -17,6 +17,7 @@ public class Lehrmittel extends GenericData implements Entry,GenericDataObject {
 	public Lehrmittel(){
 		Class cl = this.getClass();
 		try{
+			this.setObjectName("Lehrmittel");
 //			this.addAttribute("GlobalId",cl.getMethod("getGlobalId", new Class[] {}), cl.getMethod("setGlobalId", new Class[] {Integer.class} ));
 			GSMethodForeign meth = new GSMethodForeign();
 			meth.getMethod = cl.getMethod("getGlobalId", new Class[] {});

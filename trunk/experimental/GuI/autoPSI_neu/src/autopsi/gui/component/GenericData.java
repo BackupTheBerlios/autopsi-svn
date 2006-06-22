@@ -1,15 +1,32 @@
 package autopsi.gui.component;
 
 
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.HashMap;
 import java.util.Set;
+import java.util.TreeMap;
 import java.lang.reflect.Method;
+
 
 public class GenericData implements Cloneable{
 	
-	protected Map<String, GSMethod> map = new HashMap<String, GSMethod>();
+	protected Map<String, GSMethod> map;
+	protected String objectName = "";
+	
+	
+	public GenericData(){
+		map = new HashMap<String, GSMethod>();
+	}
+	
+	public String getObjectName(){
+		return this.objectName;
+	}
+	
+	public void setObjectName(String newObjName){
+		this.objectName = newObjName;
+	}
 	
 	protected void addAttribute(String attribName, Method getAttrib, Method setAttrib){
 		GSMethodNormal gsm = new GSMethodNormal();

@@ -17,6 +17,7 @@ public class TerminContainer extends GenericData implements Entry,GenericDataObj
 	public TerminContainer(){
 		Class cl = this.getClass();
 		try{
+			this.setObjectName("Termincontainer");
 			this.addAttribute("Id",cl.getMethod("getId", new Class[] {}), cl.getMethod("setId", new Class[] {Integer.class} ));
 			this.addAttribute("Titel",cl.getMethod("getTitle", new Class[] {}), cl.getMethod("setTitle", new Class[] {String.class} ));	
 			this.addAttribute("Beschreibung",cl.getMethod("getDescription", new Class[] {}), cl.getMethod("setDescription", new Class[] {String.class} ));
