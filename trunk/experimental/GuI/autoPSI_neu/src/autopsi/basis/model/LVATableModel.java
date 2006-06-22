@@ -25,6 +25,7 @@ public class LVATableModel extends AbstractTableModel {
 	public String group = null;
 	public String type = null;
 	private IServiceCommunicator ogdo = null;
+	private boolean onlinesuche = false;
 	
 	public IGenericDAO gdo = new GenericDAO();
 	public String tablename = "LVA";
@@ -167,8 +168,11 @@ public class LVATableModel extends AbstractTableModel {
 		this.type = type;
 	}
 	public void fireDataChanged() {
+		this.onlinesuche = false;
 		readData();
-		fireTableDataChanged();
+		System.out.println("Gefundene Elemente: "+this.lvas.size());
+		this.fireTableDataChanged();
+		System.out.println("Gefundene Elemente: "+this.lvas.size());
 	}
 	
 	public void fireOnlineDataChanged(){
@@ -188,7 +192,12 @@ public class LVATableModel extends AbstractTableModel {
 	}
 	
 	public int getRowCount() {
-		//System.out.println("rowcount = " + Lesers.size());
+		if (lvas != null) {
+			System.out.println("rowcount = " + lvas.size());
+		} else {
+			System.out.println("rowcount = 0");
+		}
+		
 		if (lvas != null) {
 			return lvas.size();
 		} else {
@@ -196,11 +205,12 @@ public class LVATableModel extends AbstractTableModel {
 		}
 	}
 	public String getColumnName(int c) {
-		//System.out.println("colName = " + columnName[c]);
+		System.out.println("colName = " + columnName[c]);
 		return columnName[c];
 	}
 	
 	public Object getValueAt(int row, int col) {
+		System.out.println("getValueAt: r="+row+", c="+col);
 		Universitaet u = new Universitaet();
 		Lva lva = (Lva) lvas.get(row);
 		try {
