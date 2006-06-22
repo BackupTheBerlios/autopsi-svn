@@ -13,14 +13,12 @@ import net.jini.space.JavaSpace;
 
 public class ServiceCommunicator implements IServiceCommunicator, DesiredExpirationListener {
 
-	protected static JavaSpace space = null;
-	protected LeaseRenewalManager lrm = null;
-	protected List<Lease> leases = null;
+	protected static JavaSpace space;
+	protected LeaseRenewalManager lrm;
+	protected List<Lease> leases;
 	protected static long renewalTime = 5000;
 	protected static long timeout = 5000;
 	protected static String adress = "jini://localhost";
-//	protected static String adress = "jini://192.168.2.194:4160";
-//	protected static String adress = "jini://192.168.2.101:3164";
 
 	
 	public ServiceCommunicator(){
@@ -126,7 +124,7 @@ public class ServiceCommunicator implements IServiceCommunicator, DesiredExpirat
 
 	}
 
-	public void delAllObjects() {
+	public void delAllOwnedObjects() {
 		//don't renew leases so objects can be deleted
 		this.lrm.clear();
 

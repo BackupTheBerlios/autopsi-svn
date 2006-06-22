@@ -11,6 +11,6 @@ public interface IServiceCommunicator {
 	
 	public Entry getObjectConsuming(Entry lookupObject);
 	
-	public void delAllObjects();
+	public void delAllOwnedObjects();
 	
 }

@@ -48,7 +48,7 @@ public class ObjectSpaceSharer {
 	}
 	
 	public void unshareObjects(){
-		com.delAllObjects();
+		com.delAllOwnedObjects();
 			
 	}
 	
