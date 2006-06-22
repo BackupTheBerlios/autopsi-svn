@@ -46,8 +46,8 @@ public class ServiceCommunicator implements IServiceCommunicator, DesiredExpirat
 		return this.adress;
 	}
 	
-	public void setAdress(String newAdress){
-		this.adress = newAdress;
+	public void setAdress(String adress){
+		this.adress = adress;
 		space = getSpace();
 	}
 	
