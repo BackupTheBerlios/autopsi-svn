@@ -330,16 +330,15 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 					{
 						lblBeschreibung = new JTextPane();
 						tab0.add(lblBeschreibung);
-						lblBeschreibung.setBounds(7, 98, 231, 126);
+						lblBeschreibung.setBounds(7, 112, 231, 112);
 						lblBeschreibung.setOpaque(false);
 						lblBeschreibung.setBorder(BorderFactory.createEtchedBorder(BevelBorder.LOWERED));
 					}
 					{
 						lblTerminContainer = new JLabel();
 						tab0.add(lblTerminContainer);
-						lblTerminContainer.setBounds(7, 28, 231, 21);
-						lblTerminContainer.setIcon(new ImageIcon(
-							"src/images/lva.GIF"));
+						lblTerminContainer.setBounds(7, 42, 231, 28);
+						lblTerminContainer.setIcon(new ImageIcon("src/images/icons/terminContainerIcon.png"));
 						lblTerminContainer.setFont(new java.awt.Font(
 							"Tahoma",
 							1,
@@ -349,22 +348,22 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 						lblTermin = new JLabel();
 						tab0.add(lblTermin);
 						lblTermin
-							.setIcon(new ImageIcon("src/images/termin.GIF"));
-						lblTermin.setBounds(7, 7, 231, 21);
+							.setIcon(new ImageIcon("src/images/icons/terminIcon.png"));
+						lblTermin.setBounds(7, 7, 231, 28);
 						lblTermin.setFont(new java.awt.Font("Tahoma", 1, 12));
 					}
 					{
 						lblOrt = new JLabel();
 						tab0.add(lblOrt);
 						lblOrt.setText("Ort:");
-						lblOrt.setBounds(7, 56, 231, 14);
+						lblOrt.setBounds(7, 77, 231, 14);
 						lblOrt.setFont(new java.awt.Font("Tahoma",0,12));
 					}
 					{
 						lblZeit = new JLabel();
 						tab0.add(lblZeit);
 						lblZeit.setText("Beginn:");
-						lblZeit.setBounds(7, 74, 231, 14);
+						lblZeit.setBounds(7, 91, 231, 14);
 						lblZeit.setFont(new java.awt.Font("Tahoma",0,12));
 					}
 				}
