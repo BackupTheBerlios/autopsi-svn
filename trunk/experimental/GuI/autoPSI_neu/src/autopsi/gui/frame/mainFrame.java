@@ -1675,7 +1675,7 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 			GenericDAO gdo = new GenericDAO();
 			try
 			{
-				termine = gdo.unsafeQuery("select * from termin where date>='"+t1.toString()+"' and date<='"+t2.toString()+"'",new Termin());
+				termine = gdo.unsafeQuery("select * from termin where date>='"+t1.toString()+"' and date<='"+t2.toString()+"' order by date",new Termin());
 				currentValue = new Termin[termine.size()+1];
 				Termin dayTermin = new Termin();
 				dayTermin.setDate(t1);
