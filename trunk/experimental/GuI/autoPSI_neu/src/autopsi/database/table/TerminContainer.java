@@ -70,7 +70,7 @@ public class TerminContainer extends GenericData implements Entry,GenericDataObj
 		this.description = description;
 	}
 
-	public int getGroupID(){
+	public Integer getGroupID(){
 		return this.group_id;
 	}
 	

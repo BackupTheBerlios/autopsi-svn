@@ -31,7 +31,7 @@ public class TerminKategorie extends GenericData implements Entry,GenericDataObj
 		}
 	}
 	
-	public int getId(){
+	public Integer getId(){
 		return this.id;
 	}
 	

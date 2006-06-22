@@ -71,7 +71,7 @@ public class Termin extends GenericData implements Entry,GenericDataObject{
 		}
 	}
 	
-	public int getId(){
+	public Integer getId(){
 		return this.id;
 	}
 	
@@ -79,7 +79,7 @@ public class Termin extends GenericData implements Entry,GenericDataObject{
 		this.id = id;
 	}
 	
-	public int getTerminKategorieId(){
+	public Integer getTerminKategorieId(){
 		return this.termin_kategorie_id;
 	}
 	
