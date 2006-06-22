@@ -127,10 +127,9 @@ public class EditTerminContainerFrame extends javax.swing.JFrame implements java
 	private int lastID = 0;
 	ArrayList<String[]> queryList = new ArrayList<String[]>();
 	
-	private void readData(int id) throws EDatabaseConnection, EAttributeNotFound, EDatabase{
-		
+	private void readData() throws EDatabaseConnection, EAttributeNotFound, EDatabase{
 		TerminContainer lookup = new TerminContainer();
-		lookup.setId(id);
+		lookup.setId(ID);
 		List<GenericDataObject> list = null;
 		list = gdo.getDataObjects(lookup);
 		title = ((TerminContainer)list.get(0)).getTitle();
@@ -442,26 +441,27 @@ public class EditTerminContainerFrame extends javax.swing.JFrame implements java
 					{
 						newTermin = new JButton();
 						jPanel2.add(newTermin);
-						newTermin.setBounds(210, 238, 42, 28);
+						newTermin.setBounds(210, 235, 42, 28);
 						newTermin.setIcon(new ImageIcon("src/images/newTermin.GIF"));
 					}
 					{
 						deleteTermin = new JButton();
 						jPanel2.add(deleteTermin);
-						deleteTermin.setBounds(371, 238, 42, 28);
+						deleteTermin.setBounds(371, 235, 42, 28);
 						deleteTermin.setIcon(new ImageIcon("src/images/deleteTermin.GIF"));
 					}
 					{
 						editTermin = new JButton();
 						jPanel2.add(editTermin);
-						editTermin.setBounds(329, 238, 42, 28);
+						editTermin.setBounds(329, 235, 42, 28);
 						editTermin.setIcon(new ImageIcon("src/images/editTermin.GIF"));
 					}
 					{
 						openTermin = new JButton();
 						jPanel2.add(openTermin);
-						openTermin.setBounds(7, 238, 42, 28);
+						openTermin.setBounds(7, 235, 42, 28);
 						openTermin.setIcon(new ImageIcon("src/images/goToTermin.GIF"));
+						openTermin.addMouseListener(this);
 					}
 					{
 						jLabel3 = new JLabel();
@@ -472,7 +472,7 @@ public class EditTerminContainerFrame extends javax.swing.JFrame implements java
 					{
 						newTerminReihe = new JButton();
 						jPanel2.add(newTerminReihe);
-						newTerminReihe.setBounds(252, 238, 56, 28);
+						newTerminReihe.setBounds(252, 235, 56, 28);
 						newTerminReihe.setIcon(new ImageIcon("src/images/newTerminReihe.GIF"));
 						newTerminReihe.addMouseListener(this);
 					}
@@ -523,7 +523,7 @@ public class EditTerminContainerFrame extends javax.swing.JFrame implements java
 			
 			
 			
-			if(ID>-1){ readData(ID);}
+			if(ID>-1){ readData();}
 			else
 				apply_button.setVisible(false);
 				
@@ -543,6 +543,7 @@ public class EditTerminContainerFrame extends javax.swing.JFrame implements java
 			update();
 			dispose();
 		}
+		
 		if(arg0.getSource().equals(apply_button)){
 			update();
 		}
@@ -566,8 +567,7 @@ public class EditTerminContainerFrame extends javax.swing.JFrame implements java
 			gef.setObjectToEdit(obj,false);
 			gef.setTableToEdit("Attachable_Object_Kategorie");
 			gef.setVisible(true);
-			}
-			
+			}	
 		}
 		if(arg0.getSource().equals(jAddObjectButton)){
 			InsertDialog id = new InsertDialog(this);
@@ -736,9 +736,10 @@ public class EditTerminContainerFrame extends javax.swing.JFrame implements java
 				this.loadObjectList();
 			}
 		}
-		
+		if(arg0.getSource().equals(openTermin)){
+			
+		}
 	}
-
 	
 	public void mousePressed(MouseEvent arg0) {
 		// TODO Auto-generated method stub
@@ -821,9 +822,9 @@ public class EditTerminContainerFrame extends javax.swing.JFrame implements java
 			termin_list = gdo.unsafeQuery("select * from termin where TERMINCONTAINER_ID = "+ID,new Termin());
 			
 			for(int i = 0; i < termin_list.size();i++){
-				DateConverter converter = new DateConverter();
-				Date dat = new Date(((Termin)termin_list.get(i)).getDate().getTime());
-				String datum = converter.toShortYear(dat.toString());
+				Termin term = (Termin)termin_list.get(i);
+				String datum = term.getDate().toString().substring(8,10)+"-"+term.getDate().toString().substring(5,7)+"-"+
+				term.getDate().toString().substring(0,4);
 				String termin = datum+": "+((Termin)termin_list.get(i)).getSecondaryTitle() +",       Ort: " +((Termin)termin_list.get(i)).getPlace();
 				
 				terminModel.addElement(termin);
@@ -839,12 +840,10 @@ public class EditTerminContainerFrame extends javax.swing.JFrame implements java
 	
 	public void updateTerminList(List<Termin> termine)
 	{
-		System.out.println(termine.size());
 		for(int i = 0;i<termine.size();i++)
 		{
-			DateConverter converter = new DateConverter();
-			Date dat = new Date(termine.get(i).getDate().getTime());
-			String datum = converter.toShortYear(dat.toString());
+			String datum = termine.get(i).getDate().toString().substring(8,10)+"-"+termine.get(i).getDate().toString().substring(5,7)+"-"+
+							termine.get(i).getDate().toString().substring(0,4);
 			String termin = datum+": "+termine.get(i).getSecondaryTitle()+",    Ort: "+termine.get(i).getPlace();
 			
 			container_termine.add(termine.get(i));
