@@ -30,21 +30,36 @@ public class GenericDAO implements IGenericDAO{
 	private String password = "AB";
 	private boolean debug = false;
 	
-	
+	/**
+	 * Returns the whether debug is set for this GenericDAO or not
+	 * @return True if debug is set, false otherwise
+	 */
 	public boolean getDebug(){
 		return this.debug;
 	}
-	
+
+	/**
+	 * Sets the debug status of this GenericDAO
+	 * @param newDebug The new debug state
+	 */
 	public void setDebug(boolean newDebug){
 		this.debug = newDebug;
 	}
 	
+	/**
+	 * Sets the username and password which the IGenericDAO will connect with to the database. 
+	 * @param userName the username
+	 * @param userPassword the password
+	 */
 	public void setDbUser(String userName, String userPassword){
 		this.username = userName;
 		this.password = userPassword;
 	}
 	
-	
+	/**
+	 * Tries to get a connection from the hsql database
+	 * @return Returns a valid database connection if possible, otherwise null
+	 */
 	protected Connection connect(){
 		try{
 			if ((dbCon == null) || (dbCon.isClosed())){
@@ -65,15 +80,29 @@ public class GenericDAO implements IGenericDAO{
 		return dbCon;
 	}
 	
+	/**
+	 * Sets the table in which the GenericDAO will operate
+	 * @param name the name of the table
+	 */
 	public void setCurrentTable(String tableName){
 		//set current table to tableName
 		currentTable = tableName;
 	}
 	
+	/**
+	 * Returns the name of the current table the implementing class of the IGenericDAO works with at the moment
+	 * * @return The name of the current table
+	 */
 	public String getCurrentTable(){
 		return currentTable;
 	}
 	
+	/**
+	 * Returns true if the column columnName is in table
+	 * @param tableInformation The Table information that can be gathered e.g. from an PreparedStatement
+	 * @param columnName The column name to search
+	 * @return True if the column columnName is in the Table, false otherwise
+	 */
 	protected boolean columnInTable(ResultSetMetaData tableInformation, String columnName){
 		boolean inColumn = false;
 		try{
@@ -90,7 +119,14 @@ public class GenericDAO implements IGenericDAO{
 		return inColumn;
 	}
 	
-	
+	/**
+	 * Inspects an GenericDataObject and returns all its not-null-fields in form of a SQLField. 
+	 * The methods gets all fields of obj that are != null and creates SQLField objects that represent that fields. 
+	 * Note that this method reads out even private access fields of obj (Will possibly be changed in the future).
+	 * @param obj The GenericDataObject to inspect
+	 * @return A SQLFields object that represents the fields of obj
+	 * @throws EAttributeNotFound
+	 */
 	public SQLFields getSQLFields(GenericDataObject obj) throws EAttributeNotFound{
 		SQLFields fields = new SQLFields();
 		Field[] fd = obj.getClass().getDeclaredFields();
@@ -115,6 +151,14 @@ public class GenericDAO implements IGenericDAO{
 		return fields;
 	}
 	
+	/**
+	 * Inspects an GenericDataObject and returns all its fields (including these which are == null )in form of a SQLField. 
+	 * The methods gets all fields of obj and creates SQLField objects that represent that fields. 
+	 * Note that this method reads out even private access fields of obj (Will possibly be changed in the future).
+	 * @param obj The GenericDataObject to inspect
+	 * @return A SQLFields object that represents the fields of obj
+	 * @throws EAttributeNotFound
+	 */
 	public SQLFields getSQLAllFields(GenericDataObject obj) throws EAttributeNotFound{
 		SQLFields fields = new SQLFields();
 		Field[] fd = obj.getClass().getDeclaredFields();
@@ -148,6 +192,17 @@ public class GenericDAO implements IGenericDAO{
 		}
 	}
 	
+	/**
+	 * /**
+	 * Searches the current database table for the object described by the param id
+	 * All fields which are != null in lookupObject will be considered for the SQL query. 
+	 * A null objects therefore is a sort of a wildcard.
+	 * @param lookupObj The lookup object
+	 * @return The return value is an ArrayList of GenericDataObjects that match the lookupObject
+	 * @throws EDatabase
+	 * @throws EDatabaseConnection
+	 * @throws EAttributeNotFound
+	 */
 	public List<GenericDataObject> getDataObjects(GenericDataObject lookupObj) throws EDatabase, EDatabaseConnection, EAttributeNotFound{
 		if (connect() == null)
 			throw new EDatabaseConnection();
@@ -157,7 +212,6 @@ public class GenericDAO implements IGenericDAO{
 //		sqlFields.beginTraversal();
 //		while(sqlFields.next())
 //			System.out.println("next=="+sqlFields.getCurrentName()+";"+sqlFields.getCurrentValue());
-		
 		
 		SQLStatement sqlSelect = new SQLSelect(sqlTable, sqlFields);
 		String query = sqlSelect.getQuery();
@@ -205,6 +259,8 @@ public class GenericDAO implements IGenericDAO{
 		}
 		return res;
 	}
+	
+	
 	
 	public void addDataObject(GenericDataObject newObj) throws EDatabaseConnection, EAttributeNotFound, EDatabase{
 		
