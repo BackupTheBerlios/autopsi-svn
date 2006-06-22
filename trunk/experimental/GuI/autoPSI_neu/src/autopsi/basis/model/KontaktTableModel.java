@@ -11,8 +11,8 @@ import autopsi.database.dao.GenericDAO;
 import autopsi.database.dao.GenericDataObject;
 import autopsi.database.dao.IGenericDAO;
 
+import autopsi.database.table.AttachableObject;
 import autopsi.database.table.Kontakt;
-import autopsi.javaspace.IServiceCommunicator;
 import autopsi.javaspace.ServiceCommunicator;
 
 public class KontaktTableModel extends AbstractTableModel{
@@ -187,7 +187,14 @@ public class KontaktTableModel extends AbstractTableModel{
 	public void addKontakt(GenericDataObject p){
 		try{
 			if (p!=null){
+				gdo.setCurrentTable("attachable_object");
+				AttachableObject a = new AttachableObject();
+				a.setTableName(this.tablename);
+				a.setKategorieId(0);
+				gdo.addDataObject(a);
+				a = (AttachableObject)gdo.unsafeQuery("select * from attachable_object where global_id=identity()", new AttachableObject()).get(0);
 				Kontakt k = (Kontakt) p;
+				k.setGlobalId(a.getId());
 				k.setKategorieId(0);
 				gdo.setCurrentTable(this.tablename);
 				gdo.addDataObject(k);
