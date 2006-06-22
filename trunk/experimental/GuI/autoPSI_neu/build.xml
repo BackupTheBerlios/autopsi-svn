@@ -33,7 +33,7 @@
 	</target>
 	
 	<target name="run">
-		<java classpathref="classpath" classname="autopsi.basis.Basis" fork="true"/> 
+		<java classpathref="classpath" classname="Basis" fork="true"/> 
 	</target>
 	
 	<target name="javadoc">
