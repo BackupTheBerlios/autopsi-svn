@@ -776,7 +776,7 @@ public class EditTerminFrame extends javax.swing.JFrame implements java.awt.even
 					obj = attachedObjects.get(index);
 					}catch(Exception e){
 						
-						System.out.println("Objekt ist noch nicht in der Datenbank");
+						showErrorDialog("Fehler!","Objekt konnte nicht geöffnet werden!");
 					}
 				GenericEditFrame gef = new GenericEditFrame();
 				if(obj instanceof Kontakt){
@@ -815,7 +815,7 @@ public class EditTerminFrame extends javax.swing.JFrame implements java.awt.even
 					obj = attachedObjects.get(jList1.getSelectedIndex());
 				}catch(Exception e){
 					
-					System.out.println("Objekt ist noch nicht in der Datenbank");
+					showErrorDialog("Fehler!","Objekt noch nicht in Datenbank!");
 				}
 			lm.removeElementAt(jList1.getSelectedIndex());
 			if(obj!= null){
@@ -862,6 +862,7 @@ public class EditTerminFrame extends javax.swing.JFrame implements java.awt.even
 		if (arg0.getSource().equals(this.jAddObjectButton)){
 			InsertDialog id = new InsertDialog(this);
 			if(id.getIsOk()){
+				jDelObjectButton.setVisible(false);
 				Integer globalId = id.getAttachableObjectId();
 				List<GenericDataObject> list;
 				String table = id.getAttachableObjectTableName();
@@ -1036,15 +1037,13 @@ public class EditTerminFrame extends javax.swing.JFrame implements java.awt.even
 			jLabel5.setText("");
 		}
 	}
+	
 	private void showErrorDialog(String title, String text)
 	{
 		InfoDialog info = new InfoDialog(this, title,text);
 		info.setLocation(this.getLocation().x+200,this.getLocation().y+200);
 		info.setModal(true);
-		info.setVisible(true);
-		
-		
-		
+		info.setVisible(true);	
 	}
 	
 	protected MaskFormatter createFormatter(String s) {
