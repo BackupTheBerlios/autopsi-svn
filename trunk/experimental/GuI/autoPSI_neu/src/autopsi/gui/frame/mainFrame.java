@@ -1371,8 +1371,7 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 	 * Je nach übergebenem Datum wird das Startdatum so berechnet, dass es immer 
 	 * mit einem Montag beginnt.
 	 */
-	private void setTimeSpace(GregorianCalendar cal)
-	 
+	public void setTimeSpace(GregorianCalendar cal)
 	{
 		Date dat = new Date(cal.getTimeInMillis());
 		if(viewMonth)
@@ -1891,4 +1890,9 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 			new AddAttachableObject(this, new Pruefung());
 		}
 	}
+	
+private void setMaker(GregorianCalendar greg)
+{
+	this.c_marker.setTime(greg.getTime());
+}
 }
