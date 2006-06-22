@@ -63,6 +63,13 @@ public class ServiceCommunicator implements IServiceCommunicator, DesiredExpirat
 		return space;
 	}
 	
+	public static boolean hasJavaSpace(){
+		if (space != null)
+			return true;
+		else
+			return false;
+	}
+	
 	
 	public void addObject(Entry newObject) {
 		if (getSpace() == null){
