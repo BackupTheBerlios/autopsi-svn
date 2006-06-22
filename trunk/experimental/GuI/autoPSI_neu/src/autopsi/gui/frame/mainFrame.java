@@ -249,7 +249,7 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 					todayScrollPane = new JScrollPane();
 					
 					today.add(todayScrollPane);
-					todayScrollPane.setBounds(7, 21, 238, 147);
+					todayScrollPane.setBounds(7, 21, 238, 133);
 					todayScrollPane.setBackground(new java.awt.Color(255,255,255));
 					todayScrollPane.setBorder(new LineBorder(new java.awt.Color(0,0,0), 1, false));
 					{
@@ -337,7 +337,7 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 					{
 						lblTerminContainer = new JLabel();
 						tab0.add(lblTerminContainer);
-						lblTerminContainer.setBounds(7, 42, 231, 28);
+						lblTerminContainer.setBounds(7, 35, 231, 28);
 						lblTerminContainer.setIcon(new ImageIcon("src/images/icons/terminContainerIcon.png"));
 						lblTerminContainer.setFont(new java.awt.Font(
 							"Tahoma",
@@ -1480,7 +1480,7 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 			System.out.println(sel);
 			if(sel==1)lblToday.setText("Termine zwischen 00:00 und 8:00");
 			else if(sel==15) lblToday.setText("Termine ab 21:00");
-			else lblToday.setText("Termine zwischen "+ table.getSelectedRow()+9+";00 und "+table.getSelectedRow()+10+":00");
+			else lblToday.setText("Termine zwischen "+ (sel+6)+":00 und "+(sel+7)+":00");
 			
 			}
 	}
