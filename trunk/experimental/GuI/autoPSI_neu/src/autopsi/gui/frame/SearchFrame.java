@@ -127,7 +127,6 @@ public class SearchFrame extends javax.swing.JFrame implements ActionListener {
 	private PruefungTableModel jPruefungTableModel;
 	
 	private JButton jKontaktSuchenButton, jTerminSuchenButton, jLVASuchenButton;
-	private JCheckBox jUseGroup;
 	private JButton jPruefungLoeschenButton, jPruefungWiederherstellenButton;
 	private JButton jLVALoeschenButton, jLVAWiederherstellenButton;
 	private JComboBox jGradeComboBox;
@@ -1006,12 +1005,6 @@ public class SearchFrame extends javax.swing.JFrame implements ActionListener {
 							jPruefungWiederherstellenButton.setBounds(140, 329, 168, 21);
 							jPruefungWiederherstellenButton.addActionListener(this);
 						}
-						{
-							jUseGroup = new JCheckBox();
-							jPruefungSuchePanel.add(jUseGroup);
-							jUseGroup.setText("Gruppe in Suche einbeziehen");
-							jUseGroup.setBounds(343, 77, 224, 28);
-						}
 
 					}
 					
@@ -1238,10 +1231,8 @@ public class SearchFrame extends javax.swing.JFrame implements ActionListener {
 				} else {
 					p.setGrade(null);
 				}
-				if (this.jUseGroup.isSelected())
-					jPruefungTableModel.setGroup(jPruefungGruppeComboBox.getSelectedItem().toString());
-				else
-					jPruefungTableModel.setGroup(null);
+				jPruefungTableModel.setGroup(jPruefungGruppeComboBox.getSelectedItem().toString());
+				
 				jPruefungTableModel.setSuchPruefung(p);
 				
 				if (jPruefungLokalSuchenRadioButton.isSelected()){
