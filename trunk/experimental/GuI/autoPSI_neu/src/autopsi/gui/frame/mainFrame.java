@@ -891,6 +891,12 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 			frame.setTitle("neuen Termincontainer hinzufügen");
 ;			frame.setVisible(true);
 		}
+		if(arg0.getSource().equals(button_editTC)) {
+			EditTerminContainerFrame frame = new EditTerminContainerFrame(this,tcID);
+			frame.setLocation(this.getLocation().x+20,this.getLocation().y+20);
+			frame.setTitle("Termincontainer bearbeiten");
+;			frame.setVisible(true);
+		}
 		if(arg0.getSource().equals(button_editTermin)) {
 			
 			if(terminId != -1 && selection>=0){
@@ -1739,6 +1745,7 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 					{
 						cont = (TerminContainer)dat.get(0);
 						lblTerminContainer.setText(cont.getTitle());
+						tcID = cont.getId();
 					}
 					catch(Exception ex)
 					{
@@ -1867,7 +1874,6 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 		}
 	}
 	
-
 	public void actionPerformed(ActionEvent arg0) {
 		if (arg0.getSource().equals(this.menu_add_Kontakt)){
 			System.out.println("mainFrame.actionPerformed()::füge Kontakt hinzu");
@@ -1891,8 +1897,8 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 		}
 	}
 	
-private void setMaker(GregorianCalendar greg)
-{
-	this.c_marker.setTime(greg.getTime());
-}
+	private void setMarker(GregorianCalendar greg)
+	{
+		this.c_marker.setTime(greg.getTime());
+	}
 }
