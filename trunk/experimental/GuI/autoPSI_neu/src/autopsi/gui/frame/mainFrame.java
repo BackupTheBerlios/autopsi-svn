@@ -869,8 +869,15 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 			space();
 		}
 		if(arg0.getSource().equals(todayList)) {
-			selection = todayList.getSelectedIndex()+1;
-			loadTerminData();
+			if(todayListModel.getSize()>0) {
+				selection = todayList.getSelectedIndex()+1;
+				loadTerminData();
+			}
+			else {// Liste ist leer
+				selection = -1;
+				terminId = -1;
+			} 
+			
 		}
 		if(arg0.getSource().equals(button_newTermin)) {
 			EditTerminFrame newTermin = new EditTerminFrame(this,c_marker,-1);
@@ -1692,18 +1699,17 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 	public void loadTerminData()
 	{
 		Termin showTermin = new Termin();
-		System.out.println(selection);
 		if(selection>=0)	
 		{
 			try
 			{	
 				showTermin = currentValue[selection];
+
 				IGenericDAO igdao = new GenericDAO();
 				String  query = "select * from termin where id="+showTermin.getId();
 				List<GenericDataObject> data = igdao.unsafeQuery(query,new Termin());		
 				showTermin = (Termin)data.get(0);
 				currentValue[selection] = showTermin;
-				
 				
 				if(currentValue.length>0) {
 					
@@ -1721,7 +1727,6 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 					
 					lblZeit.setText("Zeit: "+showTermin.getDate().toString().substring(12,16)+"           Dauer "+stunden+":"+minuten);
 
-					
 					lblTermin.setText(showTermin.getSecondaryTitle());
 					
 					lblOrt.setText("Ort: "+showTermin.getPlace());
@@ -1731,7 +1736,6 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 					String query2 = "select * from termincontainer where id="+showTermin.getTerminContainerID();
 					TerminContainer cont = new TerminContainer();
 					List<GenericDataObject> dat = gdo.unsafeQuery(query2,cont);
-					
 					try
 					{
 						cont = (TerminContainer)dat.get(0);
@@ -1746,7 +1750,6 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 					data = igdao.unsafeQuery(query,new Termin());		
 					relatedTermine = new Termin[data.size()];
 					Termin rTermin;
-					
 					listTC2Model.removeAllElements();
 					for(int i=0;i<data.size();i++)
 					{
@@ -1757,7 +1760,6 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 						String datum = rTermin.getDate().toString();
 						listTC2Model.addElement(datum.substring(8,10)+"-"+datum.substring(5,7)+"-"+datum.substring(0,4)+ ":  " +datum.substring(11,16)+"  "+rTermin.getSecondaryTitle().toString());
 					}
-					
 					objectListModel.removeAllElements();
 					if(showTObjects.getSelectedObjects()!=null)
 					{
@@ -1776,13 +1778,13 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 								Kontakt k = (Kontakt)list2.get(0);
 								objectListModel.addElement(k.getPrename() + " " + k.getSurname());
 							}
-							if(tablename.equals("notiz")){
+							else if(tablename.equals("notiz")){
 								list2 = gdo.unsafeQuery("select * from notiz where global_id = " + globalID,new Notiz());
 								Notiz n = (Notiz)list2.get(0);
 								objectListModel.addElement(n.getTitle() + ":   " + n.getNote());
 							}
-							if(tablename.equals("pruefung")){
-								list2 = gdo.unsafeQuery("select * from " + table + " where global_id = "+ globalID,new Pruefung());
+							else if(tablename.equals("pruefung")){
+								list2 = gdo.unsafeQuery("select * from pruefung where global_id = "+ globalID,new Pruefung());
 								Lva l = new Lva();
 								Pruefung p = ((Pruefung)list2.get(0));
 								list2 = gdo.unsafeQuery("select * from lva where global_id = " + p.getLvaId(),new Lva());
@@ -1791,12 +1793,12 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 								
 								objectListModel.addElement(pr);
 							}
-							if(tablename.equals("lehrmittel")){
+							else if(tablename.equals("lehrmittel")){
 								list2 = gdo.unsafeQuery("select * from lehrmittel where global_id = " + globalID,new Lehrmittel());
 								String leh = ((Lehrmittel)list2.get(0)).getName();
 								objectListModel.addElement(leh);
 							}
-							if(tablename.equals("lva")){
+							else if(tablename.equals("lva")){
 								list2 = gdo.unsafeQuery("select * from lva where global_id = " + globalID,new Lva());
 								String lva = "LVA-Nr.: " + ((Lva)list2.get(0)).getLvaNr()+",         Titel: " + ((Lva)list2.get(0)).getTitle(); 
 								objectListModel.addElement(lva);	
@@ -1852,7 +1854,7 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 					
 			}
 			}
-			catch(Exception ex) {System.out.println("error: " + ex.toString());}		
+			catch(Exception ex) {System.out.println("error!!: " + ex.toString());}		
 		}	
 		else
 		{
