@@ -22,9 +22,9 @@ public class PruefungTableModel extends AbstractTableModel {
 	public List <GenericDataObject> lastDeletedObjects =  new ArrayList<GenericDataObject>();
 	public IGenericDAO gdo;
 	public ServiceCommunicator ogdo = null;
-	public Pruefung suchPruefung = null;
 	public boolean onlinesuche = false;
 	public String tablename = "PRUEFUNG";
+	public Pruefung suchPruefung = null;
 	public String lvaname = null;
 	public String group = null;
 	
@@ -47,14 +47,10 @@ public class PruefungTableModel extends AbstractTableModel {
 				if (this.lvaname!=null){
 					query +=" AND LOWER(l.TITLE) LIKE '%"+this.lvaname.toLowerCase()+"%'";
 				}
-				if (this.group != null){
+				if (this.group != null && !this.group.equals("-")){
 					query += " AND ok.TITLE = '"+ this.group+"'";
 				}
-
-
-				System.out.println(query);
 				this.pruefungen =  gdo.unsafeQuery(query, suchPruefung);
-				System.out.println("pruefungsCount=="+pruefungen.size());
 			}
 		} catch (Exception e){
 			System.out.println("PruefungTableModel @ readData;"+e.toString());
