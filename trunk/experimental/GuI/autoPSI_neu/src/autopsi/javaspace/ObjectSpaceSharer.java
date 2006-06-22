@@ -27,8 +27,8 @@ public class ObjectSpaceSharer {
 		gdo = new GenericDAO();
 	}
 	
-	public void setAdress(String newAdress){
-		com.setAdress(newAdress);
+	public void setAdress(String adress){
+		com.setAdress(adress);
 	}
 	
 	public String getAdress(){
