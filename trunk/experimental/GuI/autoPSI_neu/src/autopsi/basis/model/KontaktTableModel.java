@@ -38,6 +38,7 @@ public class KontaktTableModel extends AbstractTableModel{
 	 * Diese Methode liest die Daten von der lokalen Datenbank mit Hilfe des Generic-DAO aus.
 	 * Diese Methode speichert alle Objekte aus der Datenbank als eine Liste ab.
 	 * Die Datensätze werden nach order geordnet.
+	 * @author	Alpay Firato
 	 */
 	private void readData() {
 		String query="select * from Kontakt as k, ATTACHABLE_OBJECT as a, ATTACHABLE_OBJECT_KATEGORIE as ok where k.GLOBAL_ID=a.GLOBAL_ID AND a.KATEGORIE_ID=ok.ID";
@@ -84,7 +85,8 @@ public class KontaktTableModel extends AbstractTableModel{
 	
 	/**
 	 * Diese Methode liest die Daten aus dem Javaspace mit Hilfe des ServiceCommunicators aus.
-	 * Das aus dem Javaspace rausgelesene Objekt wird in eine Liste abgespeichert.
+	 * Das, aus dem Javaspace, rausgelesene Objekt wird in eine Liste abgespeichert.
+	 * @author	Alpay Firato
 	 */
 	public void readOnlineData () {
 		try {
@@ -93,27 +95,47 @@ public class KontaktTableModel extends AbstractTableModel{
 			this.kontakte = new ArrayList<GenericDataObject>();
 			this.kontakte.add(temp);
 		} catch (Exception e) {
-			JOptionPane.showMessageDialog(null, "Fehler: " +e.toString(), "Ein Fehler ist aufgetreten!" , JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(null, "Error: " +e.toString(), "Error!" , JOptionPane.ERROR_MESSAGE);
 		}
 	}
 	
+	/**
+	 * Im Konstruktor wird die beiden Generic-DAO und Javaspace ServiceCommunicator angelegt.
+	 * @author	Alpay Firato
+	 */
 	public KontaktTableModel (){
 		this.gdo = new GenericDAO();
 		this.ogdo = new ServiceCommunicator();
 	}
 	
+	/**
+	 * Diese Methode wird immer bei einer Aenderung der lokalen Daten aufgerufen.
+	 * @author	Alpay Firato
+	 */
 	public void fireDataChanged() {
 		this.onlinesuche = false;
 		readData();
 		fireTableDataChanged();
 	}
 	
+	/**
+	 * Diese Methode wird immer bei einer Aenderung der online Daten aufgerufen.
+	 * @author	Alpay Firato
+	 */
 	public void fireOnlineDataChanged() {
 		this.onlinesuche = true;
 		readOnlineData();
 		fireTableDataChanged();
 	}
 	
+	/**
+	 * Diese Methode löscht die markierten Objekte aus der lokalen Datenbank.
+	 * Nach einem erfolgreichen Löschvorgang wird fireDataChanged aufgerufen.
+	 * Alle gelöschten Objekte wird als eine Liste abgespeichert damit man später
+	 * diese Daten wiederherstellen kann wenn erfordert.
+	 * @param	JTable	Das ist die Tabelle bei der die Daten markiert worden sind.
+	 * @author	Alpay Firato
+	 */
 	public void deleteSelectedRow(JTable table) {
 		Kontakt k = new Kontakt();
 		boolean selected = false;
@@ -155,7 +177,11 @@ public class KontaktTableModel extends AbstractTableModel{
 	    	this.fireDataChanged();
 	    }
 	}
+	
 	/**
+	 * Diese Methode löscht das übergebene Objekt aus der lokalen Datenbank.
+	 * @param	Kontakt	Das ist der Kontakt der aus dem Datenbank entfernt werden soll.
+	 * @author	Alpay Firato
 	 */
 	public boolean deleteKontakt(Kontakt k){
 		if (k == null)
@@ -174,6 +200,10 @@ public class KontaktTableModel extends AbstractTableModel{
 		return true;
 	}
 	
+	/**
+	 * Diese Methode kann alle gelöschten Objekte wiederherstellen und in die Datenbank einfügen.
+	 * @author	Alpay Firato
+	 */
 	public void restoreLastDeletedObjects(){
 		if (this.lastDeletedObjects.size() != 0) {
 			for (int i=0;i<this.lastDeletedObjects.size();i++){
@@ -187,6 +217,10 @@ public class KontaktTableModel extends AbstractTableModel{
 		this.fireDataChanged();
 	}
 	
+	/**
+	 * Diese Methode kann aus dem Javaspace gefundene Objekte in die lokale Datenbank integrieren.
+	 * @author	Alpay Firato
+	 */
 	public void downloadObject(){
 		if (this.onlinesuche==true && this.kontakte.size() != 0) {
 			for (int i=0;i<this.kontakte.size();i++){
@@ -198,6 +232,11 @@ public class KontaktTableModel extends AbstractTableModel{
 		}
 	}
 	
+	/**
+	 * Diese Methode kann das übergebene Objekt in die lokale Datenbank einfügen.
+	 * @param	GenericDataObject	Das Object das in die Datenbank eingefügt werden soll.
+	 * @author	Alpay Firato
+	 */
 	public void addKontakt(GenericDataObject p){
 		try{
 			if (p!=null){
@@ -220,16 +259,30 @@ public class KontaktTableModel extends AbstractTableModel{
 		}
 	}
 	
+	/**
+	 * Diese Methode kann die Sortiereinfolge der angezeigten Daten ändern.
+	 * @param	Integer	Sortierreinfolge nach Spalten.
+	 * @author Alpay Firato
+	 */
 	public void setOrder (Integer order){
 		this.order=order;
 	}
 	
 	
-	
+	/**
+	 * Diese Methode ändert das Suchobjekt und somit die Suchkriterien.
+	 * @param	Kontakt	Template Suchobjekt nach dem man eine Suche startet.
+	 * @author	Alpay Firato
+	 */
 	public void setSuchKontakt (Kontakt suchKontakt){
 		this.suchKontakt=suchKontakt;
 	}
 	
+	/**
+	 * Diese Methode ändert die Suchgruppe des zu suchenden Objektes.
+	 * @param	String	Suchgruppe des Objekts.
+	 * @author	Alpay Firato
+	 */
 	public void setGroup(String gruppe){
 		this.group = gruppe;
 	}
