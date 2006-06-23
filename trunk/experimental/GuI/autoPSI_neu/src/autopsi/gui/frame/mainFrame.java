@@ -1,7 +1,6 @@
 package autopsi.gui.frame;
 import java.awt.Point;
 import java.awt.event.*;
-import java.util.*;
 import javax.swing.BorderFactory;
 import java.awt.*;
 import javax.swing.*;
