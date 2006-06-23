@@ -39,14 +39,15 @@
 				<include name="**/*.*"/>
 			</fileset>
 		</copy>
-		<copy file="${static}/autoPSI.bat" todir="${dist}/${project_name}"/>
-		<!--copy file="${static}//${project_name}.sh" todir="${dist}/${project_name}" /-->    
+		<copy file="${static}/${project_name}.bat" todir="${dist}/${project_name}"/>
+		<copy file="${static}/${project_name}.sh" todir="${dist}/${project_name}" />    
 		<!-- change Unix file permissions for start-shellscript -->
         <!--chmod file="${dist}/${projname}/${project_name}.sh" perm="550"/-->
 		<!-- copy hsqldb data to distribution -->
 		<copy todir="${dist}/${project_name}/${hsqldb_data}">
             <fileset dir="${hsqldb_data}">
                 <include name="*.script" />
+            	<include name="*.properties" />
             </fileset>
         </copy>
      	<!-- create jar including project plus libraries -->
