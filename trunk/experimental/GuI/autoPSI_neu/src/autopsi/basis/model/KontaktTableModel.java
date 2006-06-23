@@ -84,7 +84,7 @@ public class KontaktTableModel extends AbstractTableModel{
 	
 	/**
 	 * Diese Methode liest die Daten aus dem Javaspace mit Hilfe des ServiceCommunicators aus.
-	 * Diese Methode speichert alle Objekte aus dem Space als eine Liste ab.
+	 * Das aus dem Javaspace rausgelesene Objekt wird in eine Liste abgespeichert.
 	 */
 	public void readOnlineData () {
 		try {
