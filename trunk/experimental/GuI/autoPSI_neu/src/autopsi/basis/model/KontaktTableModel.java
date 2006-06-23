@@ -30,10 +30,22 @@ public class KontaktTableModel extends AbstractTableModel{
 	private final String [] columnName = {"Vorname", "Nachname", "PLZ", "Ort"};
 	private final String [] columnDBName = {"Prename", "Surename", "A_ZIPCODE", "A_CITY"};
 	
+	
+	/**
+	 * Diese Methode liefert alle Kontakte als eine Liste von GenericDataObjects.
+	 * @return	List<GenericDataObject>	Liste der Kontakte.
+	 * @author	Alpay Firato
+	 */
 	public List<GenericDataObject> getKontakte() {
 		return this.kontakte;
 	}
 	
+	/**
+	 * Diese Methode liefert den angezeigten GenericDataObject an der angegebenen Zeile.
+	 * @param	int	Zellennummer an der das Objekt angezeigt wird.
+	 * @return	GenericDataObjekt	Kontakt als GenericDataObject.
+	 * @author	Alpay Firato
+	 */
 	public GenericDataObject getKontaktAt(int at) {
 		return this.kontakte.get(at);
 	}
@@ -190,6 +202,8 @@ public class KontaktTableModel extends AbstractTableModel{
 	/**
 	 * Diese Methode löscht das übergebene Objekt aus der lokalen Datenbank.
 	 * @param	Kontakt	Das ist der Kontakt der aus dem Datenbank entfernt werden soll.
+	 * @return	boolean	Falls das Objekt erfolgreich gelöscht wurde dann wird true zurückgeliefert,
+	 * sonnst false.
 	 * @author	Alpay Firato
 	 */
 	public boolean deleteKontakt(Kontakt k){
@@ -297,10 +311,20 @@ public class KontaktTableModel extends AbstractTableModel{
 		this.group = gruppe;
 	}
 	
+	/**
+	 * Diese Methode liefert die Anzahl der Spalten als int-Wert zurück.
+	 * @return	int	Anzahl der Spalten.
+	 * @author	Alpay Firato
+	 */
 	public int getColumnCount() {
 		return columnName.length;
 	}
 	
+	/**
+	 * Diese Methode liefert die Anzahl der Zeilen als int-Wert zurück.
+	 * @return	int	Anzahl der Zeilen.
+	 * @author	Alpay Firato
+	 */
 	public int getRowCount() {
 		if (kontakte != null) {
 			return kontakte.size();
@@ -308,10 +332,24 @@ public class KontaktTableModel extends AbstractTableModel{
 			return 0;
 		}
 	}
+	
+	/**
+	 * Diese Methode liefert den Header der Spalte als String-Wert zurück.
+	 * @param	int	Spaltennummer.
+	 * @return	String	Name der Spalte.
+	 * @author	Alpay Firato
+	 */
 	public String getColumnName(int c) {
 		return columnName[c];
 	}
 	
+	/**
+	 * Diese Methode liefert den Inhalt einer Zelle zurück.
+	 * @param	int	Reihe der Zelle.
+	 * @param	int	Spalte der Zelle.
+	 * @return	Object	Wert der Zelle.
+	 * @author	Alpay Firato
+	 */
 	public Object getValueAt(int row, int col) {
 		Kontakt kont = (Kontakt) kontakte.get(row);
 		if (kont==null)
