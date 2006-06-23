@@ -17,43 +17,47 @@ import autopsi.javaspace.ServiceCommunicator;
 public class KontaktTableModel extends AbstractTableModel{
 	private static final long serialVersionUID = 8737097029189851737L;
 
-	public List <GenericDataObject> kontakte = new ArrayList<GenericDataObject>();
+	public List <GenericDataObject> objects = new ArrayList<GenericDataObject>();
 	public List <GenericDataObject> lastDeletedObjects =  new ArrayList<GenericDataObject>();
-	public GenericDAO gdo;
+	public GenericDAO gdo = null;
 	public ServiceCommunicator ogdo = null;
 	public boolean onlinesuche = false;
 	public String tablename = "kontakt";
-	public Kontakt suchKontakt = null;
+	public Kontakt searchObject = null;
 	public String group = null;
 	public Integer order = null;
 	
 	private final String [] columnName = {"Vorname", "Nachname", "PLZ", "Ort"};
-	private final String [] columnDBName = {"Prename", "Surename", "A_ZIPCODE", "A_CITY"};
+	private final String [] columnDBName = {"k.Prename", "k.Surname", "k.A_ZIPCODE", "k.A_CITY"};
 	
 	
 	/**
-	 * Diese Methode liefert alle Kontakte als eine Liste von GenericDataObjects.
-	 * @return	List<GenericDataObject>	Liste der Kontakte.
+	 * Diese Methode liefert alle Objekte als eine Liste von GenericDataObjects.
+	 * @return	List<GenericDataObject>	Liste der Objekte.
 	 * @author	Alpay Firato
 	 */
-	public List<GenericDataObject> getKontakte() {
-		return this.kontakte;
+	public List<GenericDataObject> getObjects() {
+		return this.objects;
 	}
 	
 	/**
 	 * Diese Methode liefert den angezeigten GenericDataObject an der angegebenen Zeile.
 	 * @param	int	Zellennummer an der das Objekt angezeigt wird.
-	 * @return	GenericDataObjekt	Kontakt als GenericDataObject.
+	 * @return	GenericDataObjekt	Objekt als GenericDataObject.
 	 * @author	Alpay Firato
 	 */
-	public GenericDataObject getKontaktAt(int at) {
-		return this.kontakte.get(at);
+	public GenericDataObject getObjectAt(int at) {
+		if (objects != null) {
+			if (at < objects.size())
+				return this.objects.get(at);
+		}
+		return null;
 	}
 	
 	
 	/**
 	 * Diese Methode liest die Daten von der lokalen Datenbank mit Hilfe des Generic-DAO aus.
-	 * Diese Methode speichert alle Objekte aus der Datenbank als eine Liste ab.
+	 * Danach werden alle Objekte, die aus der Datenbank ausgelwsen worden sind, in eine Liste gespeichert.
 	 * Die Datensätze werden nach order geordnet.
 	 * @author	Alpay Firato
 	 */
@@ -61,46 +65,45 @@ public class KontaktTableModel extends AbstractTableModel{
 		String query="select * from Kontakt as k, ATTACHABLE_OBJECT as a, ATTACHABLE_OBJECT_KATEGORIE as ok where k.GLOBAL_ID=a.GLOBAL_ID AND a.KATEGORIE_ID=ok.ID";
 		try{
 			GenericDAO gdo = new GenericDAO();
-			if (suchKontakt!=null) {
-				if (suchKontakt.getPrename()!=null) {
-					query += " AND LOWER(k.PRENAME) LIKE '%" + suchKontakt.getPrename().toLowerCase()+"%'";
+			if (searchObject!=null) {
+				if (searchObject.getPrename()!=null) {
+					query += " AND LOWER(k.PRENAME) LIKE '%" + searchObject.getPrename().toLowerCase()+"%'";
 				}
-				if (suchKontakt.getSurname()!=null) {
-					query += " AND LOWER(SURNAME) LIKE '%" + suchKontakt.getSurname().toLowerCase()+"%'";
+				if (searchObject.getSurname()!=null) {
+					query += " AND LOWER(SURNAME) LIKE '%" + searchObject.getSurname().toLowerCase()+"%'";
 				}
-				if (suchKontakt.getBirthDate()!=null) {
-					query += " AND BIRTH_DATE LIKE '%" + suchKontakt.getBirthDate()+"%'";
+				if (searchObject.getBirthDate()!=null) {
+					query += " AND BIRTH_DATE LIKE '%" + searchObject.getBirthDate()+"%'";
 				}
-				if (suchKontakt.getTelBusiness()!=null){
-					query += " AND (TEL_PRIVATE LIKE '%" + suchKontakt.getTelBusiness()+"%' OR";
-					query += " TEL_BUSINESS LIKE '%" + suchKontakt.getTelBusiness()+"%' OR";
-					query += " TEL_MOBILE LIKE '%" + suchKontakt.getTelBusiness()+"%')";
+				if (searchObject.getTelBusiness()!=null){
+					query += " AND (TEL_PRIVATE LIKE '%" + searchObject.getTelBusiness()+"%' OR";
+					query += " TEL_BUSINESS LIKE '%" + searchObject.getTelBusiness()+"%' OR";
+					query += " TEL_MOBILE LIKE '%" + searchObject.getTelBusiness()+"%')";
 				}
-				if (suchKontakt.getFirstEmail()!=null){
-					query += " AND ( LOWER(FIRST_EMAIL) LIKE '%" + suchKontakt.getFirstEmail().toLowerCase() + "%' OR";
-					query += " LOWER(SECOND_EMAIL) LIKE '%" + suchKontakt.getFirstEmail().toLowerCase() +"%')";
+				if (searchObject.getFirstEmail()!=null){
+					query += " AND ( LOWER(FIRST_EMAIL) LIKE '%" + searchObject.getFirstEmail().toLowerCase() + "%' OR";
+					query += " LOWER(SECOND_EMAIL) LIKE '%" + searchObject.getFirstEmail().toLowerCase() +"%')";
 				}
 				if (this.group != null && !this.group.equals("-")){
 					query += " AND ok.TITLE = '"+ this.group+"'";
 				}
-				if (suchKontakt.getAZipCode()!=null) {
-					query += " AND A_ZIPCODE  = " + suchKontakt.getAZipCode();
+				if (searchObject.getAZipCode()!=null) {
+					query += " AND A_ZIPCODE  = " + searchObject.getAZipCode();
 				}
-				if (suchKontakt.getACity()!=null) {
-					query += " AND A_CITY LIKE '%" + suchKontakt.getACity()+"%'";
+				if (searchObject.getACity()!=null) {
+					query += " AND A_CITY LIKE '%" + searchObject.getACity()+"%'";
 				}
-				if (suchKontakt.getAAdress()!=null) {
-					query += " AND A_ADRESS LIKE '%" + suchKontakt.getAAdress()+"%'";
+				if (searchObject.getAAdress()!=null) {
+					query += " AND A_ADRESS LIKE '%" + searchObject.getAAdress()+"%'";
 				}
-				
 				if (this.order!=null) {
 					query += " ORDER BY "+columnDBName[this.order];
 				}
 				//System.out.println(query);
-				this.kontakte =  gdo.unsafeQuery(query, suchKontakt);
+				this.objects =  gdo.unsafeQuery(query, searchObject);
 			}
 		} catch (Exception e){
-			System.out.println("AAARGH;"+e.toString());
+			JOptionPane.showMessageDialog(null, "Error: " +e.toString(), "Error!" , JOptionPane.ERROR_MESSAGE);
 		}
 	}
 	
@@ -112,16 +115,16 @@ public class KontaktTableModel extends AbstractTableModel{
 	public void readOnlineData () {
 		try {
 			this.onlinesuche = true;
-			Kontakt temp =(Kontakt) ogdo.getObject(this.suchKontakt);
-			this.kontakte = new ArrayList<GenericDataObject>();
-			this.kontakte.add(temp);
+			Kontakt temp =(Kontakt) ogdo.getObject(this.searchObject);
+			this.objects = new ArrayList<GenericDataObject>();
+			this.objects.add(temp);
 		} catch (Exception e) {
 			JOptionPane.showMessageDialog(null, "Error: " +e.toString(), "Error!" , JOptionPane.ERROR_MESSAGE);
 		}
 	}
 	
 	/**
-	 * Im Konstruktor wird die beiden Generic-DAO und Javaspace ServiceCommunicator angelegt.
+	 * Im Konstruktor wird Generic-DAO und Javaspace-ServiceCommunicator angelegt.
 	 * @author	Alpay Firato
 	 */
 	public KontaktTableModel (){
@@ -130,7 +133,7 @@ public class KontaktTableModel extends AbstractTableModel{
 	}
 	
 	/**
-	 * Diese Methode wird immer bei einer Aenderung der lokalen Daten aufgerufen.
+	 * Diese Methode wird immer bei einer Änderung der lokalen Daten aufgerufen.
 	 * @author	Alpay Firato
 	 */
 	public void fireDataChanged() {
@@ -168,7 +171,7 @@ public class KontaktTableModel extends AbstractTableModel{
 	    for (int r=0; r<this.getRowCount(); r++) {
             if (table.isCellSelected(r, 1)) {
             	selected = true;
-            	k=(Kontakt) this.getKontakte().get(r);
+            	k=(Kontakt) this.getObjects().get(r);
             	if (k.getGlobalId() != null) {
             		if (first) {
             			auswahl = JOptionPane.showConfirmDialog(null, "Sind sie sicher dass sie alle markierten Objekte löschen wollen?", "Löschen?",JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.ERROR_MESSAGE);
@@ -218,7 +221,7 @@ public class KontaktTableModel extends AbstractTableModel{
 			loeschen = gdo.unsafeQuery("DELETE FROM " + this.tablename+" WHERE GLOBAL_ID ="+k.getGlobalId(), new Kontakt());
 			return true;
 		} catch (Exception e){
-			System.out.println("PruefungTableModel @ deletePruefung;"+e.toString());
+			JOptionPane.showMessageDialog(null, "Error: " +e.toString(), "Error!" , JOptionPane.ERROR_MESSAGE);
 		}
 		return true;
 	}
@@ -245,9 +248,9 @@ public class KontaktTableModel extends AbstractTableModel{
 	 * @author	Alpay Firato
 	 */
 	public void downloadObject(){
-		if (this.onlinesuche==true && this.kontakte.size() != 0) {
-			for (int i=0;i<this.kontakte.size();i++){
-				addKontakt(this.kontakte.get(i));
+		if (this.onlinesuche==true && this.objects.size() != 0) {
+			for (int i=0;i<this.objects.size();i++){
+				addKontakt(this.objects.get(i));
 			}
 			JOptionPane.showMessageDialog(null, "Das ausgewählte Objekt wurde heruntergeladen." , "Download abgeschlossen." , JOptionPane.INFORMATION_MESSAGE);
 		} else {
@@ -257,7 +260,7 @@ public class KontaktTableModel extends AbstractTableModel{
 	
 	/**
 	 * Diese Methode kann das übergebene Objekt in die lokale Datenbank einfügen.
-	 * @param	GenericDataObject	Das Object das in die Datenbank eingefügt werden soll.
+	 * @param	GenericDataObject	Das Object, das in die Datenbank eingefügt werden soll.
 	 * @author	Alpay Firato
 	 */
 	public void addKontakt(GenericDataObject p){
@@ -275,10 +278,10 @@ public class KontaktTableModel extends AbstractTableModel{
 				gdo.setCurrentTable(this.tablename);
 				gdo.addDataObject(k);
 			} else {
-				System.out.println("NULLLL ELEMENTTTT!!!! :(((((((");
+				JOptionPane.showMessageDialog(null, "Error: NULL OBJECT kann nicht in die Datenbank eingefügt werden", "Error!" , JOptionPane.ERROR_MESSAGE);
 			}
 		} catch (Exception e){
-			System.out.println("KontaktTableModel @ addPruefung;"+e.toString());
+			JOptionPane.showMessageDialog(null, "Error: " +e.toString(), "Error!" , JOptionPane.ERROR_MESSAGE);
 		}
 	}
 	
@@ -298,8 +301,8 @@ public class KontaktTableModel extends AbstractTableModel{
 	 * @param	Kontakt	Template Suchobjekt nach dem man eine Suche startet.
 	 * @author	Alpay Firato
 	 */
-	public void setSuchKontakt (Kontakt suchKontakt){
-		this.suchKontakt=suchKontakt;
+	public void setSearchObject (Kontakt Object){
+		this.searchObject=Object;
 	}
 	
 	/**
@@ -326,8 +329,8 @@ public class KontaktTableModel extends AbstractTableModel{
 	 * @author	Alpay Firato
 	 */
 	public int getRowCount() {
-		if (kontakte != null) {
-			return kontakte.size();
+		if (objects != null) {
+			return objects.size();
 		} else {
 			return 0;
 		}
@@ -351,7 +354,7 @@ public class KontaktTableModel extends AbstractTableModel{
 	 * @author	Alpay Firato
 	 */
 	public Object getValueAt(int row, int col) {
-		Kontakt kont = (Kontakt) kontakte.get(row);
+		Kontakt kont = (Kontakt) objects.get(row);
 		if (kont==null)
 			return null;
 		else if (col==0)
