@@ -127,6 +127,7 @@ public class SearchFrame extends javax.swing.JFrame implements ActionListener, M
 	private JTable jNotizTable, jPruefungTable;
 	
 	private JTableHeader jKontaktTableHeader, jLVATableHeader, jLehrmittelTableHeader;
+	private JTableHeader jNotizTableHeader, jTerminTableHeader, jTerminContainerTableHeader;
 
 	private TerminTableModel jTerminTableModel;
 	private TerminContainerTableModel jTerminContainerTableModel;
@@ -1005,6 +1006,9 @@ public class SearchFrame extends javax.swing.JFrame implements ActionListener, M
 								jNotizTable.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
 								jNotizTable.setShowGrid(true);
 								jNotizTable.setGridColor(Color.LIGHT_GRAY);
+								jNotizTable.addMouseListener(this);
+								jNotizTableHeader = jNotizTable.getTableHeader();
+								jNotizTableHeader.addMouseListener(this);
 							}
 						}
 						
@@ -1212,6 +1216,16 @@ public class SearchFrame extends javax.swing.JFrame implements ActionListener, M
 				gedit.setVisible(true);
 				otm.fireDataChanged();
 			}
+			if (arg0.getSource().equals(jNotizTable)){
+				NotizTableModel ntm = (NotizTableModel) TM;
+				GenericDataObject lehrmittel = ntm.getObjectAt(Table.getSelectedRow()); 
+				GenericEditFrame gedit = new GenericEditFrame(this);
+				gedit.setTableToEdit("Notiz");
+				gedit.setObjectToEdit(lehrmittel,false);
+				gedit.pack();
+				gedit.setVisible(true);
+				ntm.fireDataChanged();
+			}
 			
 		}
 		
@@ -1226,6 +1240,8 @@ public class SearchFrame extends javax.swing.JFrame implements ActionListener, M
 					if (arg0.getSource().equals(jLVATableHeader))
 						jLVATableModel.setOrder(column);
 					if (arg0.getSource().equals(jLehrmittelTableHeader))
+						jLehrmittelTableModel.setOrder(column);
+					if (arg0.getSource().equals(jNotizTableHeader))
 						jLehrmittelTableModel.setOrder(column);
 				}
 		}
@@ -1274,7 +1290,6 @@ public class SearchFrame extends javax.swing.JFrame implements ActionListener, M
 	public void starteSuche (Object cmd){
 		try {
 			if (cmd.equals(this.jKontaktSuchenButton)) {
-				//System.out.println("Kontakt wird lokal gesucht...");
 				Kontakt kont = new Kontakt();
 				if (!jVornameField.getText().equals("")){
 					kont.setPrename(jVornameField.getText());
@@ -1371,10 +1386,8 @@ public class SearchFrame extends javax.swing.JFrame implements ActionListener, M
 				jTerminTableModel.setSuchTermin(ter);
 				
 				if (jTerminLokalSuchenRadioButton.isSelected()){
-					System.out.println("Termin wird lokal gesucht...");
 					this.jTerminTableModel.fireDataChanged();
 				} else if (jTerminOnlineSuchenRadioButton.isSelected()) {
-					System.out.println("Termin wird online gesucht...");
 					this.jTerminTableModel.fireOnlineDataChanged();
 				}
 				
@@ -1394,10 +1407,8 @@ public class SearchFrame extends javax.swing.JFrame implements ActionListener, M
 				jTerminContainerTableModel.setSuchTerminc(terc);
 				
 				if (jTerminContainerLokalSuchenRadioButton.isSelected()){
-					System.out.println("Termincontainer wird lokal gesucht...");
 					jTerminContainerTableModel.fireDataChanged();
 				} else if (jTerminContainerOnlineSuchenRadioButton.isSelected()) {
-					System.out.println("Termincontainer wird online gesucht...");
 					this.jTerminContainerTableModel.fireOnlineDataChanged();
 				}
 				
@@ -1436,13 +1447,10 @@ public class SearchFrame extends javax.swing.JFrame implements ActionListener, M
 					not.setNote(null);
 				}
 				jNotizTableModel.setGroup(jNotizGruppeComboBox.getSelectedItem().toString());
-				jNotizTableModel.setSuchNotiz(not);
+				jNotizTableModel.setSearchObject(not);
 				if (jNotizLokalSuchenRadioButton.isSelected()){
-					System.out.println("Notiz wird lokal gesucht...");
+					this.jNotizTableModel.fireDataChanged();
 				} else if (jNotizOnlineSuchenRadioButton.isSelected()) {
-					System.out.println("Notiz wird online gesucht...");
-					jNotizTableModel.setGroup(jNotizGruppeComboBox.getSelectedItem().toString());
-					jNotizTableModel.setSuchNotiz(not);
 					this.jNotizTableModel.fireOnlineDataChanged();
 				}
 				
@@ -1465,18 +1473,12 @@ public class SearchFrame extends javax.swing.JFrame implements ActionListener, M
 					p.setGrade(null);
 				}
 				jPruefungTableModel.setGroup(jPruefungGruppeComboBox.getSelectedItem().toString());
-				
 				jPruefungTableModel.setSuchPruefung(p);
-				
 				if (jPruefungLokalSuchenRadioButton.isSelected()){
-					System.out.println("Prüfung wird lokal gesucht...");
 					jPruefungTableModel.fireDataChanged();
-					
 				} else if (jPruefungOnlineSuchenRadioButton.isSelected()) {
-					System.out.println("Prüfung wird online gesucht...");
 					jPruefungTableModel.fireOnlineDataChanged();
-				}
-				
+				}			
 			} else if(cmd.equals(this.jKontaktLoeschenButton)) {
 				jKontaktTableModel.deleteSelectedRow(jKontaktTable);
 			} else if(cmd.equals(this.jKontaktWiederherstellenButton)) {
@@ -1495,11 +1497,17 @@ public class SearchFrame extends javax.swing.JFrame implements ActionListener, M
 				jLehrmittelTableModel.restoreLastDeletedObjects();
 			} else if(cmd.equals(this.jKontaktDownloadButton)) {
 				jLehrmittelTableModel.downloadObject();
+			} else if(cmd.equals(this.jNotizLoeschenButton)) {
+				jNotizTableModel.deleteSelectedRow(jNotizTable);
+			} else if(cmd.equals(this.jNotizWiederherstellenButton)) {
+				jNotizTableModel.restoreLastDeletedObjects();
+			} else if(cmd.equals(this.jNotizDownloadButton)) {
+				jNotizTableModel.downloadObject();
 			} else {
 				JOptionPane.showMessageDialog(null, "Error: " +cmd.toString(), "Command not found!" , JOptionPane.ERROR_MESSAGE);
 			}
 		} catch (ParseException ps) {
-			System.err.println("Parsererror: " + ps.getMessage());
+			JOptionPane.showMessageDialog(null, "Parse-Error: " +ps.getMessage(), "Error!" , JOptionPane.ERROR_MESSAGE);
 		}
 	}
 	
@@ -1508,7 +1516,7 @@ public class SearchFrame extends javax.swing.JFrame implements ActionListener, M
 		try {
 			formatter = new MaskFormatter(s);
 		} catch (java.text.ParseException exc) {
-			System.err.println("formatter is bad: " + exc.getMessage());
+			JOptionPane.showMessageDialog(null, "Formatter-Error: " +exc.getMessage(), "Error!" , JOptionPane.ERROR_MESSAGE);
 		}
 		return formatter;
 	}
