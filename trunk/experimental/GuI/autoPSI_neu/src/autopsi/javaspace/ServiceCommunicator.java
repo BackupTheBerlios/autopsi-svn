@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import autopsi.database.table.Notiz;
+import autopsi.javaspace.exception.EServiceFailure;
+import autopsi.javaspace.exception.ESpaceNotFound;
 import net.jini.core.entry.Entry;
 import net.jini.core.lease.Lease;
 import net.jini.lease.DesiredExpirationListener;
@@ -70,9 +72,10 @@ public class ServiceCommunicator implements IServiceCommunicator, DesiredExpirat
 	}
 	
 	
-	public void addObject(Entry newObject) {
+	public void addObject(Entry newObject) throws ESpaceNotFound, EServiceFailure {
 		if (getSpace() == null){
 			System.out.println("ServiceCommunicator.addObject::Konnte JavaSpace nicht finden");
+			throw new ESpaceNotFound();
 		}
 		else
 		{
@@ -89,11 +92,12 @@ public class ServiceCommunicator implements IServiceCommunicator, DesiredExpirat
 
 	}
 
-	public Entry getObject(Entry lookupObject) {
+	public Entry getObject(Entry lookupObject)  throws ESpaceNotFound, EServiceFailure{
 		System.out.println("ServiceCommunicator.getOBject::started");
 		Entry entry = null;
 		if (getSpace() == null){
 			System.out.println("ServiceCommunictor.getObject::Konnte JavaSpace nicht finden");
+			 throw new ESpaceNotFound();
 		}
 		else
 		{
@@ -107,10 +111,11 @@ public class ServiceCommunicator implements IServiceCommunicator, DesiredExpirat
 
 	}
 
-	public Entry getObjectConsuming(Entry lookupObject) {
+	public Entry getObjectConsuming(Entry lookupObject)  throws ESpaceNotFound, EServiceFailure{
 		Entry entry = null;
 		if (getSpace() == null){
 			System.out.println("ServiceCommunictor.getObject::Konnte JavaSpace nicht finden");
+			throw new ESpaceNotFound();
 		}
 		else
 		{
