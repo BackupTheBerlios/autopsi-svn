@@ -3,6 +3,8 @@ package autopsi.gui.frame;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.text.ParseException;
@@ -16,6 +18,7 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JOptionPane;
 import javax.swing.WindowConstants;
 import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
@@ -63,7 +66,7 @@ import autopsi.database.table.LvaKategorie;
 * THIS MACHINE, SO JIGLOO OR THIS CODE CANNOT BE USED
 * LEGALLY FOR ANY CORPORATE OR COMMERCIAL PURPOSE.
 */
-public class SearchFrame extends javax.swing.JFrame implements ActionListener {
+public class SearchFrame extends javax.swing.JFrame implements ActionListener, MouseListener {
 
 	{
 		//Set Look & Feel
@@ -357,6 +360,7 @@ public class SearchFrame extends javax.swing.JFrame implements ActionListener {
 								jKontaktTable.setShowGrid(true);
 								jKontaktTable.setGridColor(Color.LIGHT_GRAY);
 								jKontaktTable.setBackground(new java.awt.Color(255,255,255));
+								jKontaktTable.addMouseListener(this);
 							}
 						}
 						
@@ -1141,23 +1145,13 @@ public class SearchFrame extends javax.swing.JFrame implements ActionListener {
 					}
 					
 // #####################################################################					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
+
 				}
 			}
 			{
 				lupe = new JLabel();
 				getContentPane().add(lupe);
-				lupe.setIcon(new ImageIcon("src/images/icons/lupe.png"));
+				lupe.setIcon(new ImageIcon("images/icons/lupe.png"));
 				lupe.setBounds(7, 238, 196, 182);
 			}
 		} catch (Exception e) {
@@ -1165,15 +1159,51 @@ public class SearchFrame extends javax.swing.JFrame implements ActionListener {
 		}
 	}
 	
-	
-	public void actionPerformed(ActionEvent ae) {
-		String cmd = ae.getActionCommand();
-		starteSuche(cmd);
+	public void mouseClicked(MouseEvent arg0) {
+		System.out.println("MOUSE CLIKCKED! Count=" + arg0.getClickCount());
 	}
 	
-	public void starteSuche (String cmd){
+	public void mousePressed(MouseEvent arg0) {
+		
+	}
+	
+	public void mouseReleased(MouseEvent arg0) {
+		
+	}
+	
+	public void mouseEntered(MouseEvent arg0) {
+		
+	}
+	
+	public void mouseExited(MouseEvent arg0) {
+		
+	}
+	
+	public void mouseDragged(MouseEvent arg0){
+		
+	}
+
+	public void mouseMoved(MouseEvent arg0) {
+		
+	}
+	
+	public void actionPerformed(ActionEvent ae) {
+		Object cmd = ae.getSource();
+		if (cmd.equals(new JTable())){
+			TableactionPerformed (cmd);
+		} else {
+			starteSuche(cmd);
+		}
+	}
+	
+	public void TableactionPerformed (Object cmd){
+		JTable Table = (JTable) cmd;
+		System.out.println(Table.getColumnName(Table.getSelectedRows()[0]));
+	}
+	
+	public void starteSuche (Object cmd){
 		try {
-			if (cmd.equals("Kontakt Suchen")) {
+			if (cmd.equals(this.jKontaktSuchenButton)) {
 				//System.out.println("Kontakt wird lokal gesucht...");
 				Kontakt kont = new Kontakt();
 				if (!jVornameField.getText().equals("")){
@@ -1231,7 +1261,7 @@ public class SearchFrame extends javax.swing.JFrame implements ActionListener {
 					System.out.println("KOntakt wird online gesucht...");
 					jKontaktTableModel.fireOnlineDataChanged();
 				}
-			} else if(cmd.equals("LVA Suchen")) {
+			} else if(cmd.equals(this.jLVASuchenButton)) {
 				Lva lva = new Lva();
 				if (!jLVANummerField.getText().equals("")){
 					lva.setLvaNr(jLVANummerField.getText());
@@ -1252,7 +1282,7 @@ public class SearchFrame extends javax.swing.JFrame implements ActionListener {
 					System.out.println("LVA wird online gesucht...");
 					this.jLVATableModel.fireOnlineDataChanged();
 				}
-			} else if(cmd.equals("Termin Suchen")) {
+			} else if(cmd.equals(this.jTerminSuchenButton)) {
 				Termin ter = new Termin();
 				if (!jTerminTitelField.getText().equals("")) {
 					ter.setSecondaryTitle(jTerminTitelField.getText());
@@ -1281,7 +1311,7 @@ public class SearchFrame extends javax.swing.JFrame implements ActionListener {
 					this.jTerminTableModel.fireOnlineDataChanged();
 				}
 				
-			}  else if(cmd.equals("Termincontainer Suchen")) {
+			}  else if(cmd.equals(this.jTerminContainerSuchenButton)) {
 				TerminContainer terc = new TerminContainer();
 				if (!jTerminContainerTitelField.getText().equals("")) {
 					terc.setTitle(jTerminContainerTitelField.getText());
@@ -1304,7 +1334,7 @@ public class SearchFrame extends javax.swing.JFrame implements ActionListener {
 					this.jTerminContainerTableModel.fireOnlineDataChanged();
 				}
 				
-			} else if(cmd.equals("Lehrmittel Suchen")) {
+			} else if(cmd.equals(this.jLehrmittelSuchenButton)) {
 				Lehrmittel lm = new Lehrmittel();
 				if (!jLehrmittelNameField.getText().equals("")) {
 					lm.setName(jLehrmittelNameField.getText());
@@ -1328,7 +1358,7 @@ public class SearchFrame extends javax.swing.JFrame implements ActionListener {
 					this.jLehrmittelTableModel.fireOnlineDataChanged();
 				}
 				
-			}  else if(cmd.equals("Notiz Suchen")) {
+			}  else if(cmd.equals(this.jNotizSuchenButton)) {
 				Notiz not = new Notiz();
 				if (!jNotizTitelField.getText().equals("")) {
 					not.setTitle(jNotizTitelField.getText());
@@ -1352,7 +1382,7 @@ public class SearchFrame extends javax.swing.JFrame implements ActionListener {
 				}
 				
 			}
-			else if(cmd.equals("Prüfung Suchen")) {
+			else if(cmd.equals(this.jPruefungSuchenButton)) {
 				Pruefung p = new Pruefung();
 				if (!jPruefungLVAField.getText().equals("")) {
 					jPruefungTableModel.setLvaName(jPruefungLVAField.getText());
@@ -1382,30 +1412,14 @@ public class SearchFrame extends javax.swing.JFrame implements ActionListener {
 					jPruefungTableModel.fireOnlineDataChanged();
 				}
 				
-			} else if(cmd.equals("Prüfung(en) Löschen")) {
-				jPruefungTableModel.deleteSelectedRow(jPruefungTable);
-			} else if(cmd.equals("Prüfung(en) Wiederherstellen")) {
-				jPruefungTableModel.restoreLastDeletedObjects();
-			} else if(cmd.equals("Prüfung Herunterladen")) {
-				jPruefungTableModel.downloadObject();
-			} else if(cmd.equals("LVA(s) Löschen")) {
-				jLVATableModel.deleteSelectedRow(jLVATable);
-			} else if(cmd.equals("Gelöschte LVA(s) Wiederherstellen")) {
-				jLVATableModel.restoreLastDeletedObjects();
-			} else if(cmd.equals("LVA Herunterladen")) {
-				jLVATableModel.downloadObject();
-			} else if(cmd.equals("Kontakt(e) Löschen")) {
+			} else if(cmd.equals(this.jKontaktLoeschenButton)) {
 				jKontaktTableModel.deleteSelectedRow(jKontaktTable);
-			} else if(cmd.equals("Gelöschte Kontakt(e) Wiederherstellen")) {
+			} else if(cmd.equals(this.jKontaktWiederherstellenButton)) {
 				jKontaktTableModel.restoreLastDeletedObjects();
-			} else if(cmd.equals("Kontakt Herunterladen")) {
+			} else if(cmd.equals(this.jKontaktDownloadButton)) {
 				jKontaktTableModel.downloadObject();
-			} else if(cmd.equals("Lehrmittel Löschen")) {
-				jLehrmittelTableModel.deleteSelectedRow(jLehrmittelTable);
-			} else if(cmd.equals("Gelöschte(s) Lehrmittel Wiederherstellen")) {
-				jLehrmittelTableModel.restoreLastDeletedObjects();
-			} else if(cmd.equals("Lehrmittel Herunterladen")) {
-				jLehrmittelTableModel.downloadObject();
+			} else {
+				JOptionPane.showMessageDialog(null, "Error: " +cmd.toString(), "Command not found!" , JOptionPane.ERROR_MESSAGE);
 			}
 		} catch (ParseException ps) {
 			System.err.println("Parsererror: " + ps.getMessage());
