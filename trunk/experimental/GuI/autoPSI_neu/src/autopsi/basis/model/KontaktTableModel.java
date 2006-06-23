@@ -28,6 +28,7 @@ public class KontaktTableModel extends AbstractTableModel{
 	public Integer order = null;
 	
 	private final String [] columnName = {"Vorname", "Nachname", "PLZ", "Ort"};
+	private final String [] columnDBName = {"Prename", "Surename", "A_ZIPCODE", "A_CITY"};
 	
 	public List<GenericDataObject> getKontakte() {
 		return this.kontakte;
@@ -74,6 +75,10 @@ public class KontaktTableModel extends AbstractTableModel{
 				}
 				if (suchKontakt.getAAdress()!=null) {
 					query += " AND A_ADRESS LIKE '%" + suchKontakt.getAAdress()+"%'";
+				}
+				
+				if (this.order!=null) {
+					query += " ORDER BY "+columnDBName[this.order];
 				}
 				//System.out.println(query);
 				this.kontakte =  gdo.unsafeQuery(query, suchKontakt);
@@ -266,6 +271,8 @@ public class KontaktTableModel extends AbstractTableModel{
 	 */
 	public void setOrder (Integer order){
 		this.order=order;
+		System.out.println("ORDER: "+order);
+		this.fireDataChanged();
 	}
 	
 	
