@@ -25,6 +25,7 @@ public class KontaktTableModel extends AbstractTableModel{
 	public String tablename = "kontakt";
 	public Kontakt suchKontakt = null;
 	public String group = null;
+	public Integer order = null;
 	
 	private final String [] columnName = {"Vorname", "Nachname", "PLZ", "Ort"};
 	
@@ -32,6 +33,12 @@ public class KontaktTableModel extends AbstractTableModel{
 		return this.kontakte;
 	}
 	
+	
+	/**
+	 * Diese Methode liest die Daten von der lokalen Datenbank mit Hilfe des Generic-DAO aus.
+	 * Diese Methode speichert alle Objekte aus der Datenbank als eine Liste ab.
+	 * Die Datensätze werden nach order geordnet.
+	 */
 	private void readData() {
 		String query="select * from Kontakt as k, ATTACHABLE_OBJECT as a, ATTACHABLE_OBJECT_KATEGORIE as ok where k.GLOBAL_ID=a.GLOBAL_ID AND a.KATEGORIE_ID=ok.ID";
 		try{
@@ -75,11 +82,19 @@ public class KontaktTableModel extends AbstractTableModel{
 		}
 	}
 	
+	/**
+	 * Diese Methode liest die Daten aus dem Javaspace mit Hilfe des ServiceCommunicators aus.
+	 * Diese Methode speichert alle Objekte aus dem Space als eine Liste ab.
+	 */
 	public void readOnlineData () {
-		this.onlinesuche = true;
-		Kontakt temp =(Kontakt) ogdo.getObject(this.suchKontakt);
-		this.kontakte = new ArrayList<GenericDataObject>();
-		this.kontakte.add(temp);
+		try {
+			this.onlinesuche = true;
+			Kontakt temp =(Kontakt) ogdo.getObject(this.suchKontakt);
+			this.kontakte = new ArrayList<GenericDataObject>();
+			this.kontakte.add(temp);
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(null, "Fehler: " +e.toString(), "Ein Fehler ist aufgetreten!" , JOptionPane.ERROR_MESSAGE);
+		}
 	}
 	
 	public KontaktTableModel (){
@@ -203,6 +218,10 @@ public class KontaktTableModel extends AbstractTableModel{
 		} catch (Exception e){
 			System.out.println("KontaktTableModel @ addPruefung;"+e.toString());
 		}
+	}
+	
+	public void setOrder (Integer order){
+		this.order=order;
 	}
 	
 	
