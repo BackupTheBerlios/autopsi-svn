@@ -286,7 +286,6 @@ public class LehrmittelTableModel extends AbstractTableModel {
 	 */
 	public void setSearchObject (Lehrmittel Object){
 		this.searchObject=Object;
-		fireDataChanged();
 	}
 	
 	/**

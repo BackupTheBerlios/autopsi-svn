@@ -287,7 +287,6 @@ public class LVATableModel extends AbstractTableModel {
 	 */
 	public void setSearchObject (Lva Object){
 		this.searchObject=Object;
-		fireDataChanged();
 	}
 	
 	/**

@@ -1189,6 +1189,7 @@ public class SearchFrame extends javax.swing.JFrame implements ActionListener, M
 				gedit.setObjectToEdit(kontakt,false);
 				gedit.pack();
 				gedit.setVisible(true);
+				otm.fireDataChanged();
 			}
 			if (arg0.getSource().equals(jLVATable)){
 				LVATableModel otm = (LVATableModel) TM;
@@ -1198,6 +1199,7 @@ public class SearchFrame extends javax.swing.JFrame implements ActionListener, M
 				gedit.setObjectToEdit(lva,false);
 				gedit.pack();
 				gedit.setVisible(true);
+				otm.fireDataChanged();
 			}
 			
 			if (arg0.getSource().equals(jLehrmittelTable)){
@@ -1208,6 +1210,7 @@ public class SearchFrame extends javax.swing.JFrame implements ActionListener, M
 				gedit.setObjectToEdit(lehrmittel,false);
 				gedit.pack();
 				gedit.setVisible(true);
+				otm.fireDataChanged();
 			}
 			
 		}
@@ -1321,11 +1324,9 @@ public class SearchFrame extends javax.swing.JFrame implements ActionListener, M
 				jKontaktTableModel.setSearchObject(kont);
 				
 				if (jKontaktLokalSuchenRadioButton.isSelected()){
-					System.out.println("Kontakt wird lokal gesucht...");
 					jKontaktTableModel.fireDataChanged();
 					
 				} else if (jKontaktOnlineSuchenRadioButton.isSelected()) {
-					System.out.println("KOntakt wird online gesucht...");
 					jKontaktTableModel.fireOnlineDataChanged();
 				}
 			} else if(cmd.equals(this.jLVASuchenButton)) {
@@ -1344,9 +1345,8 @@ public class SearchFrame extends javax.swing.JFrame implements ActionListener, M
 				jLVATableModel.setSearchObject(lva);
 				
 				if (jLVALokalSuchenRadioButton.isSelected()){
-					System.out.println("LVA wird lokal gesucht...");
+					this.jLVATableModel.fireDataChanged();
 				} else if (jLVAOnlineSuchenRadioButton.isSelected()) {
-					System.out.println("LVA wird online gesucht...");
 					this.jLVATableModel.fireOnlineDataChanged();
 				}
 			} else if(cmd.equals(this.jTerminSuchenButton)) {
@@ -1418,10 +1418,8 @@ public class SearchFrame extends javax.swing.JFrame implements ActionListener, M
 				jLehrmittelTableModel.setSearchObject(lm);
 				
 				if (jLehrmittelLokalSuchenRadioButton.isSelected()){
-					System.out.println("Lehrmittel wird lokal gesucht...");
 					jLehrmittelTableModel.fireDataChanged();
 				} else if (jLehrmittelOnlineSuchenRadioButton.isSelected()) {
-					System.out.println("Lehrmittel wird online gesucht...");
 					this.jLehrmittelTableModel.fireOnlineDataChanged();
 				}
 				
