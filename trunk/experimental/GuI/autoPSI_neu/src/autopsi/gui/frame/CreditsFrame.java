@@ -10,6 +10,8 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 
+import autopsi.basis.AutopsiConfigurator;
+
 /**
 * This code was edited or generated using CloudGarden's Jigloo
 * SWT/Swing GUI Builder, which is free for non-commercial
@@ -70,7 +72,7 @@ public class CreditsFrame extends javax.swing.JDialog implements MouseListener {
 				{
 					jLabel1 = new JLabel();
 					getContentPane().add(jLabel1);
-					jLabel1.setIcon(new ImageIcon("src/images/credits.png"));
+					jLabel1.setIcon(new ImageIcon(AutopsiConfigurator.images+"/credits.png"));
 					jLabel1.setBounds(0, -7, 399, 315);
 				}
 				{
