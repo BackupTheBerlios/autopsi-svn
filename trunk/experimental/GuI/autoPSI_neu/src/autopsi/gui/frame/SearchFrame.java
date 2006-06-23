@@ -126,7 +126,7 @@ public class SearchFrame extends javax.swing.JFrame implements ActionListener, M
 	private JTable jKontaktTable, jLVATable, jTerminTable, jTerminContainerTable, jLehrmittelTable;
 	private JTable jNotizTable, jPruefungTable;
 	
-	private JTableHeader jKontaktTableHeader, jLVATableHeader, jLehrmittelTableHeader;
+	private JTableHeader jKontaktTableHeader, jLVATableHeader, jLehrmittelTableHeader, jPruefungTableHeader;
 	private JTableHeader jNotizTableHeader, jTerminTableHeader, jTerminContainerTableHeader;
 
 	private TerminTableModel jTerminTableModel;
@@ -1139,6 +1139,9 @@ public class SearchFrame extends javax.swing.JFrame implements ActionListener, M
 								jPruefungTable.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
 								jPruefungTable.setShowGrid(true);
 								jPruefungTable.setGridColor(Color.LIGHT_GRAY);
+								jPruefungTable.addMouseListener(this);
+								jPruefungTableHeader = jPruefungTable.getTableHeader();
+								jPruefungTableHeader.addMouseListener(this);
 							}
 						}
 						{
@@ -1226,6 +1229,16 @@ public class SearchFrame extends javax.swing.JFrame implements ActionListener, M
 				gedit.setVisible(true);
 				ntm.fireDataChanged();
 			}
+			if (arg0.getSource().equals(jPruefungTable)){
+				PruefungTableModel ptm = (PruefungTableModel) TM;
+				GenericDataObject lehrmittel = ptm.getObjectAt(Table.getSelectedRow()); 
+				GenericEditFrame gedit = new GenericEditFrame(this);
+				gedit.setTableToEdit("PRUEFUNG");
+				gedit.setObjectToEdit(lehrmittel,false);
+				gedit.pack();
+				gedit.setVisible(true);
+				ptm.fireDataChanged();
+			}
 			
 		}
 		
@@ -1242,7 +1255,9 @@ public class SearchFrame extends javax.swing.JFrame implements ActionListener, M
 					if (arg0.getSource().equals(jLehrmittelTableHeader))
 						jLehrmittelTableModel.setOrder(column);
 					if (arg0.getSource().equals(jNotizTableHeader))
-						jLehrmittelTableModel.setOrder(column);
+						jNotizTableModel.setOrder(column);
+					if (arg0.getSource().equals(jPruefungTableHeader))
+						jPruefungTableModel.setOrder(column);
 				}
 		}
 	}
@@ -1473,7 +1488,7 @@ public class SearchFrame extends javax.swing.JFrame implements ActionListener, M
 					p.setGrade(null);
 				}
 				jPruefungTableModel.setGroup(jPruefungGruppeComboBox.getSelectedItem().toString());
-				jPruefungTableModel.setSuchPruefung(p);
+				jPruefungTableModel.setSearchObject(p);
 				if (jPruefungLokalSuchenRadioButton.isSelected()){
 					jPruefungTableModel.fireDataChanged();
 				} else if (jPruefungOnlineSuchenRadioButton.isSelected()) {
@@ -1503,6 +1518,12 @@ public class SearchFrame extends javax.swing.JFrame implements ActionListener, M
 				jNotizTableModel.restoreLastDeletedObjects();
 			} else if(cmd.equals(this.jNotizDownloadButton)) {
 				jNotizTableModel.downloadObject();
+			} else if(cmd.equals(this.jPruefungLoeschenButton)) {
+				jPruefungTableModel.deleteSelectedRow(jPruefungTable);
+			} else if(cmd.equals(this.jPruefungWiederherstellenButton)) {
+				jPruefungTableModel.restoreLastDeletedObjects();
+			} else if(cmd.equals(this.jPruefungDownloadButton)) {
+				jPruefungTableModel.downloadObject();
 			} else {
 				JOptionPane.showMessageDialog(null, "Error: " +cmd.toString(), "Command not found!" , JOptionPane.ERROR_MESSAGE);
 			}
