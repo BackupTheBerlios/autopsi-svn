@@ -4,19 +4,15 @@ package autopsi.gui.frame;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.sql.Date;
 import java.sql.Timestamp;
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Locale;
-
 import javax.swing.BorderFactory;
 import javax.swing.ComboBoxModel;
 
@@ -34,12 +30,9 @@ import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
-import javax.swing.ListModel;
 import javax.swing.WindowConstants;
 import javax.swing.border.LineBorder;
 import javax.swing.text.MaskFormatter;
-
-import com.sun.java_cup.internal.internal_error;
 
 import autopsi.gui.frame.EditTerminContainerFrame;
 import autopsi.basis.AutopsiConfigurator;
@@ -139,7 +132,6 @@ public class EditTerminFrame extends javax.swing.JFrame implements java.awt.even
 	private int selectedType;
 	private int selectedGroup;
 	private int selectedTC;
-	private JScrollPane attObPane;
 	ArrayList<String[]> queryList = new ArrayList<String[]>();
 	List<GenericDataObject> id_list;
 	private int lastID = 0;
@@ -232,7 +224,7 @@ public class EditTerminFrame extends javax.swing.JFrame implements java.awt.even
 			
 			int tc_id = ((TerminContainer)(termin_cont_data.get(tcTitle_box.getSelectedIndex()))).getId();
 			if((group_data.get(group_Box.getSelectedIndex())) instanceof AttachableObjectKategorie){
-				System.out.println("ist ein attachableobjectkategorie");
+				
 			}
 			int group_id = ((AttachableObjectKategorie)(group_data.get(group_Box.getSelectedIndex()))).getId();
 					
@@ -245,66 +237,65 @@ public class EditTerminFrame extends javax.swing.JFrame implements java.awt.even
 			
 			if(owner instanceof mainFrame)
 			{
-			if (ID<0)
-			{
+				if (ID<0)//Wenn es sich um einen neuen Termin handelt:
+				{
+					
+					
+					query = "insert into termin (GROUP_ID,TERMIN_KATEGORIE_ID, secondary_title, description, date, duration, place, termincontainer_id) values ("+group_id+ ","+tkat+ ",'"+sec_title+"','"+desc+"','"+date+"',"+duration+",'"+place+"',"+tc_id+")";
 				
+					gdo.unsafeQuery(query,vorlage);//Erstellt den Termin anhand der query
+					id_list = gdo.unsafeQuery("select * from termin where id =identity()",vorlage);
 				
-				query = "insert into termin (GROUP_ID,TERMIN_KATEGORIE_ID, secondary_title, description, date, duration, place, termincontainer_id) values ("+group_id+ ","+tkat+ ",'"+sec_title+"','"+desc+"','"+date+"',"+duration+",'"+place+"',"+tc_id+")";
-			
-				gdo.unsafeQuery(query,vorlage);
-				System.out.println("aha 0");
-				id_list = gdo.unsafeQuery("select * from termin where id =identity()",vorlage);
-			
-			try
-			{
-				lastID = ((Termin)id_list.get(0)).getId();
-				System.out.println(lastID);
-				
-				
-			for(int j = 0;j<queryList.size();j++)
-			{
-				System.out.println(queryList.get(j)[0]);
-				String query2 = "insert into anhaengen_termin values (" + lastID+","+ Integer.parseInt(queryList.get(j)[0])+",'"+queryList.get(j)[1]+"')";
-				gdo.unsafeQuery(query2,new Anhaengen_termin());
-				System.out.println("aha 2");
-			}
-			}
-			catch(Exception e){System.out.println("update::attach objects :::"+e.toString());}
-			}
-		else 
-			{
-			
-			for(int j = 0;j<queryList.size();j++)
-			{
-				String query2 = "insert into anhaengen_termin values (" + ID+","+ Integer.parseInt(queryList.get(j)[0])+",'"+queryList.get(j)[1]+"')";
-				gdo.unsafeQuery(query2,new Anhaengen_termin());
-				
-			}
-			
-			query = "update termin  set GROUP_ID = " + group_id + ",TERMIN_KATEGORIE_ID = " + tkat + ", secondary_title='"+sec_title+"', description='"+desc+"', date='"+date+"',duration="+duration+",place='"+place+"',termincontainer_id="+tc_id+" where id="+ID;
-			
-			gdo.unsafeQuery(query,vorlage);
-			}
-			ok = true;
-			
-				mainFrame actor = (mainFrame)owner;
-				actor.updateTable();
-				actor.updateInfoBar(false);
+				try
+				{
+					lastID = ((Termin)id_list.get(0)).getId();//Liest die letzte ID aus der Datenbank ein, die erzeugt wurde
+					
+					
+					
+				for(int j = 0;j<queryList.size();j++)//Hängt alle anzuhängenden Objekte an
+				{
+					System.out.println(queryList.get(j)[0]);
+					String query2 = "insert into anhaengen_termin values (" + lastID+","+ Integer.parseInt(queryList.get(j)[0])+",'"+queryList.get(j)[1]+"')";
+					gdo.unsafeQuery(query2,new Anhaengen_termin());
+					
+				}
+				}
+				catch(Exception e){System.out.println("update::attach objects :::"+e.toString());}
+				}
+				else 
+					{
+					
+					for(int j = 0;j<queryList.size();j++)//Hängt alle anzuhängenden Objekte an
+					{
+						String query2 = "insert into anhaengen_termin values (" + ID+","+ Integer.parseInt(queryList.get(j)[0])+",'"+queryList.get(j)[1]+"')";
+						gdo.unsafeQuery(query2,new Anhaengen_termin());
+						
+					}
+					
+					query = "update termin  set GROUP_ID = " + group_id + ",TERMIN_KATEGORIE_ID = " + tkat + ", secondary_title='"+sec_title+"', description='"+desc+"', date='"+date+"',duration="+duration+",place='"+place+"',termincontainer_id="+tc_id+" where id="+ID;
+					
+					gdo.unsafeQuery(query,vorlage);//Updatet den Termin
+					}
+					ok = true;
+					
+						mainFrame actor = (mainFrame)owner;
+						actor.updateTable();
+						actor.updateInfoBar(false);
+				}
+		else if(owner instanceof EditTerminContainerFrame)
+		{
+			EditTerminContainerFrame actor = (EditTerminContainerFrame)owner;
+			Termin data = new Termin();
+			data.setSecondaryTitle(sec_title);
+			data.setDuration(duration);
+			data.setPlace(place);
+			data.setDescription(desc);
+			data.setDate(Timestamp.valueOf(date));
+			List<Termin> termine = new ArrayList<Termin>();
+			termine.add(data);
+			actor.updateTerminList(termine);
 		}
-	else if(owner instanceof EditTerminContainerFrame)
-	{
-		EditTerminContainerFrame actor = (EditTerminContainerFrame)owner;
-		Termin data = new Termin();
-		data.setSecondaryTitle(sec_title);
-		data.setDuration(duration);
-		data.setPlace(place);
-		data.setDescription(desc);
-		data.setDate(Timestamp.valueOf(date));
-		List<Termin> termine = new ArrayList<Termin>();
-		termine.add(data);
-		actor.updateTerminList(termine);
-	}
-			
+				
 		}
 		catch (Exception e){
 			System.out.println("Exception beim Updaten=="+e.toString());
@@ -385,7 +376,7 @@ public class EditTerminFrame extends javax.swing.JFrame implements java.awt.even
 						
 						tcTitle_box.addFocusListener(new FocusListener(){
 
-							public void focusGained(FocusEvent arg0) {
+							public void focusGained(FocusEvent arg0) {//Wenn die Termincontainerbox gewählt wird, werden die bestehenden Termincontainer aus der DB geladen
 								
 								List<GenericDataObject> tcList;
 								TerminContainer tc= new TerminContainer();
@@ -451,7 +442,7 @@ public class EditTerminFrame extends javax.swing.JFrame implements java.awt.even
 						}
 						choose_Type.addFocusListener(new FocusListener(){
 
-							public void focusGained(FocusEvent arg0) {
+							public void focusGained(FocusEvent arg0) {//Hier werden die Termintypen aus der DB geladen
 								
 								List<GenericDataObject> typeList;
 								TerminKategorie kat= new TerminKategorie();
@@ -702,7 +693,6 @@ public class EditTerminFrame extends javax.swing.JFrame implements java.awt.even
 			this.setSize(456, 387);
 			this.setPreferredSize(new java.awt.Dimension(456, 387));
 			this.setResizable(false);
-			//if(ID==null) apply_button.setVisible(false);
 			if(ID!=null && cal==null && !(owner instanceof EditTerminContainerFrame)) {readData(ID);}
 			else
 				apply_button.setVisible(false);
