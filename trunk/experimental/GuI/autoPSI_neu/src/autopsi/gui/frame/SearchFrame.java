@@ -1162,8 +1162,8 @@ public class SearchFrame extends javax.swing.JFrame implements ActionListener, M
 	
 	public void mouseClicked(MouseEvent arg0) {
 		//System.out.println("MOUSE CLIKCKED! Count=" + arg0.getClickCount()+" Button:"+arg0.getButton());
-		if (arg0.getClickCount() == 2 && arg0.getButton()==MouseEvent.BUTTON3 ) {
-			System.out.println("Rechtemaustaste 2x geclickt.");
+		if (arg0.getClickCount() == 2 && arg0.getButton()==MouseEvent.BUTTON1 ) {
+			System.out.println("Linke Maustaste 2x geclickt.");
 		}
 	}
 	
