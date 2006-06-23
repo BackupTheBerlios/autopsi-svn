@@ -95,7 +95,7 @@ public class PruefungTableModel extends AbstractTableModel {
 	public void readOnlineData(){
 		try {
 			this.onlinesuche = true;
-			Lva temp = (Lva)this.ogdo.getObject(this.searchObject);
+			Pruefung temp = (Pruefung)this.ogdo.getObject(this.searchObject);
 			this.objects = new ArrayList<GenericDataObject>();
 			this.objects.add(temp);
 		} catch (Exception e) {
@@ -341,14 +341,14 @@ public class PruefungTableModel extends AbstractTableModel {
 		Pruefung p = null;
 		p = (Pruefung) objects.get(row);
 		Lva l = null;
-		if (!this.onlinesuche) {
+		if (this.onlinesuche== false) {
 			try{
 				this.lva = gdo.unsafeQuery("SELECT * FROM LVA WHERE GLOBAL_ID ="+p.getLvaId(), new Lva());
 				if (lva != null){	
 					l = (Lva) lva.get(0);
 				}
 			} catch (Exception e){
-				System.out.println("PruefungTableModel @ getValueAt;"+e.toString());
+				JOptionPane.showMessageDialog(null, "Error: " +e.toString(), "Error!" , JOptionPane.ERROR_MESSAGE);
 			}
 		}			
 		if (p==null)
@@ -356,18 +356,20 @@ public class PruefungTableModel extends AbstractTableModel {
 		else if (col==0) {
 			if (l==null)
 				return null;
+			else
+				return l.lva_nr;
 		}
 		else if (col==1) {
 			if (l==null)
 				return null;
+			else 
+				return l.title;
 		}
 		else if (col==2)
 			return p.getExaminer();
 		else if (col==3)
 			return p.getGrade();
 		else return null;
-		
-		return null;
 
 	}
 }
