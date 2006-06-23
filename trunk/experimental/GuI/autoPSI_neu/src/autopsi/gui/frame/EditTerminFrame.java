@@ -974,11 +974,16 @@ public class EditTerminFrame extends javax.swing.JFrame implements java.awt.even
 			}
 		}
 		if(arg0.getSource().equals(editTC)){
-			int id = ((TerminContainer)(termin_cont_data.get(tcTitle_box.getSelectedIndex()))).getId();
-			EditTerminContainerFrame frame = new EditTerminContainerFrame(this,id);
-			frame.setLocation(this.getLocation().x+20,this.getLocation().y+20);
-			frame.setTitle("Termincontainer bearbeiten");
-;			frame.setVisible(true);
+			if(tcTitle_box.getSelectedIndex()>0)
+			{
+				int id = ((TerminContainer)(termin_cont_data.get(tcTitle_box.getSelectedIndex()))).getId();
+				EditTerminContainerFrame frame = new EditTerminContainerFrame(this,id);
+				frame.setLocation(this.getLocation().x+20,this.getLocation().y+20);
+				frame.setTitle("Termincontainer bearbeiten");
+	;			frame.setVisible(true);
+			}
+			else showErrorDialog("Fehler!","Dieser Termincontainer kann nicht bearbeitet werden!");
+			
 		}
 	}
 
