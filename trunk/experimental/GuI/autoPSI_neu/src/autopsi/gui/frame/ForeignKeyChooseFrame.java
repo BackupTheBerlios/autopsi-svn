@@ -1,4 +1,4 @@
-package autopsi.gui.component;
+package autopsi.gui.frame;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
@@ -19,6 +19,7 @@ import autopsi.basis.model.AttachableTableModel;
 import autopsi.database.dao.GenericDAO;
 import autopsi.database.dao.GenericDataObject;
 import autopsi.database.table.AttachableObject;
+import autopsi.gui.component.GenericData;
 
 public class ForeignKeyChooseFrame extends JDialog implements ActionListener{
 
