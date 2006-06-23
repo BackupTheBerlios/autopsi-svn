@@ -21,8 +21,10 @@ import autopsi.database.dao.GenericDataObject;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import autopsi.gui.exceptions.EWrongMethod;
-import autopsi.gui.exceptions.EClassEditorMissing;
+
+import autopsi.gui.exception.EClassEditorMissing;
+import autopsi.gui.exception.EWrongMethod;
+
 import javax.swing.JButton;
 import autopsi.gui.component.GSMethod;
 import autopsi.gui.component.BooleanEditPlugin;
