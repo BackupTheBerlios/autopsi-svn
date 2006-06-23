@@ -271,7 +271,6 @@ public class KontaktTableModel extends AbstractTableModel{
 	 */
 	public void setOrder (Integer order){
 		this.order=order;
-		System.out.println("ORDER: "+order);
 		this.fireDataChanged();
 	}
 	
