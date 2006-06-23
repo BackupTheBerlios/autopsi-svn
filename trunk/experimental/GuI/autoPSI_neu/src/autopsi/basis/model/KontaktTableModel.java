@@ -34,6 +34,10 @@ public class KontaktTableModel extends AbstractTableModel{
 		return this.kontakte;
 	}
 	
+	public GenericDataObject getKontaktAt(int at) {
+		return this.kontakte.get(at);
+	}
+	
 	
 	/**
 	 * Diese Methode liest die Daten von der lokalen Datenbank mit Hilfe des Generic-DAO aus.
