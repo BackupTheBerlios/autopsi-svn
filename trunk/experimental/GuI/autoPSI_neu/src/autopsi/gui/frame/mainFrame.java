@@ -79,6 +79,7 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 	private JPanel tab2;
 	private JTextPane lblBeschreibung;
 	private JTabbedPane infobar;
+	private JSeparator jSeparator1;
 	private JScrollPane jScrollPane1;
 	private JMenuItem menu_show_info;
 	private JLabel tableBase;
@@ -183,7 +184,7 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 	private void setTable()
 	{
 		this.addWindowListener(this);
-		this.setIconImage(new ImageIcon(AutopsiConfigurator.images + "/autopsi.png").getImage() );
+		
 		table = new JTable();	
 		setTimeSpace(calStart);
 		
@@ -220,7 +221,7 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 	
 	private void initGUI() {
 		try {
-			
+			this.setIconImage(new ImageIcon(AutopsiConfigurator.images + "/autopsi.png").getImage() );
 			setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 			getContentPane().setLayout(null);
 			getContentPane().setBackground(new java.awt.Color(235,235,235));
@@ -482,7 +483,6 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 				{
 					{
 						lblDatumShadow = new JLabel();
-					//	lblDatum.add(lblDatumShadow);
 						lblDatumShadow.setText("");
 						lblDatumShadow.setBounds(9, 9, 210, 28);
 						lblDatumShadow.setFont(new java.awt.Font("Tahoma",1,12));
@@ -681,7 +681,7 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 			{
 				mainMenu = new JMenuBar();
 				setJMenuBar(mainMenu);
-				mainMenu.setPreferredSize(new java.awt.Dimension(892, 24));
+				mainMenu.setPreferredSize(new java.awt.Dimension(150, 24));
 				{
 					menu_add = new JMenu();
 					mainMenu.add(menu_add);
@@ -795,22 +795,6 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 					lblMonthShadow.setForeground(new java.awt.Color(170,170,170));
 					lblMonth.setFont(new java.awt.Font("Tahoma",1,13));
 					lblMonthShadow.setFont(new java.awt.Font("Tahoma",1,13));
-					/*todayList.addFocusListener(new FocusListener(){
-
-						public void focusGained(FocusEvent arg0) {
-							
-						}
-
-						public void focusLost(FocusEvent arg0) {
-							if(arg0.getOppositeComponent().equals(editTermin) || arg0.getOppositeComponent().equals(deleteTermin)){
-								
-							}else{
-								terminId = -1;
-							}
-	
-						}
-						
-					});*/
 				}
 				{
 					menu_show_info = new JMenuItem();
@@ -818,6 +802,13 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 					menu_show_info.setText("Info");
 					menu_show_info.setBackground(new java.awt.Color(255,255,255));
 					menu_show_info.setOpaque(false);
+					menu_show_info.setPreferredSize(new java.awt.Dimension(152, 22));
+					{
+						jSeparator1 = new JSeparator();
+						mainMenu.add(jSeparator1);
+						jSeparator1.setBounds(154, 112, 826, 21);
+						jSeparator1.setOrientation(SwingConstants.VERTICAL);
+					}
 					menu_show_info.addMouseListener(this);
 				}
 
@@ -1627,10 +1618,7 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 	}
 
 	public void windowClosing(WindowEvent arg0) {
-	}
-
-	public void windowClosed(WindowEvent arg0) {
-		//closing all database connections
+//		closing all database connections
 		GenericDAO gdao = new GenericDAO();
 		try {
 			gdao.unsafeQuery("Shutdown compact", new Notiz());
@@ -1640,6 +1628,10 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 		//deleting shared objects from JavaSpace
 		if (this.oss != null)
 			this.oss.unshareObjects();
+	}
+
+	public void windowClosed(WindowEvent arg0) {
+		
 	}
 
 	public void windowIconified(WindowEvent arg0) {
