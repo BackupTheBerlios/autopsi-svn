@@ -847,6 +847,10 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 			
 			if(zoomBox.getSelectedObjects()!=null) tableZoom();
 			
+			terminId=-1;
+			tcID = -1;
+			clearTerminData();
+			
 			selection = -1; 
 			currentCell.x = table.rowAtPoint(table.getMousePosition());
 			currentCell.y = table.columnAtPoint(table.getMousePosition());
@@ -935,10 +939,18 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 ;			frame.setVisible(true);
 		}
 		if(arg0.getSource().equals(button_editTC)) {
-			EditTerminContainerFrame frame = new EditTerminContainerFrame(this,tcID);
-			frame.setLocation(this.getLocation().x+20,this.getLocation().y+20);
-			frame.setTitle("Termincontainer bearbeiten");
-;			frame.setVisible(true);
+			if(tcID>0)
+			{
+				EditTerminContainerFrame frame = new EditTerminContainerFrame(this,tcID);
+				frame.setLocation(this.getLocation().x+20,this.getLocation().y+20);
+				frame.setTitle("Termincontainer bearbeiten");
+	;			frame.setVisible(true);
+			}
+			else
+			{
+				showErrorDialog("Fehler!","Dieser Termincontainer kann nicht bearbeitet werden!");
+			}
+			
 		}
 		if(arg0.getSource().equals(button_editTermin)) {
 			
@@ -978,10 +990,18 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 		if(arg0.getSource().equals(button_deleteTC)) {
 			if(terminId!=-1)
 			{
-				deletedObject = "termincontainer";
-				SecurityDialog diag = new SecurityDialog(this,"Termin löschen","Wollen Sie den gewählten Termincontainer wirklich löschen? Achtung: Dies löscht auch alle Termine in diesem Termincontainer!");
-				diag.setLocation(this.getLocation().x+40,this.getLocation().y+40);
-				diag.setVisible(true);
+				if(tcID>0)
+				{
+					deletedObject = "termincontainer";
+					SecurityDialog diag = new SecurityDialog(this,"Termin löschen","Wollen Sie den gewählten Termincontainer wirklich löschen? Achtung: Dies löscht auch alle Termine in diesem Termincontainer!");
+					diag.setLocation(this.getLocation().x+40,this.getLocation().y+40);
+					diag.setVisible(true);
+				}
+				else
+				{
+					showErrorDialog("Fehler!","Dieser Termincontainer kann nicht gelöscht werden!");
+				}
+				
 				
 			}
 			else showErrorDialog("Fehler!", "Kein Termin ausgewählt!");
@@ -1946,13 +1966,7 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 		}	
 		else
 		{
-			lblZeit.setText("");
-			lblOrt.setText("");
-			lblBeschreibung.setText("");
-			lblTerminContainer.setText("");
-			lblTermin.setText("");
-			listTC2.removeAll();
-			objectList.removeAll();
+			clearTerminData();
 		}
 	}
 	
@@ -1999,5 +2013,16 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 		c_marker.set(Calendar.MINUTE,0);
 		c_marker.set(Calendar.SECOND,1);
 		System.out.println("c_marker set::: "+c_marker.getTime().toString());
+	}
+	
+	public void clearTerminData()
+	{
+		lblZeit.setText("");
+		lblOrt.setText("");
+		lblBeschreibung.setText("");
+		lblTerminContainer.setText("");
+		lblTermin.setText("");
+		listTC2.removeAll();
+		objectList.removeAll();
 	}
 }
