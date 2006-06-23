@@ -34,6 +34,7 @@ import javax.swing.text.BadLocationException;
 import javax.swing.text.MaskFormatter;
 import javax.swing.text.PlainDocument;
 
+import autopsi.basis.AutopsiConfigurator;
 import autopsi.basis.model.KategorieComboBoxModel;
 import autopsi.basis.model.KontaktTableModel;
 import autopsi.basis.model.LVATableModel;
@@ -1151,7 +1152,7 @@ public class SearchFrame extends javax.swing.JFrame implements ActionListener, M
 			{
 				lupe = new JLabel();
 				getContentPane().add(lupe);
-				lupe.setIcon(new ImageIcon("images/icons/lupe.png"));
+				lupe.setIcon(new ImageIcon(AutopsiConfigurator.images_icons+"/lupe.png"));
 				lupe.setBounds(7, 238, 196, 182);
 			}
 		} catch (Exception e) {
