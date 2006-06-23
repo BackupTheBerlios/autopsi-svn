@@ -79,6 +79,9 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 	private JPanel tab2;
 	private JTextPane lblBeschreibung;
 	private JTabbedPane infobar;
+	private JMenuItem menu_add_LehrmittelKategorie;
+	private JMenuItem menu_add_LvaKategorie;
+	private JMenuItem menu_add_Universitaet;
 	private JScrollPane jScrollPane1;
 	private JMenuItem menu_show_info;
 	private JLabel tableBase;
@@ -726,6 +729,27 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 						menu_add.add(menu_add_Notiz);
 						menu_add_Notiz.setText("Notiz...");
 						menu_add_Notiz.addActionListener(this);
+					}
+					{
+						menu_add_Universitaet = new JMenuItem();
+						menu_add.add(menu_add_Universitaet);
+						menu_add_Universitaet
+							.setText("Universität...");
+						menu_add_Universitaet.addActionListener(this);
+					}
+					{
+						menu_add_LvaKategorie = new JMenuItem();
+						menu_add.add(menu_add_LvaKategorie);
+						menu_add_LvaKategorie
+							.setText("LVA-Kategorie...");
+						menu_add_LvaKategorie.addActionListener(this);
+					}
+					{
+						menu_add_LehrmittelKategorie = new JMenuItem();
+						menu_add.add(menu_add_LehrmittelKategorie);
+						menu_add_LehrmittelKategorie
+							.setText("Lehrmittel-Kategorie...");
+						menu_add_LehrmittelKategorie.addActionListener(this);
 					}
 				}
 				{
@@ -1987,7 +2011,25 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 			frame.setLocation(this.getLocation().x+20,this.getLocation().y+20);
 			frame.setTitle("neuen Termincontainer hinzufügen");
 ;			frame.setVisible(true);
-			}
+		}
+		if (arg0.getSource().equals(this.menu_add_Universitaet)){
+			GenericEditFrame gef = new GenericEditFrame(this);
+			gef.setTableToEdit("universitaet");
+			gef.setObjectToEdit(new Universitaet(), true);
+			gef.setVisible(true);
+		}
+		if (arg0.getSource().equals(this.menu_add_LvaKategorie)){
+			GenericEditFrame gef = new GenericEditFrame(this);
+			gef.setTableToEdit("lva_kategorie");
+			gef.setObjectToEdit(new LvaKategorie(), true);
+			gef.setVisible(true);
+		}
+		if (arg0.getSource().equals(this.menu_add_LehrmittelKategorie)){
+			GenericEditFrame gef = new GenericEditFrame(this);
+			gef.setTableToEdit("lehrmittel_kategorie");
+			gef.setObjectToEdit(new LehrmittelKategorie(), true);
+			gef.setVisible(true);
+		}
 		
 	}
 	
