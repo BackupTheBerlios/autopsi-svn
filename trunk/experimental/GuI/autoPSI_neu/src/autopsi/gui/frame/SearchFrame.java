@@ -31,6 +31,7 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.JTableHeader;
 import javax.swing.table.TableColumnModel;
+import javax.swing.table.TableModel;
 import javax.swing.text.AttributeSet;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.MaskFormatter;
@@ -45,6 +46,7 @@ import autopsi.basis.model.NotizTableModel;
 import autopsi.basis.model.PruefungTableModel;
 import autopsi.basis.model.TerminContainerTableModel;
 import autopsi.basis.model.TerminTableModel;
+import autopsi.database.dao.GenericDataObject;
 import autopsi.database.table.AttachableObjectKategorie;
 import autopsi.database.table.Lehrmittel;
 import autopsi.database.table.LehrmittelKategorie;
@@ -1152,6 +1154,7 @@ public class SearchFrame extends javax.swing.JFrame implements ActionListener, M
 
 					}
 					
+					
 // #####################################################################					
 
 				}
@@ -1172,7 +1175,18 @@ public class SearchFrame extends javax.swing.JFrame implements ActionListener, M
 		if (arg0.getClickCount() == 2 && arg0.getButton()==MouseEvent.BUTTON1 && !(arg0.getSource() instanceof JTableHeader)) {
 			System.out.println("Linke Maustaste 2x geclickt.");
 			JTable Table = (JTable) arg0.getSource();
-			System.out.println(Table.getColumnName(Table.getSelectedColumn()));
+			System.out.println(Table.getSelectedRow());
+			TableModel TM = Table.getModel();
+			if (arg0.getSource().equals(jKontaktTable)){
+				KontaktTableModel ktm = (KontaktTableModel) TM;
+				GenericDataObject kontakt = ktm.getKontaktAt(Table.getSelectedRow()); 
+				GenericEditFrame gedit = new GenericEditFrame(this);
+				gedit.setTableToEdit("KONTAKT");
+				gedit.setObjectToEdit(kontakt,false);
+				gedit.pack();
+				gedit.setVisible(true);
+			}
+			
 		}
 		
 		if (arg0.getSource().equals(jKontaktTableHeader)) {
