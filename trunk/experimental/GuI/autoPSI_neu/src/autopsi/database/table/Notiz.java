@@ -37,7 +37,7 @@ public class Notiz extends GenericData implements Entry,GenericDataObject {
 		}
 	}
 	
-	public int getGlobalId(){
+	public Integer getGlobalId(){
 		return this.global_id;
 	}
 	
