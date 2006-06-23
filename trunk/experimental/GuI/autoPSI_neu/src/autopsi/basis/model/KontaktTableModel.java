@@ -169,31 +169,35 @@ public class KontaktTableModel extends AbstractTableModel{
 		int auswahl = 0;
 		k = null;
 		//	 Check each cell in the range
-	    for (int r=0; r<this.getRowCount(); r++) {
-            if (table.isCellSelected(r, 1)) {
-            	selected = true;
-            	k=(Kontakt) this.getObjects().get(r);
-            	if (k.getGlobalId() != null) {
-            		if (first) {
-            			auswahl = JOptionPane.showConfirmDialog(null, "Sind sie sicher dass sie alle markierten Objekte löschen wollen?", "Löschen?",JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.ERROR_MESSAGE);
-            		}
-	            	if (auswahl == JOptionPane.YES_OPTION) {
-	            		//weiter mit löschen
-	            		deleted = this.deleteKontakt(k);
-	            		if (deleted) {
-	            			if (first){
-	            				JOptionPane.showMessageDialog(null, "Das Löschvorgang war erfolgreich." , "Gelöscht!" , JOptionPane.INFORMATION_MESSAGE);
-	            			}
-	            		} else {
-	            			JOptionPane.showMessageDialog(null, "Das Objekt konnte nicht gelöscht werden." , "Löschen!" , JOptionPane.ERROR_MESSAGE);
+		if (this.onlinesuche == false) {
+		    for (int r=0; r<this.getRowCount(); r++) {
+	            if (table.isCellSelected(r, 1)) {
+	            	selected = true;
+	            	k=(Kontakt) this.getObjects().get(r);
+	            	if (k.getGlobalId() != null) {
+	            		if (first) {
+	            			auswahl = JOptionPane.showConfirmDialog(null, "Sind sie sicher dass sie alle markierten Objekte löschen wollen?", "Löschen?",JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.ERROR_MESSAGE);
 	            		}
+		            	if (auswahl == JOptionPane.YES_OPTION) {
+		            		//weiter mit löschen
+		            		deleted = this.deleteKontakt(k);
+		            		if (deleted) {
+		            			if (first){
+		            				JOptionPane.showMessageDialog(null, "Das Löschvorgang war erfolgreich." , "Gelöscht!" , JOptionPane.INFORMATION_MESSAGE);
+		            			}
+		            		} else {
+		            			JOptionPane.showMessageDialog(null, "Das Objekt konnte nicht gelöscht werden." , "Löschen!" , JOptionPane.ERROR_MESSAGE);
+		            		}
+		            	}
+	            	} else {
+	            		JOptionPane.showMessageDialog(null, "Dieses Objekt kann nicht gelöscht werden." , "Null Object!" , JOptionPane.ERROR_MESSAGE);
 	            	}
-            	} else {
-            		JOptionPane.showMessageDialog(null, "Dieses Objekt kann nicht gelöscht werden." , "Null Object!" , JOptionPane.ERROR_MESSAGE);
-            	}
-            	first = false;
-            }    
-	    }
+	            	first = false;
+	            }    
+		    }
+		} else {
+			JOptionPane.showMessageDialog(null, "Online Objekte können nicht gelöscht werden." , "Online Object!" , JOptionPane.ERROR_MESSAGE);
+		}
 	    
 	    if (selected == false) {
 	    	JOptionPane.showMessageDialog(null, "Bitte selektieren Sie mindestens eine Reihe in der Tabelle", "Data wurde nicht ausgewählt!" , JOptionPane.ERROR_MESSAGE);
