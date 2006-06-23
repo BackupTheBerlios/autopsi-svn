@@ -9,10 +9,11 @@ import javax.swing.table.AbstractTableModel;
 
 import autopsi.database.dao.GenericDAO;
 import autopsi.database.dao.GenericDataObject;
+import autopsi.javaspace.ServiceCommunicator;
 
 import autopsi.database.table.AttachableObject;
 import autopsi.database.table.Kontakt;
-import autopsi.javaspace.ServiceCommunicator;
+
 
 public class KontaktTableModel extends AbstractTableModel{
 	private static final long serialVersionUID = 8737097029189851737L;
