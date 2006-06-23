@@ -282,7 +282,8 @@ public class EditTerminContainerFrame extends javax.swing.JFrame implements java
 						jPanel1.add(desc_area);
 						desc_area.setBounds(91, 70, 322, 189);
 						desc_area.setBorder(new LineBorder(new java.awt.Color(0,0,0), 1, false));
-						
+						desc_area.setWrapStyleWord(true);
+
 					}
 					{
 						ComboBoxModel jGroupBoxModel = new DefaultComboBoxModel();
