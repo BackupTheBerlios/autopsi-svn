@@ -246,6 +246,7 @@ public class EditTerminContainerFrame extends javax.swing.JFrame implements java
 	
 	private void initGUI() {
 		try {
+			this.setIconImage(new ImageIcon(AutopsiConfigurator.images + "/autopsi.png").getImage() );
 			setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 			this.setTitle("Termincontainer bearbeiten");
 			getContentPane().setLayout(null);
@@ -793,15 +794,6 @@ public class EditTerminContainerFrame extends javax.swing.JFrame implements java
 	}
 
 	public void mouseEntered(MouseEvent arg0) {
-		if(arg0.getSource().equals(apply_button)){
-			jLabel7.setText("Änderungen übernehmen");
-		}
-		if(arg0.getSource().equals(abort_button)){
-			jLabel7.setText("Abbrechen");
-		}
-		if(arg0.getSource().equals(ok_button)){
-			jLabel7.setText("OK");
-		}
 		if(arg0.getSource().equals(newTermin)){
 			jLabel7.setText("Erstellt einen neuen Termin in diesem Termincontainer");
 		}
@@ -826,15 +818,6 @@ public class EditTerminContainerFrame extends javax.swing.JFrame implements java
 	}
 
 	public void mouseExited(MouseEvent arg0) {
-		if(arg0.getSource().equals(apply_button)){
-			jLabel7.setText("");
-		}
-		if(arg0.getSource().equals(abort_button)){
-			jLabel7.setText("");
-		}
-		if(arg0.getSource().equals(ok_button)){
-			jLabel7.setText("");
-		}
 		if(arg0.getSource().equals(newTermin)){
 			jLabel7.setText("");
 		}
@@ -1038,7 +1021,3 @@ public class EditTerminContainerFrame extends javax.swing.JFrame implements java
 			jList1.setModel(lm);
 		}
 	}
-	
-
-
-

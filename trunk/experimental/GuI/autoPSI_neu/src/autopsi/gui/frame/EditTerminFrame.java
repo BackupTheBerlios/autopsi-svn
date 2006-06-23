@@ -22,6 +22,7 @@ import javax.swing.ComboBoxModel;
 
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFormattedTextField;
@@ -41,6 +42,7 @@ import javax.swing.text.MaskFormatter;
 import com.sun.java_cup.internal.internal_error;
 
 import autopsi.gui.frame.EditTerminContainerFrame;
+import autopsi.basis.AutopsiConfigurator;
 import autopsi.database.dao.GenericDAO;
 import autopsi.database.dao.GenericDataObject;
 import autopsi.database.dao.IGenericDAO;
@@ -354,7 +356,7 @@ public class EditTerminFrame extends javax.swing.JFrame implements java.awt.even
 	}
 	private void initGUI() {
 		try {
-			
+			this.setIconImage(new ImageIcon(AutopsiConfigurator.images + "/autopsi.png").getImage() );
 			if(cal!=null) {
 				Timestamp datum = new Timestamp(cal.getTimeInMillis());
 				dat = datum.toString();
@@ -992,15 +994,6 @@ public class EditTerminFrame extends javax.swing.JFrame implements java.awt.even
 	}
 
 	public void mouseEntered(MouseEvent arg0) {
-		if(arg0.getSource().equals(apply_button)){
-			jLabel5.setText("Änderungen übernehmen");
-		}
-		if(arg0.getSource().equals(abort_button)){
-			jLabel5.setText("Abbrechen");
-		}
-		if(arg0.getSource().equals(ok_button)){
-			jLabel5.setText("OK");
-		}
 		if(arg0.getSource().equals(edit_Group_button)){
 			jLabel5.setText("Gewählte Gruppe bearbeiten");
 		}
@@ -1022,15 +1015,6 @@ public class EditTerminFrame extends javax.swing.JFrame implements java.awt.even
 	}
 
 	public void mouseExited(MouseEvent arg0) {
-		if(arg0.getSource().equals(apply_button)){
-			jLabel5.setText("");
-		}
-		if(arg0.getSource().equals(abort_button)){
-			jLabel5.setText("");
-		}
-		if(arg0.getSource().equals(ok_button)){
-			jLabel5.setText("");
-		}
 		if(arg0.getSource().equals(edit_Group_button)){
 			jLabel5.setText("");
 		}
