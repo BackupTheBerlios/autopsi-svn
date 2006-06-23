@@ -1643,12 +1643,12 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 			if (this.oss == null)
 				this.oss = new ObjectSpaceSharer();
 			JSAdressDialog jsad = new JSAdressDialog(this);
-			this.oss.setAdress(jsad.getAdress());
-				SpaceThread thr = new SpaceThread(this.oss);
-
-
-			online=true;
-			button_space.setIcon(new ImageIcon("src/images/icons/space_online_hover.png"));
+			if (jsad.getOkClicked()){
+				this.oss.setAdress(jsad.getAdress());
+					SpaceThread thr = new SpaceThread(this.oss);
+					online=true;
+					button_space.setIcon(new ImageIcon("src/images/icons/space_online_hover.png"));
+			}
 		}
 		else 
 		{

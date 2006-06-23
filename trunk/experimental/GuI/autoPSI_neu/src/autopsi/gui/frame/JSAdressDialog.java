@@ -10,10 +10,12 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
+import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 public class JSAdressDialog extends JDialog implements ActionListener {
 
+	protected JPanel buttonPanel;
 	protected JButton okButton;
 	protected JButton cancelButton;
 	protected JTextField adressField;
@@ -21,7 +23,7 @@ public class JSAdressDialog extends JDialog implements ActionListener {
 	
 	public JSAdressDialog(JFrame owner){
 		super(owner, true);
-		this.setSize(200,80);
+		this.setSize(200,100);
 		this.setTitle("JavaSpace-Server");
 		this.setLayout(new BorderLayout());
 		GraphicsEnvironment env = GraphicsEnvironment.getLocalGraphicsEnvironment();
@@ -31,10 +33,12 @@ public class JSAdressDialog extends JDialog implements ActionListener {
 		this.okButton = new JButton("connect");
 		this.okButton.addActionListener(this);
 		this.cancelButton = new JButton("abbrechen");
-		this.okButton.addActionListener(this);
+		this.cancelButton.addActionListener(this);
 		this.adressField = new JTextField("jini://localhost");
-		this.add(okButton, BorderLayout.SOUTH);
-		this.add(cancelButton, BorderLayout.SOUTH);
+		this.buttonPanel = new JPanel();
+		buttonPanel.add(cancelButton);
+		buttonPanel.add(okButton);
+		this.add(this.buttonPanel, BorderLayout.SOUTH);
 		this.add(adressField, BorderLayout.CENTER);
 		this.setVisible(true);
 	}
