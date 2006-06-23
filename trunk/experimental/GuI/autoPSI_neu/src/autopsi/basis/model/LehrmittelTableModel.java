@@ -61,11 +61,15 @@ public class LehrmittelTableModel extends AbstractTableModel {
 	}
 
 	public void readOnlineData(){
-		this.onlinesuche = true;
-		Lehrmittel temp = (Lehrmittel)this.ogdo.getObject(this.suchLm);
-		this.lehrmittel = new ArrayList<GenericDataObject>();
-		if (temp != null)
-			this.lehrmittel.add(temp);
+		try {
+			this.onlinesuche = true;
+			Lehrmittel temp = (Lehrmittel)this.ogdo.getObject(this.suchLm);
+			this.lehrmittel = new ArrayList<GenericDataObject>();
+			if (temp != null)
+				this.lehrmittel.add(temp);
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(null, "Fehler: " +e.toString(), "Ein Fehler ist aufgetreten!" , JOptionPane.ERROR_MESSAGE);
+		}
 	}
 	
 	public LehrmittelTableModel (){
