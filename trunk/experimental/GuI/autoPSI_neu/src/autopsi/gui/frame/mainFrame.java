@@ -18,6 +18,7 @@ import javax.swing.border.BevelBorder;
 import javax.swing.border.LineBorder;
 import javax.swing.table.*;
 
+import autopsi.basis.AutopsiConfigurator;
 import autopsi.basis.model.*;
 import autopsi.database.dao.GenericDAO;
 import autopsi.database.dao.GenericDataObject;
@@ -182,7 +183,7 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 	private void setTable()
 	{
 		this.addWindowListener(this);
-		this.setIconImage(new ImageIcon("src/images/autopsi.png").getImage() );
+		this.setIconImage(new ImageIcon(AutopsiConfigurator.images + "/autopsi.png").getImage() );
 		table = new JTable();	
 		setTimeSpace(calStart);
 		
@@ -233,7 +234,7 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 				getContentPane().add(statusBar);
 				statusBar.setBounds(7, 553, 672, 21);
 				statusBar.setBackground(new java.awt.Color(192,192,192));
-				statusBar.setIcon(new ImageIcon("src/images/info.png"));
+				statusBar.setIcon(new ImageIcon(AutopsiConfigurator.images + "/info.png"));
 				statusBar.setBorder(new LineBorder(new java.awt.Color(100,100,100), 1, false));
 			}
 			{
@@ -339,7 +340,7 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 						lblTerminContainer = new JLabel();
 						tab0.add(lblTerminContainer);
 						lblTerminContainer.setBounds(7, 35, 231, 28);
-						lblTerminContainer.setIcon(new ImageIcon("src/images/icons/terminContainerIcon.png"));
+						lblTerminContainer.setIcon(new ImageIcon(AutopsiConfigurator.images_icons + "/terminContainerIcon.png"));
 						lblTerminContainer.setFont(new java.awt.Font(
 							"Tahoma",
 							1,
@@ -349,7 +350,7 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 						lblTermin = new JLabel();
 						tab0.add(lblTermin);
 						lblTermin
-							.setIcon(new ImageIcon("src/images/icons/terminIcon.png"));
+							.setIcon(new ImageIcon(AutopsiConfigurator.images_icons + "/terminIcon.png"));
 						lblTermin.setBounds(7, 7, 231, 28);
 						lblTermin.setFont(new java.awt.Font("Tahoma", 1, 12));
 					}
@@ -476,7 +477,7 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 			{
 				jLabel3 = new JLabel();
 				getContentPane().add(jLabel3);
-				jLabel3.setIcon(new ImageIcon("src/images/infoBar.png"));
+				jLabel3.setIcon(new ImageIcon(AutopsiConfigurator.images + "/infoBar.png"));
 				jLabel3.setBounds(2, 19, 252, 56);
 				{
 					{
@@ -499,18 +500,18 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 				
 				jLabel3 = new JLabel();
 				getContentPane().add(jLabel3);
-				jLabel3.setIcon(new ImageIcon("src/images/infoBar.png"));
+				jLabel3.setIcon(new ImageIcon(AutopsiConfigurator.images + "/infoBar.png"));
 				jLabel3.setBounds(2, 247, 252, 56);
 				
 				jLabel3 = new JLabel();
 				getContentPane().add(jLabel3);
-				jLabel3.setIcon(new ImageIcon("src/images/infoBar2.png"));
+				jLabel3.setIcon(new ImageIcon(AutopsiConfigurator.images + "/infoBar2.png"));
 				jLabel3.setBounds(2, 496, 252, 56);
 			}
 			{
 				button_newTermin = new JLabel();
 				getContentPane().add(button_newTermin);
-				button_newTermin.setIcon(new ImageIcon("src/images/icons/neuerTermin.png"));
+				button_newTermin.setIcon(new ImageIcon(AutopsiConfigurator.images_icons + "/neuerTermin.png"));
 				button_newTermin.setBounds(0, -7, 31, 35);
 				button_newTermin.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
 				button_newTermin.addMouseListener(this);
@@ -518,7 +519,7 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 			{
 				button_editTermin = new JLabel();
 				getContentPane().add(button_editTermin);
-				button_editTermin.setIcon(new ImageIcon("src/images/icons/editTermin.PNG"));
+				button_editTermin.setIcon(new ImageIcon(AutopsiConfigurator.images_icons + "/editTermin.PNG"));
 				button_editTermin.setBounds(31, -7, 31, 35);
 				button_editTermin.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
 				button_editTermin.addMouseListener(this);
@@ -526,7 +527,7 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 			{
 				button_deleteTermin = new JLabel();
 				getContentPane().add(button_deleteTermin);
-				button_deleteTermin.setIcon(new ImageIcon("src/images/icons/deleteTermin.png"));
+				button_deleteTermin.setIcon(new ImageIcon(AutopsiConfigurator.images_icons+"/deleteTermin.png"));
 				button_deleteTermin.setBounds(62, -7, 31, 35);
 				button_deleteTermin.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
 				button_deleteTermin.addMouseListener(this);
@@ -541,7 +542,7 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 			{
 				button_search = new JLabel();
 				getContentPane().add(button_search);
-				button_search.setIcon(new ImageIcon("src/images/icons/suche.png"));
+				button_search.setIcon(new ImageIcon(AutopsiConfigurator.images_icons+"/suche.png"));
 				button_search.setBounds(248, -7, 31, 35);
 				button_search.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
 				button_search.addMouseListener(this);
@@ -549,7 +550,7 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 			{
 				button_monthBack = new JLabel();
 				getContentPane().add(button_monthBack);
-				button_monthBack.setIcon(new ImageIcon("src/images/icons/monthBack.png"));
+				button_monthBack.setIcon(new ImageIcon(AutopsiConfigurator.images_icons+"/monthBack.png"));
 				button_monthBack.setBounds(310, -7, 51, 35);
 				button_monthBack.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
 				button_monthBack.addMouseListener(this);
@@ -557,7 +558,7 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 			{
 				button_weekBack = new JLabel();
 				getContentPane().add(button_weekBack);
-				button_weekBack.setIcon(new ImageIcon("src/images/icons/weekBack.png"));
+				button_weekBack.setIcon(new ImageIcon(AutopsiConfigurator.images_icons+"/weekBack.png"));
 				button_weekBack.setBounds(361, -7, 51, 35);
 				button_weekBack.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
 				button_weekBack.addMouseListener(this);
@@ -565,7 +566,7 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 			{
 				button_dayBack = new JLabel();
 				getContentPane().add(button_dayBack);
-				button_dayBack.setIcon(new ImageIcon("src/images/icons/dayBack.png"));
+				button_dayBack.setIcon(new ImageIcon(AutopsiConfigurator.images_icons+"/dayBack.png"));
 				button_dayBack.setBounds(412, -7, 51, 35);
 				button_dayBack.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
 				button_dayBack.addMouseListener(this);
@@ -574,7 +575,7 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 			{
 				button_jumpToToday = new JLabel();
 				getContentPane().add(button_jumpToToday);
-				button_jumpToToday.setIcon(new ImageIcon("src/images/icons/today.png"));
+				button_jumpToToday.setIcon(new ImageIcon(AutopsiConfigurator.images_icons+"/today.png"));
 				button_jumpToToday.setBounds(463, -7, 31, 35);
 				button_jumpToToday.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
 				button_jumpToToday.addMouseListener(this);
@@ -582,7 +583,7 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 			{
 				button_dayNext = new JLabel();
 				getContentPane().add(button_dayNext);
-				button_dayNext.setIcon(new ImageIcon("src/images/icons/dayNext.png"));
+				button_dayNext.setIcon(new ImageIcon(AutopsiConfigurator.images_icons+"/dayNext.png"));
 				button_dayNext.setBounds(494, -7, 51, 35);
 				button_dayNext.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
 				button_dayNext.addMouseListener(this);
@@ -591,7 +592,7 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 			{
 				button_weekNext = new JLabel();
 				getContentPane().add(button_weekNext);
-				button_weekNext.setIcon(new ImageIcon("src/images/icons/weekNext.png"));
+				button_weekNext.setIcon(new ImageIcon(AutopsiConfigurator.images_icons+"/weekNext.png"));
 				button_weekNext.setBounds(545, -7, 51, 35);
 				button_weekNext.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
 				button_weekNext.addMouseListener(this);
@@ -599,7 +600,7 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 			{
 				button_monthNext = new JLabel();
 				getContentPane().add(button_monthNext);
-				button_monthNext.setIcon(new ImageIcon("src/images/icons/monthNext.png"));
+				button_monthNext.setIcon(new ImageIcon(AutopsiConfigurator.images_icons+"/monthNext.png"));
 				button_monthNext.setBounds(596, -7, 51, 35);
 				button_monthNext.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
 				button_monthNext.addMouseListener(this);
@@ -607,7 +608,7 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 			{
 				tableBar = new JLabel();
 				getContentPane().add(tableBar);
-				tableBar.setIcon(new ImageIcon("src/images/tableBar.png"));
+				tableBar.setIcon(new ImageIcon(AutopsiConfigurator.images+"/tableBar.png"));
 				tableBar.setBounds(289, 30, 651, 35);
 				
 				tableBar.add(lblMonth);
@@ -617,7 +618,7 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 			{
 				button_view1 = new JLabel();
 				getContentPane().add(button_view1);
-				button_view1.setIcon(new ImageIcon("src/images/icons/monatsansicht.png"));
+				button_view1.setIcon(new ImageIcon(AutopsiConfigurator.images_icons+"/monatsansicht.png"));
 				button_view1.setBounds(675, -7, 31, 35);
 				button_view1.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
 				button_view1.addMouseListener(this);
@@ -625,7 +626,7 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 			{
 				button_view2 = new JLabel();
 				getContentPane().add(button_view2);
-				button_view2.setIcon(new ImageIcon("src/images/icons/wochenansicht.png"));
+				button_view2.setIcon(new ImageIcon(AutopsiConfigurator.images_icons+"/wochenansicht.png"));
 				button_view2.setBounds(706, -7, 31, 35);
 				button_view2.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
 				button_view2.addMouseListener(this);
@@ -633,7 +634,7 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 			{
 				button_space = new JLabel();
 				getContentPane().add(button_space);
-				button_space.setIcon(new ImageIcon("src/images/icons/space_offline.png"));
+				button_space.setIcon(new ImageIcon(AutopsiConfigurator.images_icons+"/space_offline.png"));
 				button_space.setBounds(872, -7, 68, 35);
 				button_space.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
 				button_space.addMouseListener(this);
@@ -641,33 +642,33 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 			{
 				button_newTC = new JLabel();
 				getContentPane().add(button_newTC);
-				button_newTC.setIcon(new ImageIcon("src/images/icons/neuerTC.png"));
+				button_newTC.setIcon(new ImageIcon(AutopsiConfigurator.images_icons+"/neuerTC.png"));
 				button_newTC.setBounds(124, -7, 31, 35);
 				button_newTC.addMouseListener(this);
 			}
 			{
 				jLabel4 = new JLabel();
 				getContentPane().add(jLabel4);
-				jLabel4.setIcon(new ImageIcon("src/images/infoBar2.png"));
+				jLabel4.setIcon(new ImageIcon(AutopsiConfigurator.images+"/infoBar2.png"));
 				jLabel4.setBounds(2, 205, 252, 56);
 			}
 			{
 				button_editTC = new JLabel();
 				getContentPane().add(button_editTC);
-				button_editTC.setIcon(new ImageIcon("src/images/icons/editTC.png"));
+				button_editTC.setIcon(new ImageIcon(AutopsiConfigurator.images_icons+"/editTC.png"));
 				button_editTC.setBounds(155, -7, 31, 35);
 				button_editTC.addMouseListener(this);
 			}
 			{
 				button_deleteTC = new JLabel();
 				getContentPane().add(button_deleteTC);
-				button_deleteTC.setIcon(new ImageIcon("src/images/icons/deleteTC.png"));
+				button_deleteTC.setIcon(new ImageIcon(AutopsiConfigurator.images_icons+"/deleteTC.png"));
 				button_deleteTC.setBounds(186, -7, 31, 35);
 				button_deleteTC.addMouseListener(this);
 			}
 			{
 				toolBar = new JLabel();
-				toolBar.setIcon(new ImageIcon("src/images/toolBar.png"));
+				toolBar.setIcon(new ImageIcon(AutopsiConfigurator.images+"/toolBar.png"));
 				getContentPane().add(toolBar);
 				toolBar.setBounds(0, -5, 950, 35);
 			}
@@ -675,7 +676,7 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 				tableBase = new JLabel();
 				getContentPane().add(tableBase);
 				tableBase.setBounds(289, 503, 651, 42);
-				tableBase.setIcon(new ImageIcon("src/images/tableBar2.png"));
+				tableBase.setIcon(new ImageIcon(AutopsiConfigurator.images+"/tableBar2.png"));
 			}
 			{
 				mainMenu = new JMenuBar();
@@ -1114,72 +1115,72 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 			mouseEntered = true;
 		}
 		if(arg0.getSource().equals(button_newTermin)){
-			button_newTermin.setIcon(new ImageIcon("src/images/icons/neuerTermin_hover.png"));
+			button_newTermin.setIcon(new ImageIcon(AutopsiConfigurator.images_icons+"/neuerTermin_hover.png"));
 			statusBar.setText("Fügt einen neuen Termin hinzu. Wenn Sie vorher auf einen Tag klicken wird dieser automatisch in das Termindatum übernommen.");	
 		}
 		if(arg0.getSource().equals(button_editTermin)){
-			button_editTermin.setIcon(new ImageIcon("src/images/icons/editTermin_hover.png"));
+			button_editTermin.setIcon(new ImageIcon(AutopsiConfigurator.images_icons+"/editTermin_hover.png"));
 			statusBar.setText("Bearbeiten des gerade gewählten Termins.");	
 		}
 		if(arg0.getSource().equals(button_deleteTermin)){
-			button_deleteTermin.setIcon(new ImageIcon("src/images/icons/deleteTermin_hover.png"));
+			button_deleteTermin.setIcon(new ImageIcon(AutopsiConfigurator.images_icons+"/deleteTermin_hover.png"));
 			statusBar.setText("Löscht den gerade gewählten Termin.");	
 		}
 		if(arg0.getSource().equals(button_newTC)){
-			button_newTC.setIcon(new ImageIcon("src/images/icons/neuerTC_hover.png"));
+			button_newTC.setIcon(new ImageIcon(AutopsiConfigurator.images_icons+"/neuerTC_hover.png"));
 			statusBar.setText("Fügt einen neuen Termincontainer hinzu.");	
 		}
 		if(arg0.getSource().equals(button_editTC)){
-			button_editTC.setIcon(new ImageIcon("src/images/icons/editTC_hover.png"));
+			button_editTC.setIcon(new ImageIcon(AutopsiConfigurator.images_icons+"/editTC_hover.png"));
 			statusBar.setText("Bearbeitet einen Termincontainer.");	
 		}
 		if(arg0.getSource().equals(button_deleteTC)){
-			button_deleteTC.setIcon(new ImageIcon("src/images/icons/deleteTC_hover.png"));
+			button_deleteTC.setIcon(new ImageIcon(AutopsiConfigurator.images_icons+"/deleteTC_hover.png"));
 			statusBar.setText("Löscht einen Termincontainer.");	
 		}
 		if(arg0.getSource().equals(button_search)){
-			button_search.setIcon(new ImageIcon("src/images/icons/suche_hover.png"));
+			button_search.setIcon(new ImageIcon(AutopsiConfigurator.images_icons+"/suche_hover.png"));
 			statusBar.setText("Sucht nach Terminen, Termincontainern und anderen Daten.");	
 		}
 		if(arg0.getSource().equals(button_monthBack)){
-			button_monthBack.setIcon(new ImageIcon("src/images/icons/monthBack_hover.png"));
+			button_monthBack.setIcon(new ImageIcon(AutopsiConfigurator.images_icons+"/monthBack_hover.png"));
 			statusBar.setText("Verschiebt die Ansicht um 4 Wochen zurück.");	
 		}
 		if(arg0.getSource().equals(button_weekBack)){
-			button_weekBack.setIcon(new ImageIcon("src/images/icons/weekBack_hover.png"));
+			button_weekBack.setIcon(new ImageIcon(AutopsiConfigurator.images_icons+"/weekBack_hover.png"));
 			statusBar.setText("Verschiebt die Ansicht um 1 Woche zurück.");	
 		}
 		if(arg0.getSource().equals(button_dayBack)){
-			button_dayBack.setIcon(new ImageIcon("src/images/icons/dayBack_hover.png"));
+			button_dayBack.setIcon(new ImageIcon(AutopsiConfigurator.images_icons+"/dayBack_hover.png"));
 			statusBar.setText("Verschiebt die Ansicht um 1 Tag zurück.");	
 		}
 		if(arg0.getSource().equals(button_monthNext)){
-			button_monthNext.setIcon(new ImageIcon("src/images/icons/monthNext_hover.png"));
+			button_monthNext.setIcon(new ImageIcon(AutopsiConfigurator.images_icons+"/monthNext_hover.png"));
 			statusBar.setText("Verschiebt die Ansicht um 4 Wochen weiter.");	
 		}
 		if(arg0.getSource().equals(button_weekNext)){
-			button_weekNext.setIcon(new ImageIcon("src/images/icons/weekNext_hover.png"));
+			button_weekNext.setIcon(new ImageIcon(AutopsiConfigurator.images_icons+"/weekNext_hover.png"));
 			statusBar.setText("Verschiebt die Ansicht um 1 Woche weiter.");	
 		}
 		if(arg0.getSource().equals(button_dayNext)){
-			button_dayNext.setIcon(new ImageIcon("src/images/icons/dayNext_hover.png"));
+			button_dayNext.setIcon(new ImageIcon(AutopsiConfigurator.images_icons+"/dayNext_hover.png"));
 			statusBar.setText("Verschiebt die Ansicht um 1 Tag weiter.");	
 		}
 		if(arg0.getSource().equals(button_jumpToToday)){
-			button_jumpToToday.setIcon(new ImageIcon("src/images/icons/today_hover.png"));
+			button_jumpToToday.setIcon(new ImageIcon(AutopsiConfigurator.images_icons+"/today_hover.png"));
 			statusBar.setText("Setzt die Ansicht auf das heutige Datum.");	
 		}
 		if(arg0.getSource().equals(button_view1)){
-			button_view1.setIcon(new ImageIcon("src/images/icons/monatsansicht_hover.png"));
+			button_view1.setIcon(new ImageIcon(AutopsiConfigurator.images_icons+"/monatsansicht_hover.png"));
 			statusBar.setText("Wechselt auf die Monatsansicht.");	
 		}
 		if(arg0.getSource().equals(button_view2)){
-			button_view2.setIcon(new ImageIcon("src/images/icons/wochenansicht_hover.png"));
+			button_view2.setIcon(new ImageIcon(AutopsiConfigurator.images_icons+"/wochenansicht_hover.png"));
 			statusBar.setText("Wechselt auf die Wochenansicht.");	
 		}
 		if(arg0.getSource().equals(button_space)){
-			if(!online) button_space.setIcon(new ImageIcon("src/images/icons/space_offline_hover.png"));
-			else button_space.setIcon(new ImageIcon("src/images/icons/space_online_hover.png"));
+			if(!online) button_space.setIcon(new ImageIcon(AutopsiConfigurator.images_icons+"/space_offline_hover.png"));
+			else button_space.setIcon(new ImageIcon(AutopsiConfigurator.images_icons+"/space_online_hover.png"));
 			statusBar.setText("Verbindet oder trennt die Verbindung zum autoSpace Service.");	
 		}
 		if(arg0.getSource().equals(zoomBox)){
@@ -1215,72 +1216,72 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 			
 		}
 		if(arg0.getSource().equals(button_newTermin)){
-			button_newTermin.setIcon(new ImageIcon("src/images/icons/neuerTermin.png"));
+			button_newTermin.setIcon(new ImageIcon(AutopsiConfigurator.images_icons+"/neuerTermin.png"));
 			statusBar.setText("");
 		}
 		if(arg0.getSource().equals(button_editTermin)){
-			button_editTermin.setIcon(new ImageIcon("src/images/icons/editTermin.png"));
+			button_editTermin.setIcon(new ImageIcon(AutopsiConfigurator.images_icons+"/editTermin.png"));
 			statusBar.setText("");	
 		}
 		if(arg0.getSource().equals(button_deleteTermin)){
-			button_deleteTermin.setIcon(new ImageIcon("src/images/icons/deleteTermin.png"));
+			button_deleteTermin.setIcon(new ImageIcon(AutopsiConfigurator.images_icons+"/deleteTermin.png"));
 			statusBar.setText("");	
 		}
 		if(arg0.getSource().equals(button_newTC)){
-			button_newTC.setIcon(new ImageIcon("src/images/icons/neuerTC.png"));
+			button_newTC.setIcon(new ImageIcon(AutopsiConfigurator.images_icons+"/neuerTC.png"));
 			statusBar.setText("");	
 		}
 		if(arg0.getSource().equals(button_editTC)){
-			button_editTC.setIcon(new ImageIcon("src/images/icons/editTC.png"));
+			button_editTC.setIcon(new ImageIcon(AutopsiConfigurator.images_icons+"/editTC.png"));
 			statusBar.setText("");	
 		}
 		if(arg0.getSource().equals(button_deleteTC)){
-			button_deleteTC.setIcon(new ImageIcon("src/images/icons/deleteTC.png"));
+			button_deleteTC.setIcon(new ImageIcon(AutopsiConfigurator.images_icons+"/deleteTC.png"));
 			statusBar.setText("");	
 		}
 		if(arg0.getSource().equals(button_search)){
-			button_search.setIcon(new ImageIcon("src/images/icons/suche.png"));
+			button_search.setIcon(new ImageIcon(AutopsiConfigurator.images_icons+"/suche.png"));
 			statusBar.setText("");	
 		}
 		if(arg0.getSource().equals(button_monthBack)){
-			button_monthBack.setIcon(new ImageIcon("src/images/icons/monthBack.png"));
+			button_monthBack.setIcon(new ImageIcon(AutopsiConfigurator.images_icons+"/monthBack.png"));
 			statusBar.setText("");	
 		}
 		if(arg0.getSource().equals(button_weekBack)){
-			button_weekBack.setIcon(new ImageIcon("src/images/icons/weekBack.png"));
+			button_weekBack.setIcon(new ImageIcon(AutopsiConfigurator.images_icons+"/weekBack.png"));
 			statusBar.setText("");	
 		}
 		if(arg0.getSource().equals(button_dayBack)){
-			button_dayBack.setIcon(new ImageIcon("src/images/icons/dayBack.png"));
+			button_dayBack.setIcon(new ImageIcon(AutopsiConfigurator.images_icons+"/dayBack.png"));
 			statusBar.setText("");	
 		}
 		if(arg0.getSource().equals(button_monthNext)){
-			button_monthNext.setIcon(new ImageIcon("src/images/icons/monthNext.png"));
+			button_monthNext.setIcon(new ImageIcon(AutopsiConfigurator.images_icons+"/monthNext.png"));
 			statusBar.setText("");	
 		}
 		if(arg0.getSource().equals(button_weekNext)){
-			button_weekNext.setIcon(new ImageIcon("src/images/icons/weekNext.png"));
+			button_weekNext.setIcon(new ImageIcon(AutopsiConfigurator.images_icons+"/weekNext.png"));
 			statusBar.setText("");	
 		}
 		if(arg0.getSource().equals(button_dayNext)){
-			button_dayNext.setIcon(new ImageIcon("src/images/icons/dayNext.png"));
+			button_dayNext.setIcon(new ImageIcon(AutopsiConfigurator.images_icons+"/dayNext.png"));
 			statusBar.setText("");	
 		}
 		if(arg0.getSource().equals(button_jumpToToday)){
-			button_jumpToToday.setIcon(new ImageIcon("src/images/icons/today.png"));
+			button_jumpToToday.setIcon(new ImageIcon(AutopsiConfigurator.images_icons+"/today.png"));
 			statusBar.setText("");	
 		}
 		if(arg0.getSource().equals(button_view1)){
-			button_view1.setIcon(new ImageIcon("src/images/icons/monatsansicht.png"));
+			button_view1.setIcon(new ImageIcon(AutopsiConfigurator.images_icons+"/monatsansicht.png"));
 			statusBar.setText("");	
 		}
 		if(arg0.getSource().equals(button_view2)){
-			button_view2.setIcon(new ImageIcon("src/images/icons/wochenansicht.png"));
+			button_view2.setIcon(new ImageIcon(AutopsiConfigurator.images_icons+"/wochenansicht.png"));
 			statusBar.setText("");	
 		}
 		if(arg0.getSource().equals(button_space)){
-			if(!online) button_space.setIcon(new ImageIcon("src/images/icons/space_offline.png"));
-			else button_space.setIcon(new ImageIcon("src/images/icons/space_online.png"));
+			if(!online) button_space.setIcon(new ImageIcon(AutopsiConfigurator.images_icons+"/space_offline.png"));
+			else button_space.setIcon(new ImageIcon(AutopsiConfigurator.images_icons+"/space_online.png"));
 			statusBar.setText("");	
 		}
 		if(arg0.getSource().equals(zoomBox)){
@@ -1675,7 +1676,7 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 				this.oss.setAdress(jsad.getAdress());
 					SpaceThread thr = new SpaceThread(this.oss);
 					online=true;
-					button_space.setIcon(new ImageIcon("src/images/icons/space_online_hover.png"));
+					button_space.setIcon(new ImageIcon(AutopsiConfigurator.images_icons+"/space_online_hover.png"));
 			}
 		}
 		else 
@@ -1689,7 +1690,7 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 			
 			
 			online = false;
-			button_space.setIcon(new ImageIcon("src/images/icons/space_offline.png"));
+			button_space.setIcon(new ImageIcon(AutopsiConfigurator.images_icons+"/space_offline.png"));
 		}
 	}
 
@@ -1840,8 +1841,8 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 					try
 					{
 						cont = (TerminContainer)dat.get(0);
-						if(cont.getId()==0) lblTerminContainer.setIcon(new ImageIcon("src/images/icons/noTerminContainerIcon.png"));
-						else lblTerminContainer.setIcon(new ImageIcon("src/images/icons/terminContainerIcon.png"));
+						if(cont.getId()==0) lblTerminContainer.setIcon(new ImageIcon(AutopsiConfigurator.images_icons+"/noTerminContainerIcon.png"));
+						else lblTerminContainer.setIcon(new ImageIcon(AutopsiConfigurator.images_icons+"/terminContainerIcon.png"));
 						lblTerminContainer.setText(cont.getTitle());
 						tcID = cont.getId();
 					}
