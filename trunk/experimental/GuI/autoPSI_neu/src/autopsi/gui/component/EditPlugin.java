@@ -21,7 +21,6 @@ public abstract class EditPlugin implements Cloneable{
 	public void setName(String newName){
 		this.name = newName;
 		nameChanged();
-		System.out.println("!!!name set!!=="+this.name);
 	}
 	
 	public String getName(){

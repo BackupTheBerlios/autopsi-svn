@@ -24,6 +24,7 @@
 	</path>
 	
 	
+	<target name="distdoc" depends="dist,javadoc"/>
 	
 	<!-- Make Distribution of project  -->
 	<target name="dist" depends="clean,compile"> 

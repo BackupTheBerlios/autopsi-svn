@@ -79,6 +79,15 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 	private JPanel tab2;
 	private JTextPane lblBeschreibung;
 	private JTabbedPane infobar;
+	private JMenuItem menu_edit_LehrmittelKategorie;
+	private JMenuItem menu_edit_LvaKategorie;
+	private JMenuItem menu_edit_Universitaet;
+	private JMenuItem menu_edit_Pruefung;
+	private JMenuItem menu_edit_Lehrmittel;
+	private JMenuItem menu_edit_Lva;
+	private JMenuItem menu_edit_Kontakt;
+	private JMenuItem menu_edit_Notiz;
+	private JMenu menu_edit;
 	private JMenuItem menu_add_LehrmittelKategorie;
 	private JMenuItem menu_add_LvaKategorie;
 	private JMenuItem menu_add_Universitaet;
@@ -750,6 +759,61 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 						menu_add_LehrmittelKategorie
 							.setText("Lehrmittel-Kategorie...");
 						menu_add_LehrmittelKategorie.addActionListener(this);
+					}
+				}
+				{
+					menu_edit = new JMenu();
+					mainMenu.add(menu_edit);
+					menu_edit.setText("Bearbeiten");
+					{
+						menu_edit_Kontakt = new JMenuItem();
+						menu_edit.add(menu_edit_Kontakt);
+						menu_edit_Kontakt.setText("Kontakt...");
+						menu_edit_Kontakt.addActionListener(this);
+					}
+					{
+						menu_edit_Pruefung = new JMenuItem();
+						menu_edit.add(menu_edit_Pruefung);
+						menu_edit_Pruefung.setText("Prüfung...");
+						menu_edit_Pruefung.addActionListener(this);
+					}
+					{
+						menu_edit_Lehrmittel = new JMenuItem();
+						menu_edit.add(menu_edit_Lehrmittel);
+						menu_edit_Lehrmittel.setText("Lehrmittel...");
+						menu_edit_Lehrmittel.addActionListener(this);
+					}
+					{
+						menu_edit_Lva = new JMenuItem();
+						menu_edit.add(menu_edit_Lva);
+						menu_edit_Lva.setText("Lva...");
+						menu_edit_Lva.addActionListener(this);
+					}
+					{
+						menu_edit_Notiz = new JMenuItem();
+						menu_edit.add(menu_edit_Notiz);
+						menu_edit_Notiz.setText("Notiz...");
+						menu_edit_Notiz.addActionListener(this);
+					}
+					{
+						menu_edit_Universitaet = new JMenuItem();
+						menu_edit.add(menu_edit_Universitaet);
+						menu_edit_Universitaet.setText("Universität...");
+						menu_edit_Universitaet.addActionListener(this);
+					}
+					{
+						menu_edit_LvaKategorie = new JMenuItem();
+						menu_edit.add(menu_edit_LvaKategorie);
+						menu_edit_LvaKategorie.setText("LVA-Kategorie...");
+						menu_edit_LvaKategorie.addActionListener(this);
+						
+					}
+					{
+						menu_edit_LehrmittelKategorie = new JMenuItem();
+						menu_edit.add(menu_edit_LehrmittelKategorie);
+						menu_edit_LehrmittelKategorie
+							.setText("Lehrmittel-Kategorie...");
+						menu_edit_LehrmittelKategorie.addActionListener(this);
 					}
 				}
 				{
@@ -2025,6 +2089,61 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 			gef.setVisible(true);
 		}
 		if (arg0.getSource().equals(this.menu_add_LehrmittelKategorie)){
+			GenericEditFrame gef = new GenericEditFrame(this);
+			gef.setTableToEdit("lehrmittel_kategorie");
+			gef.setObjectToEdit(new LehrmittelKategorie(), true);
+			gef.setVisible(true);
+		}
+		
+		
+		if (arg0.getSource().equals(this.menu_edit_Kontakt)){
+//			System.out.println("mainFrame.actionPerformed()::editiere Kontakt hinzu1");
+			ForeignKeyChooseFrame fkcf = new ForeignKeyChooseFrame(this, "kontakt", "global_id", Kontakt.class);
+//			System.out.println("mainFrame.actionPerformed()::editiere Kontakt hinzu2");
+			fkcf.setVisible(true);
+//			System.out.println("mainFrame.actionPerformed()::editiere Kontakt hinzu3a");
+			Integer val = (Integer)fkcf.getValue();
+//			System.out.println("mainFrame.actionPerformed()::editiere Kontakt hinzu3b");			
+			new AddAttachableObject(this, val);
+//			System.out.println("mainFrame.actionPerformed()::editiere Kontakt hinzu4");
+		}
+		if (arg0.getSource().equals(this.menu_edit_Notiz)){
+			System.out.println("mainFrame.actionPerformed()::editiere Notiz hinzu");
+			ForeignKeyChooseFrame fkcf = new ForeignKeyChooseFrame(this, "notiz", "global_id", Notiz.class);
+			fkcf.setVisible(true);
+			new AddAttachableObject(this, (Integer)fkcf.getValue());
+		}
+		if (arg0.getSource().equals(this.menu_edit_Lehrmittel)){
+			System.out.println("mainFrame.actionPerformed()::editieres Lehrmittel hinzu");
+			ForeignKeyChooseFrame fkcf = new ForeignKeyChooseFrame(this, "lehrmittel", "global_id", Lehrmittel.class);
+			fkcf.setVisible(true);
+			new AddAttachableObject(this, (Integer)fkcf.getValue());
+		}
+		if (arg0.getSource().equals(this.menu_edit_Lva)){
+			System.out.println("mainFrame.actionPerformed()::editiere LVA hinzu");
+			ForeignKeyChooseFrame fkcf = new ForeignKeyChooseFrame(this, "lva", "global_id", Lva.class);
+			fkcf.setVisible(true);
+			new AddAttachableObject(this, (Integer)fkcf.getValue());
+		}
+		if (arg0.getSource().equals(this.menu_edit_Pruefung)){
+			System.out.println("mainFrame.actionPerformed()::editiere Prüfung hinzu");
+			ForeignKeyChooseFrame fkcf = new ForeignKeyChooseFrame(this, "pruefung", "global_i", Pruefung.class);
+			fkcf.setVisible(true);
+			new AddAttachableObject(this, (Integer)fkcf.getValue());
+		}
+		if (arg0.getSource().equals(this.menu_edit_Universitaet)){
+			GenericEditFrame gef = new GenericEditFrame(this);
+			gef.setTableToEdit("universitaet");
+			gef.setObjectToEdit(new Universitaet(), true);
+			gef.setVisible(true);
+		}
+		if (arg0.getSource().equals(this.menu_edit_LvaKategorie)){
+			GenericEditFrame gef = new GenericEditFrame(this);
+			gef.setTableToEdit("lva_kategorie");
+			gef.setObjectToEdit(new LvaKategorie(), true);
+			gef.setVisible(true);
+		}
+		if (arg0.getSource().equals(this.menu_edit_LehrmittelKategorie)){
 			GenericEditFrame gef = new GenericEditFrame(this);
 			gef.setTableToEdit("lehrmittel_kategorie");
 			gef.setObjectToEdit(new LehrmittelKategorie(), true);

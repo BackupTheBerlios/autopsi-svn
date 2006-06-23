@@ -41,6 +41,18 @@ public class ForeignKeyChooseFrame extends JDialog implements ActionListener{
 		this.tableName = tableName;
 		this.attribName = attribName;
 		this.editedClass = editedClass;
+		this.initialize();
+	}
+	
+	public ForeignKeyChooseFrame(JFrame owner, String tableName, String attribName, Class editedClass){
+		super(owner, true);
+		this.tableName = tableName;
+		this.attribName = attribName;
+		this.editedClass = editedClass;
+		this.initialize();
+	}
+	
+	public void initialize(){
 		this.setSize(600,400);
 		this.setLayout(new BorderLayout());
 		
@@ -49,7 +61,7 @@ public class ForeignKeyChooseFrame extends JDialog implements ActionListener{
 			gdPrototype = (GenericData)editedClass.newInstance();
 			this.setTitle(gdPrototype.getObjectName() + " auswählen");
 		} catch (Exception e){
-			System.out.println("ForeignKeyChooseFrame.ForeignKeyChooseFrame::Konnte Prototyp nicht anlegen und Objektnamen bekommen::"+e.toString());
+			System.out.println("ForeignKeyChooseFrame.initialize::Konnte Prototyp nicht anlegen und Objektnamen bekommen::"+e.toString());
 		}
 		
 		objectTable = new JTable();	
