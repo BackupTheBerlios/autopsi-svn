@@ -126,7 +126,7 @@ public class SearchFrame extends javax.swing.JFrame implements ActionListener, M
 	private JTable jKontaktTable, jLVATable, jTerminTable, jTerminContainerTable, jLehrmittelTable;
 	private JTable jNotizTable, jPruefungTable;
 	
-	private JTableHeader jKontaktTableHeader;
+	private JTableHeader jKontaktTableHeader, jLVATableHeader, jLehrmittelTableHeader;
 
 	private TerminTableModel jTerminTableModel;
 	private TerminContainerTableModel jTerminContainerTableModel;
@@ -507,6 +507,9 @@ public class SearchFrame extends javax.swing.JFrame implements ActionListener, M
 								jLVATable.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
 								jLVATable.setShowGrid(true);
 								jLVATable.setGridColor(Color.LIGHT_GRAY);
+								jLVATable.addMouseListener(this);
+								jLVATableHeader = jLVATable.getTableHeader();
+								jLVATableHeader.addMouseListener(this);
 							}
 						}
 						
@@ -881,6 +884,9 @@ public class SearchFrame extends javax.swing.JFrame implements ActionListener, M
 								jLehrmittelTable.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
 								jLehrmittelTable.setShowGrid(true);
 								jLehrmittelTable.setGridColor(Color.LIGHT_GRAY);
+								jLehrmittelTable.addMouseListener(this);
+								jLehrmittelTableHeader = jLehrmittelTable.getTableHeader();
+								jLehrmittelTableHeader.addMouseListener(this);
 							}
 						}
 						
@@ -1194,6 +1200,16 @@ public class SearchFrame extends javax.swing.JFrame implements ActionListener, M
 				gedit.setVisible(true);
 			}
 			
+			if (arg0.getSource().equals(jLehrmittelTable)){
+				LehrmittelTableModel otm = (LehrmittelTableModel) TM;
+				GenericDataObject lehrmittel = otm.getObjectAt(Table.getSelectedRow()); 
+				GenericEditFrame gedit = new GenericEditFrame(this);
+				gedit.setTableToEdit("LEHRMITTEL");
+				gedit.setObjectToEdit(lehrmittel,false);
+				gedit.pack();
+				gedit.setVisible(true);
+			}
+			
 		}
 		
 		if (arg0.getSource() instanceof JTableHeader) {
@@ -1204,6 +1220,10 @@ public class SearchFrame extends javax.swing.JFrame implements ActionListener, M
 				if (column != -1) {
 					if (arg0.getSource().equals(jKontaktTableHeader))
 						jKontaktTableModel.setOrder(column);
+					if (arg0.getSource().equals(jLVATableHeader))
+						jLVATableModel.setOrder(column);
+					if (arg0.getSource().equals(jLehrmittelTableHeader))
+						jLehrmittelTableModel.setOrder(column);
 				}
 		}
 	}
@@ -1395,7 +1415,7 @@ public class SearchFrame extends javax.swing.JFrame implements ActionListener, M
 				}
 				jLehrmittelTableModel.setType(jLehrmittelTypeComboBox.getSelectedItem().toString());
 				jLehrmittelTableModel.setGroup(jLehrmittelGruppeComboBox.getSelectedItem().toString());
-				jLehrmittelTableModel.setSuchLehrmittel(lm);
+				jLehrmittelTableModel.setSearchObject(lm);
 				
 				if (jLehrmittelLokalSuchenRadioButton.isSelected()){
 					System.out.println("Lehrmittel wird lokal gesucht...");
@@ -1465,6 +1485,18 @@ public class SearchFrame extends javax.swing.JFrame implements ActionListener, M
 				jKontaktTableModel.restoreLastDeletedObjects();
 			} else if(cmd.equals(this.jKontaktDownloadButton)) {
 				jKontaktTableModel.downloadObject();
+			} else if(cmd.equals(this.jLVALoeschenButton)) {
+				jLVATableModel.deleteSelectedRow(jLVATable);
+			} else if(cmd.equals(this.jLVAWiederherstellenButton)) {
+				jLVATableModel.restoreLastDeletedObjects();
+			} else if(cmd.equals(this.jLVADownloadButton)) {
+				jLVATableModel.downloadObject();
+			} else if(cmd.equals(this.jLehrmittelLoeschenButton)) {
+				jLehrmittelTableModel.deleteSelectedRow(jLehrmittelTable);
+			} else if(cmd.equals(this.jKontaktWiederherstellenButton)) {
+				jLehrmittelTableModel.restoreLastDeletedObjects();
+			} else if(cmd.equals(this.jKontaktDownloadButton)) {
+				jLehrmittelTableModel.downloadObject();
 			} else {
 				JOptionPane.showMessageDialog(null, "Error: " +cmd.toString(), "Command not found!" , JOptionPane.ERROR_MESSAGE);
 			}
