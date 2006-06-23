@@ -101,6 +101,7 @@ public class EditTerminFrame extends javax.swing.JFrame implements java.awt.even
 	private JButton open_button;
 	private JButton jDelObjectButton;
 	private JButton jAddObjectButton;
+	private JScrollPane jScrollPane2;
 	private JScrollPane jScrollPane1;
 	private JButton editTC;
 	private JButton edit_Group_button;
@@ -381,15 +382,6 @@ public class EditTerminFrame extends javax.swing.JFrame implements java.awt.even
 						jPanel1.add(jLabel2);
 						jLabel2.setText("Beschreibung:");
 						jLabel2.setBounds(7, 182, 84, 21);
-					}
-					{
-						desc_area = new JTextArea();
-						jPanel1.add(desc_area);
-						desc_area.setBounds(91, 182, 322, 70);
-						desc_area.setBorder(new LineBorder(new java.awt.Color(0,0,0), 1, false));
-						desc_area.setLineWrap(true);
-						desc_area.setWrapStyleWord(true);
-
 					}
 					{
 						sec_titlefield = new JTextField();
@@ -701,6 +693,21 @@ public class EditTerminFrame extends javax.swing.JFrame implements java.awt.even
 				editTC.setText("...");
 				editTC.setBounds(399, 14, 14, 21);
 				editTC.addMouseListener(this);
+			}
+			{
+				jScrollPane2 = new JScrollPane();
+				jPanel1.add(jScrollPane2);
+				jScrollPane2.setBounds(91, 182, 322, 70);
+				jScrollPane2.setBorder(new LineBorder(new java.awt.Color(0,0,0), 1, false));
+				{
+					desc_area = new JTextArea();
+					jScrollPane2.setViewportView(desc_area);
+					desc_area.setBounds(91, 182, 21, 21);
+					desc_area.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
+					desc_area.setLineWrap(true);
+					desc_area.setWrapStyleWord(true);
+
+				}
 			}
 			{
 				abort_button = new JButton();

@@ -102,6 +102,7 @@ public class EditTerminContainerFrame extends javax.swing.JFrame implements java
 	private JTextField title_field;
 	private JButton add_group;
 	private JLabel jLabel4;
+	private JScrollPane jScrollPane2;
 	private JButton edit_group;
 	private JComboBox jGroupBox;
 	private JLabel jLabel1;
@@ -278,14 +279,6 @@ public class EditTerminContainerFrame extends javax.swing.JFrame implements java
 						jLabel2.setBounds(7, 70, 84, 28);
 					}
 					{
-						desc_area = new JTextArea();
-						jPanel1.add(desc_area);
-						desc_area.setBounds(91, 70, 322, 189);
-						desc_area.setBorder(new LineBorder(new java.awt.Color(0,0,0), 1, false));
-						desc_area.setWrapStyleWord(true);
-
-					}
-					{
 						ComboBoxModel jGroupBoxModel = new DefaultComboBoxModel();
 						jGroupBox = new JComboBox();
 						jPanel1.add(jGroupBox);
@@ -355,6 +348,21 @@ public class EditTerminContainerFrame extends javax.swing.JFrame implements java
 						edit_group.setText("...");
 						edit_group.setBounds(392, 42, 14, 21);
 						edit_group.addMouseListener(this);
+					}
+					{
+						jScrollPane2 = new JScrollPane();
+						jPanel1.add(jScrollPane2);
+						jScrollPane2.setBounds(91, 77, 322, 175);
+						jScrollPane2.setBorder(new LineBorder(new java.awt.Color(0,0,0), 1, false));
+						{
+							desc_area = new JTextArea();
+							jScrollPane2.setViewportView(desc_area);
+							desc_area.setBounds(91, 70, 21, 21);
+							desc_area.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
+							desc_area.setWrapStyleWord(true);
+							desc_area.setLineWrap(true);
+
+						}
 					}
 				}
 				{
