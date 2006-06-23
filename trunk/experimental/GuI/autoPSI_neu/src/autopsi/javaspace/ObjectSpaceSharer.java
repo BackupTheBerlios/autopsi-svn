@@ -15,6 +15,8 @@ import autopsi.database.table.Notiz;
 import autopsi.database.table.Pruefung;
 import autopsi.database.table.Termin;
 import autopsi.database.table.TerminContainer;
+import autopsi.javaspace.exception.EServiceFailure;
+import autopsi.javaspace.exception.ESpaceNotFound;
 
 public class ObjectSpaceSharer {
 
@@ -41,7 +43,11 @@ public class ObjectSpaceSharer {
 		while(iter.hasNext()){
 			GenericDataObject gO = iter.next();
 			if (gO!=null)
-				com.addObject(gO);
+				try {
+					com.addObject(gO);
+				} catch (Exception e){
+					System.out.println("ObjectSpaceSharer.shareObjects()::Konnte Objekt nicht zum JavaSpace hinzufügen::"+e.toString());
+				}
 			else
 				System.out.println("ObjectSpaceSharer.shareObjects()::gO==null");
 		}
