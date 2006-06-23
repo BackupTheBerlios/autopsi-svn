@@ -373,16 +373,14 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 						jScrollPane1.setBounds(7, 112, 231, 91);
 						jScrollPane1.setBorder(new LineBorder(new java.awt.Color(0,0,0), 1, false));
 						jScrollPane1.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_NEVER);
+						jScrollPane1.setOpaque(false);
 						{
 							lblBeschreibung = new JTextPane();
 							jScrollPane1.setViewportView(lblBeschreibung);
 							lblBeschreibung.setBounds(7, 112, 14, 7);
-							lblBeschreibung.setOpaque(false);
-							lblBeschreibung.setBorder(new LineBorder(
-								new java.awt.Color(0, 0, 0),
-								1,
-								false));
+							lblBeschreibung.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
 							lblBeschreibung.setEditable(false);
+							lblBeschreibung.setBackground(new java.awt.Color(240,240,240));
 						}
 					}
 				}
