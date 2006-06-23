@@ -283,6 +283,7 @@ public class TerminReiheFrame extends javax.swing.JFrame implements java.awt.eve
 				getContentPane().add(desc_field);
 				desc_field.setBounds(7, 336, 427, 77);
 				desc_field.setBorder(new LineBorder(new java.awt.Color(0,0,0), 1, false));
+				desc_field.setWrapStyleWord(true);
 			}
 			{
 				jLabel8 = new JLabel();
