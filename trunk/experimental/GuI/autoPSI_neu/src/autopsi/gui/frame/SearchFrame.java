@@ -1167,41 +1167,44 @@ public class SearchFrame extends javax.swing.JFrame implements ActionListener, M
 				lupe.setBounds(7, 150, 196, 182);
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
+			JOptionPane.showMessageDialog(null, "Error: " +e.toString(), "Error!" , JOptionPane.ERROR_MESSAGE);
 		}
 	}
 	
 	public void mouseClicked(MouseEvent arg0) {
-		//System.out.println("MOUSE CLIKCKED! Count=" + arg0.getClickCount()+" Button:"+arg0.getButton());
 		if (arg0.getClickCount() == 2 && arg0.getButton()==MouseEvent.BUTTON1 && !(arg0.getSource() instanceof JTableHeader)) {
-			System.out.println("Linke Maustaste 2x geclickt.");
 			JTable Table = (JTable) arg0.getSource();
-			System.out.println(Table.getSelectedRow());
 			TableModel TM = Table.getModel();
 			if (arg0.getSource().equals(jKontaktTable)){
-				KontaktTableModel ktm = (KontaktTableModel) TM;
-				GenericDataObject kontakt = ktm.getKontaktAt(Table.getSelectedRow()); 
+				KontaktTableModel otm = (KontaktTableModel) TM;
+				GenericDataObject kontakt = otm.getObjectAt(Table.getSelectedRow()); 
 				GenericEditFrame gedit = new GenericEditFrame(this);
 				gedit.setTableToEdit("KONTAKT");
 				gedit.setObjectToEdit(kontakt,false);
 				gedit.pack();
 				gedit.setVisible(true);
 			}
+			if (arg0.getSource().equals(jLVATable)){
+				LVATableModel otm = (LVATableModel) TM;
+				GenericDataObject lva = otm.getObjectAt(Table.getSelectedRow()); 
+				GenericEditFrame gedit = new GenericEditFrame(this);
+				gedit.setTableToEdit("LVA");
+				gedit.setObjectToEdit(lva,false);
+				gedit.pack();
+				gedit.setVisible(true);
+			}
 			
 		}
 		
-		if (arg0.getSource().equals(jKontaktTableHeader)) {
-			//System.out.println("HEADER.");
+		if (arg0.getSource() instanceof JTableHeader) {
 			JTableHeader tableh = (JTableHeader)arg0.getSource();
-			JTable table = ((JTableHeader)arg0.getSource()).getTable();
 			TableColumnModel columnModel = tableh.getColumnModel();
 			int viewColumn = columnModel.getColumnIndexAtX(arg0.getX());
 			int column = columnModel.getColumn(viewColumn).getModelIndex();
 				if (column != -1) {
-					jKontaktTableModel.setOrder(column);
-					//System.out.println("column="+column);
+					if (arg0.getSource().equals(jKontaktTableHeader))
+						jKontaktTableModel.setOrder(column);
 				}
-			
 		}
 	}
 	
@@ -1295,7 +1298,7 @@ public class SearchFrame extends javax.swing.JFrame implements ActionListener, M
 					kont.setACity(null);
 				}
 				jKontaktTableModel.setGroup(jKontaktGruppeComboBox.getSelectedItem().toString());
-				jKontaktTableModel.setSuchKontakt(kont);
+				jKontaktTableModel.setSearchObject(kont);
 				
 				if (jKontaktLokalSuchenRadioButton.isSelected()){
 					System.out.println("Kontakt wird lokal gesucht...");
@@ -1318,7 +1321,7 @@ public class SearchFrame extends javax.swing.JFrame implements ActionListener, M
 				}
 				jLVATableModel.setType(jLVATypeComboBox.getSelectedItem().toString());
 				jLVATableModel.setGroup(jLVATypeComboBox.getSelectedItem().toString());
-				jLVATableModel.setSuchLVa(lva);
+				jLVATableModel.setSearchObject(lva);
 				
 				if (jLVALokalSuchenRadioButton.isSelected()){
 					System.out.println("LVA wird lokal gesucht...");
