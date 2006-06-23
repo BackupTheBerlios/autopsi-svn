@@ -9,40 +9,66 @@ import javax.swing.table.AbstractTableModel;
 
 import autopsi.database.dao.GenericDAO;
 import autopsi.database.dao.GenericDataObject;
-import autopsi.database.dao.IGenericDAO;
 import autopsi.database.table.Pruefung;
 import autopsi.database.table.Lva;
 import autopsi.javaspace.*;
 
 public class PruefungTableModel extends AbstractTableModel {
-
 	private static final long serialVersionUID = 8737097029189851737L;
-	public List <GenericDataObject> pruefungen = new ArrayList<GenericDataObject>();
+	
+	public List <GenericDataObject> objects = new ArrayList<GenericDataObject>();
 	public List <GenericDataObject> lva = new ArrayList<GenericDataObject>();
 	public List <GenericDataObject> lastDeletedObjects =  new ArrayList<GenericDataObject>();
-	public IGenericDAO gdo;
+	public GenericDAO gdo = null;
 	public ServiceCommunicator ogdo = null;
 	public boolean onlinesuche = false;
 	public String tablename = "PRUEFUNG";
-	public Pruefung suchPruefung = null;
+	public Pruefung searchObject = null;
 	public String lvaname = null;
 	public String group = null;
+	public Integer order = null;
 	
 	private final String [] columnName = {"LVA-Nr","Titel", "Prüfer", "Note"};
+	private final String [] columnDBName = {"l.LVA_NR", "l.TITLE", "p.EXAMINER", "p.GRADE"};
 	
-	public List<GenericDataObject> getPruefungen() {
-		return this.pruefungen;
+	/**
+	 * Diese Methode liefert alle Objekte als eine Liste von GenericDataObjects.
+	 * @return	List<GenericDataObject>	Liste der Objekte.
+	 * @author	Alpay Firato
+	 */
+	public List<GenericDataObject> getObjects() {
+		return this.objects;
 	}
 	
+	/**
+	 * Diese Methode liefert den angezeigten GenericDataObject an der angegebenen Zeile.
+	 * @param	int	Zellennummer an der das Objekt angezeigt wird.
+	 * @return	GenericDataObjekt	Objekt als GenericDataObject.
+	 * @author	Alpay Firato
+	 */
+	public GenericDataObject getObjectAt(int at) {
+		if (objects != null) {
+			if (at < objects.size())
+				return this.objects.get(at);
+		}
+		return null;
+	}
+	
+	/**
+	 * Diese Methode liest die Daten von der lokalen Datenbank mit Hilfe des Generic-DAO aus.
+	 * Danach werden alle Objekte, die aus der Datenbank ausgelwsen worden sind, in eine Liste gespeichert.
+	 * Die Datensätze werden nach order geordnet.
+	 * @author	Alpay Firato
+	 */
 	private void readData() {
 		String query="select * from "+this.tablename+" as p, LVA as l, ATTACHABLE_OBJECT as a, ATTACHABLE_OBJECT_KATEGORIE as ok where p.GLOBAL_ID=a.GLOBAL_ID AND a.KATEGORIE_ID=ok.ID AND p.LVA_ID = l.GLOBAL_ID";
 		try{
-			if (suchPruefung!=null) {
-				if (this.suchPruefung.getExaminer()!=null){
-					query +=" AND LOWER(p.EXAMINER) LIKE '%"+this.suchPruefung.getExaminer().toLowerCase()+"%'";
+			if (searchObject!=null) {
+				if (this.searchObject.getExaminer()!=null){
+					query +=" AND LOWER(p.EXAMINER) LIKE '%"+this.searchObject.getExaminer().toLowerCase()+"%'";
 				}
-				if (this.suchPruefung.getGrade()!=null){
-					query +=" AND p.GRADE = "+this.suchPruefung.getGrade()+"";
+				if (this.searchObject.getGrade()!=null){
+					query +=" AND p.GRADE = "+this.searchObject.getGrade()+"";
 				}
 				if (this.lvaname!=null){
 					query +=" AND LOWER(l.TITLE) LIKE '%"+this.lvaname.toLowerCase()+"%'";
@@ -50,42 +76,70 @@ public class PruefungTableModel extends AbstractTableModel {
 				if (this.group != null && !this.group.equals("-")){
 					query += " AND ok.TITLE = '"+ this.group+"'";
 				}
-				this.pruefungen =  gdo.unsafeQuery(query, suchPruefung);
+				if (this.order!=null) {
+					query += " ORDER BY "+columnDBName[this.order];
+				}
+				//System.out.println(query);
+				this.objects =  gdo.unsafeQuery(query, searchObject);
 			}
 		} catch (Exception e){
-			System.out.println("PruefungTableModel @ readData;"+e.toString());
+			JOptionPane.showMessageDialog(null, "Error: " +e.toString(), "Error!" , JOptionPane.ERROR_MESSAGE);
 		}
 	}
 	
-	public void readOnlineData () {
+	/**
+	 * Diese Methode liest die Daten aus dem Javaspace mit Hilfe des ServiceCommunicators aus.
+	 * Das, aus dem Javaspace, rausgelesene Objekt wird in eine Liste abgespeichert.
+	 * @author	Alpay Firato
+	 */	
+	public void readOnlineData(){
 		try {
-			Pruefung temp =(Pruefung) ogdo.getObject(this.suchPruefung);
-			this.pruefungen = new ArrayList<GenericDataObject>();
-			if (temp != null)
-				this.pruefungen.add(temp);
+			this.onlinesuche = true;
+			Lva temp = (Lva)this.ogdo.getObject(this.searchObject);
+			this.objects = new ArrayList<GenericDataObject>();
+			this.objects.add(temp);
 		} catch (Exception e) {
-			JOptionPane.showMessageDialog(null, "Fehler: " +e.toString(), "Ein Fehler ist aufgetreten!" , JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(null, "Error: " +e.toString(), "Error!" , JOptionPane.ERROR_MESSAGE);
 		}
-		
 	}
 	
+	/**
+	 * Im Konstruktor wird Generic-DAO und Javaspace-ServiceCommunicator angelegt.
+	 * @author	Alpay Firato
+	 */	
 	public PruefungTableModel (){
 		this.gdo = new GenericDAO();
 		this.ogdo = new ServiceCommunicator();
 	}
 	
+	/**
+	 * Diese Methode wird immer bei einer Änderung der lokalen Daten aufgerufen.
+	 * @author	Alpay Firato
+	 */	
 	public void fireDataChanged() {
 		this.onlinesuche = false;
-		readData();
-		fireTableDataChanged();
+		this.readData();
+		this.fireTableDataChanged();
 	}
 	
-	public void fireOnlineDataChanged() {
+	/**
+	 * Diese Methode wird immer bei einer Aenderung der online Daten aufgerufen.
+	 * @author	Alpay Firato
+	 */	
+	public void fireOnlineDataChanged(){
 		this.onlinesuche = true;
-		readOnlineData();
-		fireTableDataChanged();
+		this.readOnlineData();
+		this.fireTableDataChanged();
 	}
 	
+	/**
+	 * Diese Methode löscht die markierten Objekte aus der lokalen Datenbank.
+	 * Nach einem erfolgreichen Löschvorgang wird fireDataChanged aufgerufen.
+	 * Alle gelöschten Objekte wird als eine Liste abgespeichert damit man später
+	 * diese Daten wiederherstellen kann wenn erfordert.
+	 * @param	JTable	Das ist die Tabelle bei der die Daten markiert worden sind.
+	 * @author	Alpay Firato
+	 */
 	public void deleteSelectedRow(JTable table) {
 		Pruefung p = new Pruefung();
 		boolean selected = false;
@@ -94,31 +148,35 @@ public class PruefungTableModel extends AbstractTableModel {
 		int auswahl = 0;
 		p = null;
 		//	 Check each cell in the range
-	    for (int r=0; r<this.getRowCount(); r++) {
-            if (table.isCellSelected(r, 1)) {
-            	selected = true;
-            	p=(Pruefung) this.getPruefungen().get(r);
-            	if (p.getGlobalId() != null) {
-            		if (first) {
-            			auswahl = JOptionPane.showConfirmDialog(null, "Sind sie sicher dass sie alle markierte Prüfungen löschen wollen?", "Löschen?",JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.ERROR_MESSAGE);
-            		}
-	            	if (auswahl == JOptionPane.YES_OPTION) {
-	            		//weiter mit löschen
-	            		deleted = this.deletePruefung(p);
-	            		if (deleted) {
-	            			if (first){
-	            				JOptionPane.showMessageDialog(null, "Die Prüfung wurde erfolgreich gelöscht." , "Gelöscht!" , JOptionPane.INFORMATION_MESSAGE);
-	            			}
-	            		} else {
-	            			JOptionPane.showMessageDialog(null, "Die Prüfungen konnten nicht gelöscht werden." , "Löschen!" , JOptionPane.ERROR_MESSAGE);
+		if (this.onlinesuche == false) {
+		    for (int r=0; r<this.getRowCount(); r++) {
+	            if (table.isCellSelected(r, 1)) {
+	            	selected = true;
+	            	p=(Pruefung) this.getObjects().get(r);
+	            	if (p.getGlobalId() != null) {
+	            		if (first) {
+	            			auswahl = JOptionPane.showConfirmDialog(null, "Sind sie sicher dass sie alle markierten Objekte löschen wollen?", "Löschen?",JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.ERROR_MESSAGE);
 	            		}
+		            	if (auswahl == JOptionPane.YES_OPTION) {
+		            		//weiter mit löschen
+		            		deleted = this.deletePruefung(p);
+		            		if (deleted) {
+		            			if (first){
+		            				JOptionPane.showMessageDialog(null, "Das Löschvorgang war erfolgreich." , "Gelöscht!" , JOptionPane.INFORMATION_MESSAGE);
+		            			}
+		            		} else {
+		            			JOptionPane.showMessageDialog(null, "Das Objekt konnte nicht gelöscht werden." , "Löschen!" , JOptionPane.ERROR_MESSAGE);
+		            		}
+		            	}
+	            	} else {
+	            		JOptionPane.showMessageDialog(null, "Dieses Objekt kann nicht gelöscht werden." , "Null Object!" , JOptionPane.ERROR_MESSAGE);
 	            	}
-            	} else {
-            		JOptionPane.showMessageDialog(null, "Diese Prüfung kann nicht gelöscht werden." , "Null Object!" , JOptionPane.ERROR_MESSAGE);
-            	}
-            	first = false;
-            }    
-	    }
+	            	first = false;
+	            }    
+		    }
+		} else {
+			JOptionPane.showMessageDialog(null, "Online Objekte können nicht gelöscht werden." , "Online Object!" , JOptionPane.ERROR_MESSAGE);
+		}
 	    
 	    if (selected == false) {
 	    	JOptionPane.showMessageDialog(null, "Bitte selektieren Sie mindestens eine Prüfung in der Tabelle", "Prüfung wurde nicht ausgewählt!" , JOptionPane.ERROR_MESSAGE);
@@ -129,24 +187,32 @@ public class PruefungTableModel extends AbstractTableModel {
 	}
 	
 	/**
+	 * Diese Methode löscht das übergebene Objekt aus der lokalen Datenbank.
+	 * @param	Pruefung	Das ist die Pruefung die aus dem Datenbank entfernt werden soll.
+	 * @return	boolean	Falls das Objekt erfolgreich gelöscht wurde dann wird true zurückgeliefert,
+	 * sonnst false.
+	 * @author	Alpay Firato
 	 */
 	public boolean deletePruefung(Pruefung p){
 		if (p == null)
 			return false;
 		
 		try{
-			IGenericDAO gdo = new GenericDAO();
-			//System.out.println("SELECT * FROM " + this.tablename+" WHERE GLOBAL_ID ="+p.getGlobalId());
+			GenericDAO gdo = new GenericDAO();
 			List <GenericDataObject> loeschen = gdo.unsafeQuery("SELECT * FROM " + this.tablename+" WHERE GLOBAL_ID ="+p.getGlobalId(), new Pruefung());
-				lastDeletedObjects.add(loeschen.get(0));
+			lastDeletedObjects.add(loeschen.get(0));
 			loeschen = gdo.unsafeQuery("DELETE FROM " + this.tablename+" WHERE GLOBAL_ID ="+p.getGlobalId(), new Pruefung());
 			return true;
 		} catch (Exception e){
-			System.out.println("PruefungTableModel @ deletePruefung;"+e.toString());
+			JOptionPane.showMessageDialog(null, "Error: " +e.toString(), "Error!" , JOptionPane.ERROR_MESSAGE);
 		}
 		return true;
 	}
 	
+	/**
+	 * Diese Methode kann alle gelöschten Objekte wiederherstellen und in die Datenbank einfügen.
+	 * @author	Alpay Firato
+	 */
 	public void restoreLastDeletedObjects(){
 		if (this.lastDeletedObjects.size() != 0) {
 			for (int i=0;i<this.lastDeletedObjects.size();i++){
@@ -160,17 +226,26 @@ public class PruefungTableModel extends AbstractTableModel {
 		this.fireDataChanged();
 	}
 	
+	/**
+	 * Diese Methode kann aus dem Javaspace gefundene Objekte in die lokale Datenbank integrieren.
+	 * @author	Alpay Firato
+	 */
 	public void downloadObject(){
-		if (this.onlinesuche==true && this.pruefungen.size() != 0) {
-			for (int i=0;i<this.pruefungen.size();i++){
-				addPruefung(this.pruefungen.get(i));
+		if (this.onlinesuche==true && this.objects.size() != 0) {
+			for (int i=0;i<this.objects.size();i++){
+				addPruefung(this.objects.get(i));
 			}
-			JOptionPane.showMessageDialog(null, "Die Prüfung wurde heruntergeladen." , "Download abgeschlossen." , JOptionPane.INFORMATION_MESSAGE);
+			JOptionPane.showMessageDialog(null, "Das ausgewählte Objekt wurde heruntergeladen." , "Download abgeschlossen." , JOptionPane.INFORMATION_MESSAGE);
 		} else {
-			JOptionPane.showMessageDialog(null, "Sie müssen zuerst nach eine Prüfung suchen." , "Keine Prüfung zum herunterladen." , JOptionPane.INFORMATION_MESSAGE);
+			JOptionPane.showMessageDialog(null, "Sie müssen zuerst ein Objekt auswählen." , "Kein Objekt zum herunterladen ausgewählt." , JOptionPane.INFORMATION_MESSAGE);
 		}
 	}
 	
+	/**
+	 * Diese Methode kann das übergebene Objekt in die lokale Datenbank einfügen.
+	 * @param	GenericDataObject	Das Object, das in die Datenbank eingefügt werden soll.
+	 * @author	Alpay Firato
+	 */
 	public void addPruefung(GenericDataObject p){
 		try{
 			if (p!=null){
@@ -185,44 +260,88 @@ public class PruefungTableModel extends AbstractTableModel {
 			System.out.println("PruefungTableModel @ addPruefung;"+e.toString());
 		}
 	}
-	
-	
-	public void setSuchPruefung (Pruefung suchPruefung){
-		this.suchPruefung=suchPruefung;
-		//fireDataChanged();
+
+	/**
+	 * Diese Methode kann die Sortiereinfolge der angezeigten Daten ändern.
+	 * @param	Integer	Sortierreinfolge nach Spalten.
+	 * @author Alpay Firato
+	 */
+	public void setOrder (Integer order){
+		this.order=order;
+		this.fireDataChanged();
 	}
 	
+	/**
+	 * Diese Methode ändert das Suchobjekt und somit die Suchkriterien.
+	 * @param	Lva	Template Suchobjekt nach dem man eine Suche startet.
+	 * @author	Alpay Firato
+	 */
+	public void setSearchObject (Pruefung Object){
+		this.searchObject=Object;
+	}
+	
+	/**
+	 * Diese Methode ändert die Suchgruppe des zu suchenden Objektes.
+	 * @param	String	Suchgruppe des Objekts.
+	 * @author	Alpay Firato
+	 */
+	public void setGroup(String gruppe){
+		this.group = gruppe;
+	}
+
+	/**
+	 * Diese Methode ändert die LVA-Name des zu suchenden Objektes.
+	 * @param	String	LVA_Name des Objekts.
+	 * @author	Alpay Firato
+	 */	
 	public void setLvaName(String name){
 		this.lvaname = name;
 	}
-	public void setGroup(String group){
-		this.group = group;
-	}
 	
+	/**
+	 * Diese Methode liefert die Anzahl der Spalten als int-Wert zurück.
+	 * @return	int	Anzahl der Spalten.
+	 * @author	Alpay Firato
+	 */
 	public int getColumnCount() {
-		//System.out.println("colCount = " + columnName.length);
 		return columnName.length;
 	}
 	
+	/**
+	 * Diese Methode liefert die Anzahl der Zeilen als int-Wert zurück.
+	 * @return	int	Anzahl der Zeilen.
+	 * @author	Alpay Firato
+	 */
 	public int getRowCount() {
-		//System.out.println("rowcount = " + Lesers.size());
-		if (pruefungen != null) {
-			return pruefungen.size();
+		if (objects != null) {
+			return objects.size();
 		} else {
 			return 0;
 		}
 	}
+	
+	/**
+	 * Diese Methode liefert den Header der Spalte als String-Wert zurück.
+	 * @param	int	Spaltennummer.
+	 * @return	String	Name der Spalte.
+	 * @author	Alpay Firato
+	 */
 	public String getColumnName(int c) {
-		//System.out.println("colName = " + columnName[c]);
 		return columnName[c];
 	}
 	
+	/**
+	 * Diese Methode liefert den Inhalt einer Zelle zurück.
+	 * @param	int	Reihe der Zelle.
+	 * @param	int	Spalte der Zelle.
+	 * @return	Object	Wert der Zelle.
+	 * @author	Alpay Firato
+	 */
 	public Object getValueAt(int row, int col) {
 		Pruefung p = null;
-		p = (Pruefung) pruefungen.get(row);
+		p = (Pruefung) objects.get(row);
 		Lva l = null;
 		if (!this.onlinesuche) {
-			
 			try{
 				this.lva = gdo.unsafeQuery("SELECT * FROM LVA WHERE GLOBAL_ID ="+p.getLvaId(), new Lva());
 				if (lva != null){	
@@ -232,8 +351,6 @@ public class PruefungTableModel extends AbstractTableModel {
 				System.out.println("PruefungTableModel @ getValueAt;"+e.toString());
 			}
 		}			
-		
-		
 		if (p==null)
 			return null;
 		else if (col==0) {
