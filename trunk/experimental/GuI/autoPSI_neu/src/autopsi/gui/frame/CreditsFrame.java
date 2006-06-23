@@ -38,14 +38,14 @@ public class CreditsFrame extends javax.swing.JDialog implements MouseListener {
 	private JLabel jLabel1;
 	private JButton okbutton;
 
-	/**
-	* Auto-generated main method to display this JDialog
-	*/
-	public static void main(String[] args) {
-		JFrame frame = new JFrame();
-		CreditsFrame inst = new CreditsFrame(frame);
-		inst.setVisible(true);
-	}
+//	/**
+//	* Auto-generated main method to display this JDialog
+//	*/
+//	public static void main(String[] args) {
+//		JFrame frame = new JFrame();
+//		CreditsFrame inst = new CreditsFrame(frame);
+//		inst.setVisible(true);
+//	}
 	
 	public CreditsFrame(JFrame frame) {
 		super(frame);

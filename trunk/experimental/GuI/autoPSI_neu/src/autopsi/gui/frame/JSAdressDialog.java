@@ -48,15 +48,15 @@ public class JSAdressDialog extends JDialog implements ActionListener {
 		return this.adressField.getText();
 	}
 	
-	public void setAdress(String newAdress){
-		this.adressField.setText(newAdress);
+	public void setAdress(String adress){
+		this.adressField.setText(adress);
 	}
 	
 	public boolean getOkClicked(){
 		return this.okClicked;
 	}
 	
-	public void setAdress(boolean okClicked){
+	public void setOkClicked(boolean okClicked){
 		this.okClicked = okClicked;
 	}
 	
