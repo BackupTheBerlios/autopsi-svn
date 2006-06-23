@@ -1018,7 +1018,6 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 				goToTermin.set(Calendar.MINUTE,0);
 				goToTermin.set(Calendar.SECOND,0);
 				c_marker.setTime(goToTermin.getTime());
-				System.out.println(c_marker.getTime().toString());
 				GregorianCalendar cld = new GregorianCalendar();
 				cld.setTime(c_marker.getTime());
 				setTimeSpace(cld);
@@ -1768,7 +1767,6 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 						}
 							}
 					currentValue = new Termin[termine.size()+1];
-					System.out.println("terminesize::: "+termine.size());
 					Termin dayTermin = new Termin();
 					dayTermin.setDate(t1);
 					currentValue[0]=dayTermin;
@@ -2012,7 +2010,6 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 		c_marker.set(Calendar.HOUR_OF_DAY,0);
 		c_marker.set(Calendar.MINUTE,0);
 		c_marker.set(Calendar.SECOND,1);
-		System.out.println("c_marker set::: "+c_marker.getTime().toString());
 	}
 	
 	public void clearTerminData()
