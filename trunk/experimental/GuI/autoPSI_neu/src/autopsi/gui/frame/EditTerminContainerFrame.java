@@ -177,7 +177,7 @@ public class EditTerminContainerFrame extends javax.swing.JFrame implements java
 					
 				for(int j = 0;j<queryList.size();j++)
 				{
-					String query2 = "insert into anhaengen_termincontainer values (" + lastID+","+ Integer.parseInt(queryList.get(j)[0]+",'"+queryList.get(j)[1])+"')";
+					String query2 = "insert into anhaengen_termincontainer values (" + lastID+","+ Integer.parseInt(queryList.get(j)[0])+",'"+queryList.get(j)[1]+"')";
 					gdo.unsafeQuery(query2,new Anhaengen_termincontainer());
 					System.out.println("aha 2");
 				}

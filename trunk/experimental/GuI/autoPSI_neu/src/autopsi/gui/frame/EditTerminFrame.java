@@ -213,9 +213,7 @@ public class EditTerminFrame extends javax.swing.JFrame implements java.awt.even
 	}
 	
 	private void update(){
-		try{
-			
-			
+		try{	
 			try
 			{
 				SimpleDateFormat sf = new SimpleDateFormat("dd-MM-yyyy");
@@ -228,9 +226,6 @@ public class EditTerminFrame extends javax.swing.JFrame implements java.awt.even
 				showErrorDialog("Falsches Datumsformat","Geben Sie ein Datum im Format TT-MM-JJJJ ein!");
 				
 			}
-			
-			
-			
 
 			int termin_kat = ((TerminKategorie)(termin_kat_data.get(choose_Type.getSelectedIndex()))).getId();
 			tkat = "" + termin_kat;
@@ -240,49 +235,9 @@ public class EditTerminFrame extends javax.swing.JFrame implements java.awt.even
 				System.out.println("ist ein attachableobjectkategorie");
 			}
 			int group_id = ((AttachableObjectKategorie)(group_data.get(group_Box.getSelectedIndex()))).getId();
-			
-			
-			sec_title = sec_titlefield.getText();
-			
-			sec_title = sec_title.replace("'".toCharArray()[0],'´');
+					
+			readFieldData();
 				
-
-			
-			date = dateField.getText();
-			
-			Date dat = new Date(c.getTimeInMillis());
-			date = dat.toString();
-			
-			
-			date = date.substring(0,10) + " " + timeField.getText()+":00.0";
-			desc = desc_area.getText();
-			desc = desc.replace("'".toCharArray()[0],'´');
-			place = place_field.getText();
-			
-			place = place.replace("'".toCharArray()[0],'´');
-			
-			try{
-			String test = "0123456789";
-			boolean testOk = false;
-			for(int i = 0;i<duration_field.getText().length();i++)
-			{
-				for(int k = 0;k<test.length();k++)
-				{
-					if(duration_field.getText().substring(i,i+1).equals(test.substring(k,k+1)))  testOk = true;
-				}
-				
-			}
-			if(testOk) duration = Integer.parseInt(duration_field.getText());
-			else throw new Exception();
-			
-			
-			}catch(Exception e){
-				showErrorDialog("Falsche Eingabe","Geben Sie eine Dauer ein!");
-			}
-			
-			if(sec_title.length()<1) sec_title = tcTitle_box.getSelectedItem().toString();
-			
-			
 			String query="";
 			
 			Termin vorlage = new Termin();
@@ -298,7 +253,7 @@ public class EditTerminFrame extends javax.swing.JFrame implements java.awt.even
 			
 				gdo.unsafeQuery(query,vorlage);
 				System.out.println("aha 0");
-				id_list = gdo.unsafeQuery("select * from termin where id = (select max(id) from termin)",vorlage);
+				id_list = gdo.unsafeQuery("select * from termin where id =identity()",vorlage);
 			
 			try
 			{
@@ -308,12 +263,13 @@ public class EditTerminFrame extends javax.swing.JFrame implements java.awt.even
 				
 			for(int j = 0;j<queryList.size();j++)
 			{
-				String query2 = "insert into anhaengen_termin values (" + lastID+","+ Integer.parseInt(queryList.get(j)[0]+",'"+queryList.get(j)[1])+"')";
+				System.out.println(queryList.get(j)[0]);
+				String query2 = "insert into anhaengen_termin values (" + lastID+","+ Integer.parseInt(queryList.get(j)[0])+",'"+queryList.get(j)[1]+"')";
 				gdo.unsafeQuery(query2,new Anhaengen_termin());
 				System.out.println("aha 2");
 			}
 			}
-			catch(Exception e){}
+			catch(Exception e){System.out.println("update::attach objects :::"+e.toString());}
 			}
 		else 
 			{
@@ -321,7 +277,7 @@ public class EditTerminFrame extends javax.swing.JFrame implements java.awt.even
 			for(int j = 0;j<queryList.size();j++)
 			{
 				String query2 = "insert into anhaengen_termin values (" + ID+","+ Integer.parseInt(queryList.get(j)[0])+",'"+queryList.get(j)[1]+"')";
-				gdo.unsafeQuery(query2,new Anhaengen_termincontainer());
+				gdo.unsafeQuery(query2,new Anhaengen_termin());
 				
 			}
 			
@@ -354,6 +310,7 @@ public class EditTerminFrame extends javax.swing.JFrame implements java.awt.even
 			System.out.println("Exception beim Updaten=="+e.toString());
 		}
 	}
+	
 	private void initGUI() {
 		try {
 			this.setIconImage(new ImageIcon(AutopsiConfigurator.images + "/autopsi.png").getImage() );
@@ -764,13 +721,15 @@ public class EditTerminFrame extends javax.swing.JFrame implements java.awt.even
 			this.dispose();
 		}
 		if(arg0.getSource().equals(ok_button)){
-			update();
+			if(!newTCsender) update();
+			else addToList();
 			if(ok)
 				dispose();
 			
 		}
 		if(arg0.getSource().equals(apply_button)){
-			update();
+			if(!newTCsender) update();
+			else addToList();
 			}
 		if(arg0.getSource().equals(newTC)){
 			EditTerminContainerFrame frame = new EditTerminContainerFrame(this,-1);
@@ -934,6 +893,7 @@ public class EditTerminFrame extends javax.swing.JFrame implements java.awt.even
 					id_table[0] = globalId + "";
 					id_table[1] = table;
 					queryList.add(id_table);
+					
 					
 					
 				} catch (Exception e){
@@ -1205,6 +1165,62 @@ public class EditTerminFrame extends javax.swing.JFrame implements java.awt.even
 		}
 	}
 	
+	private void addToList()
+	{
+		EditTerminContainerFrame actor = (EditTerminContainerFrame)owner;
+		List<Termin> data = new ArrayList<Termin>();
+		readFieldData();
+		Termin t = new Termin();
+		t.setDate(Timestamp.valueOf(date));
+		t.setSecondaryTitle(sec_title);
+		t.setDuration(duration);
+		t.setPlace(place);
+		t.setTerminKategorieId(Integer.parseInt(tkat));
+		
+		actor.updateTerminList(data);
+		
+	}
+	
+	private void readFieldData()
+	{
+		
+		int termin_kat = ((TerminKategorie)(termin_kat_data.get(choose_Type.getSelectedIndex()))).getId();
+		tkat = "" + termin_kat;
+		
+		sec_title = sec_titlefield.getText();		
+		sec_title = sec_title.replace("'".toCharArray()[0],'´');
+					
+		date = dateField.getText();
+		
+		Date dat = new Date(c.getTimeInMillis());
+		date = dat.toString();
+				System.out.println("hhh");
+		date = date.substring(0,10) + " " + timeField.getText()+":00.0";
+		desc = desc_area.getText();
+		desc = desc.replace("'".toCharArray()[0],'´');
+		place = place_field.getText();
+		
+		place = place.replace("'".toCharArray()[0],'´');
+		
+		try{
+		String test = "0123456789";
+		boolean testOk = false;
+		for(int i = 0;i<duration_field.getText().length();i++)
+		{
+			for(int k = 0;k<test.length();k++)
+			{
+				if(duration_field.getText().substring(i,i+1).equals(test.substring(k,k+1)))  testOk = true;
+			}
+			
+		}
+		if(testOk) duration = Integer.parseInt(duration_field.getText());
+		else throw new Exception();
+		
+		
+		}catch(Exception e){
+			showErrorDialog("Falsche Eingabe","Geben Sie eine Dauer ein!");
+		}
+		
+		if(sec_title.length()<1) sec_title = tcTitle_box.getSelectedItem().toString();
+	}
 }
-
-

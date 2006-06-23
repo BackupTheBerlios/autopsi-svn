@@ -29,6 +29,7 @@ import javax.swing.WindowConstants;
 import javax.swing.border.LineBorder;
 import javax.swing.text.MaskFormatter;
 
+import autopsi.basis.AutopsiConfigurator;
 import autopsi.database.table.Termin;
 import autopsi.database.table.TerminKategorie;
 import autopsi.database.dao.*;
@@ -246,7 +247,7 @@ public class TerminReiheFrame extends javax.swing.JFrame implements java.awt.eve
 					oneForAll1 = new JButton();
 					getContentPane().add(oneForAll1);
 					oneForAll1.setBounds(378, 112+i*28, 35, 21);
-					oneForAll1.setIcon(new ImageIcon("src/images/oneForAll.GIF"));
+					oneForAll1.setIcon(new ImageIcon(AutopsiConfigurator.images+"/oneForAll.GIF"));
 					oneForAll1.setEnabled(false);
 					buttonArray[i]=oneForAll1;
 					buttonArray[i].addMouseListener(this);
@@ -276,7 +277,7 @@ public class TerminReiheFrame extends javax.swing.JFrame implements java.awt.eve
 				jLabel7 = new JLabel();
 				getContentPane().add(jLabel7);
 				jLabel7.setText("(TT-MM-JJJJ)");
-				jLabel7.setBounds(252, 42, 182, 21);
+				jLabel7.setBounds(252, 42, 70, 21);
 			}
 			{
 				desc_field = new JTextArea();
@@ -436,8 +437,14 @@ public class TerminReiheFrame extends javax.swing.JFrame implements java.awt.eve
 			SimpleDateFormat sf = new SimpleDateFormat("dd-MM-yyyy");
 			Date dat = sf.parse(beginDate_field.getText());
 			begin.setTime(dat);
+			begin.set(Calendar.HOUR_OF_DAY,0);
+			begin.set(Calendar.MINUTE,0);
+			begin.set(Calendar.SECOND,0);
 			dat = sf.parse(endDate_field.getText());
 			end.setTime(dat);
+			end.set(Calendar.HOUR_OF_DAY,23);
+			end.set(Calendar.MINUTE,59);
+			end.set(Calendar.SECOND,59);
 			counter.setTime(begin.getTime());
 			
 			int[] count = {0,0,0,0,0,0,0}; 
@@ -449,7 +456,7 @@ public class TerminReiheFrame extends javax.swing.JFrame implements java.awt.eve
 			
 			while(counter.before(end)) //solange Zähler innerhalb der Zeitspanne
 			{
-				counter.set(Calendar.DAY_OF_MONTH,counter.get(Calendar.DAY_OF_MONTH)+1);
+				
 
 				if(checkArray[0].getSelectedObjects()!=null && counter.getTime().toString().contains("Mon"))
 				{ count[0]++;
@@ -557,6 +564,8 @@ public class TerminReiheFrame extends javax.swing.JFrame implements java.awt.eve
 						ter.setTerminKategorieId(((TerminKategorie)(termin_kat_data.get(typeBox.getSelectedIndex()))).getId());
 						termine.add(ter);
 				}
+				
+				counter.set(Calendar.DAY_OF_MONTH,counter.get(Calendar.DAY_OF_MONTH)+1);
 			}
 		
 			owner.updateTerminList(termine);
