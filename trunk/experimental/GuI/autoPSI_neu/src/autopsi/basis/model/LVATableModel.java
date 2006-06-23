@@ -16,78 +16,122 @@ import autopsi.database.table.Universitaet;
 import autopsi.javaspace.ServiceCommunicator;
 
 public class LVATableModel extends AbstractTableModel {
+	private static final long serialVersionUID = 32424324234L;
 
-	public List <GenericDataObject> lvas = new ArrayList<GenericDataObject>();
+	public List <GenericDataObject> objects = new ArrayList<GenericDataObject>();
 	public List <GenericDataObject> uni = new ArrayList<GenericDataObject>();
 	public List <GenericDataObject> lastDeletedObjects =  new ArrayList<GenericDataObject>();
-	public GenericDAO gdo;
+	public GenericDAO gdo = null;
 	public ServiceCommunicator ogdo = null;
 	public boolean onlinesuche = false;
 	public String tablename = "LVA";
-	public Lva suchLva = null;
+	public Lva searchObject = null;
 	public String group = null;
 	public String type = null;
+	public Integer order = null;
+
+	private final String [] columnName = {"LVA-Nr","Titel", "Beschreibung"};
+	private final String [] columnDBName = {"l.LVA_NR", "l.TITLE", "l.DESCRIPTION"};
 	
-	
-	private final String [] columnName = {"LVA-Nr","Titel", "Beschreibung", "UNI"};
-	
-	public List<GenericDataObject> getLvas() {
-		return this.lvas;
+	/**
+	 * Diese Methode liefert alle Objekte als eine Liste von GenericDataObjects.
+	 * @return	List<GenericDataObject>	Liste der Objekte.
+	 * @author	Alpay Firato
+	 */
+	public List<GenericDataObject> getObjects() {
+		return this.objects;
 	}
 	
+	/**
+	 * Diese Methode liefert den angezeigten GenericDataObject an der angegebenen Zeile.
+	 * @param	int	Zellennummer an der das Objekt angezeigt wird.
+	 * @return	GenericDataObjekt	Objekt als GenericDataObject.
+	 * @author	Alpay Firato
+	 */
+	public GenericDataObject getObjectAt(int at) {
+		if (objects != null) {
+			if (at < objects.size())
+				return this.objects.get(at);
+		}
+		return null;
+	}
+	
+	/**
+	 * Diese Methode liest die Daten von der lokalen Datenbank mit Hilfe des Generic-DAO aus.
+	 * Danach werden alle Objekte, die aus der Datenbank ausgelwsen worden sind, in eine Liste gespeichert.
+	 * Die Datensätze werden nach order geordnet.
+	 * @author	Alpay Firato
+	 */
 	private void readData() {
 		String query="select * from LVA as l, LVA_KATEGORIE as kat, ATTACHABLE_OBJECT as a, ATTACHABLE_OBJECT_KATEGORIE as ok where l.GLOBAL_ID=a.GLOBAL_ID AND a.KATEGORIE_ID=ok.ID AND l.TYPE = kat.id";
 		try{
 			IGenericDAO gdo = new GenericDAO();
-			if (suchLva!=null) {
-				if (this.suchLva.getLvaNr()!=null){
-					query +=" AND LVA_NR ="+this.suchLva.getLvaNr()+"";
+			if (searchObject!=null) {
+				if (this.searchObject.getLvaNr()!=null){
+					query +=" AND LVA_NR ="+this.searchObject.getLvaNr()+"";
 				}
-				if (this.suchLva.getTitle()!=null){
-					query +=" AND Lower(TITLE) Like '%"+this.suchLva.getTitle().toLowerCase()+"%'";
+				if (this.searchObject.getTitle()!=null){
+					query +=" AND Lower(TITLE) Like '%"+this.searchObject.getTitle().toLowerCase()+"%'";
 				}
-				if (this.suchLva.getDescription()!=null){
-					query +=" AND Lower(DESCRIPTION) Like '%"+this.suchLva.getDescription().toLowerCase()+"%'";
+				if (this.searchObject.getDescription()!=null){
+					query +=" AND Lower(DESCRIPTION) Like '%"+this.searchObject.getDescription().toLowerCase()+"%'";
 				}
 				if (this.type!=null && !this.type.equals("-")){
 					query +=" AND kat.NAME = '"+this.type+"'";
 				}
 				if (this.group != null && !this.group.equals("-")){
 					query += " AND ok.TITLE = '"+ this.group+"'";
+				}				
+				if (this.order!=null) {
+					query += " ORDER BY "+columnDBName[this.order];
 				}
-				System.out.println(query);
-				this.lvas =  gdo.unsafeQuery(query, suchLva);
+				//System.out.println(query);
+				this.objects =  gdo.unsafeQuery(query, searchObject);
 			}
 		} catch (Exception e){
-			System.out.println("LVATableModel @ readData;"+e.toString());
+			JOptionPane.showMessageDialog(null, "Error: " +e.toString(), "Error!" , JOptionPane.ERROR_MESSAGE);
 		}
 	}
 	
-	
+	/**
+	 * Diese Methode liest die Daten aus dem Javaspace mit Hilfe des ServiceCommunicators aus.
+	 * Das, aus dem Javaspace, rausgelesene Objekt wird in eine Liste abgespeichert.
+	 * @author	Alpay Firato
+	 */	
 	public void readOnlineData(){
 		try {
 			this.onlinesuche = true;
-			Lva temp = (Lva)this.ogdo.getObject(this.suchLva);
-			this.lvas = new ArrayList<GenericDataObject>();
-			this.lvas.add(temp);
+			Lva temp = (Lva)this.ogdo.getObject(this.searchObject);
+			this.objects = new ArrayList<GenericDataObject>();
+			this.objects.add(temp);
 		} catch (Exception e) {
-			JOptionPane.showMessageDialog(null, "Fehler: " +e.toString(), "Ein Fehler ist aufgetreten!" , JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(null, "Error: " +e.toString(), "Error!" , JOptionPane.ERROR_MESSAGE);
 		}
 	}
 
-	
+	/**
+	 * Im Konstruktor wird Generic-DAO und Javaspace-ServiceCommunicator angelegt.
+	 * @author	Alpay Firato
+	 */
 	public LVATableModel (){
 		this.gdo = new GenericDAO();
 		this.ogdo = new ServiceCommunicator();
 	}
 	
-	
+	/**
+	 * Diese Methode wird immer bei einer Änderung der lokalen Daten aufgerufen.
+	 * @author	Alpay Firato
+	 */	
 	public void fireDataChanged() {
 		this.onlinesuche = false;
 		readData();
 		this.fireTableDataChanged();
 	}
 	
+	/**
+	 * Diese Methode wird immer bei einer Aenderung der online Daten aufgerufen.
+	 * @author	Alpay Firato
+	 */	
 	public void fireOnlineDataChanged(){
 		this.onlinesuche = true;
 		readOnlineData();
@@ -95,7 +139,14 @@ public class LVATableModel extends AbstractTableModel {
 	}
 	
 
-	
+	/**
+	 * Diese Methode löscht die markierten Objekte aus der lokalen Datenbank.
+	 * Nach einem erfolgreichen Löschvorgang wird fireDataChanged aufgerufen.
+	 * Alle gelöschten Objekte wird als eine Liste abgespeichert damit man später
+	 * diese Daten wiederherstellen kann wenn erfordert.
+	 * @param	JTable	Das ist die Tabelle bei der die Daten markiert worden sind.
+	 * @author	Alpay Firato
+	 */
 	public void deleteSelectedRow(JTable table) {
 		Lva p = new Lva();
 		boolean selected = false;
@@ -107,7 +158,7 @@ public class LVATableModel extends AbstractTableModel {
 	    for (int r=0; r<this.getRowCount(); r++) {
             if (table.isCellSelected(r, 1)) {
             	selected = true;
-            	p=(Lva) this.getLvas().get(r);
+            	p=(Lva) this.getObjects().get(r);
             	if (p.getGlobalId() != null ) {
             		if (first) {
             			auswahl = JOptionPane.showConfirmDialog(null, "Sind sie sicher dass sie alle markierten Objekte löschen wollen?", "Löschen?",JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.ERROR_MESSAGE);
@@ -139,6 +190,11 @@ public class LVATableModel extends AbstractTableModel {
 	}
 	
 	/**
+	 * Diese Methode löscht das übergebene Objekt aus der lokalen Datenbank.
+	 * @param	Lva	Das ist die Lva die aus dem Datenbank entfernt werden soll.
+	 * @return	boolean	Falls das Objekt erfolgreich gelöscht wurde dann wird true zurückgeliefert,
+	 * sonnst false.
+	 * @author	Alpay Firato
 	 */
 	public boolean deleteLva(Lva p){
 		if (p == null)
@@ -152,11 +208,15 @@ public class LVATableModel extends AbstractTableModel {
 			loeschen = gdo.unsafeQuery("DELETE FROM " + this.tablename+" WHERE GLOBAL_ID ="+p.getGlobalId(), new Lva());
 			return true;
 		} catch (Exception e){
-			System.out.println("PruefungTableModel @ deletePruefung;"+e.toString());
+			JOptionPane.showMessageDialog(null, "Error: " +e.toString(), "Error!" , JOptionPane.ERROR_MESSAGE);
 		}
 		return true;
 	}
 	
+	/**
+	 * Diese Methode kann alle gelöschten Objekte wiederherstellen und in die Datenbank einfügen.
+	 * @author	Alpay Firato
+	 */
 	public void restoreLastDeletedObjects(){
 		if (this.lastDeletedObjects.size() != 0) {
 			for (int i=0;i<this.lastDeletedObjects.size();i++){
@@ -170,10 +230,14 @@ public class LVATableModel extends AbstractTableModel {
 		this.fireDataChanged();
 	}
 	
+	/**
+	 * Diese Methode kann aus dem Javaspace gefundene Objekte in die lokale Datenbank integrieren.
+	 * @author	Alpay Firato
+	 */
 	public void downloadObject(){
-		if (this.onlinesuche==true && this.lvas.size() != 0) {
-			for (int i=0;i<this.lvas.size();i++){
-				addLVA(this.lvas.get(i));
+		if (this.onlinesuche==true && this.objects.size() != 0) {
+			for (int i=0;i<this.objects.size();i++){
+				addLVA(this.objects.get(i));
 			}
 			JOptionPane.showMessageDialog(null, "Das ausgewählte Objekt wurde heruntergeladen." , "Download abgeschlossen." , JOptionPane.INFORMATION_MESSAGE);
 		} else {
@@ -181,6 +245,11 @@ public class LVATableModel extends AbstractTableModel {
 		}
 	}
 	
+	/**
+	 * Diese Methode kann das übergebene Objekt in die lokale Datenbank einfügen.
+	 * @param	GenericDataObject	Das Object, das in die Datenbank eingefügt werden soll.
+	 * @author	Alpay Firato
+	 */
 	public void addLVA(GenericDataObject p){
 		try{
 			if (p!=null){
@@ -194,68 +263,94 @@ public class LVATableModel extends AbstractTableModel {
 				l.setGlobalId(a.getId());
 				l.setUniId(0);
 				gdo.setCurrentTable(this.tablename);
-				gdo.addDataObject(l);
-				
-				
+				gdo.addDataObject(l);	
 			} else {
-				System.out.println("NULLLL ELEMENTTTT!!!! :(((((((");
+				JOptionPane.showMessageDialog(null, "Error: NULL OBJECT kann nicht in die Datenbank eingefügt werden", "Error!" , JOptionPane.ERROR_MESSAGE);
 			}
 		} catch (Exception e){
-			System.out.println("PruefungTableModel @ addPruefung;"+e.toString());
+			JOptionPane.showMessageDialog(null, "Error: " +e.toString(), "Error!" , JOptionPane.ERROR_MESSAGE);
 		}
 	}
 	
-	public void setSuchLVa (Lva suchLva){
-		this.suchLva=suchLva;
+	/**
+	 * Diese Methode kann die Sortiereinfolge der angezeigten Daten ändern.
+	 * @param	Integer	Sortierreinfolge nach Spalten.
+	 * @author Alpay Firato
+	 */
+	public void setOrder (Integer order){
+		this.order=order;
+		this.fireDataChanged();
+	}
+	
+	/**
+	 * Diese Methode ändert das Suchobjekt und somit die Suchkriterien.
+	 * @param	Kontakt	Template Suchobjekt nach dem man eine Suche startet.
+	 * @author	Alpay Firato
+	 */
+	public void setSearchObject (Lva Object){
+		this.searchObject=Object;
 		fireDataChanged();
 	}
 	
+	/**
+	 * Diese Methode ändert die Suchgruppe des zu suchenden Objektes.
+	 * @param	String	Suchgruppe des Objekts.
+	 * @author	Alpay Firato
+	 */
 	public void setGroup(String gruppe){
 		this.group = gruppe;
 	}
+	
+	/**
+	 * Diese Methode ändert die Kategorie/Type des zu suchenden Objektes.
+	 * @param	String	Kategorie des Objekts.
+	 * @author	Alpay Firato
+	 */
 	public void setType(String type){
 		this.type = type;
 	}
 	
+	/**
+	 * Diese Methode liefert die Anzahl der Spalten als int-Wert zurück.
+	 * @return	int	Anzahl der Spalten.
+	 * @author	Alpay Firato
+	 */
 	public int getColumnCount() {
-		//System.out.println("colCount = " + columnName.length);
 		return columnName.length;
 	}
 	
+	/**
+	 * Diese Methode liefert die Anzahl der Zeilen als int-Wert zurück.
+	 * @return	int	Anzahl der Zeilen.
+	 * @author	Alpay Firato
+	 */
 	public int getRowCount() {
-		if (lvas != null) {
-			System.out.println("rowcount = " + lvas.size());
-		} else {
-			System.out.println("rowcount = 0");
-		}
-		
-		if (lvas != null) {
-			return lvas.size();
+		if (objects != null) {
+			return objects.size();
 		} else {
 			return 0;
 		}
 	}
+	
+	/**
+	 * Diese Methode liefert den Header der Spalte als String-Wert zurück.
+	 * @param	int	Spaltennummer.
+	 * @return	String	Name der Spalte.
+	 * @author	Alpay Firato
+	 */
 	public String getColumnName(int c) {
-		System.out.println("colName = " + columnName[c]);
 		return columnName[c];
 	}
 	
+	/**
+	 * Diese Methode liefert den Inhalt einer Zelle zurück.
+	 * @param	int	Reihe der Zelle.
+	 * @param	int	Spalte der Zelle.
+	 * @return	Object	Wert der Zelle.
+	 * @author	Alpay Firato
+	 */
 	public Object getValueAt(int row, int col) {
-		System.out.println("getValueAt: r="+row+", c="+col);
-		Universitaet u = new Universitaet();
-		Lva lva = (Lva) lvas.get(row);
-		try {
-			IGenericDAO gdo = new GenericDAO();
-			this.uni =  gdo.unsafeQuery("select * FROM UNIVERSITAET WHERE ID="+lva.getGlobalId(), new Universitaet());
-			
-		} catch (Exception e){
-			System.out.println("LVATableModel @ getValueAt;"+e.toString());
-		}
-		if (! this.uni.isEmpty()) {
-			u = (Universitaet) this.uni.get(0);
-		} else {
-			u.setName("-");
-		}
+		Lva lva = (Lva) objects.get(row);
 		if (lva==null)
 			return null;
 		else if (col==0)
@@ -264,8 +359,6 @@ public class LVATableModel extends AbstractTableModel {
 			return lva.getTitle();
 		else if (col==2)
 			return lva.getDescription();
-		else if (col==3)
-			return u.getName();
 		else return null;
 	}
 }
