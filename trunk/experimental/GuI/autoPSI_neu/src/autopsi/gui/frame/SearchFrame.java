@@ -175,11 +175,12 @@ public class SearchFrame extends javax.swing.JFrame implements ActionListener, M
 		super();
 		initGUI();
 		this.setTitle("Suchen");
+		this.setIconImage(new ImageIcon(AutopsiConfigurator.images + "/autopsi.png").getImage() );
 		this.setResizable(false);
 		//frame.getContentPane().add(this);
 		setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 		this.pack();
-		this.setSize(813, 463);
+		this.setSize(813, 412);
 
 		addWindowListener(new WindowAdapter()
 				{
@@ -195,12 +196,12 @@ public class SearchFrame extends javax.swing.JFrame implements ActionListener, M
 	
 	private void initGUI() {
 		try {
-			this.setPreferredSize(new java.awt.Dimension(813, 463));
+			this.setPreferredSize(new java.awt.Dimension(813, 412));
 			this.setLayout(null);
 			{
 				jTabbedSearchPane = new JTabbedPane();
 				this.add(jTabbedSearchPane);
-				jTabbedSearchPane.setBounds(7, 7, 798, 420);
+				jTabbedSearchPane.setBounds(7, 7, 798, 364);
 				jTabbedSearchPane.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
 				jTabbedSearchPane.setTabPlacement(JTabbedPane.LEFT);
 				{
@@ -1163,7 +1164,7 @@ public class SearchFrame extends javax.swing.JFrame implements ActionListener, M
 				lupe = new JLabel();
 				getContentPane().add(lupe);
 				lupe.setIcon(new ImageIcon(AutopsiConfigurator.images_icons+"/lupe.png"));
-				lupe.setBounds(7, 238, 196, 182);
+				lupe.setBounds(7, 150, 196, 182);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
