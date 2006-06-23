@@ -30,7 +30,8 @@ import autopsi.database.table.*;
 import autopsi.gui.DateConverter;
 import autopsi.gui.MonthRenderer;
 import autopsi.gui.WeekRenderer;
-import autopsi.gui.AddAttachableObject;
+import autopsi.gui.HandleAttachableObject;
+import autopsi.gui.HandleOtherObject;
 import autopsi.javaspace.ObjectSpaceSharer;
 import autopsi.javaspace.ServiceCommunicator;
 import autopsi.javaspace.SpaceThread;
@@ -79,6 +80,15 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 	private JPanel tab2;
 	private JTextPane lblBeschreibung;
 	private JTabbedPane infobar;
+	private JMenuItem menu_delete_LehrmittelKategorie;
+	private JMenuItem menu_delete_LvaKategorie;
+	private JMenuItem menu_delete_Universitaet;
+	private JMenuItem menu_delete_Notiz;
+	private JMenuItem menu_delete_Lva;
+	private JMenuItem menu_delete_Lehrmittel;
+	private JMenuItem menu_delete_Pruefung;
+	private JMenuItem menu_delete_Kontakt;
+	private JMenu menu_delete;
 	private JMenuItem menu_edit_LehrmittelKategorie;
 	private JMenuItem menu_edit_LvaKategorie;
 	private JMenuItem menu_edit_Universitaet;
@@ -814,6 +824,60 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 						menu_edit_LehrmittelKategorie
 							.setText("Lehrmittel-Kategorie...");
 						menu_edit_LehrmittelKategorie.addActionListener(this);
+					}
+				}
+				{
+					menu_delete = new JMenu();
+					mainMenu.add(menu_delete);
+					menu_delete.setText("Löschen");
+					{
+						menu_delete_Kontakt = new JMenuItem();
+						menu_delete.add(menu_delete_Kontakt);
+						menu_delete_Kontakt.setText("Kontakt...");
+						menu_delete_Kontakt.addActionListener(this);
+					}
+					{
+						menu_delete_Pruefung = new JMenuItem();
+						menu_delete.add(menu_delete_Pruefung);
+						menu_delete_Pruefung.setText("Prüfung...");
+						menu_delete_Pruefung.addActionListener(this);
+					}
+					{
+						menu_delete_Lehrmittel = new JMenuItem();
+						menu_delete.add(menu_delete_Lehrmittel);
+						menu_delete_Lehrmittel.setText("Lehrmittel...");
+						menu_delete_Lehrmittel.addActionListener(this);
+					}
+					{
+						menu_delete_Lva = new JMenuItem();
+						menu_delete.add(menu_delete_Lva);
+						menu_delete_Lva.setText("Lva...");
+						menu_delete_Lva.addActionListener(this);
+					}
+					{
+						menu_delete_Notiz = new JMenuItem();
+						menu_delete.add(menu_delete_Notiz);
+						menu_delete_Notiz.setText("Notiz...");
+						menu_delete_Notiz.addActionListener(this);
+					}
+					{
+						menu_delete_Universitaet = new JMenuItem();
+						menu_delete.add(menu_delete_Universitaet);
+						menu_delete_Universitaet.setText("Universität...");
+						menu_delete_Universitaet.addActionListener(this);
+					}
+					{
+						menu_delete_LvaKategorie = new JMenuItem();
+						menu_delete.add(menu_delete_LvaKategorie);
+						menu_delete_LvaKategorie.setText("Lva-Kategorie...");
+						menu_delete_LvaKategorie.addActionListener(this);
+					}
+					{
+						menu_delete_LehrmittelKategorie = new JMenuItem();
+						menu_delete.add(menu_delete_LehrmittelKategorie);
+						menu_delete_LehrmittelKategorie
+							.setText("Lehrmittel-Kategorie");
+						menu_delete_LehrmittelKategorie.addActionListener(this);
 					}
 				}
 				{
@@ -2046,23 +2110,23 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 	public void actionPerformed(ActionEvent arg0) {
 		if (arg0.getSource().equals(this.menu_add_Kontakt)){
 			System.out.println("mainFrame.actionPerformed()::füge Kontakt hinzu");
-			new AddAttachableObject(this, new Kontakt());
+			new HandleAttachableObject(this, new Kontakt());
 		}
 		if (arg0.getSource().equals(this.menu_add_Notiz)){
 			System.out.println("mainFrame.actionPerformed()::füge Notiz hinzu");
-			new AddAttachableObject(this, new Notiz());
+			new HandleAttachableObject(this, new Notiz());
 		}
 		if (arg0.getSource().equals(this.menu_add_LM)){
 			System.out.println("mainFrame.actionPerformed()::füge Lehrmittel hinzu");
-			new AddAttachableObject(this, new Lehrmittel());
+			new HandleAttachableObject(this, new Lehrmittel());
 		}
 		if (arg0.getSource().equals(this.menu_add_Lva)){
 			System.out.println("mainFrame.actionPerformed()::füge LVA hinzu");
-			new AddAttachableObject(this, new Lva());
+			new HandleAttachableObject(this, new Lva());
 		}
 		if (arg0.getSource().equals(this.menu_add_Pruefung)){
 			System.out.println("mainFrame.actionPerformed()::füge Prüfung hinzu");
-			new AddAttachableObject(this, new Pruefung());
+			new HandleAttachableObject(this, new Pruefung());
 		}
 		if (arg0.getSource().equals(this.menu_add_T)){
 		EditTerminFrame newTermin = new EditTerminFrame(this,c_marker,-1, false);
@@ -2077,77 +2141,120 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 ;			frame.setVisible(true);
 		}
 		if (arg0.getSource().equals(this.menu_add_Universitaet)){
-			GenericEditFrame gef = new GenericEditFrame(this);
-			gef.setTableToEdit("universitaet");
-			gef.setObjectToEdit(new Universitaet(), true);
-			gef.setVisible(true);
+			System.out.println("mainFrame.actionPerformed()::füge Prüfung hinzu");
+			new HandleOtherObject(this, new Universitaet());
 		}
 		if (arg0.getSource().equals(this.menu_add_LvaKategorie)){
-			GenericEditFrame gef = new GenericEditFrame(this);
-			gef.setTableToEdit("lva_kategorie");
-			gef.setObjectToEdit(new LvaKategorie(), true);
-			gef.setVisible(true);
+			System.out.println("mainFrame.actionPerformed()::füge Prüfung hinzu");
+			new HandleOtherObject(this, new LvaKategorie());
 		}
 		if (arg0.getSource().equals(this.menu_add_LehrmittelKategorie)){
-			GenericEditFrame gef = new GenericEditFrame(this);
-			gef.setTableToEdit("lehrmittel_kategorie");
-			gef.setObjectToEdit(new LehrmittelKategorie(), true);
-			gef.setVisible(true);
+			System.out.println("mainFrame.actionPerformed()::füge Prüfung hinzu");
+			new HandleOtherObject(this, new LehrmittelKategorie());
 		}
+		
+		
 		
 		
 		if (arg0.getSource().equals(this.menu_edit_Kontakt)){
-//			System.out.println("mainFrame.actionPerformed()::editiere Kontakt hinzu1");
+			System.out.println("mainFrame.actionPerformed()::editiere Kontakt");
 			ForeignKeyChooseFrame fkcf = new ForeignKeyChooseFrame(this, "kontakt", "global_id", Kontakt.class);
-//			System.out.println("mainFrame.actionPerformed()::editiere Kontakt hinzu2");
 			fkcf.setVisible(true);
-//			System.out.println("mainFrame.actionPerformed()::editiere Kontakt hinzu3a");
 			Integer val = (Integer)fkcf.getValue();
-//			System.out.println("mainFrame.actionPerformed()::editiere Kontakt hinzu3b");			
-			new AddAttachableObject(this, val);
-//			System.out.println("mainFrame.actionPerformed()::editiere Kontakt hinzu4");
+			new HandleAttachableObject(this, val);
 		}
 		if (arg0.getSource().equals(this.menu_edit_Notiz)){
-			System.out.println("mainFrame.actionPerformed()::editiere Notiz hinzu");
+			System.out.println("mainFrame.actionPerformed()::editiere Notiz");
 			ForeignKeyChooseFrame fkcf = new ForeignKeyChooseFrame(this, "notiz", "global_id", Notiz.class);
 			fkcf.setVisible(true);
-			new AddAttachableObject(this, (Integer)fkcf.getValue());
+			new HandleAttachableObject(this, (Integer)fkcf.getValue());
 		}
 		if (arg0.getSource().equals(this.menu_edit_Lehrmittel)){
-			System.out.println("mainFrame.actionPerformed()::editieres Lehrmittel hinzu");
+			System.out.println("mainFrame.actionPerformed()::editieres Lehrmittel");
 			ForeignKeyChooseFrame fkcf = new ForeignKeyChooseFrame(this, "lehrmittel", "global_id", Lehrmittel.class);
 			fkcf.setVisible(true);
-			new AddAttachableObject(this, (Integer)fkcf.getValue());
+			new HandleAttachableObject(this, (Integer)fkcf.getValue());
 		}
 		if (arg0.getSource().equals(this.menu_edit_Lva)){
-			System.out.println("mainFrame.actionPerformed()::editiere LVA hinzu");
+			System.out.println("mainFrame.actionPerformed()::editiere LVA");
 			ForeignKeyChooseFrame fkcf = new ForeignKeyChooseFrame(this, "lva", "global_id", Lva.class);
 			fkcf.setVisible(true);
-			new AddAttachableObject(this, (Integer)fkcf.getValue());
+			new HandleAttachableObject(this, (Integer)fkcf.getValue());
 		}
 		if (arg0.getSource().equals(this.menu_edit_Pruefung)){
-			System.out.println("mainFrame.actionPerformed()::editiere Prüfung hinzu");
-			ForeignKeyChooseFrame fkcf = new ForeignKeyChooseFrame(this, "pruefung", "global_i", Pruefung.class);
+			System.out.println("mainFrame.actionPerformed()::editiere Prüfung");
+			ForeignKeyChooseFrame fkcf = new ForeignKeyChooseFrame(this, "pruefung", "global_id", Pruefung.class);
 			fkcf.setVisible(true);
-			new AddAttachableObject(this, (Integer)fkcf.getValue());
+			new HandleAttachableObject(this, (Integer)fkcf.getValue());
 		}
 		if (arg0.getSource().equals(this.menu_edit_Universitaet)){
-			GenericEditFrame gef = new GenericEditFrame(this);
-			gef.setTableToEdit("universitaet");
-			gef.setObjectToEdit(new Universitaet(), true);
-			gef.setVisible(true);
+			System.out.println("mainFrame.actionPerformed()::editiere Universitaet");
+			ForeignKeyChooseFrame fkcf = new ForeignKeyChooseFrame(this, "universitaet", "id", Universitaet.class);
+			fkcf.setVisible(true);
+			new HandleOtherObject(this, (Integer)fkcf.getValue());
 		}
 		if (arg0.getSource().equals(this.menu_edit_LvaKategorie)){
-			GenericEditFrame gef = new GenericEditFrame(this);
-			gef.setTableToEdit("lva_kategorie");
-			gef.setObjectToEdit(new LvaKategorie(), true);
-			gef.setVisible(true);
+			System.out.println("mainFrame.actionPerformed()::editiere LvaKategorie");
+			ForeignKeyChooseFrame fkcf = new ForeignKeyChooseFrame(this, "lva_kategorie", "id", LvaKategorie.class);
+			fkcf.setVisible(true);
+			new HandleAttachableObject(this, (Integer)fkcf.getValue());
 		}
 		if (arg0.getSource().equals(this.menu_edit_LehrmittelKategorie)){
-			GenericEditFrame gef = new GenericEditFrame(this);
-			gef.setTableToEdit("lehrmittel_kategorie");
-			gef.setObjectToEdit(new LehrmittelKategorie(), true);
-			gef.setVisible(true);
+			System.out.println("mainFrame.actionPerformed()::editiere Lehrmittel-Kategorie");
+			ForeignKeyChooseFrame fkcf = new ForeignKeyChooseFrame(this, "lehrmittel_kategorie", "id", LehrmittelKategorie.class);
+			fkcf.setVisible(true);
+			new HandleAttachableObject(this, (Integer)fkcf.getValue());
+		}
+		
+		
+		
+		if (arg0.getSource().equals(this.menu_delete_Kontakt)){
+			System.out.println("mainFrame.actionPerformed()::lösche Kontakt");
+			ForeignKeyChooseFrame fkcf = new ForeignKeyChooseFrame(this, "kontakt", "global_id", Kontakt.class);
+			fkcf.setVisible(true);
+			new HandleAttachableObject(this, (Integer)fkcf.getValue(), true);
+		}
+		if (arg0.getSource().equals(this.menu_delete_Notiz)){
+			System.out.println("mainFrame.actionPerformed()::lösche Notiz");
+			ForeignKeyChooseFrame fkcf = new ForeignKeyChooseFrame(this, "notiz", "global_id", Notiz.class);
+			fkcf.setVisible(true);
+			new HandleAttachableObject(this, (Integer)fkcf.getValue(), true);
+		}
+		if (arg0.getSource().equals(this.menu_delete_Lehrmittel)){
+			System.out.println("mainFrame.actionPerformed()::lösche Lehrmittel");
+			ForeignKeyChooseFrame fkcf = new ForeignKeyChooseFrame(this, "lehrmittel", "global_id", Lehrmittel.class);
+			fkcf.setVisible(true);
+			new HandleAttachableObject(this, (Integer)fkcf.getValue(), true);
+		}
+		if (arg0.getSource().equals(this.menu_delete_Lva)){
+			System.out.println("mainFrame.actionPerformed()::lösche LVA");
+			ForeignKeyChooseFrame fkcf = new ForeignKeyChooseFrame(this, "lva", "global_id", Lva.class);
+			fkcf.setVisible(true);
+			new HandleAttachableObject(this, (Integer)fkcf.getValue(), true);
+		}
+		if (arg0.getSource().equals(this.menu_delete_Pruefung)){
+			System.out.println("mainFrame.actionPerformed()::lösche Prüfung");
+			ForeignKeyChooseFrame fkcf = new ForeignKeyChooseFrame(this, "pruefung", "global_i", Pruefung.class);
+			fkcf.setVisible(true);
+			new HandleAttachableObject(this, (Integer)fkcf.getValue(), true);
+		}
+		if (arg0.getSource().equals(this.menu_delete_Universitaet)){
+			System.out.println("mainFrame.actionPerformed()::lösche Universitaet");
+			ForeignKeyChooseFrame fkcf = new ForeignKeyChooseFrame(this, "universitaet", "id", Universitaet.class);
+			fkcf.setVisible(true);
+			new HandleAttachableObject(this, (Integer)fkcf.getValue(), true);
+		}
+		if (arg0.getSource().equals(this.menu_delete_LvaKategorie)){
+			System.out.println("mainFrame.actionPerformed()::lösche Lva-Kategorie");
+			ForeignKeyChooseFrame fkcf = new ForeignKeyChooseFrame(this, "lva_kategorie", "id", LvaKategorie.class);
+			fkcf.setVisible(true);
+			new HandleAttachableObject(this, (Integer)fkcf.getValue(), true);
+		}
+		if (arg0.getSource().equals(this.menu_delete_LehrmittelKategorie)){
+			System.out.println("mainFrame.actionPerformed()::lösche Lehrmittel-Kategorie");
+			ForeignKeyChooseFrame fkcf = new ForeignKeyChooseFrame(this, "lehrmittel_kategorie", "id", LehrmittelKategorie.class);
+			fkcf.setVisible(true);
+			new HandleAttachableObject(this, (Integer)fkcf.getValue(), true);
 		}
 		
 	}

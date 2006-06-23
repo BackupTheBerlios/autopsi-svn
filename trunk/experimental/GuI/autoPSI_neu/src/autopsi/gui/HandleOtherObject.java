@@ -1,19 +1,20 @@
 package autopsi.gui;
 
-import java.util.List;
-
 import javax.swing.JFrame;
 
 import autopsi.database.dao.GenericDAO;
 import autopsi.database.dao.GenericDataObject;
-import autopsi.database.exception.EAttributeNotFound;
-import autopsi.database.exception.EDatabase;
-import autopsi.database.exception.EDatabaseConnection;
-import autopsi.database.table.*;
+import autopsi.database.table.AttachableObject;
+import autopsi.database.table.Kontakt;
+import autopsi.database.table.Lehrmittel;
+import autopsi.database.table.Lva;
+import autopsi.database.table.Notiz;
+import autopsi.database.table.Pruefung;
+import autopsi.gui.HandleAttachableObject.ObjectAction;
 import autopsi.gui.frame.GenericEditFrame;
 
-public class HandleAttachableObject {
-	
+public class HandleOtherObject {
+
 	protected enum ObjectAction {add, edit, delete};
 
 	protected GenericEditFrame gef;
@@ -23,27 +24,27 @@ public class HandleAttachableObject {
 	protected Integer dbObjId;
 	protected ObjectAction action;
 	
-	protected HandleAttachableObject(JFrame owner){
+	protected HandleOtherObject(JFrame owner){
 		gef = new GenericEditFrame(owner);
 		gdao = new GenericDAO();
 		this.owner = owner;		
 	}
 	
-	public HandleAttachableObject(JFrame owner, GenericDataObject dbObj){
+	public HandleOtherObject(JFrame owner, GenericDataObject dbObj){
 		this(owner);
 		this.action = ObjectAction.add;
 		this.dbObj = dbObj;
 		run();
 	}
 	
-	public HandleAttachableObject(JFrame owner, Integer dbObjId){
+	public HandleOtherObject(JFrame owner, Integer dbObjId){
 		this(owner);
 		this.action = ObjectAction.edit;
 		this.dbObjId = dbObjId;
 		run();
 	}
 	
-	public HandleAttachableObject(JFrame owner, Integer dbObjId, boolean dummyDelete){
+	public HandleOtherObject(JFrame owner, Integer dbObjId, boolean dummyDelete){
 		this(owner);
 		this.action = ObjectAction.delete;
 		this.dbObjId = dbObjId;
@@ -300,5 +301,5 @@ public void deleteExistingObject(){
 		System.out.println("AddAttachableObject.deleteExistingObject::Konnte Objekt nicht aus Datenbank bekommen::"+e.toString());
 	}
 }
-
+	
 }
