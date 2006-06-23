@@ -1,0 +1,11 @@
+	<bean id="HsqldbDataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+		<property name="driverClassName" value="org.hsqldb.jdbcDriver"/>
+		<property name="url" value="jdbc:hsqldb:data/database"/>
+		<property name="username" value="SA"/>
+		<property name="password" value="AB"/>
+		<property name="connectionProperties">
+			<props>
+				<prop key="shutdown compact">true</prop>
+			</props>
+		</property>
+	</bean>
