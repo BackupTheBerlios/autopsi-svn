@@ -33,6 +33,7 @@ import javax.swing.WindowConstants;
 import javax.swing.border.LineBorder;
 import javax.swing.text.MaskFormatter;
 
+import autopsi.basis.AutopsiConfigurator;
 import autopsi.basis.model.AttachableListModel;
 import autopsi.database.dao.GenericDAO;
 import autopsi.database.dao.GenericDataObject;
@@ -451,26 +452,26 @@ public class EditTerminContainerFrame extends javax.swing.JFrame implements java
 						newTermin = new JButton();
 						jPanel2.add(newTermin);
 						newTermin.setBounds(210, 235, 42, 28);
-						newTermin.setIcon(new ImageIcon("src/images/newTermin.GIF"));
+						newTermin.setIcon(new ImageIcon(AutopsiConfigurator.images+"/newTermin.GIF"));
 						newTermin.addMouseListener(this);
 					}
 					{
 						deleteTermin = new JButton();
 						jPanel2.add(deleteTermin);
 						deleteTermin.setBounds(371, 235, 42, 28);
-						deleteTermin.setIcon(new ImageIcon("src/images/deleteTermin.GIF"));
+						deleteTermin.setIcon(new ImageIcon(AutopsiConfigurator.images+"/deleteTermin.GIF"));
 					}
 					{
 						editTermin = new JButton();
 						jPanel2.add(editTermin);
 						editTermin.setBounds(329, 235, 42, 28);
-						editTermin.setIcon(new ImageIcon("src/images/editTermin.GIF"));
+						editTermin.setIcon(new ImageIcon(AutopsiConfigurator.images+"/editTermin.GIF"));
 					}
 					{
 						openTermin = new JButton();
 						jPanel2.add(openTermin);
 						openTermin.setBounds(7, 235, 42, 28);
-						openTermin.setIcon(new ImageIcon("src/images/goToTermin.GIF"));
+						openTermin.setIcon(new ImageIcon(AutopsiConfigurator.images+"/goToTermin.GIF"));
 						openTermin.addMouseListener(this);
 					}
 					{
@@ -483,7 +484,7 @@ public class EditTerminContainerFrame extends javax.swing.JFrame implements java
 						newTerminReihe = new JButton();
 						jPanel2.add(newTerminReihe);
 						newTerminReihe.setBounds(252, 235, 56, 28);
-						newTerminReihe.setIcon(new ImageIcon("src/images/newTerminReihe.GIF"));
+						newTerminReihe.setIcon(new ImageIcon(AutopsiConfigurator.images+"/newTerminReihe.GIF"));
 						newTerminReihe.addMouseListener(this);
 					}
 					{
