@@ -9,11 +9,10 @@ import javax.swing.table.AbstractTableModel;
 
 import autopsi.database.dao.GenericDAO;
 import autopsi.database.dao.GenericDataObject;
-import autopsi.database.dao.IGenericDAO;
+import autopsi.javaspace.ServiceCommunicator;
+
 import autopsi.database.table.AttachableObject;
 import autopsi.database.table.Lva;
-import autopsi.database.table.Universitaet;
-import autopsi.javaspace.ServiceCommunicator;
 
 public class LVATableModel extends AbstractTableModel {
 	private static final long serialVersionUID = 32424324234L;
@@ -65,7 +64,7 @@ public class LVATableModel extends AbstractTableModel {
 	private void readData() {
 		String query="select * from LVA as l, LVA_KATEGORIE as kat, ATTACHABLE_OBJECT as a, ATTACHABLE_OBJECT_KATEGORIE as ok where l.GLOBAL_ID=a.GLOBAL_ID AND a.KATEGORIE_ID=ok.ID AND l.TYPE = kat.id";
 		try{
-			IGenericDAO gdo = new GenericDAO();
+			GenericDAO gdo = new GenericDAO();
 			if (searchObject!=null) {
 				if (this.searchObject.getLvaNr()!=null){
 					query +=" AND LVA_NR ="+this.searchObject.getLvaNr()+"";
@@ -201,10 +200,9 @@ public class LVATableModel extends AbstractTableModel {
 			return false;
 		
 		try{
-			IGenericDAO gdo = new GenericDAO();
-			//System.out.println("SELECT * FROM " + this.tablename+" WHERE GLOBAL_ID ="+p.getGlobalId());
+			GenericDAO gdo = new GenericDAO();
 			List <GenericDataObject> loeschen = gdo.unsafeQuery("SELECT * FROM " + this.tablename+" WHERE GLOBAL_ID ="+p.getGlobalId(), new Lva());
-				lastDeletedObjects.add(loeschen.get(0));
+			lastDeletedObjects.add(loeschen.get(0));
 			loeschen = gdo.unsafeQuery("DELETE FROM " + this.tablename+" WHERE GLOBAL_ID ="+p.getGlobalId(), new Lva());
 			return true;
 		} catch (Exception e){
@@ -284,7 +282,7 @@ public class LVATableModel extends AbstractTableModel {
 	
 	/**
 	 * Diese Methode ändert das Suchobjekt und somit die Suchkriterien.
-	 * @param	Kontakt	Template Suchobjekt nach dem man eine Suche startet.
+	 * @param	Lva	Template Suchobjekt nach dem man eine Suche startet.
 	 * @author	Alpay Firato
 	 */
 	public void setSearchObject (Lva Object){
