@@ -29,6 +29,8 @@ import javax.swing.JSeparator;
 import javax.swing.JTabbedPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.table.JTableHeader;
+import javax.swing.table.TableColumnModel;
 import javax.swing.text.AttributeSet;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.MaskFormatter;
@@ -121,6 +123,8 @@ public class SearchFrame extends javax.swing.JFrame implements ActionListener, M
 	
 	private JTable jKontaktTable, jLVATable, jTerminTable, jTerminContainerTable, jLehrmittelTable;
 	private JTable jNotizTable, jPruefungTable;
+	
+	private JTableHeader jKontaktTableHeader;
 
 	private TerminTableModel jTerminTableModel;
 	private TerminContainerTableModel jTerminContainerTableModel;
@@ -362,6 +366,9 @@ public class SearchFrame extends javax.swing.JFrame implements ActionListener, M
 								jKontaktTable.setGridColor(Color.LIGHT_GRAY);
 								jKontaktTable.setBackground(new java.awt.Color(255,255,255));
 								jKontaktTable.addMouseListener(this);
+								jKontaktTableHeader = jKontaktTable.getTableHeader();
+								jKontaktTableHeader.addMouseListener(this);
+								
 							}
 						}
 						
@@ -1162,8 +1169,24 @@ public class SearchFrame extends javax.swing.JFrame implements ActionListener, M
 	
 	public void mouseClicked(MouseEvent arg0) {
 		//System.out.println("MOUSE CLIKCKED! Count=" + arg0.getClickCount()+" Button:"+arg0.getButton());
-		if (arg0.getClickCount() == 2 && arg0.getButton()==MouseEvent.BUTTON1 ) {
+		if (arg0.getClickCount() == 2 && arg0.getButton()==MouseEvent.BUTTON1 && !(arg0.getSource() instanceof JTableHeader)) {
 			System.out.println("Linke Maustaste 2x geclickt.");
+			JTable Table = (JTable) arg0.getSource();
+			System.out.println(Table.getColumnName(Table.getSelectedColumn()));
+		}
+		
+		if (arg0.getSource().equals(jKontaktTableHeader)) {
+			//System.out.println("HEADER.");
+			JTableHeader tableh = (JTableHeader)arg0.getSource();
+			JTable table = ((JTableHeader)arg0.getSource()).getTable();
+			TableColumnModel columnModel = tableh.getColumnModel();
+			int viewColumn = columnModel.getColumnIndexAtX(arg0.getX());
+			int column = columnModel.getColumn(viewColumn).getModelIndex();
+				if (column != -1) {
+					jKontaktTableModel.setOrder(column);
+					//System.out.println("column="+column);
+				}
+			
 		}
 	}
 	
@@ -1193,10 +1216,12 @@ public class SearchFrame extends javax.swing.JFrame implements ActionListener, M
 	
 	public void actionPerformed(ActionEvent ae) {
 		Object cmd = ae.getSource();
-		if (cmd.equals(new JTable())){
-			TableactionPerformed (cmd);
-		} else {
-			starteSuche(cmd);
+		starteSuche(cmd);
+	}
+	
+	public void setOrder (JTable table, int order){
+		if (table.equals(jKontaktTable)){
+			this.jKontaktTableModel.setOrder(order);
 		}
 	}
 	
