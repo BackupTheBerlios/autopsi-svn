@@ -47,6 +47,7 @@ public class ObjectSpaceSharer {
 					com.addObject(gO);
 				} catch (Exception e){
 					System.out.println("ObjectSpaceSharer.shareObjects()::Konnte Objekt nicht zum JavaSpace hinzufügen::"+e.toString());
+					return;
 				}
 			else
 				System.out.println("ObjectSpaceSharer.shareObjects()::gO==null");
