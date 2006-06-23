@@ -78,6 +78,7 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 	private JPanel tab2;
 	private JTextPane lblBeschreibung;
 	private JTabbedPane infobar;
+	private JScrollPane jScrollPane1;
 	private JMenuItem menu_show_info;
 	private JLabel tableBase;
 	private JLabel toolBar;
@@ -335,14 +336,6 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 					tab0.setEnabled(false);
 					tab0.setBackground(new java.awt.Color(240,240,240));
 					{
-						lblBeschreibung = new JTextPane();
-						tab0.add(lblBeschreibung);
-						lblBeschreibung.setBounds(7, 112, 231, 84);
-						lblBeschreibung.setOpaque(false);
-						lblBeschreibung.setBorder(BorderFactory.createEtchedBorder(BevelBorder.LOWERED));
-						lblBeschreibung.setEditable(false);
-					}
-					{
 						lblTerminContainer = new JLabel();
 						tab0.add(lblTerminContainer);
 						lblTerminContainer.setBounds(7, 35, 231, 28);
@@ -373,6 +366,24 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 						lblZeit.setText("Beginn:");
 						lblZeit.setBounds(7, 91, 231, 14);
 						lblZeit.setFont(new java.awt.Font("Tahoma",0,12));
+					}
+					{
+						jScrollPane1 = new JScrollPane();
+						tab0.add(jScrollPane1);
+						jScrollPane1.setBounds(7, 112, 231, 91);
+						jScrollPane1.setBorder(new LineBorder(new java.awt.Color(0,0,0), 1, false));
+						jScrollPane1.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_NEVER);
+						{
+							lblBeschreibung = new JTextPane();
+							jScrollPane1.setViewportView(lblBeschreibung);
+							lblBeschreibung.setBounds(7, 112, 14, 7);
+							lblBeschreibung.setOpaque(false);
+							lblBeschreibung.setBorder(new LineBorder(
+								new java.awt.Color(0, 0, 0),
+								1,
+								false));
+							lblBeschreibung.setEditable(false);
+						}
 					}
 				}
 				{
