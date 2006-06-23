@@ -58,10 +58,14 @@ public class PruefungTableModel extends AbstractTableModel {
 	}
 	
 	public void readOnlineData () {
-		Pruefung temp =(Pruefung) ogdo.getObject(this.suchPruefung);
-		this.pruefungen = new ArrayList<GenericDataObject>();
-		if (temp != null)
-			this.pruefungen.add(temp);
+		try {
+			Pruefung temp =(Pruefung) ogdo.getObject(this.suchPruefung);
+			this.pruefungen = new ArrayList<GenericDataObject>();
+			if (temp != null)
+				this.pruefungen.add(temp);
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(null, "Fehler: " +e.toString(), "Ein Fehler ist aufgetreten!" , JOptionPane.ERROR_MESSAGE);
+		}
 		
 	}
 	

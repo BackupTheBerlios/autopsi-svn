@@ -3,6 +3,7 @@ package autopsi.basis.model;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.JOptionPane;
 import javax.swing.table.AbstractTableModel;
 
 import autopsi.database.dao.GenericDAO;
@@ -74,9 +75,13 @@ public class TerminContainerTableModel extends AbstractTableModel{
 	}
 	
 	public void readOnlineData(){
-		TerminContainer temp = (TerminContainer)this.ogdo.getObject(this.suchTerminc);
-		this.termine = new ArrayList<GenericDataObject>();
-		this.termine.add(temp);
+		try {
+			TerminContainer temp = (TerminContainer)this.ogdo.getObject(this.suchTerminc);
+			this.termine = new ArrayList<GenericDataObject>();
+			this.termine.add(temp);
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(null, "Fehler: " +e.toString(), "Ein Fehler ist aufgetreten!" , JOptionPane.ERROR_MESSAGE);
+		}
 	}
 	
 	public int getColumnCount() {

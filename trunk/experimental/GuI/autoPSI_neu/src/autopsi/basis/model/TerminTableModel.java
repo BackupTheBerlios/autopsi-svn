@@ -7,6 +7,8 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
+
+import javax.swing.JOptionPane;
 import javax.swing.table.AbstractTableModel;
 
 import autopsi.database.dao.GenericDAO;
@@ -94,9 +96,13 @@ public class TerminTableModel extends AbstractTableModel{
 	}
 	
 	public void readOnlineData(){
-		Termin temp = (Termin)this.ogdo.getObject(this.suchTermin);
-		this.termine = new ArrayList<GenericDataObject>();
-		this.termine.add(temp);
+		try {
+			Termin temp = (Termin)this.ogdo.getObject(this.suchTermin);
+			this.termine = new ArrayList<GenericDataObject>();
+			this.termine.add(temp);
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(null, "Fehler: " +e.toString(), "Ein Fehler ist aufgetreten!" , JOptionPane.ERROR_MESSAGE);
+		}
 	}
 	
 	public int getColumnCount() {

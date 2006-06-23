@@ -65,10 +65,14 @@ public class LVATableModel extends AbstractTableModel {
 	
 	
 	public void readOnlineData(){
-		this.onlinesuche = true;
-		Lva temp = (Lva)this.ogdo.getObject(this.suchLva);
-		this.lvas = new ArrayList<GenericDataObject>();
-		this.lvas.add(temp);
+		try {
+			this.onlinesuche = true;
+			Lva temp = (Lva)this.ogdo.getObject(this.suchLva);
+			this.lvas = new ArrayList<GenericDataObject>();
+			this.lvas.add(temp);
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(null, "Fehler: " +e.toString(), "Ein Fehler ist aufgetreten!" , JOptionPane.ERROR_MESSAGE);
+		}
 	}
 
 	
