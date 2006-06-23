@@ -1589,7 +1589,7 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 		
 		updateTable();
 		loadTerminList(false, null);
-		loadTerminData();
+		if(!delete) loadTerminData();
 		selection = -1;
 		terminId=-1;
 	}
