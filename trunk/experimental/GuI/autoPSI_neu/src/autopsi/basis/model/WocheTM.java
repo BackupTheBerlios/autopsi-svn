@@ -90,7 +90,16 @@ public class WocheTM extends AbstractTableModel {
 		{
 			if (((Termin)termine.get(i)).getDate().toString().substring(0,10).equals(stamp.toString().substring(0,10)))
 			{	
-				if(row+6==Integer.parseInt(((Termin)termine.get(i)).getDate().toString().substring(11,13)))
+				
+				if(row+6>=21 && Integer.parseInt(((Termin)termine.get(i)).getDate().toString().substring(11,13)) >=21)
+				{
+					 ret.add((Termin)termine.get(i));
+				}	
+				else if(row+6<=7 && Integer.parseInt(((Termin)termine.get(i)).getDate().toString().substring(11,13)) <=7 && row>0)
+				{
+					 ret.add((Termin)termine.get(i));
+				}	
+				else if(row+6==Integer.parseInt(((Termin)termine.get(i)).getDate().toString().substring(11,13)) && row>0)
 				{
 					 ret.add((Termin)termine.get(i));
 				}
