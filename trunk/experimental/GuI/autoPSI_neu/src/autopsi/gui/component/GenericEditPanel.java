@@ -36,7 +36,6 @@ import autopsi.gui.component.IntegerEditPlugin;
 import autopsi.gui.component.StringEditPlugin;
 import autopsi.gui.component.TimestampEditPlugin;
 import autopsi.gui.component.UnimplementedEditPlugin;
-import autopsi.gui.frame.TestClass;
 
 public class GenericEditPanel extends JPanel {
 
