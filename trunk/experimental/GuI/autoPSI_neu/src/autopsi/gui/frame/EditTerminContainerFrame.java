@@ -747,24 +747,29 @@ public class EditTerminContainerFrame extends javax.swing.JFrame implements java
 			}
 		}
 		if(arg0.getSource().equals(openTermin)){
-			if(owner instanceof mainFrame)
+			try
 			{
-				mainFrame actor = (mainFrame)owner;
-				GregorianCalendar greg = new GregorianCalendar();
-				greg.set(Calendar.YEAR,Integer.parseInt(terminModel.getElementAt(terminList.getSelectedIndex()).toString().substring(6,10)));
-				greg.set(Calendar.MONTH,Integer.parseInt(terminModel.getElementAt(terminList.getSelectedIndex()).toString().substring(3,5))-1);
-				greg.set(Calendar.DAY_OF_MONTH,Integer.parseInt(terminModel.getElementAt(terminList.getSelectedIndex()).toString().substring(0,2)));
-				GregorianCalendar greg2 = new GregorianCalendar();
-				System.out.println(greg.getTime().toString());
-				greg2.setTime(greg.getTime());
-				System.out.println(greg2.getTime().toString());
+				if(owner instanceof mainFrame && terminList.getSelectedIndex()>-1)
+				{
+					mainFrame actor = (mainFrame)owner;
+					GregorianCalendar greg = new GregorianCalendar();
+					greg.set(Calendar.YEAR,Integer.parseInt(terminModel.getElementAt(terminList.getSelectedIndex()).toString().substring(6,10)));
+					greg.set(Calendar.MONTH,Integer.parseInt(terminModel.getElementAt(terminList.getSelectedIndex()).toString().substring(3,5))-1);
+					greg.set(Calendar.DAY_OF_MONTH,Integer.parseInt(terminModel.getElementAt(terminList.getSelectedIndex()).toString().substring(0,2)));
+					GregorianCalendar greg2 = new GregorianCalendar();
+					System.out.println(greg.getTime().toString());
+					greg2.setTime(greg.getTime());
+					System.out.println(greg2.getTime().toString());
 
-				actor.setMarker(greg2);
-				actor.setTimeSpace(greg);
-				actor.layoutTable();
-				actor.loadTerminList(false, greg);
-				this.toFront();
+					actor.setMarker(greg2);
+					actor.setTimeSpace(greg);
+					actor.layoutTable();
+					actor.loadTerminList(false, greg);
+					this.toFront();
+				}
 			}
+			catch(Exception ex) {}
+			
 		}
 	}
 	
