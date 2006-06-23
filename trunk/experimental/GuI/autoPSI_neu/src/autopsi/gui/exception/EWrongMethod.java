@@ -1,4 +1,4 @@
-package autopsi.gui.exceptions;
+package autopsi.gui.exception;
 
 public class EWrongMethod extends Exception {
 
