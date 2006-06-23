@@ -68,9 +68,12 @@ public class WeekDayCell extends javax.swing.JPanel {
 	{
 		if(data.length>0)
 		{
-			list.setModel(new DefaultComboBoxModel(data));	
-			list.setBackground(new java.awt.Color(230,230,255));
+			list.setModel(new DefaultComboBoxModel(data));		
 		}		
+	}
+	public void setGray()
+	{
+		list.setBackground(new java.awt.Color(230,230,255));
 	}
 	
 	public void setBackColor(Color col)

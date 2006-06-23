@@ -11,10 +11,13 @@ import java.awt.Color;
 import java.awt.Component;
 public class WeekRenderer extends WeekDayCell implements TableCellRenderer
 {
-	Termin [] data;
-	DateConverter converter = new DateConverter();
-	GregorianCalendar marker=null;;
-    public WeekRenderer(GregorianCalendar mark) {
+	private Termin [] data;
+	private DateConverter converter = new DateConverter();
+	private GregorianCalendar marker=null;;
+	private int var_long =0;
+	private int[] termindauer;
+	
+	public WeekRenderer(GregorianCalendar mark) {
 		super();
 		// TODO Auto-generated constructor stub
 		this.marker = mark;
@@ -35,10 +38,16 @@ public class WeekRenderer extends WeekDayCell implements TableCellRenderer
 	public Component getTableCellRendererComponent(JTable arg0, Object arg1, boolean arg2, boolean arg3, int arg4, int arg5) {
 		if(arg1 instanceof Termin[])
     	{
+			WeekDayCell cell = new WeekDayCell();
 			
+			if(var_long>0) 
+				{
+				cell.setGray();
+				var_long--;
+				}
     		data = (Termin[])arg1;
     		
-    		WeekDayCell cell = new WeekDayCell();
+    		
     		
     		Termin[] liste = new Termin[data.length-1];
     		for (int i = 0;i<liste.length;i++)
@@ -78,14 +87,40 @@ public class WeekRenderer extends WeekDayCell implements TableCellRenderer
     			}
     		}
     		String[] liste2 = new String[data.length-1];
-    		
-    		for (int i = 0;i<data.length-1;i++)
+    		if(liste2.length>0)
     		{
-    			liste2[i] = data[i+1].getDate().toString().substring(11,16) + " " + data[i+1].getSecondaryTitle();
+    			termindauer = new int[liste2.length];
+        		
+        		for (int i = 0;i<data.length-1;i++)
+        		{
+        			liste2[i] = data[i+1].getDate().toString().substring(11,16) + " " + data[i+1].getSecondaryTitle();
+        			
+        			termindauer[i] = Integer.parseInt(data[i+1].getDate().toString().substring(11,13))*60+Integer.parseInt(data[i+1].getDate().toString().substring(14,16))+data[i+1].getDuration();
+        			System.out.println(termindauer[i]);
+        		}
+        		int dauer = termindauer[0];
+        		int location = 0;
+        		for(int i = 1; i<termindauer.length;i++)
+        		{
+        			if(dauer<termindauer[i])
+        				{
+        				dauer = termindauer[i];
+        				location = i+1;
+        				}
+        		}
+        		dauer = dauer - Integer.parseInt(data[location].getDate().toString().substring(11,13))*60-Integer.parseInt(data[location].getDate().toString().substring(14,16));
+        		System.out.println("max:: "+ dauer + "  " + data[location].getDate().toString());
+        		
     		}
-    		cell.fillList(liste2);                 	
-    		cell.setVisible(true);
     		
+    	
+    		
+    		                    
+    		              
+    		
+    		cell.fillList(liste2);    
+    		if(liste2.length>0) cell.setGray();
+    		cell.setVisible(true);
         	return cell;
     	}
 		return null;       
