@@ -79,7 +79,6 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 	private JPanel tab2;
 	private JTextPane lblBeschreibung;
 	private JTabbedPane infobar;
-	private JSeparator jSeparator1;
 	private JScrollPane jScrollPane1;
 	private JMenuItem menu_show_info;
 	private JLabel tableBase;
@@ -803,12 +802,7 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 					menu_show_info.setBackground(new java.awt.Color(255,255,255));
 					menu_show_info.setOpaque(false);
 					menu_show_info.setPreferredSize(new java.awt.Dimension(152, 22));
-					{
-						jSeparator1 = new JSeparator();
-						mainMenu.add(jSeparator1);
-						jSeparator1.setBounds(154, 112, 826, 21);
-						jSeparator1.setOrientation(SwingConstants.VERTICAL);
-					}
+					menu_show_info.setMaximumSize(new java.awt.Dimension(60, 60));
 					menu_show_info.addMouseListener(this);
 				}
 
