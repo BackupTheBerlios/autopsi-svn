@@ -29,6 +29,16 @@
 	<target name="dist" depends=""> 
 
 		<!-- Copy Unix, OS X Shellscript to start application to dist -->
+		<copy todir="${dist}/${project_name}/images">
+			<fileset dir="${src}/images">
+				<include name="**/*.*"/>
+			</fileset>
+		</copy>
+		<copy todir="${dist}/${project_name}/images/icons">
+			<fileset dir="${src}/images/icons">
+				<include name="**/*.*"/>
+			</fileset>
+		</copy>
 		<copy file="${static}/autoPSI.bat" todir="${dist}/${project_name}"/>
 		<!--copy file="${static}//${project_name}.sh" todir="${dist}/${project_name}" /-->    
 		<!-- change Unix file permissions for start-shellscript -->
@@ -39,6 +49,7 @@
                 <include name="*.script" />
             </fileset>
         </copy>
+		<copy file="${src}/beans.xml" todir="${build}" /> 
      	<!-- create jar including project plus libraries -->
 		<jar destfile="${dist}/${project_name}/autoPSI.jar">
 			<fileset dir="${build}" />
