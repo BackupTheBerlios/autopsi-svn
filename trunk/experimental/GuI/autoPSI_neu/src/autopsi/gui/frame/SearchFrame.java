@@ -648,6 +648,9 @@ public class SearchFrame extends javax.swing.JFrame implements ActionListener, M
 								jTerminTable.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
 								jTerminTable.setShowGrid(true);
 								jTerminTable.setGridColor(Color.LIGHT_GRAY);
+								jTerminTable.addMouseListener(this);
+								jTerminTableHeader = jTerminTable.getTableHeader();
+								jTerminTableHeader.addMouseListener(this);
 							}
 						}
 						
@@ -760,6 +763,9 @@ public class SearchFrame extends javax.swing.JFrame implements ActionListener, M
 								jTerminContainerTable.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
 								jTerminContainerTable.setShowGrid(true);
 								jTerminContainerTable.setGridColor(Color.LIGHT_GRAY);
+								jTerminContainerTable.addMouseListener(this);
+								jTerminContainerTableHeader = jTerminContainerTable.getTableHeader();
+								jTerminContainerTableHeader.addMouseListener(this);
 							}
 						}
 						
@@ -1190,20 +1196,20 @@ public class SearchFrame extends javax.swing.JFrame implements ActionListener, M
 			TableModel TM = Table.getModel();
 			if (arg0.getSource().equals(jKontaktTable)){
 				KontaktTableModel otm = (KontaktTableModel) TM;
-				GenericDataObject kontakt = otm.getObjectAt(Table.getSelectedRow()); 
+				GenericDataObject object = otm.getObjectAt(Table.getSelectedRow()); 
 				GenericEditFrame gedit = new GenericEditFrame(this);
 				gedit.setTableToEdit("KONTAKT");
-				gedit.setObjectToEdit(kontakt,false);
+				gedit.setObjectToEdit(object,false);
 				gedit.pack();
 				gedit.setVisible(true);
 				otm.fireDataChanged();
 			}
 			if (arg0.getSource().equals(jLVATable)){
 				LVATableModel otm = (LVATableModel) TM;
-				GenericDataObject lva = otm.getObjectAt(Table.getSelectedRow()); 
+				GenericDataObject object = otm.getObjectAt(Table.getSelectedRow()); 
 				GenericEditFrame gedit = new GenericEditFrame(this);
-				gedit.setTableToEdit("LVA");
-				gedit.setObjectToEdit(lva,false);
+				gedit.setTableToEdit(otm.tablename);
+				gedit.setObjectToEdit(object,false);
 				gedit.pack();
 				gedit.setVisible(true);
 				otm.fireDataChanged();
@@ -1211,33 +1217,53 @@ public class SearchFrame extends javax.swing.JFrame implements ActionListener, M
 			
 			if (arg0.getSource().equals(jLehrmittelTable)){
 				LehrmittelTableModel otm = (LehrmittelTableModel) TM;
-				GenericDataObject lehrmittel = otm.getObjectAt(Table.getSelectedRow()); 
+				GenericDataObject object = otm.getObjectAt(Table.getSelectedRow()); 
 				GenericEditFrame gedit = new GenericEditFrame(this);
-				gedit.setTableToEdit("LEHRMITTEL");
-				gedit.setObjectToEdit(lehrmittel,false);
+				gedit.setTableToEdit(otm.tablename);
+				gedit.setObjectToEdit(object,false);
 				gedit.pack();
 				gedit.setVisible(true);
 				otm.fireDataChanged();
 			}
 			if (arg0.getSource().equals(jNotizTable)){
-				NotizTableModel ntm = (NotizTableModel) TM;
-				GenericDataObject lehrmittel = ntm.getObjectAt(Table.getSelectedRow()); 
+				NotizTableModel otm = (NotizTableModel) TM;
+				GenericDataObject object = otm.getObjectAt(Table.getSelectedRow()); 
 				GenericEditFrame gedit = new GenericEditFrame(this);
-				gedit.setTableToEdit("Notiz");
-				gedit.setObjectToEdit(lehrmittel,false);
+				gedit.setTableToEdit(otm.tablename);
+				gedit.setObjectToEdit(object,false);
 				gedit.pack();
 				gedit.setVisible(true);
-				ntm.fireDataChanged();
+				otm.fireDataChanged();
 			}
 			if (arg0.getSource().equals(jPruefungTable)){
-				PruefungTableModel ptm = (PruefungTableModel) TM;
-				GenericDataObject lehrmittel = ptm.getObjectAt(Table.getSelectedRow()); 
+				PruefungTableModel otm = (PruefungTableModel) TM;
+				GenericDataObject object = otm.getObjectAt(Table.getSelectedRow()); 
 				GenericEditFrame gedit = new GenericEditFrame(this);
-				gedit.setTableToEdit("PRUEFUNG");
-				gedit.setObjectToEdit(lehrmittel,false);
+				gedit.setTableToEdit(otm.tablename);
+				gedit.setObjectToEdit(object,false);
 				gedit.pack();
 				gedit.setVisible(true);
-				ptm.fireDataChanged();
+				otm.fireDataChanged();
+			}
+			if (arg0.getSource().equals(jTerminContainerTable)){
+				TerminContainerTableModel otm = (TerminContainerTableModel) TM;
+				GenericDataObject object = otm.getObjectAt(Table.getSelectedRow()); 
+				GenericEditFrame gedit = new GenericEditFrame(this);
+				gedit.setTableToEdit(otm.tablename);
+				gedit.setObjectToEdit(object,false);
+				gedit.pack();
+				gedit.setVisible(true);
+				otm.fireDataChanged();
+			}
+			if (arg0.getSource().equals(jTerminTable)){
+				TerminTableModel otm = (TerminTableModel) TM;
+				GenericDataObject object = otm.getObjectAt(Table.getSelectedRow()); 
+				GenericEditFrame gedit = new GenericEditFrame(this);
+				gedit.setTableToEdit(otm.tablename);
+				gedit.setObjectToEdit(object,false);
+				gedit.pack();
+				gedit.setVisible(true);
+				otm.fireDataChanged();
 			}
 			
 		}
@@ -1258,6 +1284,10 @@ public class SearchFrame extends javax.swing.JFrame implements ActionListener, M
 						jNotizTableModel.setOrder(column);
 					if (arg0.getSource().equals(jPruefungTableHeader))
 						jPruefungTableModel.setOrder(column);
+					if (arg0.getSource().equals(jTerminContainerTableHeader))
+						jTerminContainerTableModel.setOrder(column);
+					if (arg0.getSource().equals(jTerminTableHeader))
+						jTerminTableModel.setOrder(column);
 				}
 		}
 	}
@@ -1398,7 +1428,7 @@ public class SearchFrame extends javax.swing.JFrame implements ActionListener, M
 				}
 				jTerminTableModel.setType(jTerminTypeComboBox.getSelectedItem().toString());
 				jTerminTableModel.setGroup(jTerminGruppeComboBox.getSelectedItem().toString());
-				jTerminTableModel.setSuchTermin(ter);
+				jTerminTableModel.setSearchObject(ter);
 				
 				if (jTerminLokalSuchenRadioButton.isSelected()){
 					this.jTerminTableModel.fireDataChanged();
@@ -1419,7 +1449,7 @@ public class SearchFrame extends javax.swing.JFrame implements ActionListener, M
 					terc.setDescription(null);
 				}
 				jTerminContainerTableModel.setGroup(jTerminContainerGruppeComboBox.getSelectedItem().toString());
-				jTerminContainerTableModel.setSuchTerminc(terc);
+				jTerminContainerTableModel.setSearchObject(terc);
 				
 				if (jTerminContainerLokalSuchenRadioButton.isSelected()){
 					jTerminContainerTableModel.fireDataChanged();
@@ -1524,6 +1554,18 @@ public class SearchFrame extends javax.swing.JFrame implements ActionListener, M
 				jPruefungTableModel.restoreLastDeletedObjects();
 			} else if(cmd.equals(this.jPruefungDownloadButton)) {
 				jPruefungTableModel.downloadObject();
+			} else if(cmd.equals(this.jTerminContainerLoeschenButton)) {
+				jTerminContainerTableModel.deleteSelectedRow(jTerminContainerTable);
+			} else if(cmd.equals(this.jTerminContainerWiederherstellenButton)) {
+				jTerminContainerTableModel.restoreLastDeletedObjects();
+			} else if(cmd.equals(this.jTerminContainerDownloadButton)) {
+				jTerminContainerTableModel.downloadObject();
+			} else if(cmd.equals(this.jTerminLoeschenButton)) {
+				jTerminTableModel.deleteSelectedRow(jTerminTable);
+			} else if(cmd.equals(this.jTerminWiederherstellenButton)) {
+				jTerminTableModel.restoreLastDeletedObjects();
+			} else if(cmd.equals(this.jTerminDownloadButton)) {
+				jTerminTableModel.downloadObject();
 			} else {
 				JOptionPane.showMessageDialog(null, "Error: " +cmd.toString(), "Command not found!" , JOptionPane.ERROR_MESSAGE);
 			}
