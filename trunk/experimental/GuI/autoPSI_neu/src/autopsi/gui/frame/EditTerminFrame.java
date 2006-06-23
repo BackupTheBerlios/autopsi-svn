@@ -388,6 +388,7 @@ public class EditTerminFrame extends javax.swing.JFrame implements java.awt.even
 						desc_area.setBounds(91, 182, 322, 70);
 						desc_area.setBorder(new LineBorder(new java.awt.Color(0,0,0), 1, false));
 						desc_area.setLineWrap(true);
+						desc_area.setWrapStyleWord(true);
 
 					}
 					{
