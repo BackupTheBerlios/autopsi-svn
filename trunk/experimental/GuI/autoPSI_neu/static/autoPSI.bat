@@ -1,1 +1,1 @@
-java -jar autoPSI.jar
+java -cp autoPSI.jar Basis
