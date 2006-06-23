@@ -123,7 +123,7 @@ public class LVATableModel extends AbstractTableModel {
 	 */	
 	public void fireDataChanged() {
 		this.onlinesuche = false;
-		readData();
+		this.readData();
 		this.fireTableDataChanged();
 	}
 	
@@ -133,8 +133,8 @@ public class LVATableModel extends AbstractTableModel {
 	 */	
 	public void fireOnlineDataChanged(){
 		this.onlinesuche = true;
-		readOnlineData();
-		fireTableDataChanged();
+		this.readOnlineData();
+		this.fireTableDataChanged();
 	}
 	
 
@@ -154,31 +154,35 @@ public class LVATableModel extends AbstractTableModel {
 		int auswahl = 0;
 		p = null;
 		//	 Check each cell in the range
-	    for (int r=0; r<this.getRowCount(); r++) {
-            if (table.isCellSelected(r, 1)) {
-            	selected = true;
-            	p=(Lva) this.getObjects().get(r);
-            	if (p.getGlobalId() != null ) {
-            		if (first) {
-            			auswahl = JOptionPane.showConfirmDialog(null, "Sind sie sicher dass sie alle markierten Objekte löschen wollen?", "Löschen?",JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.ERROR_MESSAGE);
-            		}
-	            	if (auswahl == JOptionPane.YES_OPTION) {
-	            		//weiter mit löschen
-	            		deleted = this.deleteLva(p);
-	            		if (deleted) {
-	            			if (first){
-	            				JOptionPane.showMessageDialog(null, "Das Löschvorgang war erfolgreich." , "Gelöscht!" , JOptionPane.INFORMATION_MESSAGE);
-	            			}
-	            		} else {
-	            			JOptionPane.showMessageDialog(null, "Das Objekt konnte nicht gelöscht werden." , "Löschen!" , JOptionPane.ERROR_MESSAGE);
+		if (this.onlinesuche == false) {
+		    for (int r=0; r<this.getRowCount(); r++) {
+	            if (table.isCellSelected(r, 1)) {
+	            	selected = true;
+	            	p=(Lva) this.getObjects().get(r);
+	            	if (p.getGlobalId() != null ) {
+	            		if (first) {
+	            			auswahl = JOptionPane.showConfirmDialog(null, "Sind sie sicher dass sie alle markierten Objekte löschen wollen?", "Löschen?",JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.ERROR_MESSAGE);
 	            		}
+		            	if (auswahl == JOptionPane.YES_OPTION) {
+		            		//weiter mit löschen
+		            		deleted = this.deleteLva(p);
+		            		if (deleted) {
+		            			if (first){
+		            				JOptionPane.showMessageDialog(null, "Das Löschvorgang war erfolgreich." , "Gelöscht!" , JOptionPane.INFORMATION_MESSAGE);
+		            			}
+		            		} else {
+		            			JOptionPane.showMessageDialog(null, "Das Objekt konnte nicht gelöscht werden." , "Löschen!" , JOptionPane.ERROR_MESSAGE);
+		            		}
+		            	}
+	            	} else {
+	            		JOptionPane.showMessageDialog(null, "Dieses Objekt kann nicht gelöscht werden." , "Null Object!" , JOptionPane.ERROR_MESSAGE);
 	            	}
-            	} else {
-            		JOptionPane.showMessageDialog(null, "Dieses Objekt kann nicht gelöscht werden." , "Null Object!" , JOptionPane.ERROR_MESSAGE);
-            	}
-            	first = false;
-            }    
-	    }
+	            	first = false;
+	            }    
+		    }
+		} else {
+			JOptionPane.showMessageDialog(null, "Online Objekte können nicht gelöscht werden." , "Online Object!" , JOptionPane.ERROR_MESSAGE);
+		}
 	    
 	    if (selected == false) {
 	    	JOptionPane.showMessageDialog(null, "Bitte selektieren Sie mindestens eine Reihe in der Tabelle", "Data wurde nicht ausgewählt!" , JOptionPane.ERROR_MESSAGE);
@@ -195,15 +199,15 @@ public class LVATableModel extends AbstractTableModel {
 	 * sonnst false.
 	 * @author	Alpay Firato
 	 */
-	public boolean deleteLva(Lva p){
-		if (p == null)
+	public boolean deleteLva(Lva Object){
+		if (Object == null)
 			return false;
 		
 		try{
 			GenericDAO gdo = new GenericDAO();
-			List <GenericDataObject> loeschen = gdo.unsafeQuery("SELECT * FROM " + this.tablename+" WHERE GLOBAL_ID ="+p.getGlobalId(), new Lva());
+			List <GenericDataObject> loeschen = gdo.unsafeQuery("SELECT * FROM " + this.tablename+" WHERE GLOBAL_ID ="+Object.getGlobalId(), new Lva());
 			lastDeletedObjects.add(loeschen.get(0));
-			loeschen = gdo.unsafeQuery("DELETE FROM " + this.tablename+" WHERE GLOBAL_ID ="+p.getGlobalId(), new Lva());
+			loeschen = gdo.unsafeQuery("DELETE FROM " + this.tablename+" WHERE GLOBAL_ID ="+Object.getGlobalId(), new Lva());
 			return true;
 		} catch (Exception e){
 			JOptionPane.showMessageDialog(null, "Error: " +e.toString(), "Error!" , JOptionPane.ERROR_MESSAGE);
@@ -248,16 +252,16 @@ public class LVATableModel extends AbstractTableModel {
 	 * @param	GenericDataObject	Das Object, das in die Datenbank eingefügt werden soll.
 	 * @author	Alpay Firato
 	 */
-	public void addLVA(GenericDataObject p){
+	public void addLVA(GenericDataObject Object){
 		try{
-			if (p!=null){
+			if (Object!=null){
 				gdo.setCurrentTable("attachable_object");
 				AttachableObject a = new AttachableObject();
 				a.setTableName(this.tablename.toLowerCase());
 				a.setKategorieId(0);
 				gdo.addDataObject(a);
 				a = (AttachableObject)gdo.unsafeQuery("select * from attachable_object where global_id=identity()", new AttachableObject()).get(0);
-				Lva l = (Lva) p;
+				Lva l = (Lva) Object;
 				l.setGlobalId(a.getId());
 				l.setUniId(0);
 				gdo.setCurrentTable(this.tablename);
