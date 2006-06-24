@@ -3,6 +3,8 @@ package autopsi.gui.frame;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.WindowAdapter;
@@ -71,7 +73,7 @@ import autopsi.database.table.LvaKategorie;
 * THIS MACHINE, SO JIGLOO OR THIS CODE CANNOT BE USED
 * LEGALLY FOR ANY CORPORATE OR COMMERCIAL PURPOSE.
 */
-public class SearchFrame extends javax.swing.JFrame implements ActionListener, MouseListener {
+public class SearchFrame extends javax.swing.JFrame implements ActionListener, MouseListener, KeyListener {
 
 	{
 		//Set Look & Feel
@@ -111,7 +113,7 @@ public class SearchFrame extends javax.swing.JFrame implements ActionListener, M
 	private JTextField jLehrmittelNameField, jLehrmittelBeschreibungField;
 	private JTextField jNotizTitelField, jPruefungLVAField;
 	private JTextField jPruefungExaminerField, jNotizNoteField;
-	private JFormattedTextField jGeburtsdatumField, jDatumField;
+	private JTextField jGeburtsdatumField, jDatumField;
 
 	private JLabel jVornameLabel, jNachnameLabel, jGeburtsdatumLabel;
 	private JLabel jTelefonnummerLabel, jEmailLabel, jAdresseLabel, jOrtLabel, jPlzLabel;
@@ -255,14 +257,36 @@ public class SearchFrame extends javax.swing.JFrame implements ActionListener, M
 						jVornameField = new JTextField();
 						jKontaktSuchePanel.add(jVornameField);
 						jVornameField.setBounds(105, 7, 210, 21);
+						jVornameField.addKeyListener(this);
 
 						jNachnameField = new JTextField();
 						jKontaktSuchePanel.add(jNachnameField);
 						jNachnameField.setBounds(105, 30, 210, 21);
+						jNachnameField.addKeyListener(this);
 
-						jGeburtsdatumField = new JFormattedTextField(createFormatter("##-##-####"));
+						jGeburtsdatumField = new JTextField();
 						jKontaktSuchePanel.add(jGeburtsdatumField);
 						jGeburtsdatumField.setBounds(105, 53, 210, 21);
+						jGeburtsdatumField.setDocument(new PlainDocument() {
+					    	private static final long serialVersionUID = 8723098029189851737L;
+							public void insertString(int offset, String str, AttributeSet a)
+									throws BadLocationException {
+								// Eingaben von Buchstaben ist nicht erlaubt...
+								if (!str.matches(".*[[0-9]|-].*"))
+									return;
+								//Höchstens 15 Zeichen
+								if (offset>9)
+									return;
+								if (offset==1)
+									super.insertString(offset, "-", a);
+								if (offset==4)
+									super.insertString(offset, "-", a);
+									
+								super.insertString(offset, str, a);
+							}
+						});
+						jGeburtsdatumField.addKeyListener(this);
+						
 
 						jTelefonnummerField = new JTextField();
 						jKontaktSuchePanel.add(jTelefonnummerField);
@@ -272,7 +296,7 @@ public class SearchFrame extends javax.swing.JFrame implements ActionListener, M
 							public void insertString(int offset, String str, AttributeSet a)
 									throws BadLocationException {
 								// Eingaben von Buchstaben ist nicht erlaubt...
-								if (str.matches(".*[[a-z]|[A-Z]].*"))
+								if (!str.matches(".*[[0-9]|/].*"))
 									return;
 								//Höchstens 15 Zeichen
 								if (offset>MAXTELEFON)
@@ -280,14 +304,17 @@ public class SearchFrame extends javax.swing.JFrame implements ActionListener, M
 								super.insertString(offset, str, a);
 							}
 						});
+						jTelefonnummerField.addKeyListener(this);
 						
 						jEmailField = new JTextField();
 						jKontaktSuchePanel.add(jEmailField);
 						jEmailField.setBounds(420, 7, 210, 21);
+						jEmailField.addKeyListener(this);
 
 						jAdresseField = new JTextField();
 						jKontaktSuchePanel.add(jAdresseField);
 						jAdresseField.setBounds(420, 30, 210, 21);
+						jAdresseField.addKeyListener(this);
 						
 						jPlzField = new JTextField();
 						jKontaktSuchePanel.add(jPlzField);
@@ -305,10 +332,12 @@ public class SearchFrame extends javax.swing.JFrame implements ActionListener, M
 								super.insertString(offset, str, a);
 							}
 						});
+						jPlzField.addKeyListener(this);
 						
 						jOrtField = new JTextField();
 						jKontaktSuchePanel.add(jOrtField);
 						jOrtField.setBounds(420, 76, 210, 21);
+						jOrtField.addKeyListener(this);
 						
 						{
 							jSeparator1 = new JSeparator();
@@ -578,9 +607,27 @@ public class SearchFrame extends javax.swing.JFrame implements ActionListener, M
 						jTerminBeschreibungField.setBounds(105, 30, 210, 21);
 
 												
-						jDatumField = new JFormattedTextField();
+						jDatumField = new JTextField();
 						jTerminSuchePanel.add(jDatumField);
 						jDatumField.setBounds(420, 7, 210, 21);
+						jDatumField.setDocument(new PlainDocument() {
+					    	private static final long serialVersionUID = 8723098029189851737L;
+							public void insertString(int offset, String str, AttributeSet a)
+									throws BadLocationException {
+								// Eingaben von Buchstaben ist nicht erlaubt...
+								if (!str.matches(".*[[0-9]|-].*"))
+									return;
+								//Höchstens 9 Zeichen
+								if (offset>9)
+									return;
+								if (offset==1)
+									super.insertString(offset, "-", a);
+								if (offset==4)
+									super.insertString(offset, "-", a);
+									
+								super.insertString(offset, str, a);
+							}
+						});
 						
 						KategorieComboBoxModel jTerminTypeComboBoxModel = new KategorieComboBoxModel("TERMIN_KATEGORIE", new TerminKategorie());
 						jTerminTypeComboBox = new JComboBox();
@@ -1327,256 +1374,170 @@ public class SearchFrame extends javax.swing.JFrame implements ActionListener, M
 		}
 	}
 	
-	public void TableactionPerformed (Object cmd){
-		JTable Table = (JTable) cmd;
-		System.out.println(Table.getColumnName(Table.getSelectedRows()[0]));
-	}
-	
 	public void starteSuche (Object cmd){
-		try {
-			if (cmd.equals(this.jKontaktSuchenButton)) {
-				Kontakt kont = new Kontakt();
-				if (!jVornameField.getText().equals("")){
-					kont.setPrename(jVornameField.getText());
-				} else {
-					kont.setPrename(null);
-				} 
-				if (!jNachnameField.getText().equals("")) {
-					kont.setSurname(jNachnameField.getText());
-				} else {
-					kont.setSurname(null);
-				}
-				if (!jGeburtsdatumField.getText().equals("  -  -    ")){
-					SimpleDateFormat sf = new SimpleDateFormat("dd-MM-yyyy");
-					Date geburtsdatum = sf.parse(jGeburtsdatumField.getText());
-					java.sql.Date sqlgeburtsdatum = new java.sql.Date( geburtsdatum.getTime());
-					kont.setBirthDate(sqlgeburtsdatum);
-				} else {
-					kont.setBirthDate(null);
-				}
-				if (!jTelefonnummerField.getText().equals("")){
-					kont.setTelBusiness(jTelefonnummerField.getText());
-				} else {
-					kont.setTelBusiness(null);
-				}
-				if (!jEmailField.getText().equals("")) {
-					kont.setFirstEmail(jEmailField.getText());
-				} else {
-					kont.setFirstEmail(null);
-				}
-				if (!jPlzField.getText().equals("")){
-					Integer plz = new Integer(jPlzField.getText());
-					kont.setAZipCode(plz);
-				} else {
-					kont.setAZipCode(null);
-				}
-				if (!jAdresseField.getText().equals("")){
-					kont.setAAdress(jAdresseField.getText());
-				} else {
-					kont.setAAdress(null);
-				}
-				if (!jOrtField.getText().equals("")) {
-					kont.setACity(jOrtField.getText());
-				} else {
-					kont.setACity(null);
-				}
-				jKontaktTableModel.setGroup(jKontaktGruppeComboBox.getSelectedItem().toString());
-				jKontaktTableModel.setSearchObject(kont);
-				
-				if (jKontaktLokalSuchenRadioButton.isSelected()){
-					jKontaktTableModel.fireDataChanged();
-					
-				} else if (jKontaktOnlineSuchenRadioButton.isSelected()) {
-					jKontaktTableModel.fireOnlineDataChanged();
-				}
-			} else if(cmd.equals(this.jLVASuchenButton)) {
-				Lva lva = new Lva();
-				if (!jLVANummerField.getText().equals("")){
-					lva.setLvaNr(jLVANummerField.getText());
-				} else {
-					lva.setLvaNr(null);
-				}
-				if (!jLVATitelField.getText().equals("")){
-					lva.setTitle(jLVATitelField.getText());
-				} else {
-					lva.setTitle(null);
-				}
-				if (!jBeschreibungField.getText().equals("")){
-					lva.setDescription(jBeschreibungField.getText());
-				} else {
-					lva.setDescription(null);
-				}
-				jLVATableModel.setType(jLVATypeComboBox.getSelectedItem().toString());
-				jLVATableModel.setGroup(jLVATypeComboBox.getSelectedItem().toString());
-				jLVATableModel.setSearchObject(lva);
-				
-				if (jLVALokalSuchenRadioButton.isSelected()){
-					this.jLVATableModel.fireDataChanged();
-				} else if (jLVAOnlineSuchenRadioButton.isSelected()) {
-					this.jLVATableModel.fireOnlineDataChanged();
-				}
-			} else if(cmd.equals(this.jTerminSuchenButton)) {
-				Termin ter = new Termin();
-				if (!jTerminTitelField.getText().equals("")) {
-					ter.setSecondaryTitle(jTerminTitelField.getText());
-				} else {
-					ter.setSecondaryTitle(null);
-				}
-				if (!jTerminBeschreibungField.getText().equals("")){
-					ter.setDescription(jTerminBeschreibungField.getText());
-				} else {
-					ter.setDescription(null);
-				}
-				if (!jDatumField.getText().equals("")){
-					jTerminTableModel.setDatum(jDatumField.getText());
-				} else {
-					jTerminTableModel.setDatum(null);
-				}
-				jTerminTableModel.setType(jTerminTypeComboBox.getSelectedItem().toString());
-				jTerminTableModel.setGroup(jTerminGruppeComboBox.getSelectedItem().toString());
-				jTerminTableModel.setSearchObject(ter);
-				
-				if (jTerminLokalSuchenRadioButton.isSelected()){
-					this.jTerminTableModel.fireDataChanged();
-				} else if (jTerminOnlineSuchenRadioButton.isSelected()) {
-					this.jTerminTableModel.fireOnlineDataChanged();
-				}
-				
-			}  else if(cmd.equals(this.jTerminContainerSuchenButton)) {
-				TerminContainer terc = new TerminContainer();
-				if (!jTerminContainerTitelField.getText().equals("")) {
-					terc.setTitle(jTerminContainerTitelField.getText());
-				} else {
-					terc.setTitle(null);
-				}
-				if (!jTerminContainerBeschreibungField.getText().equals("")){
-					terc.setDescription(jTerminContainerBeschreibungField.getText());
-				} else {
-					terc.setDescription(null);
-				}
-				jTerminContainerTableModel.setGroup(jTerminContainerGruppeComboBox.getSelectedItem().toString());
-				jTerminContainerTableModel.setSearchObject(terc);
-				
-				if (jTerminContainerLokalSuchenRadioButton.isSelected()){
-					jTerminContainerTableModel.fireDataChanged();
-				} else if (jTerminContainerOnlineSuchenRadioButton.isSelected()) {
-					this.jTerminContainerTableModel.fireOnlineDataChanged();
-				}
-				
-			} else if(cmd.equals(this.jLehrmittelSuchenButton)) {
-				Lehrmittel lm = new Lehrmittel();
-				if (!jLehrmittelNameField.getText().equals("")) {
-					lm.setName(jLehrmittelNameField.getText());
-				} else {
-					lm.setName(null);
-				}
-				if (!jLehrmittelBeschreibungField.getText().equals("")) {
-					lm.setDescription(jLehrmittelBeschreibungField.getText());
-				} else {
-					lm.setDescription(null);
-				}
-				jLehrmittelTableModel.setType(jLehrmittelTypeComboBox.getSelectedItem().toString());
-				jLehrmittelTableModel.setGroup(jLehrmittelGruppeComboBox.getSelectedItem().toString());
-				jLehrmittelTableModel.setSearchObject(lm);
-				
-				if (jLehrmittelLokalSuchenRadioButton.isSelected()){
-					jLehrmittelTableModel.fireDataChanged();
-				} else if (jLehrmittelOnlineSuchenRadioButton.isSelected()) {
-					this.jLehrmittelTableModel.fireOnlineDataChanged();
-				}
-				
-			}  else if(cmd.equals(this.jNotizSuchenButton)) {
-				Notiz not = new Notiz();
-				if (!jNotizTitelField.getText().equals("")) {
-					not.setTitle(jNotizTitelField.getText());
-				} else {
-					not.setTitle(null);
-				}
-				if (!jNotizNoteField.getText().equals("")) {
-					not.setNote(jNotizNoteField.getText());
-				} else {
-					not.setNote(null);
-				}
-				jNotizTableModel.setGroup(jNotizGruppeComboBox.getSelectedItem().toString());
-				jNotizTableModel.setSearchObject(not);
-				if (jNotizLokalSuchenRadioButton.isSelected()){
-					this.jNotizTableModel.fireDataChanged();
-				} else if (jNotizOnlineSuchenRadioButton.isSelected()) {
-					this.jNotizTableModel.fireOnlineDataChanged();
-				}
-				
-			}
-			else if(cmd.equals(this.jPruefungSuchenButton)) {
-				Pruefung p = new Pruefung();
-				if (!jPruefungLVAField.getText().equals("")) {
-					jPruefungTableModel.setLvaName(jPruefungLVAField.getText());
-				} else {
-					jPruefungTableModel.setLvaName(null);
-				}
-				if (!jPruefungExaminerField.getText().equals("")) {
-					p.setExaminer(jPruefungExaminerField.getText());
-				} else {
-					p.setExaminer(null);
-				}
-				if (!jGradeComboBox.getSelectedItem().toString().equals("-")) {
-					p.setGrade(new Integer(jGradeComboBox.getSelectedItem().toString()));
-				} else {
-					p.setGrade(null);
-				}
-				jPruefungTableModel.setGroup(jPruefungGruppeComboBox.getSelectedItem().toString());
-				jPruefungTableModel.setSearchObject(p);
-				if (jPruefungLokalSuchenRadioButton.isSelected()){
-					jPruefungTableModel.fireDataChanged();
-				} else if (jPruefungOnlineSuchenRadioButton.isSelected()) {
-					jPruefungTableModel.fireOnlineDataChanged();
-				}			
-			} else if(cmd.equals(this.jKontaktLoeschenButton)) {
-				jKontaktTableModel.deleteSelectedRow(jKontaktTable);
-			} else if(cmd.equals(this.jKontaktWiederherstellenButton)) {
-				jKontaktTableModel.restoreLastDeletedObjects();
-			} else if(cmd.equals(this.jKontaktDownloadButton)) {
-				jKontaktTableModel.downloadObject();
-			} else if(cmd.equals(this.jLVALoeschenButton)) {
-				jLVATableModel.deleteSelectedRow(jLVATable);
-			} else if(cmd.equals(this.jLVAWiederherstellenButton)) {
-				jLVATableModel.restoreLastDeletedObjects();
-			} else if(cmd.equals(this.jLVADownloadButton)) {
-				jLVATableModel.downloadObject();
-			} else if(cmd.equals(this.jLehrmittelLoeschenButton)) {
-				jLehrmittelTableModel.deleteSelectedRow(jLehrmittelTable);
-			} else if(cmd.equals(this.jKontaktWiederherstellenButton)) {
-				jLehrmittelTableModel.restoreLastDeletedObjects();
-			} else if(cmd.equals(this.jKontaktDownloadButton)) {
-				jLehrmittelTableModel.downloadObject();
-			} else if(cmd.equals(this.jNotizLoeschenButton)) {
-				jNotizTableModel.deleteSelectedRow(jNotizTable);
-			} else if(cmd.equals(this.jNotizWiederherstellenButton)) {
-				jNotizTableModel.restoreLastDeletedObjects();
-			} else if(cmd.equals(this.jNotizDownloadButton)) {
-				jNotizTableModel.downloadObject();
-			} else if(cmd.equals(this.jPruefungLoeschenButton)) {
-				jPruefungTableModel.deleteSelectedRow(jPruefungTable);
-			} else if(cmd.equals(this.jPruefungWiederherstellenButton)) {
-				jPruefungTableModel.restoreLastDeletedObjects();
-			} else if(cmd.equals(this.jPruefungDownloadButton)) {
-				jPruefungTableModel.downloadObject();
-			} else if(cmd.equals(this.jTerminContainerLoeschenButton)) {
-				jTerminContainerTableModel.deleteSelectedRow(jTerminContainerTable);
-			} else if(cmd.equals(this.jTerminContainerWiederherstellenButton)) {
-				jTerminContainerTableModel.restoreLastDeletedObjects();
-			} else if(cmd.equals(this.jTerminContainerDownloadButton)) {
-				jTerminContainerTableModel.downloadObject();
-			} else if(cmd.equals(this.jTerminLoeschenButton)) {
-				jTerminTableModel.deleteSelectedRow(jTerminTable);
-			} else if(cmd.equals(this.jTerminWiederherstellenButton)) {
-				jTerminTableModel.restoreLastDeletedObjects();
-			} else if(cmd.equals(this.jTerminDownloadButton)) {
-				jTerminTableModel.downloadObject();
+		if (cmd.equals(this.jKontaktSuchenButton)) {
+			starteKontaktSuche();
+		} else if(cmd.equals(this.jLVASuchenButton)) {
+			starteLVASuche();
+		} else if(cmd.equals(this.jTerminSuchenButton)) {
+			Termin ter = new Termin();
+			if (!jTerminTitelField.getText().equals("")) {
+				ter.setSecondaryTitle(jTerminTitelField.getText());
 			} else {
-				JOptionPane.showMessageDialog(null, "Error: " +cmd.toString(), "Command not found!" , JOptionPane.ERROR_MESSAGE);
+				ter.setSecondaryTitle(null);
 			}
-		} catch (ParseException ps) {
-			JOptionPane.showMessageDialog(null, "Parse-Error: " +ps.getMessage(), "Error!" , JOptionPane.ERROR_MESSAGE);
+			if (!jTerminBeschreibungField.getText().equals("")){
+				ter.setDescription(jTerminBeschreibungField.getText());
+			} else {
+				ter.setDescription(null);
+			}
+			if (!jDatumField.getText().equals("")){
+				jTerminTableModel.setDatum(jDatumField.getText());
+			} else {
+				jTerminTableModel.setDatum(null);
+			}
+			jTerminTableModel.setType(jTerminTypeComboBox.getSelectedItem().toString());
+			jTerminTableModel.setGroup(jTerminGruppeComboBox.getSelectedItem().toString());
+			jTerminTableModel.setSearchObject(ter);
+			
+			if (jTerminLokalSuchenRadioButton.isSelected()){
+				this.jTerminTableModel.fireDataChanged();
+			} else if (jTerminOnlineSuchenRadioButton.isSelected()) {
+				this.jTerminTableModel.fireOnlineDataChanged();
+			}
+			
+		}  else if(cmd.equals(this.jTerminContainerSuchenButton)) {
+			TerminContainer terc = new TerminContainer();
+			if (!jTerminContainerTitelField.getText().equals("")) {
+				terc.setTitle(jTerminContainerTitelField.getText());
+			} else {
+				terc.setTitle(null);
+			}
+			if (!jTerminContainerBeschreibungField.getText().equals("")){
+				terc.setDescription(jTerminContainerBeschreibungField.getText());
+			} else {
+				terc.setDescription(null);
+			}
+			jTerminContainerTableModel.setGroup(jTerminContainerGruppeComboBox.getSelectedItem().toString());
+			jTerminContainerTableModel.setSearchObject(terc);
+			
+			if (jTerminContainerLokalSuchenRadioButton.isSelected()){
+				jTerminContainerTableModel.fireDataChanged();
+			} else if (jTerminContainerOnlineSuchenRadioButton.isSelected()) {
+				this.jTerminContainerTableModel.fireOnlineDataChanged();
+			}
+			
+		} else if(cmd.equals(this.jLehrmittelSuchenButton)) {
+			Lehrmittel lm = new Lehrmittel();
+			if (!jLehrmittelNameField.getText().equals("")) {
+				lm.setName(jLehrmittelNameField.getText());
+			} else {
+				lm.setName(null);
+			}
+			if (!jLehrmittelBeschreibungField.getText().equals("")) {
+				lm.setDescription(jLehrmittelBeschreibungField.getText());
+			} else {
+				lm.setDescription(null);
+			}
+			jLehrmittelTableModel.setType(jLehrmittelTypeComboBox.getSelectedItem().toString());
+			jLehrmittelTableModel.setGroup(jLehrmittelGruppeComboBox.getSelectedItem().toString());
+			jLehrmittelTableModel.setSearchObject(lm);
+			
+			if (jLehrmittelLokalSuchenRadioButton.isSelected()){
+				jLehrmittelTableModel.fireDataChanged();
+			} else if (jLehrmittelOnlineSuchenRadioButton.isSelected()) {
+				this.jLehrmittelTableModel.fireOnlineDataChanged();
+			}
+			
+		}  else if(cmd.equals(this.jNotizSuchenButton)) {
+			Notiz not = new Notiz();
+			if (!jNotizTitelField.getText().equals("")) {
+				not.setTitle(jNotizTitelField.getText());
+			} else {
+				not.setTitle(null);
+			}
+			if (!jNotizNoteField.getText().equals("")) {
+				not.setNote(jNotizNoteField.getText());
+			} else {
+				not.setNote(null);
+			}
+			jNotizTableModel.setGroup(jNotizGruppeComboBox.getSelectedItem().toString());
+			jNotizTableModel.setSearchObject(not);
+			if (jNotizLokalSuchenRadioButton.isSelected()){
+				this.jNotizTableModel.fireDataChanged();
+			} else if (jNotizOnlineSuchenRadioButton.isSelected()) {
+				this.jNotizTableModel.fireOnlineDataChanged();
+			}
+			
+		}
+		else if(cmd.equals(this.jPruefungSuchenButton)) {
+			Pruefung p = new Pruefung();
+			if (!jPruefungLVAField.getText().equals("")) {
+				jPruefungTableModel.setLvaName(jPruefungLVAField.getText());
+			} else {
+				jPruefungTableModel.setLvaName(null);
+			}
+			if (!jPruefungExaminerField.getText().equals("")) {
+				p.setExaminer(jPruefungExaminerField.getText());
+			} else {
+				p.setExaminer(null);
+			}
+			if (!jGradeComboBox.getSelectedItem().toString().equals("-")) {
+				p.setGrade(new Integer(jGradeComboBox.getSelectedItem().toString()));
+			} else {
+				p.setGrade(null);
+			}
+			jPruefungTableModel.setGroup(jPruefungGruppeComboBox.getSelectedItem().toString());
+			jPruefungTableModel.setSearchObject(p);
+			if (jPruefungLokalSuchenRadioButton.isSelected()){
+				jPruefungTableModel.fireDataChanged();
+			} else if (jPruefungOnlineSuchenRadioButton.isSelected()) {
+				jPruefungTableModel.fireOnlineDataChanged();
+			}			
+		} else if(cmd.equals(this.jKontaktLoeschenButton)) {
+			jKontaktTableModel.deleteSelectedRow(jKontaktTable);
+		} else if(cmd.equals(this.jKontaktWiederherstellenButton)) {
+			jKontaktTableModel.restoreLastDeletedObjects();
+		} else if(cmd.equals(this.jKontaktDownloadButton)) {
+			jKontaktTableModel.downloadObject();
+		} else if(cmd.equals(this.jLVALoeschenButton)) {
+			jLVATableModel.deleteSelectedRow(jLVATable);
+		} else if(cmd.equals(this.jLVAWiederherstellenButton)) {
+			jLVATableModel.restoreLastDeletedObjects();
+		} else if(cmd.equals(this.jLVADownloadButton)) {
+			jLVATableModel.downloadObject();
+		} else if(cmd.equals(this.jLehrmittelLoeschenButton)) {
+			jLehrmittelTableModel.deleteSelectedRow(jLehrmittelTable);
+		} else if(cmd.equals(this.jKontaktWiederherstellenButton)) {
+			jLehrmittelTableModel.restoreLastDeletedObjects();
+		} else if(cmd.equals(this.jKontaktDownloadButton)) {
+			jLehrmittelTableModel.downloadObject();
+		} else if(cmd.equals(this.jNotizLoeschenButton)) {
+			jNotizTableModel.deleteSelectedRow(jNotizTable);
+		} else if(cmd.equals(this.jNotizWiederherstellenButton)) {
+			jNotizTableModel.restoreLastDeletedObjects();
+		} else if(cmd.equals(this.jNotizDownloadButton)) {
+			jNotizTableModel.downloadObject();
+		} else if(cmd.equals(this.jPruefungLoeschenButton)) {
+			jPruefungTableModel.deleteSelectedRow(jPruefungTable);
+		} else if(cmd.equals(this.jPruefungWiederherstellenButton)) {
+			jPruefungTableModel.restoreLastDeletedObjects();
+		} else if(cmd.equals(this.jPruefungDownloadButton)) {
+			jPruefungTableModel.downloadObject();
+		} else if(cmd.equals(this.jTerminContainerLoeschenButton)) {
+			jTerminContainerTableModel.deleteSelectedRow(jTerminContainerTable);
+		} else if(cmd.equals(this.jTerminContainerWiederherstellenButton)) {
+			jTerminContainerTableModel.restoreLastDeletedObjects();
+		} else if(cmd.equals(this.jTerminContainerDownloadButton)) {
+			jTerminContainerTableModel.downloadObject();
+		} else if(cmd.equals(this.jTerminLoeschenButton)) {
+			jTerminTableModel.deleteSelectedRow(jTerminTable);
+		} else if(cmd.equals(this.jTerminWiederherstellenButton)) {
+			jTerminTableModel.restoreLastDeletedObjects();
+		} else if(cmd.equals(this.jTerminDownloadButton)) {
+			jTerminTableModel.downloadObject();
+		} else {
+			JOptionPane.showMessageDialog(null, "Error: " +cmd.toString(), "Command not found!" , JOptionPane.ERROR_MESSAGE);
 		}
 	}
 	
@@ -1588,5 +1549,139 @@ public class SearchFrame extends javax.swing.JFrame implements ActionListener, M
 			JOptionPane.showMessageDialog(null, "Formatter-Error: " +exc.getMessage(), "Error!" , JOptionPane.ERROR_MESSAGE);
 		}
 		return formatter;
+	}
+
+	public void keyTyped(KeyEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void keyPressed(KeyEvent arg0) {
+		// TODO Auto-generated method stub
+		
+//		private JTextField jTerminContainerTitelField, jTerminContainerBeschreibungField;
+//		private JTextField jLehrmittelNameField, jLehrmittelBeschreibungField;
+//		private JTextField jNotizTitelField, jPruefungLVAField;
+//		private JTextField jPruefungExaminerField, jNotizNoteField;
+//		private JFormattedTextField jGeburtsdatumField, jDatumField;
+//		
+		
+		if (arg0.getSource() instanceof JTextField || arg0.getSource() instanceof JFormattedTextField) {
+			if (arg0.getKeyCode() == KeyEvent.VK_ENTER) {
+				Object Field = arg0.getSource();
+				if (Field.equals(jVornameField) || Field.equals(jNachnameField) 
+						|| Field.equals(jTelefonnummerField) || Field.equals(jEmailField) 
+						|| Field.equals(jAdresseField) || Field.equals(jPlzField) 
+						|| Field.equals(jOrtField) || Field.equals(jGeburtsdatumField)) {
+					starteKontaktSuche();
+				}
+				if (Field.equals(jLVATitelField) || Field.equals(jLVANummerField) 
+						|| Field.equals(jBeschreibungField) || Field.equals(jTerminTitelField) 
+						|| Field.equals(jTerminBeschreibungField) || Field.equals(jPlzField) 
+						|| Field.equals(jOrtField) || Field.equals(jGeburtsdatumField)) {
+					starteLVASuche();
+				}
+			}
+		}
+		 
+		
+	}
+
+	public void keyReleased(KeyEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+	
+	private void starteLVASuche() {
+		Lva lva = new Lva();
+		if (!jLVANummerField.getText().equals("")){
+			lva.setLvaNr(jLVANummerField.getText());
+		} else {
+			lva.setLvaNr(null);
+		}
+		if (!jLVATitelField.getText().equals("")){
+			lva.setTitle(jLVATitelField.getText());
+		} else {
+			lva.setTitle(null);
+		}
+		if (!jBeschreibungField.getText().equals("")){
+			lva.setDescription(jBeschreibungField.getText());
+		} else {
+			lva.setDescription(null);
+		}
+		jLVATableModel.setType(jLVATypeComboBox.getSelectedItem().toString());
+		jLVATableModel.setGroup(jLVATypeComboBox.getSelectedItem().toString());
+		jLVATableModel.setSearchObject(lva);
+		
+		if (jLVALokalSuchenRadioButton.isSelected()){
+			this.jLVATableModel.fireDataChanged();
+		} else if (jLVAOnlineSuchenRadioButton.isSelected()) {
+			this.jLVATableModel.fireOnlineDataChanged();
+		}
+		
+	}
+
+	private void starteKontaktSuche() {
+		try {
+			Kontakt kont = new Kontakt();
+			if (!jVornameField.getText().equals("")){
+				kont.setPrename(jVornameField.getText());
+			} else {
+				kont.setPrename(null);
+			} 
+			if (!jNachnameField.getText().equals("")) {
+				kont.setSurname(jNachnameField.getText());
+			} else {
+				kont.setSurname(null);
+			}
+			
+			//JOptionPane.showMessageDialog(null, "laenge: " +jGeburtsdatumField.getText().length(), "Error!" , JOptionPane.ERROR_MESSAGE);
+			if (jGeburtsdatumField.getText().length()==10){
+				SimpleDateFormat sf = new SimpleDateFormat("dd-MM-yyyy");
+				Date geburtsdatum = sf.parse(jGeburtsdatumField.getText());
+				java.sql.Date sqlgeburtsdatum = new java.sql.Date( geburtsdatum.getTime());
+				kont.setBirthDate(sqlgeburtsdatum);
+			} else {
+				kont.setBirthDate(null);
+			}
+			if (!jTelefonnummerField.getText().equals("")){
+				kont.setTelBusiness(jTelefonnummerField.getText());
+			} else {
+				kont.setTelBusiness(null);
+			}
+			if (!jEmailField.getText().equals("")) {
+				kont.setFirstEmail(jEmailField.getText());
+			} else {
+				kont.setFirstEmail(null);
+			}
+			if (!jPlzField.getText().equals("")){
+				Integer plz = new Integer(jPlzField.getText());
+				kont.setAZipCode(plz);
+			} else {
+				kont.setAZipCode(null);
+			}
+			if (!jAdresseField.getText().equals("")){
+				kont.setAAdress(jAdresseField.getText());
+			} else {
+				kont.setAAdress(null);
+			}
+			if (!jOrtField.getText().equals("")) {
+				kont.setACity(jOrtField.getText());
+			} else {
+				kont.setACity(null);
+			}
+			jKontaktTableModel.setGroup(jKontaktGruppeComboBox.getSelectedItem().toString());
+			jKontaktTableModel.setSearchObject(kont);
+			
+			if (jKontaktLokalSuchenRadioButton.isSelected()){
+				jKontaktTableModel.fireDataChanged();
+				
+			} else if (jKontaktOnlineSuchenRadioButton.isSelected()) {
+				jKontaktTableModel.fireOnlineDataChanged();
+			}
+		} catch (ParseException ps) {
+			JOptionPane.showMessageDialog(null, "Parse-Error: " +ps.getMessage(), "Error!" , JOptionPane.ERROR_MESSAGE);
+		}
+		
 	}
 }
