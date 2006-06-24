@@ -1,6 +1,7 @@
 package autopsi.gui.frame;
 
 import java.awt.Color;
+import java.awt.Cursor;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -36,7 +37,6 @@ import javax.swing.table.TableColumnModel;
 import javax.swing.table.TableModel;
 import javax.swing.text.AttributeSet;
 import javax.swing.text.BadLocationException;
-import javax.swing.text.MaskFormatter;
 import javax.swing.text.PlainDocument;
 
 import autopsi.basis.AutopsiConfigurator;
@@ -463,15 +463,18 @@ public class SearchFrame extends javax.swing.JFrame implements ActionListener, M
 						jLVATitelField = new JTextField();
 						jLVASuchePanel.add(jLVATitelField);
 						jLVATitelField.setBounds(105, 7, 210, 21);
+						jLVATitelField.addKeyListener(this);
 
 
 						jLVANummerField = new JTextField();
 						jLVASuchePanel.add(jLVANummerField);
 						jLVANummerField.setBounds(105, 30, 210, 21);
+						jLVANummerField.addKeyListener(this);
 
 						jBeschreibungField = new JTextField();
 						jLVASuchePanel.add(jBeschreibungField);
-						jBeschreibungField.setBounds(105, 53, 210, 21);		
+						jBeschreibungField.setBounds(105, 53, 210, 21);
+						jBeschreibungField.addKeyListener(this);
 						
 						KategorieComboBoxModel jLVATypeComboBoxModel = new KategorieComboBoxModel("LVA_KATEGORIE", new LvaKategorie());
 						jLVATypeComboBox = new JComboBox();
@@ -600,11 +603,13 @@ public class SearchFrame extends javax.swing.JFrame implements ActionListener, M
 						jTerminTitelField = new JTextField();
 						jTerminSuchePanel.add(jTerminTitelField);
 						jTerminTitelField.setBounds(105, 7, 210, 21);
+						jTerminTitelField.addKeyListener(this);
 
 
 						jTerminBeschreibungField = new JTextField();
 						jTerminSuchePanel.add(jTerminBeschreibungField);
 						jTerminBeschreibungField.setBounds(105, 30, 210, 21);
+						jTerminBeschreibungField.addKeyListener(this);
 
 												
 						jDatumField = new JTextField();
@@ -628,6 +633,7 @@ public class SearchFrame extends javax.swing.JFrame implements ActionListener, M
 								super.insertString(offset, str, a);
 							}
 						});
+						jDatumField.addKeyListener(this);
 						
 						KategorieComboBoxModel jTerminTypeComboBoxModel = new KategorieComboBoxModel("TERMIN_KATEGORIE", new TerminKategorie());
 						jTerminTypeComboBox = new JComboBox();
@@ -746,11 +752,13 @@ public class SearchFrame extends javax.swing.JFrame implements ActionListener, M
 						jTerminContainerTitelField = new JTextField();
 						jTerminContainerSuchePanel.add(jTerminContainerTitelField);
 						jTerminContainerTitelField.setBounds(105, 7, 210, 21);
+						jTerminContainerTitelField.addKeyListener(this);
 
 
 						jTerminContainerBeschreibungField = new JTextField();
 						jTerminContainerSuchePanel.add(jTerminContainerBeschreibungField);
-						jTerminContainerBeschreibungField.setBounds(105, 30, 210, 21);			
+						jTerminContainerBeschreibungField.setBounds(105, 30, 210, 21);
+						jTerminContainerBeschreibungField.addKeyListener(this);
 
 						{
 							jSeparator4 = new JSeparator();
@@ -868,11 +876,13 @@ public class SearchFrame extends javax.swing.JFrame implements ActionListener, M
 						jLehrmittelNameField = new JTextField();
 						jLehrmittelSuchePanel.add(jLehrmittelNameField);
 						jLehrmittelNameField.setBounds(105, 7, 210, 21);
+						jLehrmittelNameField.addKeyListener(this);
 
 
 						jLehrmittelBeschreibungField = new JTextField();
 						jLehrmittelSuchePanel.add(jLehrmittelBeschreibungField);
-						jLehrmittelBeschreibungField.setBounds(105, 30, 210, 21);	
+						jLehrmittelBeschreibungField.setBounds(105, 30, 210, 21);
+						jLehrmittelBeschreibungField.addKeyListener(this);
 						
 						KategorieComboBoxModel jLehrmittelTypeComboBoxModel = new KategorieComboBoxModel("Lehrmittel_KATEGORIE", new LehrmittelKategorie());
 						jLehrmittelTypeComboBox = new JComboBox();
@@ -994,11 +1004,13 @@ public class SearchFrame extends javax.swing.JFrame implements ActionListener, M
 						jNotizTitelField = new JTextField();
 						jNotizSuchePanel.add(jNotizTitelField);
 						jNotizTitelField.setBounds(105, 7, 210, 21);
+						jNotizTitelField.addKeyListener(this);
 
 
 						jNotizNoteField = new JTextField();
 						jNotizSuchePanel.add(jNotizNoteField);
-						jNotizNoteField.setBounds(105, 30, 210, 21);		
+						jNotizNoteField.setBounds(105, 30, 210, 21);
+						jNotizNoteField.addKeyListener(this);
 
 
 						{
@@ -1118,11 +1130,13 @@ public class SearchFrame extends javax.swing.JFrame implements ActionListener, M
 						jPruefungLVAField = new JTextField();
 						jPruefungSuchePanel.add(jPruefungLVAField);
 						jPruefungLVAField.setBounds(105, 7, 210, 21);
+						jPruefungLVAField.addKeyListener(this);
 
 
 						jPruefungExaminerField = new JTextField();
 						jPruefungSuchePanel.add(jPruefungExaminerField);
-						jPruefungExaminerField.setBounds(105, 30, 210, 21);	
+						jPruefungExaminerField.setBounds(105, 30, 210, 21);
+						jPruefungExaminerField.addKeyListener(this);
 						
 						{
 							ComboBoxModel jGradeComboBoxModel = new DefaultComboBoxModel(
@@ -1380,120 +1394,15 @@ public class SearchFrame extends javax.swing.JFrame implements ActionListener, M
 		} else if(cmd.equals(this.jLVASuchenButton)) {
 			starteLVASuche();
 		} else if(cmd.equals(this.jTerminSuchenButton)) {
-			Termin ter = new Termin();
-			if (!jTerminTitelField.getText().equals("")) {
-				ter.setSecondaryTitle(jTerminTitelField.getText());
-			} else {
-				ter.setSecondaryTitle(null);
-			}
-			if (!jTerminBeschreibungField.getText().equals("")){
-				ter.setDescription(jTerminBeschreibungField.getText());
-			} else {
-				ter.setDescription(null);
-			}
-			if (!jDatumField.getText().equals("")){
-				jTerminTableModel.setDatum(jDatumField.getText());
-			} else {
-				jTerminTableModel.setDatum(null);
-			}
-			jTerminTableModel.setType(jTerminTypeComboBox.getSelectedItem().toString());
-			jTerminTableModel.setGroup(jTerminGruppeComboBox.getSelectedItem().toString());
-			jTerminTableModel.setSearchObject(ter);
-			
-			if (jTerminLokalSuchenRadioButton.isSelected()){
-				this.jTerminTableModel.fireDataChanged();
-			} else if (jTerminOnlineSuchenRadioButton.isSelected()) {
-				this.jTerminTableModel.fireOnlineDataChanged();
-			}
-			
+			starteTerminSuche();			
 		}  else if(cmd.equals(this.jTerminContainerSuchenButton)) {
-			TerminContainer terc = new TerminContainer();
-			if (!jTerminContainerTitelField.getText().equals("")) {
-				terc.setTitle(jTerminContainerTitelField.getText());
-			} else {
-				terc.setTitle(null);
-			}
-			if (!jTerminContainerBeschreibungField.getText().equals("")){
-				terc.setDescription(jTerminContainerBeschreibungField.getText());
-			} else {
-				terc.setDescription(null);
-			}
-			jTerminContainerTableModel.setGroup(jTerminContainerGruppeComboBox.getSelectedItem().toString());
-			jTerminContainerTableModel.setSearchObject(terc);
-			
-			if (jTerminContainerLokalSuchenRadioButton.isSelected()){
-				jTerminContainerTableModel.fireDataChanged();
-			} else if (jTerminContainerOnlineSuchenRadioButton.isSelected()) {
-				this.jTerminContainerTableModel.fireOnlineDataChanged();
-			}
-			
+			starteTerminContainerSuche();
 		} else if(cmd.equals(this.jLehrmittelSuchenButton)) {
-			Lehrmittel lm = new Lehrmittel();
-			if (!jLehrmittelNameField.getText().equals("")) {
-				lm.setName(jLehrmittelNameField.getText());
-			} else {
-				lm.setName(null);
-			}
-			if (!jLehrmittelBeschreibungField.getText().equals("")) {
-				lm.setDescription(jLehrmittelBeschreibungField.getText());
-			} else {
-				lm.setDescription(null);
-			}
-			jLehrmittelTableModel.setType(jLehrmittelTypeComboBox.getSelectedItem().toString());
-			jLehrmittelTableModel.setGroup(jLehrmittelGruppeComboBox.getSelectedItem().toString());
-			jLehrmittelTableModel.setSearchObject(lm);
-			
-			if (jLehrmittelLokalSuchenRadioButton.isSelected()){
-				jLehrmittelTableModel.fireDataChanged();
-			} else if (jLehrmittelOnlineSuchenRadioButton.isSelected()) {
-				this.jLehrmittelTableModel.fireOnlineDataChanged();
-			}
-			
-		}  else if(cmd.equals(this.jNotizSuchenButton)) {
-			Notiz not = new Notiz();
-			if (!jNotizTitelField.getText().equals("")) {
-				not.setTitle(jNotizTitelField.getText());
-			} else {
-				not.setTitle(null);
-			}
-			if (!jNotizNoteField.getText().equals("")) {
-				not.setNote(jNotizNoteField.getText());
-			} else {
-				not.setNote(null);
-			}
-			jNotizTableModel.setGroup(jNotizGruppeComboBox.getSelectedItem().toString());
-			jNotizTableModel.setSearchObject(not);
-			if (jNotizLokalSuchenRadioButton.isSelected()){
-				this.jNotizTableModel.fireDataChanged();
-			} else if (jNotizOnlineSuchenRadioButton.isSelected()) {
-				this.jNotizTableModel.fireOnlineDataChanged();
-			}
-			
-		}
-		else if(cmd.equals(this.jPruefungSuchenButton)) {
-			Pruefung p = new Pruefung();
-			if (!jPruefungLVAField.getText().equals("")) {
-				jPruefungTableModel.setLvaName(jPruefungLVAField.getText());
-			} else {
-				jPruefungTableModel.setLvaName(null);
-			}
-			if (!jPruefungExaminerField.getText().equals("")) {
-				p.setExaminer(jPruefungExaminerField.getText());
-			} else {
-				p.setExaminer(null);
-			}
-			if (!jGradeComboBox.getSelectedItem().toString().equals("-")) {
-				p.setGrade(new Integer(jGradeComboBox.getSelectedItem().toString()));
-			} else {
-				p.setGrade(null);
-			}
-			jPruefungTableModel.setGroup(jPruefungGruppeComboBox.getSelectedItem().toString());
-			jPruefungTableModel.setSearchObject(p);
-			if (jPruefungLokalSuchenRadioButton.isSelected()){
-				jPruefungTableModel.fireDataChanged();
-			} else if (jPruefungOnlineSuchenRadioButton.isSelected()) {
-				jPruefungTableModel.fireOnlineDataChanged();
-			}			
+			starteLehrmittelSuche();
+		} else if(cmd.equals(this.jNotizSuchenButton)) {
+			starteNotizSuche();
+		} else if(cmd.equals(this.jPruefungSuchenButton)) {
+			startePruefungSuche();
 		} else if(cmd.equals(this.jKontaktLoeschenButton)) {
 			jKontaktTableModel.deleteSelectedRow(jKontaktTable);
 		} else if(cmd.equals(this.jKontaktWiederherstellenButton)) {
@@ -1540,46 +1449,46 @@ public class SearchFrame extends javax.swing.JFrame implements ActionListener, M
 			JOptionPane.showMessageDialog(null, "Error: " +cmd.toString(), "Command not found!" , JOptionPane.ERROR_MESSAGE);
 		}
 	}
-	
-	protected MaskFormatter createFormatter(String s) {
-		 MaskFormatter formatter = null;
-		try {
-			formatter = new MaskFormatter(s);
-		} catch (java.text.ParseException exc) {
-			JOptionPane.showMessageDialog(null, "Formatter-Error: " +exc.getMessage(), "Error!" , JOptionPane.ERROR_MESSAGE);
-		}
-		return formatter;
-	}
 
 	public void keyTyped(KeyEvent arg0) {
 		// TODO Auto-generated method stub
 		
 	}
-
-	public void keyPressed(KeyEvent arg0) {
+	
+	public void keyReleased(KeyEvent arg0) {
 		// TODO Auto-generated method stub
 		
-//		private JTextField jTerminContainerTitelField, jTerminContainerBeschreibungField;
-//		private JTextField jLehrmittelNameField, jLehrmittelBeschreibungField;
-//		private JTextField jNotizTitelField, jPruefungLVAField;
-//		private JTextField jPruefungExaminerField, jNotizNoteField;
-//		private JFormattedTextField jGeburtsdatumField, jDatumField;
-//		
-		
+	}
+
+	public void keyPressed(KeyEvent arg0) {
 		if (arg0.getSource() instanceof JTextField || arg0.getSource() instanceof JFormattedTextField) {
 			if (arg0.getKeyCode() == KeyEvent.VK_ENTER) {
 				Object Field = arg0.getSource();
-				if (Field.equals(jVornameField) || Field.equals(jNachnameField) 
-						|| Field.equals(jTelefonnummerField) || Field.equals(jEmailField) 
-						|| Field.equals(jAdresseField) || Field.equals(jPlzField) 
-						|| Field.equals(jOrtField) || Field.equals(jGeburtsdatumField)) {
+				if (Field.equals(this.jVornameField) || Field.equals(this.jNachnameField) 
+						|| Field.equals(this.jTelefonnummerField) || Field.equals(this.jEmailField) 
+						|| Field.equals(this.jAdresseField) || Field.equals(this.jPlzField) 
+						|| Field.equals(this.jOrtField) || Field.equals(this.jGeburtsdatumField)) {
 					starteKontaktSuche();
 				}
-				if (Field.equals(jLVATitelField) || Field.equals(jLVANummerField) 
-						|| Field.equals(jBeschreibungField) || Field.equals(jTerminTitelField) 
-						|| Field.equals(jTerminBeschreibungField) || Field.equals(jPlzField) 
-						|| Field.equals(jOrtField) || Field.equals(jGeburtsdatumField)) {
+				if (Field.equals(this.jLVATitelField) || Field.equals(this.jLVANummerField) 
+						|| Field.equals(this.jBeschreibungField)) {
 					starteLVASuche();
+				}
+				if (Field.equals(this.jTerminTitelField) || Field.equals(this.jTerminBeschreibungField) 
+						|| Field.equals(this.jDatumField)) {
+					starteTerminSuche();
+				}
+				if (Field.equals(this.jTerminContainerBeschreibungField) || Field.equals(this.jTerminContainerTitelField)) {
+					starteTerminContainerSuche();
+				}
+				if (Field.equals(this.jLehrmittelBeschreibungField) || Field.equals(this.jLehrmittelNameField)) {
+					starteLehrmittelSuche();
+				}
+				if (Field.equals(this.jNotizNoteField) || Field.equals(this.jNotizTitelField)) {
+					starteNotizSuche();
+				}
+				if (Field.equals(this.jPruefungExaminerField) || Field.equals(this.jPruefungLVAField)) {
+					startePruefungSuche();
 				}
 			}
 		}
@@ -1587,12 +1496,108 @@ public class SearchFrame extends javax.swing.JFrame implements ActionListener, M
 		
 	}
 
-	public void keyReleased(KeyEvent arg0) {
-		// TODO Auto-generated method stub
+	private void startePruefungSuche() {
+		setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
+		Pruefung p = new Pruefung();
+		if (!jPruefungLVAField.getText().equals("")) {
+			jPruefungTableModel.setLvaName(jPruefungLVAField.getText());
+		} else {
+			jPruefungTableModel.setLvaName(null);
+		}
+		if (!jPruefungExaminerField.getText().equals("")) {
+			p.setExaminer(jPruefungExaminerField.getText());
+		} else {
+			p.setExaminer(null);
+		}
+		if (!jGradeComboBox.getSelectedItem().toString().equals("-")) {
+			p.setGrade(new Integer(jGradeComboBox.getSelectedItem().toString()));
+		} else {
+			p.setGrade(null);
+		}
+		jPruefungTableModel.setGroup(jPruefungGruppeComboBox.getSelectedItem().toString());
+		jPruefungTableModel.setSearchObject(p);
+		if (jPruefungLokalSuchenRadioButton.isSelected()){
+			jPruefungTableModel.fireDataChanged();
+		} else if (jPruefungOnlineSuchenRadioButton.isSelected()) {
+			jPruefungTableModel.fireOnlineDataChanged();
+		}
+		setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
+	}
+
+	private void starteNotizSuche() {
+		setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
+		Notiz not = new Notiz();
+		if (!jNotizTitelField.getText().equals("")) {
+			not.setTitle(jNotizTitelField.getText());
+		} else {
+			not.setTitle(null);
+		}
+		if (!jNotizNoteField.getText().equals("")) {
+			not.setNote(jNotizNoteField.getText());
+		} else {
+			not.setNote(null);
+		}
+		jNotizTableModel.setGroup(jNotizGruppeComboBox.getSelectedItem().toString());
+		jNotizTableModel.setSearchObject(not);
+		if (jNotizLokalSuchenRadioButton.isSelected()){
+			this.jNotizTableModel.fireDataChanged();
+		} else if (jNotizOnlineSuchenRadioButton.isSelected()) {
+			this.jNotizTableModel.fireOnlineDataChanged();
+		}
+		setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
+	}
+
+	private void starteLehrmittelSuche() {
+		setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
+		Lehrmittel lm = new Lehrmittel();
+		if (!jLehrmittelNameField.getText().equals("")) {
+			lm.setName(jLehrmittelNameField.getText());
+		} else {
+			lm.setName(null);
+		}
+		if (!jLehrmittelBeschreibungField.getText().equals("")) {
+			lm.setDescription(jLehrmittelBeschreibungField.getText());
+		} else {
+			lm.setDescription(null);
+		}
+		jLehrmittelTableModel.setType(jLehrmittelTypeComboBox.getSelectedItem().toString());
+		jLehrmittelTableModel.setGroup(jLehrmittelGruppeComboBox.getSelectedItem().toString());
+		jLehrmittelTableModel.setSearchObject(lm);
 		
+		if (jLehrmittelLokalSuchenRadioButton.isSelected()){
+			jLehrmittelTableModel.fireDataChanged();
+		} else if (jLehrmittelOnlineSuchenRadioButton.isSelected()) {
+			this.jLehrmittelTableModel.fireOnlineDataChanged();
+		}
+		setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
+	}
+
+	private void starteTerminContainerSuche() {
+		setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
+		TerminContainer terc = new TerminContainer();
+		if (!jTerminContainerTitelField.getText().equals("")) {
+			terc.setTitle(jTerminContainerTitelField.getText());
+		} else {
+			terc.setTitle(null);
+		}
+		if (!jTerminContainerBeschreibungField.getText().equals("")){
+			terc.setDescription(jTerminContainerBeschreibungField.getText());
+		} else {
+			terc.setDescription(null);
+		}
+		jTerminContainerTableModel.setGroup(jTerminContainerGruppeComboBox.getSelectedItem().toString());
+		jTerminContainerTableModel.setSearchObject(terc);
+		
+		if (jTerminContainerLokalSuchenRadioButton.isSelected()){
+			jTerminContainerTableModel.fireDataChanged();
+		} else if (jTerminContainerOnlineSuchenRadioButton.isSelected()) {
+			this.jTerminContainerTableModel.fireOnlineDataChanged();
+		}
+		setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
 	}
 	
 	private void starteLVASuche() {
+		setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
 		Lva lva = new Lva();
 		if (!jLVANummerField.getText().equals("")){
 			lva.setLvaNr(jLVANummerField.getText());
@@ -1618,10 +1623,11 @@ public class SearchFrame extends javax.swing.JFrame implements ActionListener, M
 		} else if (jLVAOnlineSuchenRadioButton.isSelected()) {
 			this.jLVATableModel.fireOnlineDataChanged();
 		}
-		
+		setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
 	}
 
 	private void starteKontaktSuche() {
+		setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
 		try {
 			Kontakt kont = new Kontakt();
 			if (!jVornameField.getText().equals("")){
@@ -1682,6 +1688,36 @@ public class SearchFrame extends javax.swing.JFrame implements ActionListener, M
 		} catch (ParseException ps) {
 			JOptionPane.showMessageDialog(null, "Parse-Error: " +ps.getMessage(), "Error!" , JOptionPane.ERROR_MESSAGE);
 		}
+		setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
+	}
+	
+	private void starteTerminSuche(){
+		setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
+		Termin ter = new Termin();
+		if (!jTerminTitelField.getText().equals("")) {
+			ter.setSecondaryTitle(jTerminTitelField.getText());
+		} else {
+			ter.setSecondaryTitle(null);
+		}
+		if (!jTerminBeschreibungField.getText().equals("")){
+			ter.setDescription(jTerminBeschreibungField.getText());
+		} else {
+			ter.setDescription(null);
+		}
+		if (!jDatumField.getText().equals("")){
+			jTerminTableModel.setDatum(jDatumField.getText());
+		} else {
+			jTerminTableModel.setDatum(null);
+		}
+		jTerminTableModel.setType(jTerminTypeComboBox.getSelectedItem().toString());
+		jTerminTableModel.setGroup(jTerminGruppeComboBox.getSelectedItem().toString());
+		jTerminTableModel.setSearchObject(ter);
 		
+		if (jTerminLokalSuchenRadioButton.isSelected()){
+			this.jTerminTableModel.fireDataChanged();
+		} else if (jTerminOnlineSuchenRadioButton.isSelected()) {
+			this.jTerminTableModel.fireOnlineDataChanged();
+		}
+		setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
 	}
 }
