@@ -38,7 +38,6 @@ public class BooleanEditPlugin extends EditPlugin implements ItemListener{
 	}
 	
 	public void setValue(Object newValue){
-		System.out.println("boolean edit plugin setValue");
 		if(newValue != null)
 			this.selected = (Boolean)newValue;
 		else

@@ -80,6 +80,9 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 	private JPanel tab2;
 	private JTextPane lblBeschreibung;
 	private JTabbedPane infobar;
+	private JMenuItem menu_delete_AttachableObjectKategorie;
+	private JMenuItem menu_edit_AttachableObjectKategorie;
+	private JMenuItem menu_add_AttachableObjectKategorie;
 	private JMenuItem menu_delete_LehrmittelKategorie;
 	private JMenuItem menu_delete_LvaKategorie;
 	private JMenuItem menu_delete_Universitaet;
@@ -770,6 +773,13 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 							.setText("Lehrmittel-Kategorie...");
 						menu_add_LehrmittelKategorie.addActionListener(this);
 					}
+					{
+						menu_add_AttachableObjectKategorie = new JMenuItem();
+						menu_add.add(menu_add_AttachableObjectKategorie);
+						menu_add_AttachableObjectKategorie
+							.setText("Anhängbare Objekte-Kategorie...");
+						menu_add_AttachableObjectKategorie.addActionListener(this);
+					}
 				}
 				{
 					menu_edit = new JMenu();
@@ -825,6 +835,13 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 							.setText("Lehrmittel-Kategorie...");
 						menu_edit_LehrmittelKategorie.addActionListener(this);
 					}
+					{
+						menu_edit_AttachableObjectKategorie = new JMenuItem();
+						menu_edit.add(menu_edit_AttachableObjectKategorie);
+						menu_edit_AttachableObjectKategorie
+							.setText("Anhängbare Objekte-Kategorie...");
+						menu_edit_AttachableObjectKategorie.addActionListener(this);
+					}
 				}
 				{
 					menu_delete = new JMenu();
@@ -875,9 +892,15 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 					{
 						menu_delete_LehrmittelKategorie = new JMenuItem();
 						menu_delete.add(menu_delete_LehrmittelKategorie);
-						menu_delete_LehrmittelKategorie
-							.setText("Lehrmittel-Kategorie");
+						menu_delete_LehrmittelKategorie.setText("Lehrmittel-Kategorie...");
 						menu_delete_LehrmittelKategorie.addActionListener(this);
+					}
+					{
+						menu_delete_AttachableObjectKategorie = new JMenuItem();
+						menu_delete.add(menu_delete_AttachableObjectKategorie);
+						menu_delete_AttachableObjectKategorie
+							.setText("Anhängbare Objekte-Kategorie...");
+						menu_delete_AttachableObjectKategorie.addActionListener(this);
 					}
 				}
 				{
@@ -2152,7 +2175,10 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 			System.out.println("mainFrame.actionPerformed()::füge Prüfung hinzu");
 			new HandleOtherObject(this, new LehrmittelKategorie());
 		}
-		
+		if (arg0.getSource().equals(this.menu_add_AttachableObjectKategorie)){
+			System.out.println("mainFrame.actionPerformed()::füge anhängbare Objekte-Kategorie hinzu");
+			new HandleOtherObject(this, new AttachableObjectKategorie());
+		}		
 		
 		
 		
@@ -2191,21 +2217,26 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 			System.out.println("mainFrame.actionPerformed()::editiere Universitaet");
 			ForeignKeyChooseFrame fkcf = new ForeignKeyChooseFrame(this, "universitaet", "id", Universitaet.class);
 			fkcf.setVisible(true);
-			new HandleOtherObject(this, (Integer)fkcf.getValue());
+			new HandleOtherObject(this, (Integer)fkcf.getValue(), "universitaet");
 		}
 		if (arg0.getSource().equals(this.menu_edit_LvaKategorie)){
 			System.out.println("mainFrame.actionPerformed()::editiere LvaKategorie");
 			ForeignKeyChooseFrame fkcf = new ForeignKeyChooseFrame(this, "lva_kategorie", "id", LvaKategorie.class);
 			fkcf.setVisible(true);
-			new HandleAttachableObject(this, (Integer)fkcf.getValue());
+			new HandleOtherObject(this, (Integer)fkcf.getValue(), "lva_kategorie");
 		}
 		if (arg0.getSource().equals(this.menu_edit_LehrmittelKategorie)){
 			System.out.println("mainFrame.actionPerformed()::editiere Lehrmittel-Kategorie");
 			ForeignKeyChooseFrame fkcf = new ForeignKeyChooseFrame(this, "lehrmittel_kategorie", "id", LehrmittelKategorie.class);
 			fkcf.setVisible(true);
-			new HandleAttachableObject(this, (Integer)fkcf.getValue());
+			new HandleOtherObject(this, (Integer)fkcf.getValue(), "lehrmittel_kategorie");
 		}
-		
+		if (arg0.getSource().equals(this.menu_edit_AttachableObjectKategorie)){
+			System.out.println("mainFrame.actionPerformed()::editiere anhängbare Objekte-Kategorie");
+			ForeignKeyChooseFrame fkcf = new ForeignKeyChooseFrame(this, "attachable_object_kategorie", "id", AttachableObjectKategorie.class);
+			fkcf.setVisible(true);
+			new HandleOtherObject(this, (Integer)fkcf.getValue(), "attachable_object_kategorie");
+		}		
 		
 		
 		if (arg0.getSource().equals(this.menu_delete_Kontakt)){
@@ -2242,19 +2273,25 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 			System.out.println("mainFrame.actionPerformed()::lösche Universitaet");
 			ForeignKeyChooseFrame fkcf = new ForeignKeyChooseFrame(this, "universitaet", "id", Universitaet.class);
 			fkcf.setVisible(true);
-			new HandleAttachableObject(this, (Integer)fkcf.getValue(), true);
+			new HandleOtherObject(this, (Integer)fkcf.getValue(), "universitaet", true);
 		}
 		if (arg0.getSource().equals(this.menu_delete_LvaKategorie)){
 			System.out.println("mainFrame.actionPerformed()::lösche Lva-Kategorie");
 			ForeignKeyChooseFrame fkcf = new ForeignKeyChooseFrame(this, "lva_kategorie", "id", LvaKategorie.class);
 			fkcf.setVisible(true);
-			new HandleAttachableObject(this, (Integer)fkcf.getValue(), true);
+			new HandleOtherObject(this, (Integer)fkcf.getValue(), "lva_kategorie", true);
 		}
 		if (arg0.getSource().equals(this.menu_delete_LehrmittelKategorie)){
 			System.out.println("mainFrame.actionPerformed()::lösche Lehrmittel-Kategorie");
 			ForeignKeyChooseFrame fkcf = new ForeignKeyChooseFrame(this, "lehrmittel_kategorie", "id", LehrmittelKategorie.class);
 			fkcf.setVisible(true);
-			new HandleAttachableObject(this, (Integer)fkcf.getValue(), true);
+			new HandleOtherObject(this, (Integer)fkcf.getValue(), "lehrmittel_kategorie", true);
+		}
+		if (arg0.getSource().equals(this.menu_delete_AttachableObjectKategorie)){
+			System.out.println("mainFrame.actionPerformed()::lösche anhängbare Objekte-Kategorie");
+			ForeignKeyChooseFrame fkcf = new ForeignKeyChooseFrame(this, "attachable_object_kategorie", "id", AttachableObjectKategorie.class);
+			fkcf.setVisible(true);
+			new HandleOtherObject(this, (Integer)fkcf.getValue(), "attachable_object_kategorie", true);
 		}
 		
 	}
