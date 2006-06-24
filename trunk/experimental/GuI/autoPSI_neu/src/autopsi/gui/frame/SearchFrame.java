@@ -1393,12 +1393,18 @@ public class SearchFrame extends javax.swing.JFrame implements ActionListener, M
 				Lva lva = new Lva();
 				if (!jLVANummerField.getText().equals("")){
 					lva.setLvaNr(jLVANummerField.getText());
+				} else {
+					lva.setLvaNr(null);
 				}
 				if (!jLVATitelField.getText().equals("")){
 					lva.setTitle(jLVATitelField.getText());
+				} else {
+					lva.setTitle(null);
 				}
 				if (!jBeschreibungField.getText().equals("")){
 					lva.setDescription(jBeschreibungField.getText());
+				} else {
+					lva.setDescription(null);
 				}
 				jLVATableModel.setType(jLVATypeComboBox.getSelectedItem().toString());
 				jLVATableModel.setGroup(jLVATypeComboBox.getSelectedItem().toString());

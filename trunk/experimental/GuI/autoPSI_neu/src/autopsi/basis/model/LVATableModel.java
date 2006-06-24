@@ -67,7 +67,7 @@ public class LVATableModel extends AbstractTableModel {
 			GenericDAO gdo = new GenericDAO();
 			if (searchObject!=null) {
 				if (this.searchObject.getLvaNr()!=null){
-					query +=" AND LVA_NR ="+this.searchObject.getLvaNr()+"";
+					query +=" AND LVA_NR ='"+this.searchObject.getLvaNr()+"'";
 				}
 				if (this.searchObject.getTitle()!=null){
 					query +=" AND Lower(TITLE) Like '%"+this.searchObject.getTitle().toLowerCase()+"%'";
