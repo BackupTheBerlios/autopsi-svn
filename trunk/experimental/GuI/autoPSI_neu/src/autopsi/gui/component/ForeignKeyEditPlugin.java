@@ -113,7 +113,8 @@ public class ForeignKeyEditPlugin extends EditPlugin implements ActionListener {
 			ForeignKeyChooseFrame fkcd = new ForeignKeyChooseFrame(this.parentFrame, this.editedTable, this.editedAttrib, this.editedClass);
 //			fkcd.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 			fkcd.setVisible(true);
-			this.setValue(fkcd.getValue());
+			if (fkcd.getOk())
+				this.setValue(fkcd.getValue());
 		}
 		
 	}

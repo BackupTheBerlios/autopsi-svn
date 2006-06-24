@@ -15,6 +15,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.ListSelectionModel;
 import javax.swing.table.DefaultTableModel;
 
 import autopsi.basis.model.AttachableTableModel;
@@ -68,6 +69,7 @@ public class ForeignKeyChooseFrame extends JDialog implements ActionListener, Wi
 		}
 		
 		objectTable = new JTable();	
+		objectTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		model = new AttachableTableModel();
 		model.setObjectType(this.tableName, this.attribName, this.editedClass);
 		objectTable.setModel(model);
