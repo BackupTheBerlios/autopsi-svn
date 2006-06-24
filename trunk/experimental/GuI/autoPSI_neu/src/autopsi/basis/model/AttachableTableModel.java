@@ -52,10 +52,6 @@ public class AttachableTableModel implements TableModel {
 		this.gdao.setCurrentTable(this.tableName);
 		try {
 			objs = this.gdao.getDataObjects(gdPrototype);
-			if (objs == null)
-				System.out.println("null!!!");
-			else
-				System.out.println("not null!");
 		} catch (Exception e){
 			System.out.println("AttachableTableModel.setObjectType::Konnte DataObjects nicht bekommen::"+e.toString());
 		}
