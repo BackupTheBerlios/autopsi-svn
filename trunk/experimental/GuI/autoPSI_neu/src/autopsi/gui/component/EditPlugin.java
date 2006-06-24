@@ -18,6 +18,10 @@ public abstract class EditPlugin implements Cloneable{
 	
 	public abstract void nameChanged();
 	
+	/**
+	 * Setzt den Namen des zu bearbeitenden Objekts
+	 * @param newName Der neue Name
+	 */
 	public void setName(String newName){
 		this.name = newName;
 		nameChanged();

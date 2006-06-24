@@ -31,7 +31,7 @@ public class ForeignKeyEditPlugin extends EditPlugin implements ActionListener {
 	public ForeignKeyEditPlugin(){
 		this.panel = new JPanel();
 		this.panel.setLayout(new FlowLayout(FlowLayout.LEADING));
-		this.panel.setAlignmentY(Component.LEFT_ALIGNMENT);
+//		this.panel.setAlignmentY(Component.LEFT_ALIGNMENT);
 //		this.panel.setBackground(new Color(255,0,0));
 		this.moreButton = new JButton("...");
 		this.moreButton.addActionListener(this);

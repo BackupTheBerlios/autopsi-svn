@@ -119,7 +119,7 @@ public class EditTerminFrame extends javax.swing.JFrame implements java.awt.even
 	private IGenericDAO gdo; 
 	private String place;
 	private Integer ID;
-	private GregorianCalendar c = null;
+	private GregorianCalendar c = new GregorianCalendar();
 	private boolean ok = false;
 	private GregorianCalendar cal=null;
 	private String tkat = "";
@@ -227,9 +227,9 @@ public class EditTerminFrame extends javax.swing.JFrame implements java.awt.even
 				
 			}
 			int group_id = ((AttachableObjectKategorie)(group_data.get(group_Box.getSelectedIndex()))).getId();
-					
+			System.out.println("vor readFieldData");		
 			readFieldData();
-				
+			System.out.println("Nach readFieldData");
 			String query="";
 			
 			Termin vorlage = new Termin();
@@ -284,6 +284,7 @@ public class EditTerminFrame extends javax.swing.JFrame implements java.awt.even
 				}
 		else if(owner instanceof EditTerminContainerFrame)
 		{
+			System.out.println("elsif beim EditTCFrame");
 			EditTerminContainerFrame actor = (EditTerminContainerFrame)owner;
 			Termin data = new Termin();
 			data.setSecondaryTitle(sec_title);
@@ -712,7 +713,10 @@ public class EditTerminFrame extends javax.swing.JFrame implements java.awt.even
 		}
 		if(arg0.getSource().equals(ok_button)){
 			if(!newTCsender) update();
-			else addToList();
+			else {
+				addToList();
+				dispose();
+			}
 			if(ok)
 				dispose();
 			
@@ -1166,28 +1170,29 @@ public class EditTerminFrame extends javax.swing.JFrame implements java.awt.even
 		t.setDuration(duration);
 		t.setPlace(place);
 		t.setTerminKategorieId(Integer.parseInt(tkat));
-		
+		data.add(t);
 		actor.updateTerminList(data);
 		
 	}
 	
 	private void readFieldData()
 	{
-		
+		System.out.println("readFieldData:::aha 0");
 		int termin_kat = ((TerminKategorie)(termin_kat_data.get(choose_Type.getSelectedIndex()))).getId();
 		tkat = "" + termin_kat;
-		
+		System.out.println("readFieldData:::aha 1");
 		sec_title = sec_titlefield.getText();		
 		sec_title = sec_title.replace("'".toCharArray()[0],'´');
-					
+		System.out.println("readFieldData:::aha 2");			
 		date = dateField.getText();
-		
+		System.out.println("readFieldData:::"+date);
 		Date dat = new Date(c.getTimeInMillis());
 		date = dat.toString();
-				System.out.println("hhh");
 		date = date.substring(0,10) + " " + timeField.getText()+":00.0";
+		System.out.println("readFieldData:::aha 3");
 		desc = desc_area.getText();
 		desc = desc.replace("'".toCharArray()[0],'´');
+		System.out.println("readFieldData:::aha 4");
 		place = place_field.getText();
 		
 		place = place.replace("'".toCharArray()[0],'´');
@@ -1210,7 +1215,8 @@ public class EditTerminFrame extends javax.swing.JFrame implements java.awt.even
 		}catch(Exception e){
 			showErrorDialog("Falsche Eingabe","Geben Sie eine Dauer ein!");
 		}
-		
+		System.out.println("readFieldData:::aha 5");
 		if(sec_title.length()<1) sec_title = tcTitle_box.getSelectedItem().toString();
+		System.out.println("readFieldData:::aha 6");
 	}
 }
