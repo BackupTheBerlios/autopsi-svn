@@ -4,6 +4,8 @@ import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 import java.lang.reflect.AccessibleObject;
 import java.lang.reflect.Field;
 
@@ -21,7 +23,7 @@ import autopsi.database.dao.GenericDataObject;
 import autopsi.database.table.AttachableObject;
 import autopsi.gui.component.GenericData;
 
-public class ForeignKeyChooseFrame extends JDialog implements ActionListener{
+public class ForeignKeyChooseFrame extends JDialog implements ActionListener, WindowListener{
 
 	
 	protected GenericDAO gdao;
@@ -35,6 +37,7 @@ public class ForeignKeyChooseFrame extends JDialog implements ActionListener{
 	protected String attribName;
 	protected Class editedClass;
 	protected Object value;
+	protected boolean isOk;
 	
 	public ForeignKeyChooseFrame(JDialog owner, String tableName, String attribName, Class editedClass){
 		super(owner, true);
@@ -82,8 +85,17 @@ public class ForeignKeyChooseFrame extends JDialog implements ActionListener{
 	public void setValue(Object newValue){
 		this.value = newValue;
 	}
+	
+	public boolean getOk(){
+		return this.isOk;
+	}
 
+	public void setOk(boolean newOk){
+		this.isOk = newOk;
+	}
+	
 	public void actionPerformed(ActionEvent arg0) {
+		this.isOk = true;
 		if (arg0.getSource().equals(this.chooseButton)){
 			if (this.objectTable.getSelectedRow() != -1){
 			
@@ -103,6 +115,41 @@ public class ForeignKeyChooseFrame extends JDialog implements ActionListener{
 				this.dispose();
 			}
 		}
+		
+	}
+
+	public void windowOpened(WindowEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void windowClosing(WindowEvent arg0) {
+		this.isOk = false;
+		
+	}
+
+	public void windowClosed(WindowEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void windowIconified(WindowEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void windowDeiconified(WindowEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void windowActivated(WindowEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void windowDeactivated(WindowEvent arg0) {
+		// TODO Auto-generated method stub
 		
 	}
 }
