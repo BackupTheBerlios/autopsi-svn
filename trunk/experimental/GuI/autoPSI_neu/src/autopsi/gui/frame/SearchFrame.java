@@ -176,6 +176,10 @@ public class SearchFrame extends javax.swing.JFrame implements ActionListener, M
 	* JPanel inside a new JFrame.
 	*/
 	
+	/**
+	 * Im Konstruktor wird die GUI erstellt und anschliessend auch angezeigt.
+	 * @author	Alpay Firato
+	 */
 	public SearchFrame() {
 		super();
 		initGUI();
@@ -199,6 +203,10 @@ public class SearchFrame extends javax.swing.JFrame implements ActionListener, M
 				});
 	}
 	
+	/**
+	 * Diese Methode initalisiert die GUI. Actionslistener, Keylelistener und/oder MouseListener wird/werden zugewiesen.
+	 * @author	Alpay Firato
+	 */
 	private void initGUI() {
 		try {
 			this.setPreferredSize(new java.awt.Dimension(813, 412));
@@ -1253,6 +1261,12 @@ public class SearchFrame extends javax.swing.JFrame implements ActionListener, M
 		}
 	}
 	
+	/**
+	 * Diese Methode wird bei einer MouseClick ausgeführt.
+	 * Bei einer Doppelklick auf einer Tabelle wird das dazugehörige Editfenster angezeigt.
+	 * @param	MouseEvent	Das ist das MouseEvent, das betätigt wurde.
+	 * @author	Alpay Firato
+	 */
 	public void mouseClicked(MouseEvent arg0) {
 		if (arg0.getClickCount() == 2 && arg0.getButton()==MouseEvent.BUTTON1 && !(arg0.getSource() instanceof JTableHeader)) {
 			JTable Table = (JTable) arg0.getSource();
@@ -1394,17 +1408,35 @@ public class SearchFrame extends javax.swing.JFrame implements ActionListener, M
 		
 	}
 	
+	/**
+	 * Diese Methode wird beim drücken auf einem Button ausgeführt.
+	 * Je nach Button wird was anderes aufgerufen.
+	 * @param	ActionEvent	ActionEvent der aufgelöst wurde.
+	 * @author	Alpay Firato
+	 */
 	public void actionPerformed(ActionEvent ae) {
 		Object cmd = ae.getSource();
 		starteSuche(cmd);
 	}
 	
+	/**
+	 * Diese Methode setzt die Sortierreinfolge der angegebenen Tabelle.
+	 * Beim drücken auf dem Spaltenkopf (Header) der angegebenen Tabelle wird die Sortierreinfolge ja nach Spalte verändert.
+	 * @param	JTabelle	Die Tabelle bei der die Sortierreinfolge verändert werden soll.
+	 * @param	int	Sortierreinfolge als int-Zahl.
+	 * @author	Alpay Firato
+	 */
 	public void setOrder (JTable table, int order){
 		if (table.equals(jKontaktTable)){
 			this.jKontaktTableModel.setOrder(order);
 		}
 	}
 	
+	/**
+	 * Diese Methode startet je nach cmd eine Suche.
+	 * @param	Object	Das ist der Button, der betätigt wurde.
+	 * @author	Alpay Firato
+	 */
 	public void starteSuche (Object cmd){
 		if (cmd.equals(this.jKontaktSuchenButton)) {
 			starteKontaktSuche();
@@ -1475,6 +1507,12 @@ public class SearchFrame extends javax.swing.JFrame implements ActionListener, M
 		
 	}
 
+	/**
+	 * Diese Methode wird beim Drücken einer Taste aufgerufen.
+	 * Falls die Enter-Taste in einer TextField gedrückt wurde, dann wird die Suche gestartet.
+	 * @param	KeyEvent	Das ist die Taste, die betätigt wurde.
+	 * @author	Alpay Firato
+	 */
 	public void keyPressed(KeyEvent arg0) {
 		if (arg0.getSource() instanceof JTextField || arg0.getSource() instanceof JFormattedTextField) {
 			if (arg0.getKeyCode() == KeyEvent.VK_ENTER) {
@@ -1511,6 +1549,10 @@ public class SearchFrame extends javax.swing.JFrame implements ActionListener, M
 		
 	}
 
+	/**
+	 * Diese Methode sucht je nachdem was ausgewählt ist, online oder lokal nach Prüfungen.
+	 * @author	Alpay Firato
+	 */
 	private void startePruefungSuche() {
 		setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
 		Pruefung p = new Pruefung();
@@ -1539,6 +1581,10 @@ public class SearchFrame extends javax.swing.JFrame implements ActionListener, M
 		setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
 	}
 
+	/**
+	 * Diese Methode sucht je nachdem was ausgewählt ist, online oder lokal nach Notizen.
+	 * @author	Alpay Firato
+	 */
 	private void starteNotizSuche() {
 		setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
 		Notiz not = new Notiz();
@@ -1562,6 +1608,10 @@ public class SearchFrame extends javax.swing.JFrame implements ActionListener, M
 		setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
 	}
 
+	/**
+	 * Diese Methode sucht je nachdem was ausgewählt ist, online oder lokal nach Lehrmittel.
+	 * @author	Alpay Firato
+	 */
 	private void starteLehrmittelSuche() {
 		setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
 		Lehrmittel lm = new Lehrmittel();
@@ -1587,6 +1637,10 @@ public class SearchFrame extends javax.swing.JFrame implements ActionListener, M
 		setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
 	}
 
+	/**
+	 * Diese Methode sucht je nachdem was ausgewählt ist, online oder lokal nach TerminContainer.
+	 * @author	Alpay Firato
+	 */
 	private void starteTerminContainerSuche() {
 		setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
 		TerminContainer terc = new TerminContainer();
@@ -1611,6 +1665,10 @@ public class SearchFrame extends javax.swing.JFrame implements ActionListener, M
 		setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
 	}
 	
+	/**
+	 * Diese Methode sucht je nachdem was ausgewählt ist, online oder lokal nach LVAs.
+	 * @author	Alpay Firato
+	 */
 	private void starteLVASuche() {
 		setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
 		Lva lva = new Lva();
@@ -1641,6 +1699,10 @@ public class SearchFrame extends javax.swing.JFrame implements ActionListener, M
 		setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
 	}
 
+	/**
+	 * Diese Methode sucht je nachdem was ausgewählt ist, online oder lokal nach Kontakte.
+	 * @author	Alpay Firato
+	 */
 	private void starteKontaktSuche() {
 		setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
 		try {
@@ -1706,6 +1768,10 @@ public class SearchFrame extends javax.swing.JFrame implements ActionListener, M
 		setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
 	}
 	
+	/**
+	 * Diese Methode sucht je nachdem was ausgewählt ist, online oder lokal nach Termine.
+	 * @author	Alpay Firato
+	 */
 	private void starteTerminSuche(){
 		setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
 		Termin ter = new Termin();
