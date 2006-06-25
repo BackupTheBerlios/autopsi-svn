@@ -1309,22 +1309,37 @@ public class SearchFrame extends javax.swing.JFrame implements ActionListener, M
 			if (arg0.getSource().equals(jTerminContainerTable)){
 				TerminContainerTableModel otm = (TerminContainerTableModel) TM;
 				GenericDataObject object = otm.getObjectAt(Table.getSelectedRow()); 
-				GenericEditFrame gedit = new GenericEditFrame(this);
-				gedit.setTableToEdit(otm.tablename);
-				gedit.setObjectToEdit(object,false);
-				gedit.pack();
-				gedit.setVisible(true);
-				otm.fireDataChanged();
+//				GenericEditFrame gedit = new GenericEditFrame(this);
+//				gedit.setTableToEdit(otm.tablename);
+//				gedit.setObjectToEdit(object,false);
+//				gedit.pack();
+//				gedit.setVisible(true);
+//				otm.fireDataChanged();
+				
+				TerminContainer tc = (TerminContainer) object;
+				Integer tcID = tc.id;
+				
+				EditTerminContainerFrame frame = new EditTerminContainerFrame(this,tcID);
+				//frame.setLocation(this.getLocation().x+20,this.getLocation().y+20);
+				frame.setTitle("Termincontainer bearbeiten");
+				frame.setVisible(true);
 			}
 			if (arg0.getSource().equals(jTerminTable)){
 				TerminTableModel otm = (TerminTableModel) TM;
 				GenericDataObject object = otm.getObjectAt(Table.getSelectedRow()); 
-				GenericEditFrame gedit = new GenericEditFrame(this);
-				gedit.setTableToEdit(otm.tablename);
-				gedit.setObjectToEdit(object,false);
-				gedit.pack();
-				gedit.setVisible(true);
-				otm.fireDataChanged();
+//				GenericEditFrame gedit = new GenericEditFrame(this);
+//				gedit.setTableToEdit(otm.tablename);
+//				gedit.setObjectToEdit(object,false);
+//				gedit.pack();
+//				gedit.setVisible(true);
+//				otm.fireDataChanged();
+				Termin t = (Termin) object;
+				Integer terminId = t.id;
+				
+				EditTerminFrame newTermin = new EditTerminFrame(this,null, terminId, false);
+				newTermin.setTitle("Termin bearbeiten");
+				newTermin.setLocation(this.getLocation().x+30,this.getLocation().y+30);
+				newTermin.setVisible(true);
 			}
 			
 		}
