@@ -197,6 +197,10 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 	private int tcID;
 	private int doubleClickCounter = 0;
 	
+	/**
+	 * Constructor for the MainFrame
+	 * 
+	 */
 	public mainFrame() {
 		super();
 		initGUI();	
@@ -205,6 +209,10 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 		loadTerminList(true, null);
 	}
 	
+	/**
+	 * Builds and fills the table with data according to the given space of time
+	 * 
+	 */
 	private void setTable()
 	{
 		this.addWindowListener(this);
@@ -243,6 +251,10 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 		table.setModel(tablemodel);
 	}
 	
+	/**
+	 * Builds the user interface
+	 * 
+	 */
 	private void initGUI() {
 		try {
 			this.setIconImage(new ImageIcon(AutopsiConfigurator.images + "/autopsi.png").getImage() );
@@ -989,6 +1001,10 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 		}
 	}
 
+	/**
+	 * Event Listener for mouse activities
+	 * @param arg0 The event given by the controls who are added to the MouseListener
+	 */
 	public void mouseClicked(MouseEvent arg0) {
 		if(arg0.getSource().equals(button_view1))
 		{
@@ -1004,7 +1020,7 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 			timetable.setVisible(true);
 		}
 		if(arg0.getSource().equals(table))
-		{ //zeigt den angeklickten Tag in der Infobar an
+		{
 			
 			if(zoomBox.getSelectedObjects()!=null) tableZoom();
 			
@@ -1474,16 +1490,13 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 				this.doubleClickCounter = 0;
 		}
 	}
-	/* Zoom-Funktion für das Hovern über die Tabelle
-	 * 
+	
+	/**
+	 * zoom feature for the table. The size of the cell under the cursor increases if
+	 * the zoomBox-Checkbox is selected
 	 */
 	private void tableZoom()
-	/* Diese Methode vergrößert die Zelle, über der sich der Cursor befindet,
-	 * indem die jeweilige Reihenhöhe und Spaltenbreite erhöht werden.
-	 */
 	{
-//		 TableZoom Engine (c) 2006 by Stephe ;-) ---------------------------
-		
 		if(mouseEntered && zoomBox.getSelectedObjects()!= null)
 		{
 			try{
@@ -1502,10 +1515,9 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 					
 					for (i=0;i<5;i++)
 					{ 
-						if(i==j) { k=186; } //Reihe j ist die Reihe, über die gerade "gehovert" wird
-						else { k = 76; } //Die anderen Reihen werden verkleinert
-						table.setRowHeight(i,k); //Reihe i wird mit Höhe k versehen
-						
+						if(i==j) { k=186; }
+						else { k = 76; } 
+						table.setRowHeight(i,k); 
 					}
 				}
 				else
@@ -1514,16 +1526,12 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 					{
 						j=table.rowAtPoint(table.getMousePosition()); 
 					}
-					catch(Exception ex)
-					{
-						
-					}
-					
+					catch(Exception ex)	{}
 						for (i=1;i<15;i++)
 						{ 
-							if(i==j) { k=150; } //Reihe j ist die Reihe, über die gerade "gehovert" wird
-							else { k = 29; } //Die anderen Reihen werden verkleinert
-							table.setRowHeight(i,k); //Reihe i wird mit Höhe k versehen
+							if(i==j) { k=150; } 
+							else { k = 29; } 
+							table.setRowHeight(i,k); 
 							timetable.setRowHeight(i,k);
 						}
 				}
@@ -1533,13 +1541,13 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 				j = table.columnAtPoint(table.getMousePosition());
 				for (i=0;i<7;i++)
 				{
-					if (i==j){ k = 200; } //Spalte j ist die Spalte, über die gerade "gehovert" wird
-					else {k = 97; } //Die anderen Spalten werden verkleinert
+					if (i==j){ k = 200; } 
+					else {k = 97; } 
 					
 					TableColumn col = new TableColumn(i, k);
 					cm.addColumn(col);
 				}
-				table.setColumnModel(cm); //Spaltenlayout auf die Tabelle bringen
+				table.setColumnModel(cm); 
 			}
 		
 			catch(Exception ex)
@@ -1548,8 +1556,8 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 		}	
 	}
 	
-	/* Setzt das Layout für die Tabelle
-	 * 
+	/**
+	 * sets the table layout with a new column model
 	 */
 	public void layoutTable()
 	{
@@ -1571,8 +1579,8 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 		updateTable();
 	}
 	
-	/* Liest die Daten für die Tabelle ein
-	 * 
+	/**
+	 * updates table data according to the given space of time
 	 */
 	public void updateTable()
 	{
@@ -1591,8 +1599,8 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 		}	
 	}
 
-	/* Erneuert die Anzeige für die angezeigte Zeitspanne
-	 * 
+	/**
+	 * sets the text for the Date Indicator showing the space of time of the table
 	 */
 	private void updateDateIndicator()
 	{
@@ -1604,9 +1612,10 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 		this.setTitle("autoPSI | " + lblMonth.getText());
 	}
 	
-	/* Diese Methode berechnet das Startdatum für die Monatsansicht.
-	 * Je nach übergebenem Datum wird das Startdatum so berechnet, dass es immer 
-	 * mit einem Montag beginnt.
+	/**
+	 * sets the space of time according to the selected buttons 
+
+	 * @param cal The start date of the calendar to be shown
 	 */
 	public void setTimeSpace(GregorianCalendar cal)
 	{
@@ -1653,6 +1662,11 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 		updateTable();
 	}
 	
+	/**
+	 * displays an error dialog in case of system or handling errors
+	 * @param title The title of the error dialog
+	 * @param text The text to be shown in the dialog
+	 */
 	private void showErrorDialog(String title, String text)
 	{
 		InfoDialog info = new InfoDialog(this, title,text);
@@ -1661,6 +1675,10 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 		
 	}
 	
+	/**
+	 * sets the model for the table according to the selected view (month or week)
+	 * @param view The view of the table ("month" or "week")
+	 */
 	private void setModel(String view)
 	{
 		if (view.equals("week"))
@@ -1693,10 +1711,10 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 		}
 	}
 	
-	/*
-	 * Lädt Termindetails in den unteren Teil der InfoBar
+	/**
+	 * mask formatter for the jump-to-date field
+	 * @param s The mask (e. g. ##-##-####, whereas # stands for a digit
 	 */
-	
 	protected MaskFormatter createFormatter(String s) {
 		 MaskFormatter formatter = null;
 		 try {
@@ -1707,6 +1725,10 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 		return formatter;
 	}
 
+	/** updates the contents of the info bar on the left side of the window
+	 * @param delete Indicates that an object is deleted, so that the infobar clears if it
+	 * has shown the object before
+	 */
 	public void updateInfoBar(boolean delete)
 	{
 		GenericDAO gdo = new GenericDAO();
@@ -1717,9 +1739,6 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 			tcID = ((Termin)delTC.get(0)).getTerminContainerID();
 		}
 		catch(Exception e){}
-		
-		
-		
 	
 		if(delete)
 			{
@@ -1783,6 +1802,10 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 		terminId=-1;
 	}
 
+	/**
+	 * Windows Listener for the MainFrame
+	 * @param arg0
+	 */
 	public void windowOpened(WindowEvent arg0) {
 	}
 
@@ -1823,7 +1846,9 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 		
 	}
 	
-	//Setzt die Space-Einstellungen
+	/**
+	 * procedure for going online and offline
+	 */
 	private void space()
 	{
 		if(!online)
@@ -1855,6 +1880,11 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 		}
 	}
 
+	/**
+	 * Sets the debug status of this GenericDAO
+	 * @param first True if this method is called for the first time, so it shows the data
+	 * of the current day
+	 */
 	public void loadTerminList(boolean first, GregorianCalendar g)
 	{
 			GregorianCalendar c1 = new GregorianCalendar();
@@ -1961,6 +1991,8 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 			catch(Exception ex) {System.out.println("loadTerminList:: "+ex.toString());}
 	}
 	
+	/** reads the data for a selected date which is shown in the infobar
+	 */
 	public void loadTerminData()
 	{
 		Termin showTermin = new Termin();
@@ -2130,6 +2162,10 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 		}
 	}
 	
+	/**
+	 * Action Listener of the mainFrame
+	 * @param arg0
+	 */
 	public void actionPerformed(ActionEvent arg0) {
 		if (arg0.getSource().equals(this.menu_add_Kontakt)){
 			System.out.println("mainFrame.actionPerformed()::füge Kontakt hinzu");
@@ -2311,6 +2347,11 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 		
 	}
 	
+	/**
+	 * sets the marker which makes a cell appear red if it indicates the
+	 * current day or if you click on it
+	 * @param greg The marker is set to the given GregorianCalendar
+	 */
 	public void setMarker(GregorianCalendar greg)
 	{
 		this.c_marker.setTime(greg.getTime());
@@ -2319,6 +2360,9 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 		c_marker.set(Calendar.SECOND,1);
 	}
 	
+	/**
+	 * clears the data in the infobar
+	 */
 	public void clearTerminData()
 	{
 		lblZeit.setText("");
