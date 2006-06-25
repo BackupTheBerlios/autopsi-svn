@@ -170,7 +170,7 @@ public class SearchFrame extends javax.swing.JFrame implements ActionListener, M
 	private JComboBox jLehrmittelGruppeComboBox, jLehrmittelTypeComboBox;
 	private JComboBox jNotizGruppeComboBox, jPruefungGruppeComboBox;
 	
-	private Dialogs Dialog;
+	private Dialogs Dialog = new Dialogs();
 	/**
 	* Auto-generated main method to display this 
 	* JPanel inside a new JFrame.
@@ -178,7 +178,6 @@ public class SearchFrame extends javax.swing.JFrame implements ActionListener, M
 	
 	public SearchFrame() {
 		super();
-		this.Dialog = new Dialogs ();
 		initGUI();
 		this.setTitle("Suchen");
 		this.setIconImage(new ImageIcon(AutopsiConfigurator.images + "/autopsi.png").getImage() );
