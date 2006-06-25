@@ -37,17 +37,17 @@ public class WeekDayCell extends javax.swing.JPanel {
 		}
 	}
 
-	/**
-	* Auto-generated main method to display this 
-	* JPanel inside a new JFrame.
-	*/
-	public static void main(String[] args) {
-		JFrame frame = new JFrame();
-		frame.getContentPane().add(new WeekDayCell());
-		frame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-		frame.pack();
-		frame.setVisible(true);		
-	}
+//	/**
+//	* Auto-generated main method to display this 
+//	* JPanel inside a new JFrame.
+//	*/
+//	public static void main(String[] args) {
+//		JFrame frame = new JFrame();
+//		frame.getContentPane().add(new WeekDayCell());
+//		frame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+//		frame.pack();
+//		frame.setVisible(true);		
+//	}
 	
 	public WeekDayCell() {
 		super();

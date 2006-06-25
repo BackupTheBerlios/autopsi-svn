@@ -11,6 +11,7 @@ import java.awt.Color;
 import java.awt.Component;
 public class WeekRenderer extends WeekDayCell implements TableCellRenderer
 {
+	private static final long serialVersionUID = 1L;
 	private Termin [] data;
 	private DateConverter converter = new DateConverter();
 	private GregorianCalendar marker=null;;
@@ -26,7 +27,7 @@ public class WeekRenderer extends WeekDayCell implements TableCellRenderer
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 1L;
+
   
    
     public Object getCellEditorValue()

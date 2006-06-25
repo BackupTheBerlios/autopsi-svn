@@ -24,7 +24,7 @@ import autopsi.database.dao.GenericDataObject;
 import autopsi.database.table.AttachableObject;
 import autopsi.gui.component.GenericData;
 
-public class ForeignKeyChooseFrame extends JDialog implements ActionListener, WindowListener{
+public class ForeignKeyChooseFrame extends JDialog implements ActionListener{
 
 	
 	protected GenericDAO gdao;
@@ -119,39 +119,5 @@ public class ForeignKeyChooseFrame extends JDialog implements ActionListener, Wi
 		}
 		
 	}
-
-	public void windowOpened(WindowEvent arg0) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	public void windowClosing(WindowEvent arg0) {
-		this.isOk = false;
-		
-	}
-
-	public void windowClosed(WindowEvent arg0) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	public void windowIconified(WindowEvent arg0) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	public void windowDeiconified(WindowEvent arg0) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	public void windowActivated(WindowEvent arg0) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	public void windowDeactivated(WindowEvent arg0) {
-		// TODO Auto-generated method stub
-		
-	}
+	
 }
