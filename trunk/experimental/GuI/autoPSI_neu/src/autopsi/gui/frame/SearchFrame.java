@@ -21,7 +21,6 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
-import javax.swing.JOptionPane;
 import javax.swing.WindowConstants;
 import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
@@ -60,6 +59,7 @@ import autopsi.database.table.TerminContainer;
 import autopsi.database.table.TerminKategorie;
 import autopsi.database.table.Lva;
 import autopsi.database.table.LvaKategorie;
+import autopsi.gui.component.Dialogs;
 
 /**
 * This code was edited or generated using CloudGarden's Jigloo
@@ -169,6 +169,8 @@ public class SearchFrame extends javax.swing.JFrame implements ActionListener, M
 	private JComboBox jKontaktGruppeComboBox, jLVAGruppeComboBox, jTerminGruppeComboBox;
 	private JComboBox jLehrmittelGruppeComboBox, jLehrmittelTypeComboBox;
 	private JComboBox jNotizGruppeComboBox, jPruefungGruppeComboBox;
+	
+	private Dialogs Dialog;
 	/**
 	* Auto-generated main method to display this 
 	* JPanel inside a new JFrame.
@@ -176,6 +178,7 @@ public class SearchFrame extends javax.swing.JFrame implements ActionListener, M
 	
 	public SearchFrame() {
 		super();
+		this.Dialog = new Dialogs ();
 		initGUI();
 		this.setTitle("Suchen");
 		this.setIconImage(new ImageIcon(AutopsiConfigurator.images + "/autopsi.png").getImage() );
@@ -1247,7 +1250,7 @@ public class SearchFrame extends javax.swing.JFrame implements ActionListener, M
 				lupe.setBounds(7, 150, 196, 182);
 			}
 		} catch (Exception e) {
-			JOptionPane.showMessageDialog(null, "Error: " +e.toString(), "Error!" , JOptionPane.ERROR_MESSAGE);
+			this.Dialog.showErrorDialog("Error: " +e.toString(), "Error!");
 		}
 	}
 	
@@ -1461,7 +1464,7 @@ public class SearchFrame extends javax.swing.JFrame implements ActionListener, M
 		} else if(cmd.equals(this.jTerminDownloadButton)) {
 			jTerminTableModel.downloadObject();
 		} else {
-			JOptionPane.showMessageDialog(null, "Error: " +cmd.toString(), "Command not found!" , JOptionPane.ERROR_MESSAGE);
+			this.Dialog.showErrorDialog("Error: " +cmd.toString(), "Command not found!");
 		}
 	}
 
@@ -1699,7 +1702,7 @@ public class SearchFrame extends javax.swing.JFrame implements ActionListener, M
 				jKontaktTableModel.fireOnlineDataChanged();
 			}
 		} catch (ParseException ps) {
-			JOptionPane.showMessageDialog(null, "Parse-Error: " +ps.getMessage(), "Error!" , JOptionPane.ERROR_MESSAGE);
+			this.Dialog.showErrorDialog("Parse-Error: " +ps.getMessage(), "Error!");
 		}
 		setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
 	}
