@@ -126,8 +126,13 @@ public class EditTerminContainerFrame extends javax.swing.JFrame implements java
 	private DefaultListModel lm;
 	private int lastID = 0;
 	private ArrayList<String[]> queryList = new ArrayList<String[]>();
-	
-	private void readData() throws EDatabaseConnection, EAttributeNotFound, EDatabase{
+	/**
+	 * Hier werden die Daten des Termincontainers aus der Datenbank in die Felder gelesen
+	 * @throws EDatabaseConnection
+	 * @throws EAttributeNotFound
+	 * @throws EDatabase
+	 */
+	void readData() throws EDatabaseConnection, EAttributeNotFound, EDatabase{
 		TerminContainer lookup = new TerminContainer();
 		lookup.setId(ID);
 		List<GenericDataObject> list = null;
@@ -147,7 +152,10 @@ public class EditTerminContainerFrame extends javax.swing.JFrame implements java
 		loadObjectList();
 		firstUpdateTerminList();	
 	}
-	
+	/**
+	 * Hier werden die Daten des neuen bzw. alten Termincontainers in die Datenbank geschrieben
+	 *
+	 */
 	private void update(){
 		try{
 			String query="";
@@ -222,7 +230,11 @@ public class EditTerminContainerFrame extends javax.swing.JFrame implements java
 			System.out.println("Exception beim Updaten des Termincontainers== "+e.toString());
 		}
 	}
-	
+	/**
+	 * Ist der Konstruktor des EditTerminContainerFrame's
+	 * @param owner Ist das aufrufende Fenster
+	 * @param id Ist die ID des Termincontainers
+	 */
 	public EditTerminContainerFrame(JFrame owner, int id) { //Konstruktor für das EditTermin-Frame
 		super();
 		this.ID = id;
@@ -242,7 +254,10 @@ public class EditTerminContainerFrame extends javax.swing.JFrame implements java
 					}
 				});
 	}
-	
+	/**
+	 * Hier werden alle GUI-Komponenten erstellt.
+	 *
+	 */
 	private void initGUI() {
 		try {
 			this.setIconImage(new ImageIcon(AutopsiConfigurator.images + "/autopsi.png").getImage() );
@@ -545,7 +560,9 @@ public class EditTerminContainerFrame extends javax.swing.JFrame implements java
 			e.printStackTrace();
 		}
 	}
-
+	/**
+	 * Hier werden alle Aktionen definiert, die bei Mausklicken ausglöst werden müssen
+	 */
 	public void mouseClicked(MouseEvent arg0) {
 		if(arg0.getSource().equals(abort_button)){
 			this.dispose();
@@ -787,7 +804,9 @@ public class EditTerminContainerFrame extends javax.swing.JFrame implements java
 		// TODO Auto-generated method stub
 		
 	}
-
+	/**
+	 * Hier werden alle Texte erstellt, die in der Infoleiste angezeigt werden, wenn man mit der Maus über eine Komponente fährt.
+	 */
 	public void mouseEntered(MouseEvent arg0) {
 		if(arg0.getSource().equals(newTermin)){
 			jLabel7.setText("Erstellt einen neuen Termin in diesem Termincontainer");
@@ -811,7 +830,9 @@ public class EditTerminContainerFrame extends javax.swing.JFrame implements java
 			jLabel7.setText("Gruppe bearbeiten");
 		}
 	}
-
+	/**
+	 * Hier werden alle Texte erstellt, die in der Infoleiste angezeigt werden, wenn man mit der Maus eine Komponente verlässt.
+	 */
 	public void mouseExited(MouseEvent arg0) {
 		if(arg0.getSource().equals(newTermin)){
 			jLabel7.setText("");
@@ -835,7 +856,10 @@ public class EditTerminContainerFrame extends javax.swing.JFrame implements java
 			jLabel7.setText("");
 		}
 	}
-	
+	/**
+	 * Hier wird die Terminliste zum ersten Mal geladen
+	 *
+	 */
 	private void firstUpdateTerminList(){
 		try {
 			termin_list = gdo.unsafeQuery("select * from termin where TERMINCONTAINER_ID = "+ID,new Termin());
@@ -856,7 +880,10 @@ public class EditTerminContainerFrame extends javax.swing.JFrame implements java
 		}
 	}
 	
-	
+	/**
+	 * Hier wird die Terminliste aktualisiert
+	 * @param termine Ist eine Liste der Termine, welche zur Terminliste hinzugefügt werden sollen
+	 */
 	public void updateTerminList(List<Termin> termine)
 	{
 		for(int i = 0;i<termine.size();i++)
@@ -869,7 +896,11 @@ public class EditTerminContainerFrame extends javax.swing.JFrame implements java
 			terminModel.addElement(termin);		
 		}
 	}
-	
+	/**
+	 * Hier wird ein Formatter erstellt
+	 * @param s
+	 * @return ist ein funktionierender MaskFormatter
+	 */
 	protected MaskFormatter createFormatter(String s) {
 		 MaskFormatter formatter = null;
 		 try {
@@ -879,7 +910,11 @@ public class EditTerminContainerFrame extends javax.swing.JFrame implements java
 		}
 		return formatter;
 	}
-	
+	/**
+	 * Hier wird ein Fehlerdialog erstellt
+	 * @param title Ist der Titel des Fehlerdialogs
+	 * @param text Ist die angezeigte Meldung des Fehlerdialogs
+	 */
 	private void showErrorDialog(String title, String text)
 	{
 		InfoDialog info = new InfoDialog(this, title,text);
@@ -887,7 +922,10 @@ public class EditTerminContainerFrame extends javax.swing.JFrame implements java
 		info.setModal(true);
 		info.setVisible(true);	
 	}
-	
+	/**
+	 * Hier wird die Liste der angehängten Objekte geladen.
+	 *
+	 */
 	private void loadObjectList(){//Lädt die angehängten Objekte
 		this.attachedObjects = new ArrayList<GenericDataObject>();
 		lm.clear();
