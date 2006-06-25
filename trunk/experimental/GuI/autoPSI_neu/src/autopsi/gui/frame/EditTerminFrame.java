@@ -136,7 +136,13 @@ public class EditTerminFrame extends javax.swing.JFrame implements java.awt.even
 	List<GenericDataObject> id_list;
 	private int lastID = 0;
 	private boolean newTCsender;
-	
+	/**
+	 * Der Konstruktor von EditTerminFrame.
+	 * @param owner Ist das aufrufende Fenster
+	 * @param cal Ist ein übergebenes Datum für das Datumsfeld
+	 * @param id Ist die ID, unter der der Termin in der Datenbank gespeichert ist
+	 * @param tcsender Gibt an, ob das EditTerminFrame von einem Termincontainer aus aufgerufen wurde.
+	 */
 	public EditTerminFrame(JFrame owner, GregorianCalendar cal, Integer id, boolean tcsender) {
 		super();
 		this.ID = id;
@@ -157,7 +163,13 @@ public class EditTerminFrame extends javax.swing.JFrame implements java.awt.even
 					}
 				});
 	}
-	
+	/**
+	 * Hier werden die Daten des Termins aus der Datenbank in die Felder gelesen
+	 * @param id Ist die ID, unter der der Termin in der Datenbank gespeichert ist
+	 * @throws EDatabaseConnection
+	 * @throws EAttributeNotFound
+	 * @throws EDatabase
+	 */
 	private void readData(Integer id) throws EDatabaseConnection, EAttributeNotFound, EDatabase{
 		
 		
@@ -203,7 +215,10 @@ public class EditTerminFrame extends javax.swing.JFrame implements java.awt.even
 		selectedGroup = i;
 		loadObjectList();
 	}
-	
+	/**
+	 * Hier werden die Daten des neuen bzw. alten Termins in die Datenbank geschrieben
+	 *
+	 */
 	private void update(){
 		try{	
 			try
@@ -302,7 +317,10 @@ public class EditTerminFrame extends javax.swing.JFrame implements java.awt.even
 			System.out.println("Exception beim Updaten=="+e.toString());
 		}
 	}
-	
+	/**
+	 * Hier werden alle GUI-Komponenten erstellt.
+	 *
+	 */
 	private void initGUI() {
 		try {
 			this.setIconImage(new ImageIcon(AutopsiConfigurator.images + "/autopsi.png").getImage() );
@@ -706,7 +724,9 @@ public class EditTerminFrame extends javax.swing.JFrame implements java.awt.even
 	public void mouseClicked(MouseEvent arg0) {
 		
 	}
-
+	/**
+	 * Hier werden alle Aktionen definiert, die bei Mausklicken ausglöst werden müssen
+	 */
 	public void mousePressed(MouseEvent arg0) {
 		if(arg0.getSource().equals(abort_button)){
 			this.dispose();
@@ -946,7 +966,9 @@ public class EditTerminFrame extends javax.swing.JFrame implements java.awt.even
 	public void mouseReleased(MouseEvent arg0) {
 		
 	}
-
+	/**
+	 * Hier werden alle Texte erstellt, die in der Infoleiste angezeigt werden, wenn man mit der Maus über eine Komponente fährt.
+	 */
 	public void mouseEntered(MouseEvent arg0) {
 		if(arg0.getSource().equals(edit_Group_button)){
 			jLabel5.setText("Gewählte Gruppe bearbeiten");
@@ -967,7 +989,9 @@ public class EditTerminFrame extends javax.swing.JFrame implements java.awt.even
 			jLabel5.setText("neuen Termincontainer erstellen");
 		}
 	}
-
+	/**
+	 * Hier werden alle Texte erstellt, die in der Infoleiste angezeigt werden, wenn man mit der Maus eine Komponente verlässt.
+	 */
 	public void mouseExited(MouseEvent arg0) {
 		if(arg0.getSource().equals(edit_Group_button)){
 			jLabel5.setText("");
@@ -988,7 +1012,11 @@ public class EditTerminFrame extends javax.swing.JFrame implements java.awt.even
 			jLabel5.setText("");
 		}
 	}
-	
+	/**
+	 * Hier wird ein Fehlerdialog erstellt
+	 * @param title Ist der Titel des Fehlerdialogs
+	 * @param text Ist die angezeigte Meldung des Fehlerdialogs
+	 */
 	private void showErrorDialog(String title, String text)
 	{
 		InfoDialog info = new InfoDialog(this, title,text);
@@ -996,7 +1024,11 @@ public class EditTerminFrame extends javax.swing.JFrame implements java.awt.even
 		info.setModal(true);
 		info.setVisible(true);	
 	}
-	
+	/**
+	 * Hier wird ein Formatter erstellt
+	 * @param s
+	 * @return ist ein funktionierender MaskFormatter
+	 */
 	protected MaskFormatter createFormatter(String s) {
 		 MaskFormatter formatter = null;
 		 try {
@@ -1006,7 +1038,10 @@ public class EditTerminFrame extends javax.swing.JFrame implements java.awt.even
 		}
 		return formatter;
 	}
-
+	/**
+	 * Hier wird die Termincontainerliste in der Combobox der Termincontainer aktualisiert. 
+	 *
+	 */
 	public void updateTCList()
 	{
 		List<GenericDataObject> tcList;
@@ -1034,7 +1069,10 @@ public class EditTerminFrame extends javax.swing.JFrame implements java.awt.even
 			
 		}
 	}
-	
+	/**
+	 * Hier wird die Liste der angehängten Objekte geladen.
+	 *
+	 */
 	private void loadObjectList(){
 		this.attachedObjects = new ArrayList<GenericDataObject>();
 		lm.clear();
@@ -1158,7 +1196,10 @@ public class EditTerminFrame extends javax.swing.JFrame implements java.awt.even
 			jList1.setModel(lm);
 		}
 	}
-	
+	/**
+	 * Hier wird ein Termin zu der Liste eines Termincontainers hinzugefügt, wenn das TerminEditFrame aus einem Termincontainer aus aufgerufen wurde.
+	 *
+	 */
 	private void addToList()
 	{
 		EditTerminContainerFrame actor = (EditTerminContainerFrame)owner;
@@ -1174,7 +1215,10 @@ public class EditTerminFrame extends javax.swing.JFrame implements java.awt.even
 		actor.updateTerminList(data);
 		
 	}
-	
+	/**
+	 * Hier werden die Daten aus den Eingabefeldern ausgelesen.
+	 *
+	 */
 	private void readFieldData()
 	{
 		System.out.println("readFieldData:::aha 0");
