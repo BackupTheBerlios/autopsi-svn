@@ -1466,12 +1466,10 @@ public class SearchFrame extends javax.swing.JFrame implements ActionListener, M
 	}
 
 	public void keyTyped(KeyEvent arg0) {
-		// TODO Auto-generated method stub
 		
 	}
 	
 	public void keyReleased(KeyEvent arg0) {
-		// TODO Auto-generated method stub
 		
 	}
 
