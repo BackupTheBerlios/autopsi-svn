@@ -8,8 +8,10 @@ import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.sql.Array;
 import java.sql.Date;
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.GregorianCalendar;
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
@@ -17,6 +19,7 @@ import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.Border;
+import javax.swing.text.DateFormatter;
 import javax.swing.text.MaskFormatter;
 
 public class DateEditPlugin extends EditPlugin implements FocusListener {
@@ -62,7 +65,20 @@ public class DateEditPlugin extends EditPlugin implements FocusListener {
 			this.value = (Date)newValue;
 		else
 			this.value = new Date(System.currentTimeMillis());
-
+		GregorianCalendar cal = new GregorianCalendar();
+		cal.setTime(this.value);
+		Integer day = cal.get(cal.DAY_OF_MONTH);
+		Integer month = cal.get(cal.MONTH);
+		Integer year = cal.get(cal.YEAR);
+		String dayS = day.toString();
+		String monthS = month.toString();
+		String yearS = year.toString();
+		if (day < 10)
+			dayS = "0" + day;
+		if (month < 10)
+			monthS = "0" + month;
+		
+		this.dateEdit.setText(dayS + "-" + monthS + "-" + yearS);
 	}
 
 	@Override

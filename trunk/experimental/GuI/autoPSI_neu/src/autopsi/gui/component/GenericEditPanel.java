@@ -131,6 +131,8 @@ public class GenericEditPanel extends JPanel {
 			if (plug == null)
 				plug = this.getNewPlugin(Object.class);
 			plug.setName(key);
+			if (plug instanceof DateEditPlugin)
+				System.out.println("GenericEditPanel.inspectEditedObjecT()::is DATE");
 //			System.out.println("GenericEditPanel.inspectEditedObject()::key=="+key);
 			try{
 				Object obj = null;

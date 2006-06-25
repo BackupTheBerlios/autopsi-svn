@@ -55,8 +55,35 @@ public class TimestampEditPlugin extends EditPlugin implements FocusListener{
 
 	@Override
 	public void setValue(Object newValue) {
-		this.value = (Timestamp)newValue;
-//		this.dateEdit.setText(value.getHours().toString()+value)
+		if (newValue != null)
+			this.value = (Timestamp)newValue;
+		else
+			this.value = new Timestamp(System.currentTimeMillis());
+		GregorianCalendar cal = new GregorianCalendar();
+		cal.setTime(this.value);
+		Integer hour = cal.get(cal.HOUR);
+		Integer min = cal.get(cal.MINUTE);
+		Integer day = cal.get(cal.DAY_OF_MONTH);
+		Integer month = cal.get(cal.MONTH);
+		Integer year = cal.get(cal.YEAR);
+		String hourS = hour.toString();
+		String minS = min.toString();
+		String dayS = day.toString();
+		String monthS = month.toString();
+		String yearS = year.toString();
+		if (hour < 10)
+			hourS = "0" + hour;
+		if (min < 10)
+			minS = "0" + min;
+		if (day < 10)
+			dayS = "0" + day;
+		if (month < 10)
+			monthS = "0" + month;
+		
+		
+		System.out.println("TimestampEditPlugin.setValue::dateEdit.setText with::"+cal.get(cal.HOUR) + ":" + cal.get(cal.MINUTE)+ "," + cal.get(cal.DAY_OF_MONTH) + "-" + cal.get(cal.MONTH) + "-" + cal.get(cal.YEAR));
+		this.dateEdit.setText(hourS + ":" + minS + "," + dayS + "-" + monthS + "-" + yearS);
+		
 	}
 
 	@Override
