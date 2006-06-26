@@ -27,7 +27,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
-
+import javax.swing.ListSelectionModel;
 
 import javax.swing.WindowConstants;
 import javax.swing.border.LineBorder;
@@ -88,7 +88,6 @@ public class EditTerminContainerFrame extends javax.swing.JFrame implements java
 	private JLabel jLabel3;
 	private List<GenericDataObject> attachedObjects;
 	private JButton openTermin;
-	private JButton editTermin;
 	private JButton deleteTermin;
 	private JButton newTermin;
 	private JTextField sucheTermin_field;
@@ -318,7 +317,6 @@ public class EditTerminContainerFrame extends javax.swing.JFrame implements java
 						jGroupBox.addFocusListener(new FocusListener(){
 
 							
-							//Wird die Gruppenauswahlbox angewählt, so werden die verfügbaren Gruppen geladen
 							public void focusGained(FocusEvent arg0) {
 								
 								List<GenericDataObject> groupList;
@@ -344,7 +342,7 @@ public class EditTerminContainerFrame extends javax.swing.JFrame implements java
 								}
 								
 							}
-							//Speichert die gewählte Gruppe
+						
 							public void focusLost(FocusEvent arg0) {
 								selectedGroup = jGroupBox.getSelectedIndex();
 							}
@@ -449,16 +447,37 @@ public class EditTerminContainerFrame extends javax.swing.JFrame implements java
 							public void keyTyped(KeyEvent arg0)
 							{
 								DefaultComboBoxModel model2 = new DefaultComboBoxModel();
-								
-								for(int i = 0;i<terminModel.getSize();i++)
+
+								if(sucheTermin_field.getText().length()>0)
 								{
-									if(terminModel.getElementAt(i).toString().toLowerCase().contains(sucheTermin_field.getText().toLowerCase()))
+									for(int i = 0;i<terminModel.getSize();i++)
 									{
-										model2.addElement(terminModel.getElementAt(i));
+										if(terminModel.getElementAt(i).toString().toLowerCase().contains(sucheTermin_field.getText().toLowerCase()))
+										{
+											model2.addElement(terminModel.getElementAt(i));
+										}
+									}
+									terminModel.removeAllElements();
+									for(int k = 0;k<model2.getSize();k++)
+									{
+										terminModel.addElement(model2.getElementAt(k));
+									}
+									terminList.setModel(terminModel);
+								}
+								else 
+								{
+									terminModel.removeAllElements();
+									for(int j = 0; j < container_termine.size();j++){
+										Termin term = (Termin)container_termine.get(j);
+										String datum = term.getDate().toString().substring(8,10)+"-"+term.getDate().toString().substring(5,7)+"-"+
+										term.getDate().toString().substring(0,4)+" um "+term.getDate().toString().substring(11,16);
+										String termin = datum+": "+((Termin)container_termine.get(j)).getSecondaryTitle() +",     Ort: " +((Termin)container_termine.get(j)).getPlace();
+										
+										terminModel.addElement(termin);
+
 									}
 								}
 								
-								terminList.setModel(model2);
 							}
 							public void keyPressed(KeyEvent arg0)
 							{						
@@ -471,7 +490,7 @@ public class EditTerminContainerFrame extends javax.swing.JFrame implements java
 					{
 						newTermin = new JButton();
 						jPanel2.add(newTermin);
-						newTermin.setBounds(210, 235, 42, 28);
+						newTermin.setBounds(238, 235, 42, 28);
 						newTermin.setIcon(new ImageIcon(AutopsiConfigurator.images+"/newTermin.GIF"));
 						newTermin.addMouseListener(this);
 					}
@@ -483,17 +502,18 @@ public class EditTerminContainerFrame extends javax.swing.JFrame implements java
 						deleteTermin.addMouseListener(this);
 					}
 					{
-						editTermin = new JButton();
-						jPanel2.add(editTermin);
-						editTermin.setBounds(329, 235, 42, 28);
-						editTermin.setIcon(new ImageIcon(AutopsiConfigurator.images+"/editTermin.GIF"));
+						if(ID>0)
 					}
 					{
-						openTermin = new JButton();
-						jPanel2.add(openTermin);
-						openTermin.setBounds(7, 235, 42, 28);
-						openTermin.setIcon(new ImageIcon(AutopsiConfigurator.images+"/goToTermin.GIF"));
-						openTermin.addMouseListener(this);
+						if(ID>0)
+						{
+							openTermin = new JButton();
+							jPanel2.add(openTermin);
+							openTermin.setBounds(7, 235, 42, 28);
+							openTermin.setIcon(new ImageIcon(AutopsiConfigurator.images+"/goToTermin.GIF"));
+							openTermin.addMouseListener(this);
+						}
+						
 					}
 					{
 						jLabel3 = new JLabel();
@@ -504,7 +524,7 @@ public class EditTerminContainerFrame extends javax.swing.JFrame implements java
 					{
 						newTerminReihe = new JButton();
 						jPanel2.add(newTerminReihe);
-						newTerminReihe.setBounds(252, 235, 56, 28);
+						newTerminReihe.setBounds(280, 235, 56, 28);
 						newTerminReihe.setIcon(new ImageIcon(AutopsiConfigurator.images+"/newTerminReihe.GIF"));
 						newTerminReihe.addMouseListener(this);
 					}
@@ -518,6 +538,7 @@ public class EditTerminContainerFrame extends javax.swing.JFrame implements java
 							terminList = new JList();
 							jScrollPane1.setViewportView(terminList);
 							terminList.setModel(terminModel);
+							terminList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 						}
 					}
 				
@@ -573,8 +594,7 @@ public class EditTerminContainerFrame extends javax.swing.JFrame implements java
 	 */
 	public void mouseClicked(MouseEvent arg0) {
 		if(arg0.getSource().equals(deleteTermin)){
-			if(ID<0)
-			{
+			
 				try
 				{
 					String t = terminModel.getElementAt(terminList.getSelectedIndex()).toString();
@@ -592,33 +612,56 @@ public class EditTerminContainerFrame extends javax.swing.JFrame implements java
 						
 						String time1 = t.substring(14,19);
 						String time2 = container_termine.get(i).getDate().toString().substring(11,16);
-						
-						System.out.println("time1:: "+time1+ "   time2:: " + time2);
+
 						if(day1==day2 && month1==month2 && year1==year2 && time1.equals(time2))
 						{
-							terminModel.removeElementAt(terminList.getSelectedIndex());
 							System.out.println("before: " + container_termine.size());
 							container_termine.remove(i);
-							System.out.println("then: " + container_termine.size());
-							System.out.println("removed successfully");
-							
-							terminModel.removeAllElements();
-							for (int j = 0;i<container_termine.size();j++)
+							if(ID>0)
 							{
-								
-							}	
+								try
+								{
+									String date = year1+"-"+month1+"-"+day1+" "+time1+":00.0";
+									gdo.unsafeQuery("delete from termin where date='"+date+"'",new Termin());
+									
+									if(owner instanceof mainFrame)
+									{
+										mainFrame actor = (mainFrame)owner;
+										actor.updateTable();
+										GregorianCalendar greg = new GregorianCalendar();
+										greg.setTime(actor.getMarker().getTime());
+										actor.loadTerminList(false, greg);
+										this.toFront();
+									}
+									
+								}
+								catch(Exception ex){System.out.println("error:: "+ex.toString());}
+							}
+							System.out.println("then: " + container_termine.size());
+							System.out.println("removed successfully at index "+i);
 						}
-					
 					}
+					terminModel.removeAllElements();
+					for(int j = 0; j < container_termine.size();j++){
+						Termin term = (Termin)container_termine.get(j);
+						String datum = term.getDate().toString().substring(8,10)+"-"+term.getDate().toString().substring(5,7)+"-"+
+						term.getDate().toString().substring(0,4)+" um "+term.getDate().toString().substring(11,16);
+						String termin = datum+": "+((Termin)container_termine.get(j)).getSecondaryTitle() +",     Ort: " +((Termin)container_termine.get(j)).getPlace();
+						
+						terminModel.addElement(termin);
+						sucheTermin_field.getKeyListeners()[0].keyTyped(null);
+
+					}
+					System.out.println(container_termine.size());
 					
 				}
 				catch(Exception ex)
 				{
-					showErrorDialog("Fehler!","Kein Termin zum Löschen ausgewählt!");
+					showErrorDialog("Fehler!",ex.toString());
 				}
 			
 			}
-		}
+		
 		
 		if(arg0.getSource().equals(abort_button)){
 			this.dispose();
@@ -916,7 +959,6 @@ public class EditTerminContainerFrame extends javax.swing.JFrame implements java
 	private void firstUpdateTerminList(){
 		try {
 			termin_list = gdo.unsafeQuery("select * from termin where TERMINCONTAINER_ID = "+ID,new Termin());
-			
 			for(int i = 0; i < termin_list.size();i++){
 				Termin term = (Termin)termin_list.get(i);
 				String datum = term.getDate().toString().substring(8,10)+"-"+term.getDate().toString().substring(5,7)+"-"+

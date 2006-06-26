@@ -299,7 +299,7 @@ public class EditTerminFrame extends javax.swing.JFrame implements java.awt.even
 				}
 		else if(owner instanceof EditTerminContainerFrame)
 		{
-			System.out.println("elsif beim EditTCFrame");
+		
 			EditTerminContainerFrame actor = (EditTerminContainerFrame)owner;
 			Termin data = new Termin();
 			data.setSecondaryTitle(sec_title);
@@ -307,9 +307,12 @@ public class EditTerminFrame extends javax.swing.JFrame implements java.awt.even
 			data.setPlace(place);
 			data.setDescription(desc);
 			data.setDate(Timestamp.valueOf(date));
-			List<Termin> termine = new ArrayList<Termin>();
-			termine.add(data);
-			actor.updateTerminList(termine);
+			query = "update termin  set GROUP_ID = " + group_id + ",TERMIN_KATEGORIE_ID = " + tkat + ", secondary_title='"+sec_title+"', description='"+desc+"', date='"+date+"',duration="+duration+",place='"+place+"',termincontainer_id="+tc_id+" where id="+ID;
+			
+			gdo.unsafeQuery(query,vorlage);//Updatet den Termin
+			actor.updateTerminList(new ArrayList<Termin>());
+			ok=true;
+			
 		}
 				
 		}
@@ -712,7 +715,7 @@ public class EditTerminFrame extends javax.swing.JFrame implements java.awt.even
 			this.setSize(456, 387);
 			this.setPreferredSize(new java.awt.Dimension(456, 387));
 			this.setResizable(false);
-			if(ID!=null && cal==null && !(owner instanceof EditTerminContainerFrame)) {readData(ID);}
+			if(ID!=null && cal==null) {readData(ID);}
 			else
 				apply_button.setVisible(false);
 			pack();
