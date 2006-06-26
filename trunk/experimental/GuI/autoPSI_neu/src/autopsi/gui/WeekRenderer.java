@@ -109,13 +109,13 @@ public class WeekRenderer extends WeekDayCell implements TableCellRenderer
         				location = i+1;
         				}
         		}
-        		System.out.println(data[location].getDate().toString());
+        		
         		dauer = dauer - Integer.parseInt(data[location+1].getDate().toString().substring(11,13))*60-Integer.parseInt(data[location+1].getDate().toString().substring(14,16));
-        		System.out.println(dauer);
-        		dauer = dauer - (var_long[arg5]*60);
-        		System.out.println(dauer);
+        		
+        		dauer = dauer - (var_long[arg5]*60)-60;
+        		
         		if(dauer<0) dauer = 0;
-        		System.out.println(var_long[arg5]);
+        	
         		
         	while(dauer>0)
         	{
