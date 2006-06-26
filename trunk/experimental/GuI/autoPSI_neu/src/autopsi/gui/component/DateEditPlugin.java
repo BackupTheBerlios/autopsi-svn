@@ -91,7 +91,7 @@ public class DateEditPlugin extends EditPlugin implements FocusListener {
 		GregorianCalendar cal = new GregorianCalendar();
 		cal.setTime(this.value);
 		Integer day = cal.get(cal.DAY_OF_MONTH);
-		Integer month = cal.get(cal.MONTH);
+		Integer month = cal.get(cal.MONTH)+1;
 		Integer year = cal.get(cal.YEAR);
 		String dayS = day.toString();
 		String monthS = month.toString();
