@@ -1659,6 +1659,8 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 		}
 		greg.set(Calendar.HOUR_OF_DAY,0);
 		greg.set(Calendar.MINUTE,0);
+		greg.set(Calendar.SECOND,0);
+		greg.set(Calendar.MILLISECOND,0);
 		tsBegin = new Timestamp(greg.getTimeInMillis());
 		calStart.setTime(greg.getTime());
 		calEnd.setTime(calStart.getTime()); //Endzeit auf Startzeit setzen
@@ -1907,11 +1909,13 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 			if (g!=null) c1.setTime(g.getTime());
 			c1.set(Calendar.HOUR_OF_DAY,0);
 			c1.set(Calendar.MINUTE,0);
-			c1.set(Calendar.SECOND,1);
+			c1.set(Calendar.SECOND,0);
+			c1.set(Calendar.MILLISECOND,0);
 			Timestamp t1 = new Timestamp(c1.getTimeInMillis());
 			c1.set(Calendar.HOUR_OF_DAY,23);
 			c1.set(Calendar.MINUTE,59);
 			c1.set(Calendar.SECOND,59);
+			c1.set(Calendar.MILLISECOND,0);
 			Timestamp t2 = new Timestamp(c1.getTimeInMillis());
 			
 			//Datumsanzeige setzen
