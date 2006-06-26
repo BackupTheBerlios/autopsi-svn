@@ -15,8 +15,7 @@ public class WeekRenderer extends WeekDayCell implements TableCellRenderer
 	private Termin [] data;
 	private DateConverter converter = new DateConverter();
 	private GregorianCalendar marker=null;;
-	private int[] var_long = {0,0,0,0,0,0,0};
-	private int[] termindauer;
+
 	
 	public WeekRenderer(GregorianCalendar mark) {
 		super();
@@ -38,25 +37,17 @@ public class WeekRenderer extends WeekDayCell implements TableCellRenderer
 
 	public Component getTableCellRendererComponent(JTable arg0, Object arg1, boolean arg2, boolean arg3, int arg4, int arg5) {
 		try{
-			if(arg1 instanceof Termin[])
-	    	{
+			if(arg1 instanceof Termin[]) {
+	    	
+				data = (Termin[])arg1;
 				WeekDayCell cell = new WeekDayCell();
 				
-				if(var_long[arg5]>0) 
-					{
-					cell.setGray();
-					var_long[arg5]--;
-					}
-	    		data = (Termin[])arg1;
-	    		
-	    		
-	    		
 	    		Termin[] liste = new Termin[data.length-1];
 	    		for (int i = 0;i<liste.length;i++)
 	    		{
 	    			liste[i]=data[i+1];
 	    		}
-	    	
+	    		
 	    		Calendar cal = new GregorianCalendar();
 	    		cal.set(Integer.parseInt(data[0].getDate().toString().substring(0,4)),Integer.parseInt(data[0].getDate().toString().substring(5,7))-1,Integer.parseInt(data[0].getDate().toString().substring(8,10)));
 	    		Date dat = new Date(cal.getTimeInMillis());
@@ -88,42 +79,14 @@ public class WeekRenderer extends WeekDayCell implements TableCellRenderer
 	    				marker=null;
 	    			}
 	    		}
+	    		
 	    		String[] liste2 = new String[data.length-1];
 	    		if(liste2.length>0)
-	    		{
-	    			termindauer = new int[liste2.length];
-	        		
+	    		{	
 	        		for (int i = 0;i<data.length-1;i++)
 	        		{
-	        			liste2[i] = data[i+1].getDate().toString().substring(11,16) + " " + data[i+1].getSecondaryTitle();
-	        			termindauer[i] = Integer.parseInt(data[i+1].getDate().toString().substring(11,13))*60+Integer.parseInt(data[i+1].getDate().toString().substring(14,16))+data[i+1].getDuration();
-	        			
-	        		}
-	        		int dauer = termindauer[0];
-	        		int location = 0;
-	        		
-	        		for(int i = 1; i<termindauer.length;i++)
-	        		{
-	        			if(dauer<termindauer[i])
-	        				{
-	        				dauer = termindauer[i];
-	        				location = i+1;
-	        				}
-	        		}
-	        		
-	        		dauer = dauer - Integer.parseInt(data[location+1].getDate().toString().substring(11,13))*60-Integer.parseInt(data[location+1].getDate().toString().substring(14,16));
-	        		
-	        		dauer = dauer - (var_long[arg5]*60)-60;
-	        		
-	        		if(dauer<0) dauer = 0;
-	        	
-	        		
-	        	while(dauer>0)
-	        	{
-	        		dauer = dauer - 60;
-	        		var_long[arg5]++;
-	        	}
-	        		
+	        			liste2[i] = data[i+1].getDate().toString().substring(11,16) + " " + data[i+1].getSecondaryTitle();       			
+	        		}        		
 	    		}
 
 	    		cell.fillList(liste2);    
@@ -131,7 +94,7 @@ public class WeekRenderer extends WeekDayCell implements TableCellRenderer
 	    		cell.setVisible(true);
 	        	return cell;
 	    	}
-			return null;       
+			      
 		}
 		catch(Exception ex) {System.out.println("weekRenderer:: "+ex.toString());}
 		return null;
