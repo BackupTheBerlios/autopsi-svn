@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import javax.swing.JOptionPane;
+
 import autopsi.database.dao.GenericDAO;
 import autopsi.database.dao.GenericDataObject;
 import autopsi.database.table.AttachableObject;
@@ -46,11 +48,11 @@ public class ObjectSpaceSharer {
 				try {
 					com.addObject(gO);
 				} catch (Exception e){
-					System.out.println("ObjectSpaceSharer.shareObjects()::Konnte Objekt nicht zum JavaSpace hinzufügen::"+e.toString());
-					return;
+					JOptionPane.showMessageDialog(null, "Error: "+e.toString(),"Error!",JOptionPane.ERROR_MESSAGE);
+						return;
 				}
-			else
-				System.out.println("ObjectSpaceSharer.shareObjects()::gO==null");
+			
+				
 		}
 	}
 	
@@ -69,71 +71,56 @@ public class ObjectSpaceSharer {
 			GenericDataObject lookupObj = null;
 			String tableName = aob.getTableName().toLowerCase();
 			if (tableName.equals("kontakt")){
-				System.out.println("Ist ein Kontakt, globalId=="+aob.getId());
+				
 				lookupObj = new Kontakt();
 				this.gdo.setCurrentTable("kontakt");
 				((Kontakt)lookupObj).setGlobalId(aob.getId());
 			}
 			if (tableName.equals("notiz")){
-				System.out.println("Ist eine Notiz, globalId=="+aob.getId());
+				
 				lookupObj = new Notiz();
 				this.gdo.setCurrentTable("notiz");
 				((Notiz)lookupObj).setGlobalId(aob.getId());
 			}
 			if (tableName.equals("lva")){
-				System.out.println("Ist eine Lva, globalId=="+aob.getId());
+				
 				lookupObj = new Lva();
 				this.gdo.setCurrentTable("lva");
 				((Lva)lookupObj).setGlobalId(aob.getId());
 			}
 			if (tableName.equals("lehrmittel")){
-				System.out.println("Ist ein Lehrmittel, globalId=="+aob.getId());
+				
 				lookupObj = new Lehrmittel();
 				this.gdo.setCurrentTable("lehrmittel");
 				((Lehrmittel)lookupObj).setGlobalId(aob.getId());
 			}
 			if (tableName.equals("pruefung")){
-				System.out.println("Ist eine Prüfung, globalId=="+aob.getId());
+				
 				lookupObj = new Pruefung();
 				this.gdo.setCurrentTable("pruefung");
 				((Pruefung)lookupObj).setGlobalId(aob.getId());
 			}
 			
 			GenericDataObject obj = null;
-//			System.out.println("ObjecTSpaceSharer.getSharedObjects()::1");
+
 			try{
-//				System.out.println("ObjecTSpaceSharer.getSharedObjects()::1a");
+
 				List<GenericDataObject> l = null;
-			/*	if (lookupObj instanceof Kontakt)
-					System.out.println("lookupObj instanceof Kontakt, global_id=="+((Kontakt)lookupObj).global_id);
-				if (lookupObj instanceof Lva)
-					System.out.println("lookupObj instanceof Lva, global_id=="+((Lva)lookupObj).global_id);
-				if (lookupObj instanceof Notiz)
-					System.out.println("lookupObj instanceof Notiz, global_id=="+((Notiz)lookupObj).global_id);		
-				if (lookupObj instanceof Pruefung)
-					System.out.println("lookupObj instanceof Pruefung, global_id=="+((Pruefung)lookupObj).global_id);		
-				if (lookupObj instanceof Lehrmittel)
-					System.out.println("lookupObj instanceof Lehrmittel, global_id=="+((Lehrmittel)lookupObj).global_id);		
-			*/
-				if (lookupObj == null)
-					System.out.println("ObjectSpaceSharer.getSharedObjects()::lookupObj==null");
+
+				
 				l = this.gdo.getDataObjects(lookupObj);
-				if (l == null)
-					System.out.println("l==null");
+		
 				try{
 				obj = l.get(0);
 				}
 				catch(Exception e){
-					System.out.println("ObjectSpaceSharer.getSharedObjects()::Kein solchesObjekt vorhanden::"+e.toString());
-				}
+					JOptionPane.showMessageDialog(null, "Error: "+e.toString(),"Error!",JOptionPane.ERROR_MESSAGE);
+					}
 			}
 			catch (Exception e){
-				System.out.println("ObjectSpaceSharer.getSharedObjects()::Konnte Objekt nicht aus Tabelle bekommen::"+e.toString());
-			}
+				JOptionPane.showMessageDialog(null, "Error: "+e.toString(),"Error!",JOptionPane.ERROR_MESSAGE);
+					}
 			if (obj instanceof Kontakt)
-				System.out.println("ObjectSpaceSharer.getSharedObjects()::Kontakt.getGlobalId()=="+((Kontakt)obj).getGlobalId());
-//			if (obj == null)
-//				System.out.println("ObjectSpaceSharer.getSharedObjects()::obj==null");
 			result.add(obj);
 		}
 		
@@ -145,8 +132,8 @@ public class ObjectSpaceSharer {
 			list = this.gdo.getDataObjects(new TerminContainer());
 		}
 		catch(Exception e){
-			System.out.println("ObjectSpaceSharer.gerSharedObjects()::Konnte Termincontainer nicht aus der Datenbank nicht bekommen::"+e.toString());
-		}
+			JOptionPane.showMessageDialog(null, "Error: "+e.toString(),"Error!",JOptionPane.ERROR_MESSAGE);
+			}
 		Iterator<GenericDataObject> iter = list.iterator();
 		while(iter.hasNext()){
 			GenericDataObject gObj = iter.next();
@@ -159,8 +146,8 @@ public class ObjectSpaceSharer {
 			list = this.gdo.getDataObjects(new Termin());
 		}
 		catch(Exception e){
-			System.out.println("ObjectSpaceSharer.gerSharedObjects()::Konnte Termin nicht aus der Datenbank bekommen::"+e.toString());
-		}
+			JOptionPane.showMessageDialog(null, "Error: "+e.toString(),"Error!",JOptionPane.ERROR_MESSAGE);
+			}
 		iter = list.iterator();
 		while(iter.hasNext()){
 			GenericDataObject gObj = iter.next();
@@ -179,8 +166,8 @@ public class ObjectSpaceSharer {
 			categories = this.gdo.getDataObjects(new AttachableObjectKategorie());
 		}
 		catch (Exception e){
-			System.out.println("ObjectSpaceSharer.shareObjects()::Konnte die zu sharenden Kategorien nicht auslesen::"+e.toString());
-		}
+			JOptionPane.showMessageDialog(null, "Error: "+e.toString(),"Error!",JOptionPane.ERROR_MESSAGE);
+			}
 		Iterator<GenericDataObject> iter = categories.iterator();
 		ArrayList<AttachableObject> result = new ArrayList<AttachableObject>();
 		while(iter.hasNext()){
@@ -195,12 +182,10 @@ public class ObjectSpaceSharer {
 					aobs = this.gdo.getDataObjects(lookupObj);
 				}
 				catch (Exception e){
-//					System.out.println("ObjectSpaceSharer.getAttachableObjects()::Konnte Objekte einer Kategorie nicht auslesen!::"+e.toString());
 				}
 				Iterator<GenericDataObject> attObIter = aobs.iterator();
 				while(attObIter.hasNext()){
 					AttachableObject atOb = (AttachableObject)attObIter.next();
-//					System.out.println("ObjectSpaceSharer.getAttachableObjects()::atOb.getGlobalId()=="+atOb.getId());
 					result.add(atOb);
 				}
 			}

@@ -31,6 +31,8 @@ import java.net.MalformedURLException;
 
 import java.rmi.*;
 
+import javax.swing.JOptionPane;
+
 public class ServiceFinder implements DiscoveryListener {
 
 	
@@ -60,15 +62,16 @@ public class ServiceFinder implements DiscoveryListener {
 			discovery = new LookupDiscovery(LookupDiscovery.ALL_GROUPS);
 		}
 		catch (Exception e){
-			System.out.println("Couldn' t create a LookupDiscovery,Exception::"+e.toString());
-		}
+			JOptionPane.showMessageDialog(null, "Error: "+e.toString(),"Error!",JOptionPane.ERROR_MESSAGE);
+			}
 		discovery.addDiscoveryListener(this);
 		synchronized(lock){
 			lock.wait(waitTime);
 		}
 		discovery.terminate();
 		if (proxy==null){
-			System.out.println("Couldn' t find service you were looking for!");
+			JOptionPane.showMessageDialog(null, "Error: couldn't find service you are looking for","Error!",JOptionPane.ERROR_MESSAGE);
+			
 			throw new InterruptedException();
 		}
 		return proxy;
@@ -84,24 +87,23 @@ public class ServiceFinder implements DiscoveryListener {
 			lup = new LookupLocator(adress);
 		}
 		catch (MalformedURLException e){
-			System.out.println("Malformed URL for Unicast Discovery::"+e.toString());
-		}
+			JOptionPane.showMessageDialog(null, "Error: "+e.toString(),"Error!",JOptionPane.ERROR_MESSAGE);
+				}
 		
 		try{
 			reg = lup.getRegistrar();
 		}
 		catch (Exception e){
-			System.out.println("Exception when trying to getRegistrar()::"+e.toString());
-		}
+			JOptionPane.showMessageDialog(null, "Error: "+e.toString(),"Error!",JOptionPane.ERROR_MESSAGE);
+				}
 		
 		try{
 			proxy = reg.lookup(template);
 		}
 		catch (Exception e){
-			System.out.println("errror on reg.lookup()"+e.toString());
-		}
-		if (proxy== null)
-			System.out.println("couldn't find service you were looking for");
+			JOptionPane.showMessageDialog(null, "Error: "+e.toString(),"Error!",JOptionPane.ERROR_MESSAGE);
+				}
+		
 		return proxy;
 	}
 	
@@ -121,8 +123,8 @@ public class ServiceFinder implements DiscoveryListener {
 			}
 		}
 		catch (Exception e){
-			System.out.println("Tried to find the service at the lookup Service; error :: "+e.toString());
-		}
+			JOptionPane.showMessageDialog(null, "Error: "+e.toString(),"Error!",JOptionPane.ERROR_MESSAGE);
+			}
 	}
 	
 	public void discarded(DiscoveryEvent e){

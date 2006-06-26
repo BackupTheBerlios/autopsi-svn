@@ -3,6 +3,8 @@ package autopsi.javaspace;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.JOptionPane;
+
 import autopsi.database.table.Notiz;
 import autopsi.javaspace.exception.EServiceFailure;
 import autopsi.javaspace.exception.ESpaceNotFound;
@@ -74,7 +76,7 @@ public class ServiceCommunicator implements IServiceCommunicator, DesiredExpirat
 	
 	public void addObject(Entry newObject) throws ESpaceNotFound, EServiceFailure {
 		if (getSpace() == null){
-			System.out.println("ServiceCommunicator.addObject::Konnte JavaSpace nicht finden");
+	
 			throw new ESpaceNotFound();
 		}
 		else
@@ -84,19 +86,19 @@ public class ServiceCommunicator implements IServiceCommunicator, DesiredExpirat
 				newLease = space.write(newObject, null, this.renewalTime);
 				leases.add(newLease);
 			} catch (Exception e){
-				System.out.println("ServiceCommunicator.addObject::Konnte Objekt nicht in den JavaSpace schreiben::"+e.toString());
-			}
+				JOptionPane.showMessageDialog(null, "Error: "+e.toString(),"Error!",JOptionPane.ERROR_MESSAGE);
+					}
 			lrm.renewUntil(newLease, Lease.FOREVER, this.renewalTime, this);
 		}
-//		this.space = null;
+
 
 	}
 
 	public Entry getObject(Entry lookupObject)  throws ESpaceNotFound, EServiceFailure{
-		System.out.println("ServiceCommunicator.getOBject::started");
+		
 		Entry entry = null;
 		if (getSpace() == null){
-			System.out.println("ServiceCommunictor.getObject::Konnte JavaSpace nicht finden");
+		
 			 throw new ESpaceNotFound();
 		}
 		else
@@ -104,8 +106,8 @@ public class ServiceCommunicator implements IServiceCommunicator, DesiredExpirat
 			try {
 				entry = space.read(lookupObject, null, this.timeout);
 			} catch (Exception e){
-				System.out.println("ServiceCommunicator.getObject::Konnte Objekt nicht aus dem JavaSpace lesen::"+e.toString());
-			}
+				JOptionPane.showMessageDialog(null, "Error: "+e.toString(),"Error!",JOptionPane.ERROR_MESSAGE);
+				}
 		}
 		return entry;
 
@@ -114,7 +116,7 @@ public class ServiceCommunicator implements IServiceCommunicator, DesiredExpirat
 	public Entry getObjectConsuming(Entry lookupObject)  throws ESpaceNotFound, EServiceFailure{
 		Entry entry = null;
 		if (getSpace() == null){
-			System.out.println("ServiceCommunictor.getObject::Konnte JavaSpace nicht finden");
+			
 			throw new ESpaceNotFound();
 		}
 		else
@@ -122,8 +124,8 @@ public class ServiceCommunicator implements IServiceCommunicator, DesiredExpirat
 			try {
 				entry = space.take(lookupObject, null, this.timeout);
 			} catch (Exception e){
-				System.out.println("ServiceCommunicator.getObject::Konnte Objekt nicht aus dem JavaSpace lesen::"+e.toString());
-			}
+				JOptionPane.showMessageDialog(null, "Error: "+e.toString(),"Error!",JOptionPane.ERROR_MESSAGE);
+					}
 		}
 		return entry;
 
@@ -136,11 +138,11 @@ public class ServiceCommunicator implements IServiceCommunicator, DesiredExpirat
 	}
 
 	public void expirationReached(LeaseRenewalEvent arg0) {
-		System.out.println("Erneuere Lease für Objekt");
+	//	System.out.println("Erneuere Lease für Objekt");
 	}
 
 	public void notify(LeaseRenewalEvent arg0) {
-		System.out.println("Konnte Lease für Objekt nicht erneuern!");
+	//	System.out.println("Konnte Lease für Objekt nicht erneuern!");
 		
 	}
 
