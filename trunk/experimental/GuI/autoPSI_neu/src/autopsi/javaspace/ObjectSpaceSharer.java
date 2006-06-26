@@ -120,7 +120,7 @@ public class ObjectSpaceSharer {
 			catch (Exception e){
 				JOptionPane.showMessageDialog(null, "Error: "+e.toString(),"Error!",JOptionPane.ERROR_MESSAGE);
 					}
-			if (obj instanceof Kontakt)
+			
 			result.add(obj);
 		}
 		
