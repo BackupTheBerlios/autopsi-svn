@@ -466,7 +466,7 @@ public class TerminReiheFrame extends javax.swing.JFrame implements java.awt.eve
 			end.set(Calendar.MINUTE,59);
 			end.set(Calendar.SECOND,59);
 			counter.setTime(begin.getTime());
-			
+			if(end.getTimeInMillis()<begin.getTimeInMillis()) throw new Exception();
 			int[] count = {0,0,0,0,0,0,0}; 
 			String name = name_field.getText();
 			name = name.replace("'".toCharArray()[0],'´');
@@ -596,7 +596,7 @@ public class TerminReiheFrame extends javax.swing.JFrame implements java.awt.eve
 		catch(Exception ex)
 		{
 			ShowErrorDialog("Ungültige Eingabe!","Felder wurden ungültig oder nicht ausgefüllt.");
-			JOptionPane.showMessageDialog(null, "Error: "+ex.toString(),"Error!",JOptionPane.ERROR_MESSAGE);
+			
 			
 		}
 }
