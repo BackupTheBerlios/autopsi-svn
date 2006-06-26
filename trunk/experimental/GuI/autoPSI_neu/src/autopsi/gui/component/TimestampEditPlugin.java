@@ -18,6 +18,11 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.text.MaskFormatter;
 
+/**
+ * An EditPlugin used to edit Timestamp-Objects
+ * @author Rudolf
+ *
+ */
 public class TimestampEditPlugin extends EditPlugin implements FocusListener{
 
 	protected Timestamp value = null;
@@ -25,7 +30,10 @@ public class TimestampEditPlugin extends EditPlugin implements FocusListener{
 	protected JLabel label = null;
 	protected JFormattedTextField dateEdit = null;
 	
-	
+	/**
+	 * Initializes a TimestampEditPlugin
+	 *
+	 */
 	public TimestampEditPlugin(){
 		panel = new JPanel();
 		this.panel.setAlignmentY(Component.LEFT_ALIGNMENT);
@@ -39,22 +47,30 @@ public class TimestampEditPlugin extends EditPlugin implements FocusListener{
 		panel.add(dateEdit);
 	}
 	
-	@Override
+	/**
+	 * Returns the panel for editing
+	 */
 	public Component getEditor() {
 		return panel;
 	}
 
-	@Override
+	/**
+	 * Returns the panel for viewing
+	 */
 	public Component getView() {
 		return panel;
 	}
 
-	@Override
+	/**
+	 * Returns the EditPlugin' s value
+	 */
 	public Object getValue() {
 		return value;
 	}
 
-	@Override
+	/**
+	 * Sets the EditPlugin' s value
+	 */
 	public void setValue(Object newValue) {
 		if (newValue != null)
 			this.value = (Timestamp)newValue;
@@ -86,12 +102,19 @@ public class TimestampEditPlugin extends EditPlugin implements FocusListener{
 		
 	}
 
-	@Override
+	/**
+	 * Sets the label if the value' s name has changed
+	 */
 	public void nameChanged() {
 		this.label.setText(this.name+":");
 
 	}
 	
+	/**
+	 * Formats the input
+	 * @param s
+	 * @return
+	 */
 	protected MaskFormatter createFormatter(String s) {
 		 MaskFormatter formatter = null;
 		 try {
@@ -101,12 +124,19 @@ public class TimestampEditPlugin extends EditPlugin implements FocusListener{
 		}
 		return formatter;
 	}
-
+	
+	/**
+	 * Unused
+	 */
 	public void focusGained(FocusEvent arg0) {
 		// TODO Auto-generated method stub
 		
 	}
 
+	/**
+	 * When the focus lost the EditPlugin' s value will be updated
+	 * @param arg0 The FocusEvent
+	 */
 	public void focusLost(FocusEvent arg0) {
 		java.util.Date geburtsdatum = null;
 		try {

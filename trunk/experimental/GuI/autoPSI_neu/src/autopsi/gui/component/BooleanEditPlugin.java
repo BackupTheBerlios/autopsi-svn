@@ -11,6 +11,11 @@ import javax.swing.JPanel;
 import javax.swing.JCheckBox;
 import javax.swing.JLabel;
 
+/**
+ * EditPlugin that is used to edit Boolean values
+ * @author Rudolf
+ *
+ */
 public class BooleanEditPlugin extends EditPlugin implements ItemListener{
 
 	
@@ -18,6 +23,10 @@ public class BooleanEditPlugin extends EditPlugin implements ItemListener{
 	protected JPanel panel = null;
 	protected JCheckBox checkBox = null;
 	
+	/**
+	 * Initializes a BooleanEditPlugin
+	 *
+	 */
 	public BooleanEditPlugin(){
 		panel = new JPanel();
 		this.panel.setLayout(new FlowLayout(FlowLayout.LEADING));
@@ -29,14 +38,24 @@ public class BooleanEditPlugin extends EditPlugin implements ItemListener{
 		checkBox.addItemListener(this);
 	}
 	
+	/**
+	 * Return editing view
+	 */
 	public Component getEditor(){
 		return panel;
 	}
 	
+	/**
+	 * Sets the check box' s caption to the new name
+	 */
 	public void nameChanged(){
 		checkBox.setText(name);
 	}
 	
+	/**
+	 * Sets the currently edited value
+	 * @param newValue The new value
+	 */
 	public void setValue(Object newValue){
 		if(newValue != null)
 			this.selected = (Boolean)newValue;
@@ -45,15 +64,23 @@ public class BooleanEditPlugin extends EditPlugin implements ItemListener{
 		checkBox.setSelected(this.selected);
 	}
 	
+	/**
+	 * Returns showing-only view
+	 */
 	public Component getView(){
 		return panel;
 	}
 	
-	
+	/**
+	 * Returns the currently edited value
+	 */
 	public Object getValue(){
 		return this.selected;
 	}
-
+	
+	/**
+	 * When the item state is changed, the value will be updated
+	 */
 	public void itemStateChanged(ItemEvent arg0) {
 		if (arg0.getSource().equals(this.checkBox)){
 			this.selected = this.checkBox.isSelected();

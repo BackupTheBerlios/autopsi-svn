@@ -38,6 +38,14 @@ import autopsi.gui.component.StringEditPlugin;
 import autopsi.gui.component.TimestampEditPlugin;
 import autopsi.gui.component.UnimplementedEditPlugin;
 
+/**
+ * The GenericEditPanel is a graphical Panel which is able to show GenericData-Objects. 
+ * The programmer can specify EditPlugins which will be used if an attribute of the 
+ * GenericData-Object which is set to be edited is found that corresponds to
+ * an EditPlugin. 
+ * 
+ * @author Rudolf Mildner
+ */
 public class GenericEditPanel extends JPanel {
 
 	private GenericData editedObject = null;
@@ -46,6 +54,10 @@ public class GenericEditPanel extends JPanel {
 	private JPanel panel = null;
 	private JDialog parentFrame;
 	
+	/**
+	 * Creates and initializes the GenericEditPanel
+	 * @param parentFrame The Parent Dialog which calls the GenericEditPanel
+	 */
 	public GenericEditPanel(JDialog parentFrame){
 		plugins = new HashMap<Class, EditPlugin>();
 		panel = new JPanel();
@@ -55,6 +67,10 @@ public class GenericEditPanel extends JPanel {
 		setDefaultEditors();
 	}
 	
+	/**
+	 * Sets the default Editors for the GenericEditPanel. 
+	 *
+	 */
 	private void setDefaultEditors(){
 		plugins.put(String.class, new StringEditPlugin());
 		EditPlugin edit = new BooleanEditPlugin();
@@ -73,6 +89,13 @@ public class GenericEditPanel extends JPanel {
 		plugins.put(Object.class, new UnimplementedEditPlugin());
 	}
 	
+	/**
+	 * Sets the GenericData-Object that is to be edited. 
+	 * @param obj The GenericData - Object that will be edited. 
+	 * @throws EClassEditorMissing Is thrown if no ClassEditor is found 
+	 * for an attribute of the object. Note that this implementation will use a 
+	 * ClassEditor which will show a graphical error message to the user. 
+	 */
 	public void setObjectToEdit(GenericData obj) throws EClassEditorMissing{
 
 		this.editedObject = obj;
@@ -83,11 +106,20 @@ public class GenericEditPanel extends JPanel {
 
 	}
 	
+	/**
+	 * Returns the object that is currently edited. 
+	 * @return The currently edited object. 
+	 */
 	public GenericData getEditedObject(){
 		this.updateEditedObject();
 		return this.editedObject;
 	}
 	
+	/**
+	 * Updates the currently edited object with the values the user has set with the
+	 * EditPlugins. 
+	 *
+	 */
 	protected void updateEditedObject(){
 		Set<GSMethod> s = methods.keySet();
 		Iterator<GSMethod> iter = s.iterator();
@@ -112,6 +144,13 @@ public class GenericEditPanel extends JPanel {
 		}
 	}
 	
+	/**
+	 * Inspects the currently edited object and clones plugins if they are needed.
+	 * @throws EClassEditorMissing Will be thrown if there is no EditPlugin registered
+	 * for a certain class but the currently edited object has an attribute of that class. 
+	 * Note that this won' t happen in this implementation because by default an editor
+	 * for missing classes is registered. 
+	 */
 	private void inspectEditedObject() throws EClassEditorMissing{
 		Method[] tempMethods = editedObject.getClass().getDeclaredMethods();
 //		methods = new HashMap<GSMethod, EditPlugin>();
@@ -160,6 +199,11 @@ public class GenericEditPanel extends JPanel {
 
 	}
 	
+	/**
+	 * Returns an EditPlugin that can handle Class cl. 
+	 * @param cl The class the returned EditPlugin will be able to edit. 
+	 * @return
+	 */
 	private EditPlugin getNewPlugin(Class cl){
 		EditPlugin newPlugin = null;
 
@@ -186,12 +230,17 @@ public class GenericEditPanel extends JPanel {
 		return newPlugin;
 	}
 	
+	/**
+	 * Registers a new plugin at the GenericEditPanel
+	 * @param newPlugin The new Plugin
+	 * @param classToRegister The class the Plugin will be used for
+	 */
 	public void registerPlugin(EditPlugin newPlugin, Class classToRegister){
 		plugins.put(classToRegister, newPlugin);
 	}
 	
 	/**
-	 * 
+	 * Creates the UI from the EditPlugins the inspection of the edited object found out. 
 	 *
 	 */
 	private void createUI(){

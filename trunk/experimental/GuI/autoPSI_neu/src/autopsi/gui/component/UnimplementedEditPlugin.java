@@ -7,13 +7,22 @@ import java.awt.FlowLayout;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+/**
+ * A Class that shows a graphical error msg that no EditPlugin is linked with that sort of Object (means: Class). 
+ * @author Rudolf
+ *
+ */
 public class UnimplementedEditPlugin extends EditPlugin {
-
+	
 	protected JPanel panel = null;
 	protected JLabel missingLabel = null;
 	
 	protected final static String missingMsg = "Attribute cannot be edited: ";
 	
+	/**
+	 * Initializes an UnimplementedEditPlugin
+	 *
+	 */
 	public UnimplementedEditPlugin(){
 		panel = new JPanel();
 		this.panel.setAlignmentY(Component.LEFT_ALIGNMENT);
@@ -24,27 +33,38 @@ public class UnimplementedEditPlugin extends EditPlugin {
 		missingLabel.setForeground(new Color(255,0,0));
 	}
 	
-	@Override
+	/**
+	 * Returns the panel for editing
+	 */
 	public Component getEditor() {
 		return panel;
 	}
 
-	@Override
+	/**
+	 * Returns the panel for showing
+	 */
 	public Component getView() {
 		return panel;
 	}
 
-	@Override
+	/**
+	 * Returns the value of the EditPlugin
+	 */
 	public Object getValue() {
 		return "";
 	}
 
-	@Override
+	/**
+	 * Sets the value of the EditPlugin to newValue
+	 * @param newValue The new value
+	 */
 	public void setValue(Object newValue) {
 
 	}
 
-	@Override
+	/**
+	 * Sets the graphical components to the new text
+	 */
 	public void nameChanged() {
 		missingLabel.setText(this.missingMsg+ this.name);
 

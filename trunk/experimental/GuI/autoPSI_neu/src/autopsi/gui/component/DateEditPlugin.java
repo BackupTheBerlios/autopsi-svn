@@ -26,6 +26,11 @@ import javax.swing.text.DateFormatter;
 import javax.swing.text.MaskFormatter;
 import javax.swing.text.PlainDocument;
 
+/**
+ * EditPlugin that is used to edit Date values
+ * @author Rudolf
+ *
+ */
 public class DateEditPlugin extends EditPlugin implements FocusListener {
 
 	
@@ -34,7 +39,10 @@ public class DateEditPlugin extends EditPlugin implements FocusListener {
 	protected JLabel label = null;
 	protected JFormattedTextField dateEdit = null;
 	
-	
+	/**
+	 * Initializes a DateEditPlugin
+	 *
+	 */
 	public DateEditPlugin(){
 		panel = new JPanel();
 		this.panel.setLayout(new FlowLayout(FlowLayout.LEADING));
@@ -66,22 +74,31 @@ public class DateEditPlugin extends EditPlugin implements FocusListener {
 		panel.add(dateEdit);
 	}
 	
-	@Override
+	/**
+	 * Return editing view
+	 */
 	public Component getEditor() {
 		return panel;
 	}
 
-	@Override
+	/**
+	 * Returns showing-only view
+	 */
 	public Component getView() {
 		return panel;
 	}
 
-	@Override
+	/**
+	 * Returns the currently edited value
+	 */
 	public Object getValue() {
 		return value;
 	}
 
-	@Override
+	/**
+	 * Sets the currently edited value
+	 * @param newValue The new value
+	 */
 	public void setValue(Object newValue) {
 		if (newValue != null)
 			this.value = (Date)newValue;
@@ -104,17 +121,25 @@ public class DateEditPlugin extends EditPlugin implements FocusListener {
 		this.dateEdit.setText(dayS + "-" + monthS + "-" + yearS);
 	}
 
-	@Override
+	/**
+	 * Sets the label to the new name
+	 */
 	public void nameChanged() {
 		this.label.setText(this.name+":");
 
 	}
-
+	
+	/**
+	 * Unused
+	 */
 	public void focusGained(FocusEvent arg0) {
 		// TODO Auto-generated method stub
 		
 	}
 
+	/**
+	 * When the focus is lost the value will be updated
+	 */
 	public void focusLost(FocusEvent arg0) {
 		SimpleDateFormat sf = new SimpleDateFormat("dd-MM-yyyy");
 		

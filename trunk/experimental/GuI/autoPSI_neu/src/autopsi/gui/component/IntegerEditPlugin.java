@@ -12,6 +12,11 @@ import javax.swing.JTextField;
 import java.awt.event.FocusListener;
 import java.awt.event.FocusEvent;
 
+/**
+ * An EditPlugin used for editing Integer values
+ * @author Rudolf
+ *
+ */
 public class IntegerEditPlugin extends EditPlugin implements FocusListener {
 
 	protected Integer value = 0;
@@ -21,7 +26,10 @@ public class IntegerEditPlugin extends EditPlugin implements FocusListener {
 	protected JTextField doubleEdit;
 	protected Color labelFG, textFieldBG;
 	
-	
+	/**
+	 * Initializes an IntegerEditPlugin
+	 *
+	 */
 	public IntegerEditPlugin(){
 
 		panel = new JPanel();
@@ -39,18 +47,30 @@ public class IntegerEditPlugin extends EditPlugin implements FocusListener {
 		labelFG = label.getForeground();
 	}
 	
+	/**
+	 * Returns edit view
+	 */
 	public Component getEditor() {
 		return this.panel;
 	}
 
+	/**
+	 * Returns view for showing-only
+	 */
 	public Component getView() {
 		return this.panel;
 	}
 
+	/**
+	 * Returns the current value
+	 */
 	public Object getValue() {
 		return this.value;
 	}
 
+	/**
+	 * Sets the current value
+	 */
 	public void setValue(Object newValue) {
 		if (newValue!=null){
 
@@ -63,15 +83,23 @@ public class IntegerEditPlugin extends EditPlugin implements FocusListener {
 		this.doubleEdit.setText(this.value.toString());
 	}
 
+	/**
+	 * Sets label when the name of the edited value has changed
+	 */
 	public void nameChanged() {
 		this.label.setText(this.name+":");
 	}
 
-	
+	/**
+	 * Unused
+	 */
 	public void focusGained(FocusEvent e){
 
 	}
 	
+	/**
+	 * When edit field looses focus, the EditPlugin' s value will be updated
+	 */
 	public void focusLost(FocusEvent e){
 		if (e.getComponent().getClass().equals(JTextField.class)){
 			try{
