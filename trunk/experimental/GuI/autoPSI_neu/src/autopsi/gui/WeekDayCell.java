@@ -37,17 +37,7 @@ public class WeekDayCell extends javax.swing.JPanel {
 		}
 	}
 
-//	/**
-//	* Auto-generated main method to display this 
-//	* JPanel inside a new JFrame.
-//	*/
-//	public static void main(String[] args) {
-//		JFrame frame = new JFrame();
-//		frame.getContentPane().add(new WeekDayCell());
-//		frame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-//		frame.pack();
-//		frame.setVisible(true);		
-//	}
+
 	
 	public WeekDayCell() {
 		super();
@@ -73,7 +63,7 @@ public class WeekDayCell extends javax.swing.JPanel {
 	}
 	public void setGray()
 	{
-		list.setBackground(new java.awt.Color(230,230,255));
+		list.setBackground(new java.awt.Color(243,247,138));
 	}
 	
 	public void setBackColor(Color col)
