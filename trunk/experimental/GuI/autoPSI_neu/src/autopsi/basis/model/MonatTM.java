@@ -2,9 +2,13 @@ package autopsi.basis.model;
 
 import java.util.*;
 
+import javax.swing.JOptionPane;
+import javax.swing.WindowConstants;
 import javax.swing.table.AbstractTableModel;
 import autopsi.database.dao.*;
 import autopsi.database.table.*;
+import autopsi.gui.frame.InfoDialog;
+
 import java.sql.Timestamp;
 import java.util.List;
 
@@ -35,7 +39,8 @@ public class MonatTM extends AbstractTableModel {
 		}
 		catch(Exception ex)
 		{
-			System.out.println(ex.toString());
+			showErrorDialog();
+			System.exit(0);
 		}		
 	}
 	
@@ -95,6 +100,11 @@ public class MonatTM extends AbstractTableModel {
 		}
 
 			return retur;
+	}
+	
+	private void showErrorDialog()
+	{
+		JOptionPane.showMessageDialog(null, "Verbindung zur Datenbank konnte nicht hergestellt werden. Möglicherweise wurden mehrere Instanzen von autoPSI gestartet.", "Fehler!",JOptionPane.ERROR_MESSAGE);
 	}
 
 }
