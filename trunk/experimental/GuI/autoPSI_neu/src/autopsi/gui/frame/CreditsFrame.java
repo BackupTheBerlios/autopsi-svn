@@ -12,7 +12,9 @@ import javax.swing.JLabel;
 
 import autopsi.basis.AutopsiConfigurator;
 
-/**
+/** The credits frame is shown when the user clicks on the "info" menu item
+ * on top of the mainframe. It shows the authors of the autopsi project.
+ * 
 * This code was edited or generated using CloudGarden's Jigloo
 * SWT/Swing GUI Builder, which is free for non-commercial
 * use. If Jigloo is being used commercially (ie, by a corporation,
@@ -26,8 +28,9 @@ import autopsi.basis.AutopsiConfigurator;
 */
 public class CreditsFrame extends javax.swing.JDialog implements MouseListener {
 
+	private static final long serialVersionUID = 1L;
+
 	{
-		//Set Look & Feel
 		try {
 			javax.swing.UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
 		} catch(Exception e) {
@@ -38,15 +41,10 @@ public class CreditsFrame extends javax.swing.JDialog implements MouseListener {
 	private JLabel jLabel1;
 	private JButton okbutton;
 
-//	/**
-//	* Auto-generated main method to display this JDialog
-//	*/
-//	public static void main(String[] args) {
-//		JFrame frame = new JFrame();
-//		CreditsFrame inst = new CreditsFrame(frame);
-//		inst.setVisible(true);
-//	}
-	
+	/** Constructor for the Credits frame
+	 * 
+	 * @param frame the frame from which the credits frame is launched
+	 */
 	public CreditsFrame(JFrame frame) {
 		super(frame);
 		initGUI();
@@ -62,6 +60,10 @@ public class CreditsFrame extends javax.swing.JDialog implements MouseListener {
 				});
 	}
 	
+	/**
+	 * Builds the user interface (buttons, tables, panels etc.)
+	 * 
+	 */
 	private void initGUI() {
 		try {
 			{
@@ -90,8 +92,11 @@ public class CreditsFrame extends javax.swing.JDialog implements MouseListener {
 		}
 	}
 
+	/**
+	 * Event Listener for mouse activities
+	 * @param arg0 The event given by the controls who are added to the MouseListener
+	 */
 	public void mouseClicked(MouseEvent arg0) {
-		// TODO Auto-generated method stub
 		if(arg0.getSource().equals(okbutton))
 		{
 			dispose();
@@ -99,23 +104,18 @@ public class CreditsFrame extends javax.swing.JDialog implements MouseListener {
 	}
 
 	public void mousePressed(MouseEvent arg0) {
-		// TODO Auto-generated method stub
 		
 	}
 
 	public void mouseReleased(MouseEvent arg0) {
-		// TODO Auto-generated method stub
 		
 	}
 
 	public void mouseEntered(MouseEvent arg0) {
-		// TODO Auto-generated method stub
 		
 	}
 
 	public void mouseExited(MouseEvent arg0) {
-		// TODO Auto-generated method stub
-		
 	}
 
 }
