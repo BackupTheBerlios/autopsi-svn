@@ -20,8 +20,11 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.Border;
+import javax.swing.text.AttributeSet;
+import javax.swing.text.BadLocationException;
 import javax.swing.text.DateFormatter;
 import javax.swing.text.MaskFormatter;
+import javax.swing.text.PlainDocument;
 
 public class DateEditPlugin extends EditPlugin implements FocusListener {
 
@@ -37,8 +40,26 @@ public class DateEditPlugin extends EditPlugin implements FocusListener {
 		this.panel.setLayout(new FlowLayout(FlowLayout.LEADING));
 		this.panel.setAlignmentY(Component.LEFT_ALIGNMENT);
 //		this.panel.setBackground(new Color(255,0,0));
-		dateEdit = new JFormattedTextField(createFormatter("##-##-####"));
+		dateEdit = new JFormattedTextField();
 		dateEdit.setPreferredSize(new Dimension(100,dateEdit.getPreferredSize().height));
+		dateEdit.setDocument(new PlainDocument() {
+	    	private static final long serialVersionUID = 8723098029189851737L;
+			public void insertString(int offset, String str, AttributeSet a)
+					throws BadLocationException {
+				// Eingaben von Buchstaben ist nicht erlaubt...
+				if (!str.matches(".*[[0-9]|-].*"))
+					return;
+				//Höchstens 15 Zeichen
+				if (offset>9)
+					return;
+				if (offset==1)
+					super.insertString(offset, "-", a);
+				if (offset==4)
+					super.insertString(offset, "-", a);
+					
+				super.insertString(offset, str, a);
+			}
+		});
 		label = new JLabel();
 		dateEdit.addFocusListener(this);
 		panel.add(label);
@@ -66,6 +87,7 @@ public class DateEditPlugin extends EditPlugin implements FocusListener {
 			this.value = (Date)newValue;
 		else
 			this.value = new Date(System.currentTimeMillis());
+		
 		GregorianCalendar cal = new GregorianCalendar();
 		cal.setTime(this.value);
 		Integer day = cal.get(cal.DAY_OF_MONTH);
@@ -87,16 +109,6 @@ public class DateEditPlugin extends EditPlugin implements FocusListener {
 		this.label.setText(this.name+":");
 
 	}
-	
-	protected MaskFormatter createFormatter(String s) {
-		 MaskFormatter formatter = null;
-		 try {
-			 formatter = new MaskFormatter(s);
-		} catch (java.text.ParseException exc) {
-			System.err.println("formatter is bad: " + exc.getMessage());
-		}
-		return formatter;
-	}
 
 	public void focusGained(FocusEvent arg0) {
 		// TODO Auto-generated method stub
@@ -105,6 +117,7 @@ public class DateEditPlugin extends EditPlugin implements FocusListener {
 
 	public void focusLost(FocusEvent arg0) {
 		SimpleDateFormat sf = new SimpleDateFormat("dd-MM-yyyy");
+		
 		java.util.Date geburtsdatum = null;
 		try {
 			geburtsdatum = sf.parse(dateEdit.getText());
