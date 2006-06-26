@@ -86,7 +86,11 @@ public class GenericEditFrame extends JDialog implements ActionListener {
 //		System.out.println("GenericEditFrame.setObjectToEdit():1");
 		//set title
 		try {
-			this.setTitle(((GenericData)obj).getObjectName() + " hinzufügen");
+			if(newObject)
+				this.setTitle(((GenericData)obj).getObjectName() + " hinzufügen");
+			else
+				this.setTitle(((GenericData)obj).getObjectName() + " bearbeiten");
+				
 		} catch (Exception e){
 			System.out.println("ForeignKeyChooseFrame.ForeignKeyChooseFrame::Konnte Prototyp nicht anlegen und Objektnamen bekommen::"+e.toString());
 		}
