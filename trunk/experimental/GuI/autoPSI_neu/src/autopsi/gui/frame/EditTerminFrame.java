@@ -33,7 +33,10 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.WindowConstants;
 import javax.swing.border.LineBorder;
+import javax.swing.text.AttributeSet;
+import javax.swing.text.BadLocationException;
 import javax.swing.text.MaskFormatter;
+import javax.swing.text.PlainDocument;
 
 import autopsi.gui.frame.EditTerminContainerFrame;
 import autopsi.basis.AutopsiConfigurator;
@@ -137,6 +140,7 @@ public class EditTerminFrame extends javax.swing.JFrame implements java.awt.even
 	List<GenericDataObject> id_list;
 	private int lastID = 0;
 	private boolean newTCsender;
+	private boolean read_ok = false;
 	/**
 	 * Der Konstruktor von EditTerminFrame.
 	 * @param owner Ist das aufrufende Fenster
@@ -234,6 +238,8 @@ public class EditTerminFrame extends javax.swing.JFrame implements java.awt.even
 				showErrorDialog("Falsches Datumsformat","Geben Sie ein Datum im Format TT-MM-JJJJ ein!");
 				
 			}
+			
+			
 
 			int termin_kat = ((TerminKategorie)(termin_kat_data.get(choose_Type.getSelectedIndex()))).getId();
 			tkat = "" + termin_kat;
@@ -244,83 +250,88 @@ public class EditTerminFrame extends javax.swing.JFrame implements java.awt.even
 			}
 			int group_id = ((AttachableObjectKategorie)(group_data.get(group_Box.getSelectedIndex()))).getId();	
 			readFieldData();
-			String query="";
-			
-			Termin vorlage = new Termin();
-			
-			
-			if(owner instanceof mainFrame)
+			if(read_ok)
 			{
-				if (ID<0)//Wenn es sich um einen neuen Termin handelt:
-				{
-					
-					
-					query = "insert into termin (GROUP_ID,TERMIN_KATEGORIE_ID, secondary_title, description, date, duration, place, termincontainer_id) values ("+group_id+ ","+tkat+ ",'"+sec_title+"','"+desc+"','"+date+"',"+duration+",'"+place+"',"+tc_id+")";
+				String query="";
 				
-					gdo.unsafeQuery(query,vorlage);//Erstellt den Termin anhand der query
-					id_list = gdo.unsafeQuery("select * from termin where id =identity()",vorlage);
+				Termin vorlage = new Termin();
 				
-				try
+				
+				if(owner instanceof mainFrame)
 				{
-					lastID = ((Termin)id_list.get(0)).getId();//Liest die letzte ID aus der Datenbank ein, die erzeugt wurde
-					
-					
-					
-				for(int j = 0;j<queryList.size();j++)//Hängt alle anzuhängenden Objekte an
-				{
-			
-					String query2 = "insert into anhaengen_termin values (" + lastID+","+ Integer.parseInt(queryList.get(j)[0])+",'"+queryList.get(j)[1]+"')";
-					gdo.unsafeQuery(query2,new Anhaengen_termin());
-					
-				}
-				}
-				catch(Exception e){
-					JOptionPane.showMessageDialog(null, "Error: "+e.toString(),"Error!",JOptionPane.ERROR_MESSAGE);
-					
-				}
-				}
-				else 
+					if (ID<0)//Wenn es sich um einen neuen Termin handelt:
 					{
+						
+						
+						query = "insert into termin (GROUP_ID,TERMIN_KATEGORIE_ID, secondary_title, description, date, duration, place, termincontainer_id) values ("+group_id+ ","+tkat+ ",'"+sec_title+"','"+desc+"','"+date+"',"+duration+",'"+place+"',"+tc_id+")";
 					
+						gdo.unsafeQuery(query,vorlage);//Erstellt den Termin anhand der query
+						id_list = gdo.unsafeQuery("select * from termin where id =identity()",vorlage);
+					
+					try
+					{
+						lastID = ((Termin)id_list.get(0)).getId();//Liest die letzte ID aus der Datenbank ein, die erzeugt wurde
+						
+						
+						
 					for(int j = 0;j<queryList.size();j++)//Hängt alle anzuhängenden Objekte an
 					{
-						String query2 = "insert into anhaengen_termin values (" + ID+","+ Integer.parseInt(queryList.get(j)[0])+",'"+queryList.get(j)[1]+"')";
+				
+						String query2 = "insert into anhaengen_termin values (" + lastID+","+ Integer.parseInt(queryList.get(j)[0])+",'"+queryList.get(j)[1]+"')";
 						gdo.unsafeQuery(query2,new Anhaengen_termin());
 						
 					}
-					
-					query = "update termin  set GROUP_ID = " + group_id + ",TERMIN_KATEGORIE_ID = " + tkat + ", secondary_title='"+sec_title+"', description='"+desc+"', date='"+date+"',duration="+duration+",place='"+place+"',termincontainer_id="+tc_id+" where id="+ID;
-					
-					gdo.unsafeQuery(query,vorlage);//Updatet den Termin
 					}
-					ok = true;
-					
-						mainFrame actor = (mainFrame)owner;
-						actor.updateTable();
-						actor.updateInfoBar(false);
-				}
-		else if(owner instanceof EditTerminContainerFrame)
-		{
-		
-			EditTerminContainerFrame actor = (EditTerminContainerFrame)owner;
-			Termin data = new Termin();
-			data.setSecondaryTitle(sec_title);
-			data.setDuration(duration);
-			data.setPlace(place);
-			data.setDescription(desc);
-			data.setDate(Timestamp.valueOf(date));
-			query = "update termin  set GROUP_ID = " + group_id + ",TERMIN_KATEGORIE_ID = " + tkat + ", secondary_title='"+sec_title+"', description='"+desc+"', date='"+date+"',duration="+duration+",place='"+place+"',termincontainer_id="+tc_id+" where id="+ID;
+					catch(Exception e){
+						JOptionPane.showMessageDialog(null, "Error: "+e.toString(),"Error!",JOptionPane.ERROR_MESSAGE);
+						
+					}
+					}
+					else 
+						{
+						
+						for(int j = 0;j<queryList.size();j++)//Hängt alle anzuhängenden Objekte an
+						{
+							String query2 = "insert into anhaengen_termin values (" + ID+","+ Integer.parseInt(queryList.get(j)[0])+",'"+queryList.get(j)[1]+"')";
+							gdo.unsafeQuery(query2,new Anhaengen_termin());
+							
+						}
+						
+						query = "update termin  set GROUP_ID = " + group_id + ",TERMIN_KATEGORIE_ID = " + tkat + ", secondary_title='"+sec_title+"', description='"+desc+"', date='"+date+"',duration="+duration+",place='"+place+"',termincontainer_id="+tc_id+" where id="+ID;
+						
+						gdo.unsafeQuery(query,vorlage);//Updatet den Termin
+						}
+						ok = true;
+						
+							mainFrame actor = (mainFrame)owner;
+							actor.updateTable();
+							actor.updateInfoBar(false);
+					}
+			else if(owner instanceof EditTerminContainerFrame)
+			{
 			
-			gdo.unsafeQuery(query,vorlage);//Updatet den Termin
-			actor.updateTerminList(new ArrayList<Termin>());
-			ok=true;
-			
-		}
+				EditTerminContainerFrame actor = (EditTerminContainerFrame)owner;
+				Termin data = new Termin();
+				data.setSecondaryTitle(sec_title);
+				data.setDuration(duration);
+				data.setPlace(place);
+				data.setDescription(desc);
+				data.setDate(Timestamp.valueOf(date));
+				query = "update termin  set GROUP_ID = " + group_id + ",TERMIN_KATEGORIE_ID = " + tkat + ", secondary_title='"+sec_title+"', description='"+desc+"', date='"+date+"',duration="+duration+",place='"+place+"',termincontainer_id="+tc_id+" where id="+ID;
 				
-		}
+				gdo.unsafeQuery(query,vorlage);//Updatet den Termin
+				actor.updateTerminList(new ArrayList<Termin>());
+				ok=true;
+				
+			}
+					
+			}
+			
+			}
 		catch (Exception e){
 			JOptionPane.showMessageDialog(null, "Error: "+e.toString(),"Error!",JOptionPane.ERROR_MESSAGE);
 			}
+			
 	}
 	/**
 	 * Hier werden alle GUI-Komponenten erstellt.
@@ -513,10 +524,26 @@ public class EditTerminFrame extends javax.swing.JFrame implements java.awt.even
 						if(cal!=null) dateField.setText(dat.substring(8,10)+"-"+dat.substring(5,7)+"-"+dat.substring(0,4));
 					}
 					{
-						timeField = new JFormattedTextField(createFormatter("##:##"));
+						timeField = new JFormattedTextField();
 						jPanel1.add(timeField);
 						timeField.setBounds(252, 77, 42, 21);
 						timeField.setBorder(new LineBorder(new java.awt.Color(0,0,0), 1, false));
+						timeField.setDocument(new PlainDocument() {
+					    	private static final long serialVersionUID = 8723098029189851737L;
+							public void insertString(int offset, String str, AttributeSet a)
+									throws BadLocationException {
+								// Eingaben von Buchstaben ist nicht erlaubt...
+								if (!str.matches(".*[[0-9]].*"))
+									return;
+								//Höchstens 15 Zeichen
+								if (offset>5)
+									return;
+								if (offset==1)
+									super.insertString(offset, ":", a);
+									
+								super.insertString(offset, str, a);
+							}
+						});
 					}
 					{
 						duration_field = new JTextField();
@@ -1246,6 +1273,10 @@ public class EditTerminFrame extends javax.swing.JFrame implements java.awt.even
 		place = place.replace("'".toCharArray()[0],'´');
 		
 		try{
+			
+		
+		if(timeField.getText().length()!=5) throw new Exception();
+
 		String test = "0123456789";
 		boolean testOk = false;
 		for(int i = 0;i<duration_field.getText().length();i++)
@@ -1259,9 +1290,10 @@ public class EditTerminFrame extends javax.swing.JFrame implements java.awt.even
 		if(testOk) duration = Integer.parseInt(duration_field.getText());
 		else throw new Exception();
 		
+		read_ok=true;
 		
 		}catch(Exception e){
-			showErrorDialog("Falsche Eingabe","Geben Sie eine Dauer ein!");
+			showErrorDialog("Falsche Eingabe","Felder wurden ungültig oder nicht ausgefüllt!");
 		}
 	
 		if(sec_title.length()<1) sec_title = tcTitle_box.getSelectedItem().toString();
