@@ -34,7 +34,6 @@ import javax.swing.border.LineBorder;
 import javax.swing.text.MaskFormatter;
 
 import autopsi.basis.AutopsiConfigurator;
-import autopsi.basis.model.AttachableListModel;
 import autopsi.database.dao.GenericDAO;
 import autopsi.database.dao.GenericDataObject;
 import autopsi.database.dao.IGenericDAO;
@@ -52,7 +51,10 @@ import autopsi.database.table.Termin;
 import autopsi.database.table.TerminContainer;
 import autopsi.gui.DateConverter;
 
-/**
+/** The EditTerminContainerFrame is shown when the user wants
+ * to edit or add a date container. it features several text fields,
+ * and listings for attached objects and dates.
+ * 
 * This code was edited or generated using CloudGarden's Jigloo
 * SWT/Swing GUI Builder, which is free for non-commercial
 * use. If Jigloo is being used commercially (ie, by a corporation,
@@ -66,12 +68,10 @@ import autopsi.gui.DateConverter;
 */
 public class EditTerminContainerFrame extends javax.swing.JFrame implements java.awt.event.MouseListener{
 
-	/**	 * 
-	 */
+	
 	private static final long serialVersionUID = 1L;
 
 	{
-		//Set Look & Feel
 		try {
 			javax.swing.UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
 		} catch(Exception e) {
@@ -126,8 +126,11 @@ public class EditTerminContainerFrame extends javax.swing.JFrame implements java
 	private DefaultListModel lm;
 	private int lastID = 0;
 	private ArrayList<String[]> queryList = new ArrayList<String[]>();
+	
+	
 	/**
-	 * Hier werden die Daten des Termincontainers aus der Datenbank in die Felder gelesen
+	 * If a date container is edited, this method reads the data from the database which
+	 * is shown in the textfields and lists.
 	 * @throws EDatabaseConnection
 	 * @throws EAttributeNotFound
 	 * @throws EDatabase
@@ -152,8 +155,9 @@ public class EditTerminContainerFrame extends javax.swing.JFrame implements java
 		loadObjectList();
 		firstUpdateTerminList();	
 	}
+	
 	/**
-	 * Hier werden die Daten des neuen bzw. alten Termincontainers in die Datenbank geschrieben
+	 * Updates the data for an edited date container
 	 *
 	 */
 	private void update(){
@@ -231,9 +235,9 @@ public class EditTerminContainerFrame extends javax.swing.JFrame implements java
 		}
 	}
 	/**
-	 * Ist der Konstruktor des EditTerminContainerFrame's
-	 * @param owner Ist das aufrufende Fenster
-	 * @param id Ist die ID des Termincontainers
+	 * Constructor for the EditTerminContainerFrame.
+	 * @param owner the frame from which the EditTerminContainerFrame is launched.
+	 * @param id The id from the date container to be edited
 	 */
 	public EditTerminContainerFrame(JFrame owner, int id) { //Konstruktor für das EditTermin-Frame
 		super();
@@ -254,9 +258,10 @@ public class EditTerminContainerFrame extends javax.swing.JFrame implements java
 					}
 				});
 	}
+	
 	/**
-	 * Hier werden alle GUI-Komponenten erstellt.
-	 *
+	 * Builds the user interface (buttons, tables, panels etc.)
+	 * 
 	 */
 	private void initGUI() {
 		try {
@@ -560,8 +565,10 @@ public class EditTerminContainerFrame extends javax.swing.JFrame implements java
 			e.printStackTrace();
 		}
 	}
+	
 	/**
-	 * Hier werden alle Aktionen definiert, die bei Mausklicken ausglöst werden müssen
+	 * Event Listener for mouse activities
+	 * @param arg0 The event given by the controls who are added to the MouseListener
 	 */
 	public void mouseClicked(MouseEvent arg0) {
 		if(arg0.getSource().equals(abort_button)){
@@ -804,9 +811,7 @@ public class EditTerminContainerFrame extends javax.swing.JFrame implements java
 		// TODO Auto-generated method stub
 		
 	}
-	/**
-	 * Hier werden alle Texte erstellt, die in der Infoleiste angezeigt werden, wenn man mit der Maus über eine Komponente fährt.
-	 */
+	
 	public void mouseEntered(MouseEvent arg0) {
 		if(arg0.getSource().equals(newTermin)){
 			jLabel7.setText("Erstellt einen neuen Termin in diesem Termincontainer");
@@ -830,9 +835,7 @@ public class EditTerminContainerFrame extends javax.swing.JFrame implements java
 			jLabel7.setText("Gruppe bearbeiten");
 		}
 	}
-	/**
-	 * Hier werden alle Texte erstellt, die in der Infoleiste angezeigt werden, wenn man mit der Maus eine Komponente verlässt.
-	 */
+	
 	public void mouseExited(MouseEvent arg0) {
 		if(arg0.getSource().equals(newTermin)){
 			jLabel7.setText("");
@@ -856,8 +859,9 @@ public class EditTerminContainerFrame extends javax.swing.JFrame implements java
 			jLabel7.setText("");
 		}
 	}
+	
 	/**
-	 * Hier wird die Terminliste zum ersten Mal geladen
+	 * Loads the list of dates for the first time (when the frame is launched)
 	 *
 	 */
 	private void firstUpdateTerminList(){
@@ -881,8 +885,8 @@ public class EditTerminContainerFrame extends javax.swing.JFrame implements java
 	}
 	
 	/**
-	 * Hier wird die Terminliste aktualisiert
-	 * @param termine Ist eine Liste der Termine, welche zur Terminliste hinzugefügt werden sollen
+	 * Updates the list of dates
+	 * @param termine the list of dates to be added to the dates list
 	 */
 	public void updateTerminList(List<Termin> termine)
 	{
@@ -896,10 +900,10 @@ public class EditTerminContainerFrame extends javax.swing.JFrame implements java
 			terminModel.addElement(termin);		
 		}
 	}
+	
 	/**
-	 * Hier wird ein Formatter erstellt
-	 * @param s
-	 * @return ist ein funktionierender MaskFormatter
+	 * mask formatter
+	 * @param s The mask (e. g. ##-##-####, whereas # stands for a digit
 	 */
 	protected MaskFormatter createFormatter(String s) {
 		 MaskFormatter formatter = null;
@@ -910,10 +914,11 @@ public class EditTerminContainerFrame extends javax.swing.JFrame implements java
 		}
 		return formatter;
 	}
+	
 	/**
-	 * Hier wird ein Fehlerdialog erstellt
-	 * @param title Ist der Titel des Fehlerdialogs
-	 * @param text Ist die angezeigte Meldung des Fehlerdialogs
+	 * displays an error dialog in case of system or handling errors
+	 * @param title The title of the error dialog
+	 * @param text The text to be shown in the dialog
 	 */
 	private void showErrorDialog(String title, String text)
 	{
@@ -922,11 +927,12 @@ public class EditTerminContainerFrame extends javax.swing.JFrame implements java
 		info.setModal(true);
 		info.setVisible(true);	
 	}
+	
 	/**
-	 * Hier wird die Liste der angehängten Objekte geladen.
+	 * Loads the list of attached objects
 	 *
 	 */
-	private void loadObjectList(){//Lädt die angehängten Objekte
+	private void loadObjectList(){
 		this.attachedObjects = new ArrayList<GenericDataObject>();
 		lm.clear();
 		List<GenericDataObject> objs = null;
