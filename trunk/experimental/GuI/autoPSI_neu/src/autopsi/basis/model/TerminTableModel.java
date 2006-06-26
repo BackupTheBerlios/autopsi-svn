@@ -239,7 +239,12 @@ public class TerminTableModel extends AbstractTableModel{
 	public void downloadObject(){
 		if (this.onlinesuche==true && this.objects.size() != 0) {
 			for (int i=0;i<this.objects.size();i++){
-				addTermin(this.objects.get(i));
+				Termin temp = (Termin)this.objects.get(i);
+				temp.setGroupID(0);
+				temp.setTerminContainerID(0);
+				temp.setTerminKategorieId(0);
+					
+				addTermin(temp);
 			}
 			JOptionPane.showMessageDialog(null, "Das ausgewählte Objekt wurde heruntergeladen." , "Download abgeschlossen." , JOptionPane.INFORMATION_MESSAGE);
 		} else {
