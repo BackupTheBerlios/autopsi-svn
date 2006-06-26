@@ -21,6 +21,8 @@ import java.util.Iterator;
 import java.lang.reflect.AccessibleObject;
 import java.lang.reflect.Field;
 
+import javax.swing.JOptionPane;
+
 public class GenericDAO implements IGenericDAO{
 
 	
@@ -69,12 +71,12 @@ public class GenericDAO implements IGenericDAO{
 			}
 		}
 		catch (SQLException e){
-			System.out.println("Couldn't open database connection\nException says ::"+e.toString());
-			System.out.println();
+			JOptionPane.showMessageDialog(null, "Error: "+e.toString(),"Error!",JOptionPane.ERROR_MESSAGE);
+			
 			return null;
 		}
 		catch (ClassNotFoundException e){
-			System.out.println("Database Driver not found\nException says ::"+e.toString());
+			JOptionPane.showMessageDialog(null, "Error: "+e.toString(),"Error!",JOptionPane.ERROR_MESSAGE);
 			return null;
 		}
 		return dbCon;
@@ -114,7 +116,8 @@ public class GenericDAO implements IGenericDAO{
 			}
 		}
 		catch (SQLException e){
-			System.out.println("SQLException in columnInTable");
+			JOptionPane.showMessageDialog(null, "Error: "+e.toString(),"Error!",JOptionPane.ERROR_MESSAGE);
+			
 		}
 		return inColumn;
 	}
@@ -136,17 +139,15 @@ public class GenericDAO implements IGenericDAO{
 				if(fd[i].get(obj) == null)
 					continue;
 				
-		/*		if (!columnInTable(tableInformation, fd[i].getName()))
-					throw new EAttributeNotFound();
-		*/		
+				
 				SQLField field = null;
 				field = new SQLField(fd[i].getName(), fd[i].get(obj).toString());
 				fields.add(field);
 			}
 		}
 		catch (IllegalAccessException e){
-			System.out.println("GenericDAO: Couldn't get attributes through reflection");
-		}
+			JOptionPane.showMessageDialog(null, "Error: "+e.toString(),"Error!",JOptionPane.ERROR_MESSAGE);
+			}
 			
 		return fields;
 	}
@@ -177,8 +178,8 @@ public class GenericDAO implements IGenericDAO{
 			}
 		}
 		catch (IllegalAccessException e){
-			System.out.println("GenericDAO: Couldn't get attributes through reflection");
-		}
+			JOptionPane.showMessageDialog(null, "Error: "+e.toString(),"Error!",JOptionPane.ERROR_MESSAGE);
+			}
 			
 		return fields;
 	}
@@ -209,15 +210,10 @@ public class GenericDAO implements IGenericDAO{
 		
 		SQLTable sqlTable = new SQLTable(currentTable);
 		SQLFields sqlFields = getSQLFields(lookupObj);
-//		sqlFields.beginTraversal();
-//		while(sqlFields.next())
-//			System.out.println("next=="+sqlFields.getCurrentName()+";"+sqlFields.getCurrentValue());
 		
 		SQLStatement sqlSelect = new SQLSelect(sqlTable, sqlFields);
 		String query = sqlSelect.getQuery();
 		
-		if (this.debug)
-			System.out.println("GenericDAO.getDataObjects(...)::query=="+query);
 		
 		List<GenericDataObject> res = null;
 		try{
@@ -254,8 +250,8 @@ public class GenericDAO implements IGenericDAO{
 			}
 		}
 		catch (Exception e){
-			System.out.println("GenericDAO.getDataObjects(...)::"+e.toString());
-			throw new EDatabase();
+			JOptionPane.showMessageDialog(null, "Error: "+e.toString(),"Error!",JOptionPane.ERROR_MESSAGE);
+				throw new EDatabase();
 		}
 		return res;
 	}
@@ -273,17 +269,14 @@ public class GenericDAO implements IGenericDAO{
 		SQLStatement sqlInsert = new SQLInsert(table, fields);
 		String query = sqlInsert.getQuery();
 		
-		if (this.debug)
-			System.out.println("GenericDAO.addDataObject::query=="+query);
-		
+	
 		try{
 			PreparedStatement ps = null;
 			try{
 				ps = dbCon.prepareStatement(query);
 			}
 			catch (SQLException e){
-				if (debug)
-					System.out.println("GenericDAO.addDataObject::Error bei Query, versuche testweise Query"+"SELECT * FROM "+currentTable);
+				
 				ps = dbCon.prepareStatement("SELECT * FROM "+currentTable);
 				
 				if (ps == null){
@@ -299,7 +292,7 @@ public class GenericDAO implements IGenericDAO{
 			
 		}
 		catch (SQLException e){
-			System.out.println("Exception@GenericDAO.addDataObject=="+e.toString());
+			JOptionPane.showMessageDialog(null, "Error: "+e.toString(),"Error!",JOptionPane.ERROR_MESSAGE);
 			throw new EDatabase();
 		}
 	}
@@ -316,8 +309,6 @@ public class GenericDAO implements IGenericDAO{
 		SQLStatement sqlDelete = new SQLDelete(sqlTable, sqlFields);
 		String query = sqlDelete.getQuery();
 		
-		if (this.debug)
-			System.out.println("GenericDAO.delDataObject::query=="+query);
 		
 		try{
 			PreparedStatement ps = null;
@@ -325,8 +316,6 @@ public class GenericDAO implements IGenericDAO{
 				ps = dbCon.prepareCall(query);
 			}
 			catch (SQLException e){
-				if (debug)
-					System.out.println("GenericDAO.addDataObject::Error bei Query, versuche testweise Query"+"SELECT * FROM "+currentTable);
 				ps = dbCon.prepareStatement("SELECT * FROM "+currentTable);
 				
 				if (ps == null)
@@ -342,7 +331,7 @@ public class GenericDAO implements IGenericDAO{
 			
 		}
 		catch (SQLException e){
-			System.out.println("Exception@GenericDAO.delDataObjects=="+e.toString());
+			JOptionPane.showMessageDialog(null, "Error: "+e.toString(),"Error!",JOptionPane.ERROR_MESSAGE);
 			throw new EDatabase();
 		}
 	}
@@ -357,18 +346,13 @@ public class GenericDAO implements IGenericDAO{
 		SQLStatement sqlUpdate = new SQLUpdate(sqlTable, sqlLookupFields, sqlNewFields);
 		String query = sqlUpdate.getQuery();
 		
-		if (this.debug)
-			System.out.println("GenericDAO.updDataObject::query=="+query);
-		
 		try{
 			PreparedStatement ps = null;
 			try{
 				ps = dbCon.prepareStatement(query);
 			}
 			catch (SQLException e){
-				if (debug)
-					System.out.println("GenericDAO.addDataObject::Error bei Query, versuche testweise Query"+"SELECT * FROM "+currentTable);
-				ps = dbCon.prepareStatement("SELECT * FROM "+currentTable);
+					ps = dbCon.prepareStatement("SELECT * FROM "+currentTable);
 				
 				if (ps == null)
 					throw new EDatabase();
@@ -383,8 +367,8 @@ public class GenericDAO implements IGenericDAO{
 			dbCon.commit();
 		}
 		catch (SQLException e){
-			System.out.println("Exception@GenericDAO.updDataObjects=="+e.toString());
-			throw new EDatabase();
+			JOptionPane.showMessageDialog(null, "Error: "+e.toString(),"Error!",JOptionPane.ERROR_MESSAGE);
+				throw new EDatabase();
 		}
 	}
 	
@@ -395,18 +379,14 @@ public class GenericDAO implements IGenericDAO{
 		List<GenericDataObject> res = null;
 		String query = stm.getQuery();
 		
-		if (this.debug)
-			System.out.println("GenericDAO.complexQuery::query=="+query);
-			
+		
 		PreparedStatement ps = null;
 		try{
 			try{
 				ps = dbCon.prepareStatement(query);
 			}
 			catch (SQLException e){
-				if (debug)
-					System.out.println("GenericDAO.addDataObject::Error bei Query, versuche testweise Query"+"SELECT * FROM "+currentTable);
-				ps = dbCon.prepareStatement("SELECT * FROM "+currentTable);
+					ps = dbCon.prepareStatement("SELECT * FROM "+currentTable);
 				
 				if (ps ==null)
 					throw new EDatabase();
@@ -433,19 +413,19 @@ public class GenericDAO implements IGenericDAO{
 			}
 		}
 		catch (SQLException e){
-			System.out.println("Exception;"+e.toString());
-			throw new EDatabase();
+			JOptionPane.showMessageDialog(null, "Error: "+e.toString(),"Error!",JOptionPane.ERROR_MESSAGE);
+				throw new EDatabase();
 		}
 		catch (InstantiationException e){
-			System.out.println("Exception;"+e.toString());
+			JOptionPane.showMessageDialog(null, "Error: "+e.toString(),"Error!",JOptionPane.ERROR_MESSAGE);
 			throw new EDatabase();
 		}
 		catch (IllegalArgumentException e){
-			System.out.println("Exception;"+e.toString());
-			throw new EDatabase();
+			JOptionPane.showMessageDialog(null, "Error: "+e.toString(),"Error!",JOptionPane.ERROR_MESSAGE);
+				throw new EDatabase();
 		}
 		catch (IllegalAccessException e){
-			System.out.println("Exception;"+e.toString());
+			JOptionPane.showMessageDialog(null, "Error: "+e.toString(),"Error!",JOptionPane.ERROR_MESSAGE);
 			throw new EDatabase();
 		}
 		return res;
@@ -455,9 +435,6 @@ public class GenericDAO implements IGenericDAO{
 		if (connect() == null)
 			throw new EDatabaseConnection();
 		
-		if (this.debug)
-			System.out.println("GenericDAO.unsafeQuery::query=="+query);
-		
 		List<GenericDataObject> res = null;
 		try{
 			
@@ -466,27 +443,16 @@ public class GenericDAO implements IGenericDAO{
 				ps = dbCon.createStatement();
 			}
 			catch (SQLException e){
-				System.out.println("unsafeQuery::prepareStatement fehlgeschlagen::"+e.toString());
+				JOptionPane.showMessageDialog(null, "Error: "+e.toString(),"Error!",JOptionPane.ERROR_MESSAGE);
 				
-				if (debug)
-					System.out.println("GenericDAO.addDataObject::Error bei Query, versuche testweise Query"+"SELECT * FROM "+currentTable);
 				ps = dbCon.prepareStatement("SELECT * FROM "+currentTable);
 				
 				if (ps ==null)
 					throw new EDatabase();
 				
-/*				this.checkAttributes(ps.getMetaData(), prototype);
-				throw new EDatabase();*/
+
 			}
-			
-/*			if (!ps.execute()){
-				System.out.println("ps.execute() konnte nicht ausgeführt werden");
-				throw new EDatabase();
-			}
-			dbCon.commit();
-			*/
-				
-//			ResultSet rs = ps.getResultSet();
+
 			ResultSet rs = ps.executeQuery(query);
 			ps.close();
 			dbCon.commit();
@@ -504,19 +470,19 @@ public class GenericDAO implements IGenericDAO{
 			}
 		}
 		catch (SQLException e){
-			System.out.println("Exception;"+e.toString());
+			JOptionPane.showMessageDialog(null, "Error: "+e.toString(),"Error!",JOptionPane.ERROR_MESSAGE);
 			throw new EDatabase();
 		}
 		catch (InstantiationException e){
-			System.out.println("Exception;"+e.toString());
+			JOptionPane.showMessageDialog(null, "Error: "+e.toString(),"Error!",JOptionPane.ERROR_MESSAGE);
 			throw new EDatabase();
 		}
 		catch (IllegalArgumentException e){
-			System.out.println("Exception;"+e.toString());
+			JOptionPane.showMessageDialog(null, "Error: "+e.toString(),"Error!",JOptionPane.ERROR_MESSAGE);
 			throw new EDatabase();
 		}
 		catch (IllegalAccessException e){
-			System.out.println("Exception;"+e.toString());
+			JOptionPane.showMessageDialog(null, "Error: "+e.toString(),"Error!",JOptionPane.ERROR_MESSAGE);
 			throw new EDatabase();
 		}
 		return res;
@@ -525,14 +491,13 @@ public class GenericDAO implements IGenericDAO{
 	
 	protected void shutdownDB() throws Throwable{
 		try{
-			System.out.println("closing DB Connection with SHUTDOWN");
 			PreparedStatement pshut = dbCon.prepareStatement("SHUTDOWN IMMEDIATELY");
 			pshut.execute();
 			dbCon.commit();
 		}
 		catch (Exception e){
-			System.out.println("Couldn' t close DB");
-		}
+			JOptionPane.showMessageDialog(null, "Error: "+e.toString(),"Error!",JOptionPane.ERROR_MESSAGE);
+			}
 	}
 	
 }

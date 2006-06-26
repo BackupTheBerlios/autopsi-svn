@@ -9,6 +9,8 @@ import java.util.Set;
 import java.util.TreeMap;
 import java.lang.reflect.Method;
 
+import javax.swing.JOptionPane;
+
 
 public class GenericData implements Cloneable{
 	
@@ -45,29 +47,12 @@ public class GenericData implements Cloneable{
 			return gsm.getMethod.invoke(this, new Object[] {});
 		}
 		catch (Exception e){
-			System.out.println("Exception :: "+e.toString());
-		}
+			JOptionPane.showMessageDialog(null, "Error: "+e.toString(),"Error!",JOptionPane.ERROR_MESSAGE);
+			}
 		return null;
 	}
-//	
-//	public Map<String, GSMethodPrimary> getAllPrimary(){
-//		Map<String, GSMethodPrimary> result = new Map<String, GSMethodPrimary>();
-//		Set<String> s = map.keySet();
-//		Iterator<String> iter = s.iterator();
-//		while(iter.hasNext()){
-//			String key = iter.next();
-//			GSMethod meth = map.get(key);
-//			if (meth instanceof GSMethodPrimary)
-//				result.put(key, (GSMethodPrimary)meth);
-//		}
-//		return result;
-//	}
-//	
-//	public Map<String, GSMethodForeign> getAllForeign(){
-//		
-//	}
-	
-	
+
+
 	public Map<String, GSMethod> getAllAttribs(){
 		return map;
 	}
@@ -78,8 +63,8 @@ public class GenericData implements Cloneable{
 			gsm.getMethod.invoke(this, new Object[] { name, newValue});
 		}
 		catch(Exception e){
-			System.out.println("Exception :: "+e.toString());
-		}
+			JOptionPane.showMessageDialog(null, "Error: "+e.toString(),"Error!",JOptionPane.ERROR_MESSAGE);
+			}
 	}
 	
 	public int getAttribCount(){
@@ -91,8 +76,8 @@ public class GenericData implements Cloneable{
 			return super.clone();
 		}
 		catch (Exception e){
-			System.out.println("Konnte GenericDataObject nicht klonen!::"+e.toString());
-		}
+			JOptionPane.showMessageDialog(null, "Error: "+e.toString(),"Error!",JOptionPane.ERROR_MESSAGE);
+			}
 		return null;
 	}
 	

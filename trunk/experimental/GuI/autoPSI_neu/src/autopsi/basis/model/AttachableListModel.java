@@ -2,6 +2,7 @@ package autopsi.basis.model;
 
 import java.util.List;
 
+import javax.swing.JOptionPane;
 import javax.swing.ListModel;
 import javax.swing.event.ListDataListener;
 
@@ -39,39 +40,39 @@ public class AttachableListModel implements ListModel {
 			try {
 				objs = this.gdao.getDataObjects(new Kontakt());
 			} catch (Exception e){
-				System.out.println("AttachableListModel: setTableName(String) Exception="+ e.toString());
+				JOptionPane.showMessageDialog(null, "Error: "+e.toString(),"Error!",JOptionPane.ERROR_MESSAGE);
 			}
 		}
 		if (this.tableName.equals("lva")){
-			System.out.println("AttachableListModel.setTableName(...)::lva");
+		
 			try {
 				objs = this.gdao.getDataObjects(new Lva());
 			} catch (Exception e){
-				System.out.println("AttachableListModel: setTableName(String) Exception="+ e.toString());
+				JOptionPane.showMessageDialog(null, "Error: "+e.toString(),"Error!",JOptionPane.ERROR_MESSAGE);
 			}
 		}
 		if (this.tableName.equals("pruefung")){
-			System.out.println("AttachableListModel.setTableName(...)::pruefung");
+			
 			try {
 				objs = this.gdao.getDataObjects(new Pruefung());
 			} catch (Exception e){
-				System.out.println("AttachableListModel: setTableName(String) Exception="+ e.toString());
+				JOptionPane.showMessageDialog(null, "Error: "+e.toString(),"Error!",JOptionPane.ERROR_MESSAGE);
 			}
 		}
 		if (this.tableName.equals("lehrmittel")){
-			System.out.println("AttachableListModel.setTableName(...)::lehrmittel");
+			
 			try {
 				objs = this.gdao.getDataObjects(new Lehrmittel());
 			} catch (Exception e){
-				System.out.println("AttachableListModel: setTableName(String) Exception="+ e.toString());
+				JOptionPane.showMessageDialog(null, "Error: "+e.toString(),"Error!",JOptionPane.ERROR_MESSAGE);
 			}
 		}
 		if (this.tableName.equals("notiz")){
-			System.out.println("AttachableListModel.setTableName(...)::notiz");
+		
 			try {
 				objs = this.gdao.getDataObjects(new Notiz());
 			} catch (Exception e){
-				System.out.println("AttachableListModel: setTableName(String) Exception="+ e.toString());
+				JOptionPane.showMessageDialog(null, "Error: "+e.toString(),"Error!",JOptionPane.ERROR_MESSAGE);
 			}
 		}
 	}
@@ -119,8 +120,8 @@ public class AttachableListModel implements ListModel {
 			try {
 				lList = this.gdao.getDataObjects(l);
 			} catch (Exception e){
-				System.out.println("AttachableListModel.getElementsAt(...)::Konnte zur Prüfung zugehörige Lva nicht bekommen::"+e.toString());
-			}
+				JOptionPane.showMessageDialog(null, "Error: "+e.toString(),"Error!",JOptionPane.ERROR_MESSAGE);
+				}
 			if (lList.get(0) == null)
 				return new String("");
 			

@@ -14,6 +14,7 @@ import java.util.GregorianCalendar;
 
 import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.text.MaskFormatter;
 
@@ -81,7 +82,6 @@ public class TimestampEditPlugin extends EditPlugin implements FocusListener{
 			monthS = "0" + month;
 		
 		
-		System.out.println("TimestampEditPlugin.setValue::dateEdit.setText with::"+cal.get(cal.HOUR) + ":" + cal.get(cal.MINUTE)+ "," + cal.get(cal.DAY_OF_MONTH) + "-" + cal.get(cal.MONTH) + "-" + cal.get(cal.YEAR));
 		this.dateEdit.setText(hourS + ":" + minS + "," + dayS + "-" + monthS + "-" + yearS);
 		
 	}
@@ -97,7 +97,7 @@ public class TimestampEditPlugin extends EditPlugin implements FocusListener{
 		 try {
 			 formatter = new MaskFormatter(s);
 		} catch (java.text.ParseException exc) {
-			System.err.println("formatter is bad: " + exc.getMessage());
+			
 		}
 		return formatter;
 	}
@@ -112,23 +112,23 @@ public class TimestampEditPlugin extends EditPlugin implements FocusListener{
 		try {
 			GregorianCalendar c = null;
 			Integer year = Integer.parseInt(dateEdit.getText().substring(12,16));
-			System.out.println("year=="+year);
+
 			Integer month = Integer.parseInt(dateEdit.getText().substring(9,11));
 			month--;
-			System.out.println("month=="+month);
+
 			Integer day = Integer.parseInt(dateEdit.getText().substring(6,8));
-			System.out.println("day=="+day);
+
 			Integer hour = Integer.parseInt(dateEdit.getText().substring(3,5));
-			System.out.println("hour=="+hour);
+
 			Integer min = Integer.parseInt(dateEdit.getText().substring(0,2));
-			System.out.println("min=="+min);
+
 			Integer sec = 0;
 			Integer nano = 0;
 			c = new GregorianCalendar(year, month, day, hour, min);
 			value = new Timestamp(c.getTimeInMillis());
 		} catch (Exception e) {
-			System.out.println("Konnte Datum nicht ändern::"+e.toString());
-		}
+			JOptionPane.showMessageDialog(null, "Error: "+e.toString(),"Error!",JOptionPane.ERROR_MESSAGE);
+			}
 	}
 
 }

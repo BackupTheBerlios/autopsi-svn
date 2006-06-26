@@ -100,7 +100,7 @@ public class KontaktTableModel extends AbstractTableModel{
 				if (this.order!=null) {
 					query += " ORDER BY "+columnDBName[this.order];
 				}
-				//System.out.println(query);
+	
 				this.objects =  gdo.unsafeQuery(query, searchObject);
 			}
 		} catch (Exception e){
@@ -220,7 +220,7 @@ public class KontaktTableModel extends AbstractTableModel{
 		
 		try{
 			GenericDAO gdo = new GenericDAO();
-			//System.out.println("SELECT * FROM " + this.tablename+" WHERE GLOBAL_ID ="+k.getGlobalId());
+			
 			List <GenericDataObject> loeschen = gdo.unsafeQuery("SELECT * FROM " + this.tablename+" WHERE GLOBAL_ID ="+k.getGlobalId(), new Kontakt());
 				lastDeletedObjects.add(loeschen.get(0));
 			loeschen = gdo.unsafeQuery("DELETE FROM " + this.tablename+" WHERE GLOBAL_ID ="+k.getGlobalId(), new Kontakt());

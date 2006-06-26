@@ -6,6 +6,7 @@ import java.lang.reflect.AccessibleObject;
 import java.lang.reflect.Field;
 import java.util.List;
 
+import javax.swing.JOptionPane;
 import javax.swing.ListModel;
 import javax.swing.event.ListDataListener;
 import javax.swing.event.TableModelListener;
@@ -45,16 +46,16 @@ public class AttachableTableModel implements TableModel {
 			gdPrototype = (GenericDataObject)editedClass.newInstance();
 			
 		} catch (Exception e){
-			System.out.println("AttachableTableModel.setObjectType()::Konnte keinen Prototypen erstellen");
-		}
+			JOptionPane.showMessageDialog(null, "Error: "+e.toString(),"Error!",JOptionPane.ERROR_MESSAGE);
+			}
 		fields = editedClass.getDeclaredFields();
 		AccessibleObject.setAccessible(fields, true);
 		this.gdao.setCurrentTable(this.tableName);
 		try {
 			objs = this.gdao.getDataObjects(gdPrototype);
 		} catch (Exception e){
-			System.out.println("AttachableTableModel.setObjectType::Konnte DataObjects nicht bekommen::"+e.toString());
-		}
+			JOptionPane.showMessageDialog(null, "Error: "+e.toString(),"Error!",JOptionPane.ERROR_MESSAGE);
+				}
 	}
 
 	public int getRowCount() {
@@ -84,8 +85,8 @@ public class AttachableTableModel implements TableModel {
 		try {
 			return fields[arg1].get(objs.get(arg0));
 		} catch (Exception e){
-			System.out.println("AttachableTableModel.getValueAt()::Exception::"+e.toString());
-		}
+			JOptionPane.showMessageDialog(null, "Error: "+e.toString(),"Error!",JOptionPane.ERROR_MESSAGE);
+			}
 		return null;
 	}
 

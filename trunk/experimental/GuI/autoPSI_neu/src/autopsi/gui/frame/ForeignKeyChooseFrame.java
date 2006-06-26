@@ -12,6 +12,7 @@ import java.lang.reflect.Field;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -65,8 +66,8 @@ public class ForeignKeyChooseFrame extends JDialog implements ActionListener{
 			gdPrototype = (GenericData)editedClass.newInstance();
 			this.setTitle(gdPrototype.getObjectName() + " auswählen");
 		} catch (Exception e){
-			System.out.println("ForeignKeyChooseFrame.initialize::Konnte Prototyp nicht anlegen und Objektnamen bekommen::"+e.toString());
-		}
+			JOptionPane.showMessageDialog(null, "Error: "+e.toString(),"Error!",JOptionPane.ERROR_MESSAGE);
+			}
 		
 		objectTable = new JTable();	
 		objectTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -106,14 +107,14 @@ public class ForeignKeyChooseFrame extends JDialog implements ActionListener{
 				try {
 					fd = obj.getClass().getField(this.attribName);
 				} catch (Exception e){
-					System.out.println("ForeignKeyChooseFrame.actionPerformed()::Exception::"+e.toString());
-				}
+					JOptionPane.showMessageDialog(null, "Error: "+e.toString(),"Error!",JOptionPane.ERROR_MESSAGE);
+					}
 				try {
 					this.value = fd.get(obj);
 				} catch (Exception e){
-					System.out.println("ForeignKeyChooseFrame.actionPerformed()::Exception::"+e.toString());
-				}
-	//			System.out.println("value=="+this.value.toString());
+					JOptionPane.showMessageDialog(null, "Error: "+e.toString(),"Error!",JOptionPane.ERROR_MESSAGE);
+						}
+
 				this.dispose();
 			}
 		}

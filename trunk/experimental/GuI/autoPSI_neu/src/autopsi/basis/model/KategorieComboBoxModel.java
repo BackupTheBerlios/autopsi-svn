@@ -1,6 +1,8 @@
 package autopsi.basis.model;
 import java.util.List;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.JOptionPane;
+
 import autopsi.database.dao.GenericDAO;
 import autopsi.database.dao.GenericDataObject;
 import autopsi.database.dao.IGenericDAO;
@@ -26,8 +28,8 @@ public class KategorieComboBoxModel extends DefaultComboBoxModel {
 		try {
 			kategorien = gdo.unsafeQuery("select * from "+tablename, kat);
 		} catch (Exception e) {
-			System.out.println("KategoryComboBoxModel: "+ e.toString());
-		}
+			JOptionPane.showMessageDialog(null, "Error: "+e.toString(),"Error!",JOptionPane.ERROR_MESSAGE);
+			}
 		this.addElement("-");
 		if (kategorien != null) {
 			for (int i = 0; i<kategorien.size();i++){
@@ -49,8 +51,8 @@ public class KategorieComboBoxModel extends DefaultComboBoxModel {
 		try {
 			kategorien = gdo.unsafeQuery("select * from "+tablename, kat);
 		} catch (Exception e) {
-			System.out.println("KategoryComboBoxModel: "+ e.toString());
-		}
+			JOptionPane.showMessageDialog(null, "Error: "+e.toString(),"Error!",JOptionPane.ERROR_MESSAGE);
+				}
 		this.addElement("-");
 		if (kategorien != null) {
 			for (int i = 0; i<kategorien.size();i++){
@@ -72,8 +74,8 @@ public class KategorieComboBoxModel extends DefaultComboBoxModel {
 		try {
 			kategorien = gdo.unsafeQuery("select * from "+tablename, kat);
 		} catch (Exception e) {
-			System.out.println("KategoryComboBoxModel: "+ e.toString());
-		}
+			JOptionPane.showMessageDialog(null, "Error: "+e.toString(),"Error!",JOptionPane.ERROR_MESSAGE);
+			}
 		this.addElement("-");
 		if (kategorien != null) {
 			for (int i = 0; i<kategorien.size();i++){
@@ -96,8 +98,8 @@ public class KategorieComboBoxModel extends DefaultComboBoxModel {
 		try {
 			kategorien = gdo.unsafeQuery("select * from "+tablename, kat);
 		} catch (Exception e) {
-			System.out.println("KategoryComboBoxModel: "+ e.toString());
-		}
+			JOptionPane.showMessageDialog(null, "Error: "+e.toString(),"Error!",JOptionPane.ERROR_MESSAGE);
+			}
 		this.addElement("-");
 		if (kategorien != null) {
 			for (int i = 0; i<kategorien.size();i++){

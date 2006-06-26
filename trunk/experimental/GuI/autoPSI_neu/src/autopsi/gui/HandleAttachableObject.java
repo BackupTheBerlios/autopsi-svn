@@ -3,6 +3,7 @@ package autopsi.gui;
 import java.util.List;
 
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 
 import autopsi.database.dao.GenericDAO;
 import autopsi.database.dao.GenericDataObject;
@@ -66,8 +67,8 @@ public class HandleAttachableObject {
 			}
 		}
 		catch (Exception e){
-			System.out.println("HandleAttachableObject.run()::Konnte Aktion nicht ausführen::"+e.toString());
-		}
+			JOptionPane.showMessageDialog(null, "Error: "+e.toString(),"Error!",JOptionPane.ERROR_MESSAGE);
+			}
 		
 	}
 	
@@ -92,7 +93,7 @@ public class HandleAttachableObject {
 		
 		
 		try {
-			System.out.println("newObject");
+		
 			gef.setObjectToEdit(neuesObjekt, true);
 			gef.setTableToEdit("attachable_object");
 			gef.setInsertIntoTable(false);
@@ -101,9 +102,8 @@ public class HandleAttachableObject {
 			gef.setVisible(true);
 			neuesObjekt = (AttachableObject)gef.getObjectToEdit();
 			gdao.addDataObject(neuesObjekt);
-			System.out.println("Select * from attack_ where global_id = identity()");
-			neuesObjekt = (AttachableObject)gdao.unsafeQuery("select * from attachable_object where global_id=identity()", new AttachableObject()).get(0);
-			System.out.println("neuesObjekt.getId()=="+neuesObjekt.getId());		
+			
+			neuesObjekt = (AttachableObject)gdao.unsafeQuery("select * from attachable_object where global_id=identity()", new AttachableObject()).get(0);	
 			gef = new GenericEditFrame(this.owner);
 			
 			
@@ -137,8 +137,8 @@ public class HandleAttachableObject {
 			gef.setVisible(true);
 		
 		} catch (Exception e){
-			System.out.println("HandleAttachableObject.addNewObject::konnte Objekt nicht in DB einfügen::"+e.toString());
-		}
+			JOptionPane.showMessageDialog(null, "Error: "+e.toString(),"Error!",JOptionPane.ERROR_MESSAGE);
+				}
 	}
 	
 	public void editExistingObject(){
@@ -150,8 +150,8 @@ public class HandleAttachableObject {
 			gdao.setCurrentTable("attachable_object");
 			neuesObjekt = (AttachableObject)(gdao.unsafeQuery("select * from attachable_object where global_id="+this.dbObjId, new AttachableObject()).get(0));
 		} catch (Exception e){
-			System.out.println("AddAttachableObject.editExistingObject::Konnte Anhängbares Objekt nicht aus der Datenbank bekommen::"+e.toString());
-		}
+			JOptionPane.showMessageDialog(null, "Error: "+e.toString(),"Error!",JOptionPane.ERROR_MESSAGE);
+			}
 		
 		if (neuesObjekt.getTableName().toLowerCase().equals("notiz")){
 			this.dbObj = new Notiz();
@@ -214,8 +214,8 @@ public class HandleAttachableObject {
 			konkretesObjekt = gdao.getDataObjects(this.dbObj).get(0);
 		}
 		catch (Exception e){
-			System.out.println("AddAttachableObject.editExistingObject()::Konnte Objekt nicht aus Datenbank bekommen::"+e.toString());
-		}
+			JOptionPane.showMessageDialog(null, "Error: "+e.toString(),"Error!",JOptionPane.ERROR_MESSAGE);
+			}
 		
 		gef.setObjectToEdit(konkretesObjekt, false);
 		gef.setInsertIntoTable(true);
@@ -233,8 +233,8 @@ public void deleteExistingObject(){
 		this.gdao.setCurrentTable("attachable_object");
 		neuesObjekt = (AttachableObject)(gdao.unsafeQuery("select * from attachable_object where global_id="+this.dbObjId, new AttachableObject()).get(0));
 	} catch (Exception e){
-		System.out.println("AddAttachableObject.deleteExistingObject::Konnte Anhängbares Objekt nicht aus der Datenbank bekommen::"+e.toString());
-	}
+		JOptionPane.showMessageDialog(null, "Error: "+e.toString(),"Error!",JOptionPane.ERROR_MESSAGE);
+		}
 	
 	if (neuesObjekt.getTableName().toLowerCase().equals("notiz")){
 		this.dbObj = new Notiz();
@@ -264,8 +264,8 @@ public void deleteExistingObject(){
 		gdao.delDataObjects(neuesObjekt);
 	}
 	catch (Exception e){
-		System.out.println("AddAttachableObject.deleteExistingObject::Konnte Objekt nicht aus Datenbank bekommen::"+e.toString());
-	}
+		JOptionPane.showMessageDialog(null, "Error: "+e.toString(),"Error!",JOptionPane.ERROR_MESSAGE);
+		}
 	
 	if (neuesObjekt.getTableName().toLowerCase().equals("notiz")){
 		this.dbObj = new Notiz();
@@ -297,8 +297,8 @@ public void deleteExistingObject(){
 		gdao.delDataObjects(this.dbObj);
 	}
 	catch (Exception e){
-		System.out.println("AddAttachableObject.deleteExistingObject::Konnte Objekt nicht aus Datenbank bekommen::"+e.toString());
-	}
+		JOptionPane.showMessageDialog(null, "Error: "+e.toString(),"Error!",JOptionPane.ERROR_MESSAGE);
+		}
 }
 
 }

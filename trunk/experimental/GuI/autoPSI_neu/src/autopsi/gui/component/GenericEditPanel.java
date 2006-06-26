@@ -16,6 +16,7 @@ import java.awt.GridLayout;
 import javax.swing.BoxLayout;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import autopsi.database.dao.GenericDataObject;
 
@@ -73,23 +74,21 @@ public class GenericEditPanel extends JPanel {
 	}
 	
 	public void setObjectToEdit(GenericData obj) throws EClassEditorMissing{
-//		System.out.println("GenericEditPanel.setObjectToEdit(...)::1");
+
 		this.editedObject = obj;
-//		System.out.println("GenericEditPanel.setObjectToEdit(...)::2");
+
 		inspectEditedObject();
-//		System.out.println("GenericEditPanel.setObjectToEdit(...)::3");
+
 		createUI();
-//		System.out.println("GenericEditPanel.setObjectToEdit(...)::4");
+
 	}
 	
 	public GenericData getEditedObject(){
 		this.updateEditedObject();
-//		System.out.println("TestClass.getOb()=="+((TestClass)this.editedObject).getOb());
 		return this.editedObject;
 	}
 	
 	protected void updateEditedObject(){
-//		System.out.println("GenericEditPanel::updateEditedObject");
 		Set<GSMethod> s = methods.keySet();
 		Iterator<GSMethod> iter = s.iterator();
 		while(iter.hasNext()){
@@ -99,17 +98,16 @@ public class GenericEditPanel extends JPanel {
 					meth.setMethod.invoke(this.editedObject, methods.get(meth).getValue());
 				}
 				catch (Exception e){
-					System.out.println("updateEditedObject::"+e.toString());
-				}
+					JOptionPane.showMessageDialog(null, "Error: "+e.toString(),"Error!",JOptionPane.ERROR_MESSAGE);
+					}
 			}
 			if (meth instanceof GSMethodPrimary){
 				try{
 					meth.setMethod.invoke(this.editedObject, new Object[] {null});
-//					meth.setMethod.invoke(this.editedObject, methods.get(meth).getValue());
 				}
 				catch (Exception e){
-					System.out.println("GenericEditPanel.updateEditedObject::Konnte Primary Key nicht updaten::"+e.toString());
-				}
+					JOptionPane.showMessageDialog(null, "Error: "+e.toString(),"Error!",JOptionPane.ERROR_MESSAGE);
+					}
 			}
 		}
 	}
@@ -121,7 +119,6 @@ public class GenericEditPanel extends JPanel {
 		Map<String, GSMethod> map = this.editedObject.getAllAttribs();
 		Set<String> set = map.keySet();
 		Iterator<String> iter = set.iterator();
-//		System.out.println("obj.size()=="+this.editedObject.getAttribCount());
 		while(iter.hasNext()){
 			String key = iter.next();
 			GSMethod x = map.get(key);
@@ -131,9 +128,6 @@ public class GenericEditPanel extends JPanel {
 			if (plug == null)
 				plug = this.getNewPlugin(Object.class);
 			plug.setName(key);
-			if (plug instanceof DateEditPlugin)
-				System.out.println("GenericEditPanel.inspectEditedObjecT()::is DATE");
-//			System.out.println("GenericEditPanel.inspectEditedObject()::key=="+key);
 			try{
 				Object obj = null;
 				try{
@@ -145,9 +139,8 @@ public class GenericEditPanel extends JPanel {
 				plug.setValue(obj);
 			}
 			catch (Exception e){
-				if (e instanceof InvocationTargetException)
-					System.out.println("InvocationTargetException::"+((InvocationTargetException)e).getTargetException().toString());
-				System.out.println("Couldn' t set value in plugin::"+e.toString());
+				JOptionPane.showMessageDialog(null, "Error: "+e.toString(),"Error!",JOptionPane.ERROR_MESSAGE);
+				
 			}
 			if (x instanceof GSMethodForeign){
 				EditPlugin original = plug;
@@ -164,7 +157,7 @@ public class GenericEditPanel extends JPanel {
 			methods.put(x, plug);
 
 		}
-//		System.out.println("inspectEditedObject 3");
+
 	}
 	
 	private EditPlugin getNewPlugin(Class cl){
@@ -180,8 +173,8 @@ public class GenericEditPanel extends JPanel {
 						newPlugin = plugins.get(Object.class).getClass().newInstance();
 					}
 					catch (Exception e2){
-						System.out.println("couldn't create new Instance of plugin for Object.class::"+e2.toString());
-					}
+						JOptionPane.showMessageDialog(null, "Error: "+e2.toString(),"Error!",JOptionPane.ERROR_MESSAGE);
+						}
 				} 
 			}
 			else
@@ -245,8 +238,8 @@ public class GenericEditPanel extends JPanel {
 			
 		}
 		catch (Exception e){
-			System.out.println("CreateUI, Exception :: "+e.toString());
-		}
+			JOptionPane.showMessageDialog(null, "Error: "+e.toString(),"Error!",JOptionPane.ERROR_MESSAGE);
+			}
 	}
 	
 }

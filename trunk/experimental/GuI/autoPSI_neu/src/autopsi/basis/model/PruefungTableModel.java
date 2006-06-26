@@ -79,7 +79,7 @@ public class PruefungTableModel extends AbstractTableModel {
 				if (this.order!=null) {
 					query += " ORDER BY "+columnDBName[this.order];
 				}
-				//System.out.println(query);
+				
 				this.objects =  gdo.unsafeQuery(query, searchObject);
 			}
 		} catch (Exception e){
@@ -254,11 +254,11 @@ public class PruefungTableModel extends AbstractTableModel {
 				gdo.setCurrentTable(this.tablename);
 				gdo.addDataObject(pr);
 			} else {
-				System.out.println("NULLLL ELEMENTTTT!!!! :(((((((");
-			}
+				JOptionPane.showMessageDialog(null, "Error: NULL ELEMENT","Error!",JOptionPane.ERROR_MESSAGE);
+				}
 		} catch (Exception e){
-			System.out.println("PruefungTableModel @ addPruefung;"+e.toString());
-		}
+			JOptionPane.showMessageDialog(null, "Error: "+e.toString(),"Error!",JOptionPane.ERROR_MESSAGE);
+			}
 	}
 
 	/**

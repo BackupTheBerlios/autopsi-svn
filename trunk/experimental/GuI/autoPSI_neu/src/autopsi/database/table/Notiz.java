@@ -1,5 +1,7 @@
 package autopsi.database.table;
 
+import javax.swing.JOptionPane;
+
 import net.jini.core.entry.Entry;
 import autopsi.database.dao.GenericDAO;
 import autopsi.database.dao.GenericDataObject;
@@ -33,8 +35,8 @@ public class Notiz extends GenericData implements Entry,GenericDataObject {
 
 		}
 		catch (Exception e){
-			System.out.println("Fehler beim Erstellen des Notiz-Objekts::"+e.toString());
-		}
+			JOptionPane.showMessageDialog(null, "Error: "+e.toString(),"Error!",JOptionPane.ERROR_MESSAGE);
+			}
 	}
 	
 	public Integer getGlobalId(){
@@ -44,15 +46,7 @@ public class Notiz extends GenericData implements Entry,GenericDataObject {
 	public void setGlobalId(Integer globalId){
 		this.global_id = globalId;
 	}
-	
-//	public int getKategorieId(){
-//		System.out.println("Notiz.getKategorieId()=="+kategorie_id);
-//		return this.kategorie_id;
-//	}
-//	
-//	public void setKategorieId(Integer kategorieId){
-//		this.kategorie_id = kategorieId;
-//	}
+
 	
 	public String getTitle(){
 		return this.title;

@@ -22,6 +22,7 @@ import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
@@ -194,8 +195,8 @@ public class EditTerminContainerFrame extends javax.swing.JFrame implements java
 				}
 				catch(Exception e)
 				{
-					System.out.println("Konnte Objekte bzw. Termine nicht an den Termincontainer anhängen:  "+e.toString());
-				}
+					JOptionPane.showMessageDialog(null, "Error: "+e.toString(),"Error!",JOptionPane.ERROR_MESSAGE);
+					}
 				}
 			else      // Termincontainer wird upgedatet
 				{
@@ -230,8 +231,8 @@ public class EditTerminContainerFrame extends javax.swing.JFrame implements java
 			}
 		}
 		catch (Exception e){
-			System.out.println("Exception beim Updaten des Termincontainers== "+e.toString());
-		}
+			JOptionPane.showMessageDialog(null, "Error: "+e.toString(),"Error!",JOptionPane.ERROR_MESSAGE);
+			}
 	}
 	/**
 	 * Constructor for the EditTerminContainerFrame.
@@ -615,7 +616,7 @@ public class EditTerminContainerFrame extends javax.swing.JFrame implements java
 
 						if(day1==day2 && month1==month2 && year1==year2 && time1.equals(time2))
 						{
-							System.out.println("before: " + container_termine.size());
+							
 							container_termine.remove(i);
 							if(ID>0)
 							{
@@ -635,10 +636,11 @@ public class EditTerminContainerFrame extends javax.swing.JFrame implements java
 									}
 									
 								}
-								catch(Exception ex){System.out.println("error:: "+ex.toString());}
+								catch(Exception ex){
+									JOptionPane.showMessageDialog(null, "Error: "+ex.toString(),"Error!",JOptionPane.ERROR_MESSAGE);
+									}
 							}
-							System.out.println("then: " + container_termine.size());
-							System.out.println("removed successfully at index "+i);
+							
 						}
 					}
 					terminModel.removeAllElements();
@@ -652,7 +654,7 @@ public class EditTerminContainerFrame extends javax.swing.JFrame implements java
 						sucheTermin_field.getKeyListeners()[0].keyTyped(null);
 
 					}
-					System.out.println(container_termine.size());
+					
 					
 				}
 				catch(Exception ex)
@@ -716,8 +718,8 @@ public class EditTerminContainerFrame extends javax.swing.JFrame implements java
 						String kon = ((Kontakt)list.get(0)).getPrename()+" " + ((Kontakt)list.get(0)).getSurname();
 						lm.addElement(kon);
 					} catch (Exception e){
-						System.out.println("EditTerminContainerFrame::jAddObjectButton:: "+ e.toString());
-					}
+						JOptionPane.showMessageDialog(null, "Error: "+e.toString(),"Error!",JOptionPane.ERROR_MESSAGE);
+						}
 				}
 				if(table.toLowerCase().equals("lva")){
 					try {
@@ -725,8 +727,8 @@ public class EditTerminContainerFrame extends javax.swing.JFrame implements java
 						String lva = "LVA-Nr.: " + ((Lva)list.get(0)).getLvaNr()+",         Titel: " + ((Lva)list.get(0)).getTitle(); 
 						lm.addElement(lva);
 					} catch (Exception e){
-						System.out.println("EditTerminContainerFrame::jAddObjectButton:: "+ e.toString());
-					}
+						JOptionPane.showMessageDialog(null, "Error: "+e.toString(),"Error!",JOptionPane.ERROR_MESSAGE);
+						}
 				}
 				if(table.toLowerCase().equals("notiz")){
 					try {
@@ -734,8 +736,8 @@ public class EditTerminContainerFrame extends javax.swing.JFrame implements java
 						String not = ((Notiz)list.get(0)).getTitle();
 						lm.addElement(not);
 					} catch (Exception e){
-						System.out.println("EditTerminContainerFrame::jAddObjectButton:: "+ e.toString());
-					}
+						JOptionPane.showMessageDialog(null, "Error: "+e.toString(),"Error!",JOptionPane.ERROR_MESSAGE);
+						}
 				}
 				if(table.toLowerCase().equals("lehrmittel")){
 					try {
@@ -743,8 +745,8 @@ public class EditTerminContainerFrame extends javax.swing.JFrame implements java
 						String leh = ((Lehrmittel)list.get(0)).getName();
 						lm.addElement(leh);
 					} catch (Exception e){
-						System.out.println("EditTerminContainerFrame::jAddObjectButton:: "+ e.toString());
-					}
+						JOptionPane.showMessageDialog(null, "Error: "+e.toString(),"Error!",JOptionPane.ERROR_MESSAGE);
+						}
 				}
 				if(table.toLowerCase().equals("pruefung")){
 					try {
@@ -756,8 +758,8 @@ public class EditTerminContainerFrame extends javax.swing.JFrame implements java
 						String pr = l.getLvaNr() + " - "  + l.getTitle() + " - "+ p.getExaminer()+ " : " + p.getGrade();
 						lm.addElement(pr);
 					} catch (Exception e){
-						System.out.println("EditTerminContainerFrame::jAddObjectButton:: "+ e.toString());
-					}
+						JOptionPane.showMessageDialog(null, "Error: "+e.toString(),"Error!",JOptionPane.ERROR_MESSAGE);
+						}
 				}
 				this.gdo.setCurrentTable("anhaengen_termincontainer");
 				try {
@@ -768,8 +770,8 @@ public class EditTerminContainerFrame extends javax.swing.JFrame implements java
 					
 					
 				} catch (Exception e){
-					System.out.println("EditTerminCntainerFrame.mousePressed::Konnte Objekt nicht anhängen::"+e.toString());
-				}
+					JOptionPane.showMessageDialog(null, "Error: "+e.toString(),"Error!",JOptionPane.ERROR_MESSAGE);
+					}
 				
 			}
 			
@@ -820,7 +822,8 @@ public class EditTerminContainerFrame extends javax.swing.JFrame implements java
 					obj = attachedObjects.get(jList1.getSelectedIndex());
 				}catch(Exception e){
 					
-					System.out.println("Objekt wurde nicht  erkannt");
+					JOptionPane.showMessageDialog(null, "Error: "+e.toString(),"Error!",JOptionPane.ERROR_MESSAGE);
+					
 				}
 			lm.removeElementAt(jList1.getSelectedIndex());
 			}
@@ -853,16 +856,16 @@ public class EditTerminContainerFrame extends javax.swing.JFrame implements java
 					this.gdo.delDataObjects(at);
 				}
 				catch (Exception e){
-					System.out.println("EditTerminContainerFrame.mousePressed(...)::Konnte Attached Objekt nicht löschen::"+e.toString());
-				}
+					JOptionPane.showMessageDialog(null, "Error: "+e.toString(),"Error!",JOptionPane.ERROR_MESSAGE);
+					}
 				
 				this.gdo.setCurrentTable("anhaengen_termincontainer");
 				try{
 					this.gdo.delDataObjects(at);
 				}
 				catch (Exception e){
-					System.out.println("EditTerminContainerFrame.mousePressed(...)::Konnte Attached_termin-Objekt nicht löschen::"+e.toString());
-				}
+					JOptionPane.showMessageDialog(null, "Error: "+e.toString(),"Error!",JOptionPane.ERROR_MESSAGE);
+					}
 				
 				this.loadObjectList();
 			}
@@ -877,10 +880,8 @@ public class EditTerminContainerFrame extends javax.swing.JFrame implements java
 					greg.set(Calendar.YEAR,Integer.parseInt(terminModel.getElementAt(terminList.getSelectedIndex()).toString().substring(6,10)));
 					greg.set(Calendar.MONTH,Integer.parseInt(terminModel.getElementAt(terminList.getSelectedIndex()).toString().substring(3,5))-1);
 					greg.set(Calendar.DAY_OF_MONTH,Integer.parseInt(terminModel.getElementAt(terminList.getSelectedIndex()).toString().substring(0,2)));
-					GregorianCalendar greg2 = new GregorianCalendar();
-					System.out.println(greg.getTime().toString());
+					GregorianCalendar greg2 = new GregorianCalendar();				
 					greg2.setTime(greg.getTime());
-					System.out.println(greg2.getTime().toString());
 
 					actor.setMarker(greg2);
 					actor.setTimeSpace(greg);
@@ -965,8 +966,8 @@ public class EditTerminContainerFrame extends javax.swing.JFrame implements java
 		
 		
 		} catch (Exception e){
-			System.out.println("EditTerminContainerFrame::firstUpdateTerminList::"+e.toString());
-		}
+			JOptionPane.showMessageDialog(null, "Error: "+e.toString(),"Error!",JOptionPane.ERROR_MESSAGE);
+			}
 	}
 	
 	/**
@@ -995,7 +996,7 @@ public class EditTerminContainerFrame extends javax.swing.JFrame implements java
 		 try {
 			 formatter = new MaskFormatter(s);
 		} catch (java.text.ParseException exc) {
-			System.err.println("formatter is bad: " + exc.getMessage());
+		
 		}
 		return formatter;
 	}
@@ -1026,8 +1027,8 @@ public class EditTerminContainerFrame extends javax.swing.JFrame implements java
 			objs = gdo.unsafeQuery("SELECT * FROM anhaengen_termincontainer where termincontainer_id="+this.ID, new Anhaengen_termincontainer());
 		
 		} catch (Exception e){
-			System.out.println("EditTerminContainerFrame.loadObjectList()::"+e.toString());
-		}
+			JOptionPane.showMessageDialog(null, "Error: "+e.toString(),"Error!",JOptionPane.ERROR_MESSAGE);
+			}
 		Iterator<GenericDataObject> iter = objs.iterator();
 		String tableName = "";
 		int globalId = -1;
@@ -1038,7 +1039,7 @@ public class EditTerminContainerFrame extends javax.swing.JFrame implements java
 			List<GenericDataObject> ob = null;
 			tableName = tableName.toLowerCase();
 			
-			System.out.println("EditTerminContainerFrame.loadObjectList::tableName=="+tableName);
+			
 			if(tableName.equals("kontakt")){
 				gdo.setCurrentTable("kontakt");
 				try {
@@ -1046,8 +1047,8 @@ public class EditTerminContainerFrame extends javax.swing.JFrame implements java
 				} 
 				catch (Exception e)
 				{
-					System.out.println("EditTerminContainerFrame.loadObjectList() Kontaktlist::"+e.toString());
-				}
+					JOptionPane.showMessageDialog(null, "Error: "+e.toString(),"Error!",JOptionPane.ERROR_MESSAGE);
+					}
 				Iterator<GenericDataObject> iter2 = ob.iterator();
 				Kontakt k;
 				while(iter2.hasNext())
@@ -1064,8 +1065,8 @@ public class EditTerminContainerFrame extends javax.swing.JFrame implements java
 				} 
 				catch (Exception e)
 				{
-					System.out.println("EditTerminContainerFrame.loadObjectList() Notizlist::"+e.toString());
-				}
+					JOptionPane.showMessageDialog(null, "Error: "+e.toString(),"Error!",JOptionPane.ERROR_MESSAGE);
+						}
 				Iterator<GenericDataObject> iter2 = ob.iterator();
 				Notiz n;
 				while(iter2.hasNext())
@@ -1082,8 +1083,8 @@ public class EditTerminContainerFrame extends javax.swing.JFrame implements java
 				} 
 				catch (Exception e)
 				{
-					System.out.println("EditTerminContainerFrame.loadObjectList() Lvalist::"+e.toString());
-				}
+					JOptionPane.showMessageDialog(null, "Error: "+e.toString(),"Error!",JOptionPane.ERROR_MESSAGE);
+						}
 				Iterator<GenericDataObject> iter2 = ob.iterator();
 				Lva l;
 				while(iter2.hasNext())
@@ -1100,8 +1101,8 @@ public class EditTerminContainerFrame extends javax.swing.JFrame implements java
 				} 
 				catch (Exception e)
 				{
-					System.out.println("EditTerminContainerFrame.loadObjectList() Lehrmitellist::"+e.toString());
-				}
+					JOptionPane.showMessageDialog(null, "Error: "+e.toString(),"Error!",JOptionPane.ERROR_MESSAGE);
+						}
 				Iterator<GenericDataObject> iter2 = ob.iterator();
 				Lehrmittel l;
 				while(iter2.hasNext())
@@ -1118,8 +1119,8 @@ public class EditTerminContainerFrame extends javax.swing.JFrame implements java
 				} 
 				catch (Exception e)
 				{
-					System.out.println("EditTerminContainerFrame.loadObjectList() Pruefunglist::"+e.toString());
-				}
+					JOptionPane.showMessageDialog(null, "Error: "+e.toString(),"Error!",JOptionPane.ERROR_MESSAGE);
+						}
 				Iterator<GenericDataObject> iter2 = ob.iterator();
 				Pruefung p;
 				while(iter2.hasNext())
@@ -1132,8 +1133,8 @@ public class EditTerminContainerFrame extends javax.swing.JFrame implements java
 						list = gdo.unsafeQuery("select * from lva where global_id = " + p.getLvaId(),new Lva());
 						l= (Lva)list.get(0);
 					} catch (Exception e){
-						System.out.println("EditTerminFrame.loadObjectList() Pruefunglist::"+e.toString());
-					}
+						JOptionPane.showMessageDialog(null, "Error: "+e.toString(),"Error!",JOptionPane.ERROR_MESSAGE);
+							}
 					lm.addElement(l.getLvaNr() + " - "  + l.getTitle() + " - "+ p.getExaminer()+ " : " + p.getGrade());	
 				}
 					

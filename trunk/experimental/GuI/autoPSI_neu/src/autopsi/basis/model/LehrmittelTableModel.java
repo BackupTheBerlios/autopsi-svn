@@ -82,7 +82,7 @@ public class LehrmittelTableModel extends AbstractTableModel {
 				if (this.order!=null) {
 					query += " ORDER BY "+columnDBName[this.order];
 				}
-				//System.out.println(query);
+				
 				this.objects =  gdo.unsafeQuery(query, searchObject);
 			}
 		} catch (Exception e){
@@ -261,7 +261,6 @@ public class LehrmittelTableModel extends AbstractTableModel {
 				a = (AttachableObject)gdo.unsafeQuery("select * from attachable_object where global_id=identity()", new AttachableObject()).get(0);
 				Lehrmittel lm = (Lehrmittel) l;
 				lm.setGlobalId(a.getId());
-				System.out.println("ID :"+a.getId());
 				lm.setLehrmittelKategorieId(0);
 				gdo.setCurrentTable(this.tablename);
 				gdo.addDataObject(lm);

@@ -1,6 +1,8 @@
 package autopsi.database.table;
 
 
+import javax.swing.JOptionPane;
+
 import net.jini.core.entry.Entry;
 
 import autopsi.database.dao.GenericDataObject;
@@ -35,14 +37,13 @@ public class TerminContainer extends GenericData implements Entry,GenericDataObj
 			foreign.attribName = "id";
 			foreign.objectClass = AttachableObjectKategorie.class;
 			this.addAttribute("Anhängbare Objekt - Kategorie", foreign);
-//			this.addAttribute("GruppenId",cl.getMethod("getGroupID", new Class[] {}), cl.getMethod("setGroupID", new Class[] {Integer.class} ));
 			
 			this.addAttribute("Titel",cl.getMethod("getTitle", new Class[] {}), cl.getMethod("setTitle", new Class[] {String.class} ));	
 			this.addAttribute("Beschreibung",cl.getMethod("getDescription", new Class[] {}), cl.getMethod("setDescription", new Class[] {String.class} ));
 		}
 		catch (Exception e){
-			System.out.println("Fehler beim Erstellen des Termin-Container-Objekts::"+e.toString());
-		}
+			JOptionPane.showMessageDialog(null, "Error: "+e.toString(),"Error!",JOptionPane.ERROR_MESSAGE);
+			}
 	}
 	
 	public Integer getId(){

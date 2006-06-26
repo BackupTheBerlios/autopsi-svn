@@ -46,7 +46,6 @@ public class UnimplementedEditPlugin extends EditPlugin {
 
 	@Override
 	public void nameChanged() {
-		System.out.println("unimplementedPlugin.nameChanged");
 		missingLabel.setText(this.missingMsg+ this.name);
 
 	}

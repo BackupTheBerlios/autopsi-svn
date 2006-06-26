@@ -22,7 +22,6 @@ public class DoubleEditPlugin extends EditPlugin implements FocusListener{
 	
 	
 	public DoubleEditPlugin(){
-//		System.out.println("CREATED DoubleEditPlugin");
 		panel = new JPanel();
 		this.panel.setAlignmentY(Component.LEFT_ALIGNMENT);
 		this.panel.setLayout(new BoxLayout(panel,BoxLayout.Y_AXIS));
@@ -68,13 +67,12 @@ public class DoubleEditPlugin extends EditPlugin implements FocusListener{
 	}
 	
 	public void focusLost(FocusEvent e){
-		System.out.println("focusLost");
 		if (e.getComponent().getClass().equals(JTextField.class)){
-			System.out.println("focusLostDobuleEdit::JTextField");
+			
 			try{
-				System.out.println("focusLostDoubleEditPlugin trying to set value");
+
 				this.value = Double.parseDouble(((JTextField)e.getComponent()).getText());
-				System.out.println("focusLostDoubleEditPlugin, value=="+this.value);
+
 				((JTextField)e.getComponent()).setBackground(this.textFieldBG);
 				this.label.setText(this.getName());
 				this.label.setForeground(this.labelFG);

@@ -76,7 +76,7 @@ public class NotizTableModel  extends AbstractTableModel {
 				if (this.order!=null) {
 					query += " ORDER BY "+columnDBName[this.order];
 				}
-				//System.out.println(query);
+				
 				this.objects =  gdo.unsafeQuery(query, searchObject);
 			}
 		} catch (Exception e){

@@ -8,6 +8,8 @@ import autopsi.gui.component.GenericData;
 
 import java.sql.Date;
 
+import javax.swing.JOptionPane;
+
 public class Kontakt extends GenericData implements Entry,GenericDataObject {
 
 	public Integer global_id;
@@ -63,8 +65,8 @@ public class Kontakt extends GenericData implements Entry,GenericDataObject {
 			this.addAttribute("Email 2",cl.getMethod("getSecondEmail", new Class[] {}), cl.getMethod("setSecondEmail", new Class[] {String.class} ));
 		}
 		catch (Exception e){
-			System.out.println("Fehler beim Erstellen des Kontakt-Objekts::"+e.toString());
-		}
+			JOptionPane.showMessageDialog(null, "Error: "+e.toString(),"Error!",JOptionPane.ERROR_MESSAGE);
+			}
 	}
 	
 	public Integer getGlobalId(){

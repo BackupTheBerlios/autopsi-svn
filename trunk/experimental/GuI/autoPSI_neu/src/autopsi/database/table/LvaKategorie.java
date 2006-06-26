@@ -1,5 +1,7 @@
 package autopsi.database.table;
 
+import javax.swing.JOptionPane;
+
 import net.jini.core.entry.Entry;
 import autopsi.database.dao.GenericDataObject;
 import autopsi.gui.component.GSMethodPrimary;
@@ -24,8 +26,8 @@ public class LvaKategorie extends GenericData implements Entry,GenericDataObject
 			
 			this.addAttribute("Kategoriename",cl.getMethod("getName", new Class[] {}), cl.getMethod("setName", new Class[] {String.class} ));	}
 		catch (Exception e){
-			System.out.println("Fehler beim Erstellen des LVA-Kategorie-Objekts::"+e.toString());
-		}
+			JOptionPane.showMessageDialog(null, "Error: "+e.toString(),"Error!",JOptionPane.ERROR_MESSAGE);
+			}
 	}
 	
 	

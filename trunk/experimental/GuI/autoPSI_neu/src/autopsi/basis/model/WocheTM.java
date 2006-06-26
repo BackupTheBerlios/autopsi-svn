@@ -2,6 +2,7 @@ package autopsi.basis.model;
 
 import java.util.*;
 
+import javax.swing.JOptionPane;
 import javax.swing.table.AbstractTableModel;
 import autopsi.database.dao.*;
 import autopsi.database.table.*;
@@ -37,7 +38,7 @@ public class WocheTM extends AbstractTableModel {
 		}
 		catch(Exception ex)
 		{
-			System.out.println(ex.toString());
+			JOptionPane.showMessageDialog(null, "Error: "+ex.toString(),"Error!",JOptionPane.ERROR_MESSAGE);
 		}		
 	}
 	

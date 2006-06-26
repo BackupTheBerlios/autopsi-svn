@@ -17,6 +17,7 @@ import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.Border;
 import javax.swing.text.DateFormatter;
@@ -109,8 +110,8 @@ public class DateEditPlugin extends EditPlugin implements FocusListener {
 			geburtsdatum = sf.parse(dateEdit.getText());
 			value = new java.sql.Date( geburtsdatum.getTime());
 		} catch (ParseException e) {
-			System.out.println("Konnte Datum nicht ändern::"+e.toString());
-		}
+			JOptionPane.showMessageDialog(null, "Error: "+e.toString(),"Error!",JOptionPane.ERROR_MESSAGE);
+			}
 	}
 
 }

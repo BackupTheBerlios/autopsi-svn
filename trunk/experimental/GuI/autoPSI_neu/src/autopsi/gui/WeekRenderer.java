@@ -97,7 +97,7 @@ public class WeekRenderer extends WeekDayCell implements TableCellRenderer
         			liste2[i] = data[i+1].getDate().toString().substring(11,16) + " " + data[i+1].getSecondaryTitle();
         			
         			termindauer[i] = Integer.parseInt(data[i+1].getDate().toString().substring(11,13))*60+Integer.parseInt(data[i+1].getDate().toString().substring(14,16))+data[i+1].getDuration();
-        			System.out.println(termindauer[i]);
+        			
         		}
         		int dauer = termindauer[0];
         		int location = 0;
@@ -110,7 +110,7 @@ public class WeekRenderer extends WeekDayCell implements TableCellRenderer
         				}
         		}
         		dauer = dauer - Integer.parseInt(data[location].getDate().toString().substring(11,13))*60-Integer.parseInt(data[location].getDate().toString().substring(14,16));
-        		System.out.println("max:: "+ dauer + "  " + data[location].getDate().toString());
+        	
         		
     		}
     		

@@ -1,5 +1,7 @@
 package autopsi.database.table;
 
+import javax.swing.JOptionPane;
+
 import net.jini.core.entry.Entry;
 import autopsi.database.dao.GenericDataObject;
 import autopsi.gui.component.GSMethodPrimary;
@@ -30,8 +32,8 @@ public class AttachableObjectKategorie extends GenericData implements Entry,Gene
 			this.addAttribute("Geshared",cl.getMethod("getShareable", new Class[] {}), cl.getMethod("setShareable", new Class[] {Boolean.class} ));	
 		}
 		catch (Exception e){
-			System.out.println("Fehler beim Erstellen des AttachableObjektKategorie-Objects::"+e.toString());
-		}
+			JOptionPane.showMessageDialog(null, "Error: "+e.toString(),"Error!",JOptionPane.ERROR_MESSAGE);
+			}
 	}
 	
 	public int getId(){

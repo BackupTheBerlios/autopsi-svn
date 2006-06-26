@@ -1,5 +1,7 @@
 package autopsi.database.table;
 
+import javax.swing.JOptionPane;
+
 import net.jini.core.entry.Entry;
 
 import autopsi.database.dao.GenericDataObject;
@@ -44,8 +46,8 @@ public class Pruefung extends GenericData implements Entry,GenericDataObject {
 			this.addAttribute("Prüfer",cl.getMethod("getExaminer", new Class[] {}), cl.getMethod("setExaminer", new Class[] {String.class} ));
 			this.addAttribute("Note",cl.getMethod("getGrade", new Class[] {}), cl.getMethod("setGrade", new Class[] {Integer.class} ));	}
 		catch (Exception e){
-			System.out.println("Fehler beim Erstellen des Prüfungs-Objekts::"+e.toString());
-		}
+			JOptionPane.showMessageDialog(null, "Error: "+e.toString(),"Error!",JOptionPane.ERROR_MESSAGE);
+			}
 	}
 	
 	public Integer getGlobalId(){
@@ -56,14 +58,6 @@ public class Pruefung extends GenericData implements Entry,GenericDataObject {
 		this.global_id = globalId;
 	}
 	
-//	public int getKategorieId(){
-//		return this.kategorie_id;
-//	}
-//	
-//	public void setKategorieId(Integer kategorieId){
-//		this.kategorie_id = kategorieId;
-//	}
-//	
 	public Integer getLvaId(){
 		return this.lva_id;
 	}

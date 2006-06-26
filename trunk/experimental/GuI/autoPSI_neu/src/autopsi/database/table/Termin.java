@@ -3,6 +3,9 @@ package autopsi.database.table;
 
 import net.jini.core.entry.Entry;
 import java.sql.Timestamp;
+
+import javax.swing.JOptionPane;
+
 import autopsi.database.dao.GenericDataObject;
 import autopsi.gui.component.GSMethodForeign;
 import autopsi.gui.component.GSMethodPrimary;
@@ -64,11 +67,10 @@ public class Termin extends GenericData implements Entry,GenericDataObject{
 			foreign.attribName = "id";
 			foreign.objectClass = AttachableObjectKategorie.class;
 			this.addAttribute("Gruppe", foreign);
-//			this.addAttribute("GruppenId",cl.getMethod("getGroupID", new Class[] {}), cl.getMethod("setGroupID", new Class[] {Integer.class} ));
-		}
+	}
 		catch (Exception e){
-			System.out.println("Fehler beim Erstellen des Termin-Kategorie-Objekts::"+e.toString());
-		}
+			JOptionPane.showMessageDialog(null, "Error: "+e.toString(),"Error!",JOptionPane.ERROR_MESSAGE);
+				}
 	}
 	
 	public Integer getId(){

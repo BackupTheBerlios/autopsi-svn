@@ -1,5 +1,7 @@
 package autopsi.database.table;
 
+import javax.swing.JOptionPane;
+
 import net.jini.core.entry.Entry;
 import autopsi.database.dao.GenericDataObject;
 import autopsi.gui.component.GSMethodForeign;
@@ -43,8 +45,8 @@ public class AttachableObject extends GenericData implements Entry,GenericDataOb
 //			this.addAttribute("TableName",cl.getMethod("getTableName", new Class[] {}), cl.getMethod("setTableName", new Class[] {String.class} ));		}
 		}
 		catch (Exception e){
-			System.out.println("Fehler beim Erstellen des Attachable-Objects::"+e.toString());
-		}
+			JOptionPane.showMessageDialog(null, "Error: "+e.toString(),"Error!",JOptionPane.ERROR_MESSAGE);
+				}
 	}
 	
 	public int getId(){

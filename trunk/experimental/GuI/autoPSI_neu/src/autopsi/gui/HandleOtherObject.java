@@ -5,6 +5,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 
 import autopsi.database.dao.GenericDAO;
 import autopsi.database.dao.GenericDataObject;
@@ -88,8 +89,8 @@ public class HandleOtherObject {
 			this.dbObj = this.gdao.getDataObjects(gesuchtesObjekt).get(0);
 		}
 		catch(Exception e){
-			System.out.println("HandleOtherObject.getObjectFromId()::Konnte Objekt nicht aus der Datenbank bekommen::"+e.toString());
-		}
+			JOptionPane.showMessageDialog(null, "Error: "+e.toString(),"Error!",JOptionPane.ERROR_MESSAGE);
+			}
 	}
 	
 	public void run(){
@@ -108,8 +109,8 @@ public class HandleOtherObject {
 			}
 		}
 		catch (Exception e){
-			System.out.println("HandleAttachableObject.run()::Konnte Aktion nicht ausführen::"+e.toString());
-		}
+			JOptionPane.showMessageDialog(null, "Error: "+e.toString(),"Error!",JOptionPane.ERROR_MESSAGE);
+			}
 		
 	}
 	
@@ -133,8 +134,8 @@ public class HandleOtherObject {
 			gef.setVisible(true);
 		
 		} catch (Exception e){
-			System.out.println("HandleAttachableObject.addNewObject::konnte Objekt nicht in DB einfügen::"+e.toString());
-		}
+			JOptionPane.showMessageDialog(null, "Error: "+e.toString(),"Error!",JOptionPane.ERROR_MESSAGE);
+			}
 	}
 	
 	public void editExistingObject(){
@@ -158,8 +159,8 @@ public void deleteExistingObject(){
 			lvas = this.gdao.getDataObjects(new Lva());
 		}
 		catch (Exception e){
-			System.out.println("HandleOtherObject.deleteExistingObject::Konnte Lvas nicht aus der Datenbank löschen::"+e.toString());
-		}
+			JOptionPane.showMessageDialog(null, "Error: "+e.toString(),"Error!",JOptionPane.ERROR_MESSAGE);
+			}
 		Iterator<GenericDataObject> iter = lvas.iterator();
 		while(iter.hasNext()){
 			Lva l = (Lva)iter.next();
@@ -170,8 +171,8 @@ public void deleteExistingObject(){
 				this.gdao.updDataObjects(lookup, l);
 			}
 			catch (Exception e){
-				System.out.println("HandleOtherObject.deleteExistingObject::Konnte Lvas nicht ändern::"+e.toString());
-			}
+				JOptionPane.showMessageDialog(null, "Error: "+e.toString(),"Error!",JOptionPane.ERROR_MESSAGE);
+				}
 		}
 	}
 	if (this.dbObj instanceof LvaKategorie){
@@ -181,8 +182,8 @@ public void deleteExistingObject(){
 			lvas = this.gdao.getDataObjects(new Lva());
 		}
 		catch (Exception e){
-			System.out.println("HandleOtherObject.deleteExistingObject::Konnte Lvas nicht aus der Datenbank löschen::"+e.toString());
-		}
+			JOptionPane.showMessageDialog(null, "Error: "+e.toString(),"Error!",JOptionPane.ERROR_MESSAGE);
+			}
 		Iterator<GenericDataObject> iter = lvas.iterator();
 		while(iter.hasNext()){
 			Lva l = (Lva)iter.next();
@@ -193,8 +194,8 @@ public void deleteExistingObject(){
 				this.gdao.updDataObjects(lookup, l);
 			}
 			catch (Exception e){
-				System.out.println("HandleOtherObject.deleteExistingObject::Konnte Lvas nicht ändern::"+e.toString());
-			}
+				JOptionPane.showMessageDialog(null, "Error: "+e.toString(),"Error!",JOptionPane.ERROR_MESSAGE);
+				}
 		}
 	}
 	if (this.dbObj instanceof LehrmittelKategorie){
@@ -204,8 +205,8 @@ public void deleteExistingObject(){
 			lehrmittel = this.gdao.getDataObjects(new Lehrmittel());
 		}
 		catch (Exception e){
-			System.out.println("HandleOtherObject.deleteExistingObject::Konnte Lehrmittel nicht aus der Datenbank löschen::"+e.toString());
-		}
+			JOptionPane.showMessageDialog(null, "Error: "+e.toString(),"Error!",JOptionPane.ERROR_MESSAGE);
+			}
 		Iterator<GenericDataObject> iter = lehrmittel.iterator();
 		while(iter.hasNext()){
 			Lehrmittel l = (Lehrmittel)iter.next();
@@ -216,8 +217,8 @@ public void deleteExistingObject(){
 				this.gdao.updDataObjects(lookup, l);
 			}
 			catch (Exception e){
-				System.out.println("HandleOtherObject.deleteExistingObject::Konnte Lehrmittel nicht ändern::"+e.toString());
-			}
+				JOptionPane.showMessageDialog(null, "Error: "+e.toString(),"Error!",JOptionPane.ERROR_MESSAGE);
+				}
 		}
 	}
 	if (this.dbObj instanceof AttachableObjectKategorie){
@@ -227,8 +228,8 @@ public void deleteExistingObject(){
 			attachableObjects = this.gdao.getDataObjects(new AttachableObject());
 		}
 		catch (Exception e){
-			System.out.println("HandleOtherObject.deleteExistingObject::Konnte anhängbare Objekte nicht aus der Datenbank löschen::"+e.toString());
-		}
+			JOptionPane.showMessageDialog(null, "Error: "+e.toString(),"Error!",JOptionPane.ERROR_MESSAGE);
+				}
 		Iterator<GenericDataObject> iter = attachableObjects.iterator();
 		while(iter.hasNext()){
 			AttachableObject l = (AttachableObject)iter.next();
@@ -239,8 +240,8 @@ public void deleteExistingObject(){
 				this.gdao.updDataObjects(lookup, l);
 			}
 			catch (Exception e){
-				System.out.println("HandleOtherObject.deleteExistingObject::Konnte anhängbares Objekt nicht ändern::"+e.toString());
-			}
+				JOptionPane.showMessageDialog(null, "Error: "+e.toString(),"Error!",JOptionPane.ERROR_MESSAGE);
+					}
 		}
 	}
 	
@@ -263,8 +264,8 @@ public void deleteExistingObject(){
 		this.gdao.delDataObjects(this.dbObj);
 	}
 	catch (Exception e){
-		System.out.println("HandleOtherObject.deleteExistingObject::Konnte Objekt nicht aus der Datenbank löschen::"+e.toString());
-	}
+		JOptionPane.showMessageDialog(null, "Error: "+e.toString(),"Error!",JOptionPane.ERROR_MESSAGE);
+		}
 }
 	
 }

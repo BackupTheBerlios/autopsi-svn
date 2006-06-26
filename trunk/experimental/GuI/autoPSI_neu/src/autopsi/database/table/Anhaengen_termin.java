@@ -1,5 +1,7 @@
 package autopsi.database.table;
 
+import javax.swing.JOptionPane;
+
 import net.jini.core.entry.Entry;
 import autopsi.database.dao.GenericDataObject;
 import autopsi.gui.component.GSMethodForeign;
@@ -38,8 +40,8 @@ public class Anhaengen_termin extends GenericData implements Entry,GenericDataOb
 			this.addAttribute("Tabellenname",cl.getMethod("getTable_Name", new Class[] {}), cl.getMethod("setTable_Name", new Class[] {String.class} ));
 		}
 		catch (Exception e){
-			System.out.println("Fehler beim Erstellen des Anhängen-Termin-Objekts::"+e.toString());
-		}
+			JOptionPane.showMessageDialog(null, "Error: "+e.toString(),"Error!",JOptionPane.ERROR_MESSAGE);
+			}
 	}
 	
 	public int getTerminId(){

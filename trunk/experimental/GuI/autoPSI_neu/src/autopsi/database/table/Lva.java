@@ -1,5 +1,7 @@
 package autopsi.database.table;
 
+import javax.swing.JOptionPane;
+
 import net.jini.core.entry.Entry;
 import autopsi.database.dao.GenericDataObject;
 import autopsi.gui.component.GSMethodForeign;
@@ -58,8 +60,8 @@ public class Lva extends GenericData implements Entry,GenericDataObject {
 			
 		}
 		catch (Exception e){
-			System.out.println("Fehler beim Erstellen des LVA-Objekts::"+e.toString());
-		}
+			JOptionPane.showMessageDialog(null, "Error: "+e.toString(),"Error!",JOptionPane.ERROR_MESSAGE);
+			}
 	}
 	
 	public Integer getGlobalId(){
