@@ -2366,6 +2366,13 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 		c_marker.set(Calendar.SECOND,1);
 	}
 	
+	/**returns the marker
+	 */
+	public GregorianCalendar getMarker()
+	{
+		return this.c_marker;
+	}
+	
 	/**
 	 * clears the data in the infobar
 	 */
