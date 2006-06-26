@@ -9,6 +9,9 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.WindowConstants;
 import javax.swing.border.LineBorder;
 import javax.swing.*;
+
+import autopsi.basis.AutopsiConfigurator;
+
 import java.util.*;
 
 /**
@@ -65,7 +68,7 @@ public class DayCell extends javax.swing.JPanel {
 		{
 			list.setModel(new DefaultComboBoxModel(data));
 		}
-		if(data.length>5) title.setIcon(new ImageIcon("src/images/longlist.GIF"));
+		if(data.length>5) title.setIcon(new ImageIcon(AutopsiConfigurator.images+"/longlist.GIF"));
 			
 	}
 	public void setBackColor(Color col)
@@ -98,7 +101,7 @@ public class DayCell extends javax.swing.JPanel {
 					title.setText("Datum2");
 					title.setBackground(new java.awt.Color(100,100,64));
 					title.setForeground(new java.awt.Color(255,255,255));
-					title.setIcon(new ImageIcon("src/images/tag.GIF"));
+					title.setIcon(new ImageIcon(AutopsiConfigurator.images+"/tag.GIF"));
 					title.setPreferredSize(new java.awt.Dimension(88, 14));
 
 				{

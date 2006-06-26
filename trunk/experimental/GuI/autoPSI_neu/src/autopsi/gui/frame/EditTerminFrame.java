@@ -308,7 +308,7 @@ public class EditTerminFrame extends javax.swing.JFrame implements java.awt.even
 					}
 			else if(owner instanceof EditTerminContainerFrame)
 			{
-			
+			System.out.println("owner!!");
 				EditTerminContainerFrame actor = (EditTerminContainerFrame)owner;
 				Termin data = new Termin();
 				data.setSecondaryTitle(sec_title);
@@ -318,8 +318,10 @@ public class EditTerminFrame extends javax.swing.JFrame implements java.awt.even
 				data.setDate(Timestamp.valueOf(date));
 				query = "update termin  set GROUP_ID = " + group_id + ",TERMIN_KATEGORIE_ID = " + tkat + ", secondary_title='"+sec_title+"', description='"+desc+"', date='"+date+"',duration="+duration+",place='"+place+"',termincontainer_id="+tc_id+" where id="+ID;
 				
-				gdo.unsafeQuery(query,vorlage);//Updatet den Termin
-				actor.updateTerminList(new ArrayList<Termin>());
+				ArrayList<Termin> dat = new ArrayList<Termin>();
+				dat.add(data);
+				System.out.println(data.getSecondaryTitle()+" "+data.getDate().toString());
+				actor.updateTerminList(dat);
 				ok=true;
 				
 			}
@@ -328,7 +330,7 @@ public class EditTerminFrame extends javax.swing.JFrame implements java.awt.even
 			
 			}
 		catch (Exception e){
-			JOptionPane.showMessageDialog(null, "Error: "+e.toString(),"Error!",JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(null, "Error while editing: "+e.toString(),"Error!",JOptionPane.ERROR_MESSAGE);
 			}
 			
 	}

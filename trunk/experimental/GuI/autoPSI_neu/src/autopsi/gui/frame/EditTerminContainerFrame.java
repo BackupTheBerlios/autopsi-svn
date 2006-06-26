@@ -677,7 +677,7 @@ public class EditTerminContainerFrame extends javax.swing.JFrame implements java
 			update();
 		}
 		if(arg0.getSource().equals(newTermin)){
-			EditTerminFrame etframe = new EditTerminFrame(this,null, -1,true);
+			EditTerminFrame etframe = new EditTerminFrame(this,null,null,false);
 			etframe.setVisible(true);
 			
 			

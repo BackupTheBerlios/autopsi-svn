@@ -99,6 +99,8 @@ public class WeekDayCell extends javax.swing.JPanel {
 						jScrollPane1.setViewportView(list);
 						list.setBackground(new java.awt.Color(255,255,255));
 						list.setFont(new java.awt.Font("Tahoma",0,10));
+						list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+						list.setVisibleRowCount(10);
 					}
 				}						
 			}
