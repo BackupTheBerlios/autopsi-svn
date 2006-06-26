@@ -47,7 +47,12 @@ import java.text.SimpleDateFormat;
 import javax.swing.text.MaskFormatter;
 
 
-/**
+/** The MainFrame class is the main user interface class which displays
+ * the infobar, a calendar view and control buttons for adding and editing data.
+ * It is instanciated by the Basis class and is the first window to be shown when
+ * autopsi is launched.
+ * 
+ * 
 * This code was edited or generated using CloudGarden's Jigloo
 * SWT/Swing GUI Builder, which is free for non-commercial
 * use. If Jigloo is being used commercially (ie, by a corporation,
@@ -58,11 +63,12 @@ import javax.swing.text.MaskFormatter;
 * A COMMERCIAL LICENSE HAS NOT BEEN PURCHASED FOR
 * THIS MACHINE, SO JIGLOO OR THIS CODE CANNOT BE USED
 * LEGALLY FOR ANY CORPORATE OR COMMERCIAL PURPOSE.
+* @author Stephan Zapotocky
 */
 public class mainFrame extends javax.swing.JFrame implements java.awt.event.MouseListener,java.awt.event.MouseMotionListener,WindowListener, ActionListener{
 
 	{
-		//Set Look & Feel
+		
 		try {
 			javax.swing.UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
 		} catch(Exception e) {
@@ -252,7 +258,7 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 	}
 	
 	/**
-	 * Builds the user interface
+	 * Builds the user interface (buttons, tables, panels etc.)
 	 * 
 	 */
 	private void initGUI() {
