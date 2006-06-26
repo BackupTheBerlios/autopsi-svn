@@ -257,6 +257,19 @@ public class TerminReiheFrame extends javax.swing.JFrame implements java.awt.eve
 					dauer1.setBounds(315, 112+i*28, 49, 21);
 					dauer1.setBorder(new LineBorder(new java.awt.Color(0, 0, 0),1,false));
 					dauer1.setEnabled(false);
+					dauer1.setDocument(new PlainDocument() {
+				    	private static final long serialVersionUID = 8723098029189851737L;
+						public void insertString(int offset, String str, AttributeSet a)
+								throws BadLocationException {
+							// Eingaben von Buchstaben ist nicht erlaubt...
+							if (!str.matches(".*[[0-9]].*"))
+								return;
+							
+							
+								
+							super.insertString(offset, str, a);
+						}
+					});
 					dauerArray[i]=dauer1;
 				}
 				
