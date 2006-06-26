@@ -248,7 +248,7 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 		this.getContentPane().add(table);
 		table.setCellSelectionEnabled(true);
 		table.setGridColor(new java.awt.Color(0,0,0));
-		table.setIntercellSpacing(new java.awt.Dimension(2, 2));
+		table.setIntercellSpacing(new java.awt.Dimension(2, 1));
 		table.setShowVerticalLines(false);
 		table.setShowHorizontalLines(false);
 		table.setBackground(new java.awt.Color(230,230,230));
