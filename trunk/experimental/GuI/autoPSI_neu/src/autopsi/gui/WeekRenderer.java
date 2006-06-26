@@ -96,7 +96,6 @@ public class WeekRenderer extends WeekDayCell implements TableCellRenderer
 	        		for (int i = 0;i<data.length-1;i++)
 	        		{
 	        			liste2[i] = data[i+1].getDate().toString().substring(11,16) + " " + data[i+1].getSecondaryTitle();
-
 	        			termindauer[i] = Integer.parseInt(data[i+1].getDate().toString().substring(11,13))*60+Integer.parseInt(data[i+1].getDate().toString().substring(14,16))+data[i+1].getDuration();
 	        			
 	        		}
