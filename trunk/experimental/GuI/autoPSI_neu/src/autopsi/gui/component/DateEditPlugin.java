@@ -47,7 +47,7 @@ public class DateEditPlugin extends EditPlugin implements FocusListener {
 			public void insertString(int offset, String str, AttributeSet a)
 					throws BadLocationException {
 				// Eingaben von Buchstaben ist nicht erlaubt...
-				if (!str.matches(".*[[0-9]|-].*"))
+				if (!str.matches(".*[[0-9]].*"))
 					return;
 				//Höchstens 15 Zeichen
 				if (offset>9)
@@ -117,6 +117,9 @@ public class DateEditPlugin extends EditPlugin implements FocusListener {
 
 	public void focusLost(FocusEvent arg0) {
 		SimpleDateFormat sf = new SimpleDateFormat("dd-MM-yyyy");
+		
+		if (this.dateEdit.getText().length() <10)
+			return;
 		
 		java.util.Date geburtsdatum = null;
 		try {
