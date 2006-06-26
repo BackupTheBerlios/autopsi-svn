@@ -502,7 +502,7 @@ public class EditTerminContainerFrame extends javax.swing.JFrame implements java
 						deleteTermin.addMouseListener(this);
 					}
 					{
-						if(ID>0)
+						
 					}
 					{
 						if(ID>0)
@@ -908,9 +908,6 @@ public class EditTerminContainerFrame extends javax.swing.JFrame implements java
 		if(arg0.getSource().equals(newTermin)){
 			jLabel7.setText("Erstellt einen neuen Termin in diesem Termincontainer");
 		}
-		if(arg0.getSource().equals(editTermin)){
-			jLabel7.setText("Bearbeitet den gewählten Termin");
-		}
 		if(arg0.getSource().equals(deleteTermin)){
 			jLabel7.setText("Löscht den gewählten Termin");
 		}
@@ -930,9 +927,6 @@ public class EditTerminContainerFrame extends javax.swing.JFrame implements java
 	
 	public void mouseExited(MouseEvent arg0) {
 		if(arg0.getSource().equals(newTermin)){
-			jLabel7.setText("");
-		}
-		if(arg0.getSource().equals(editTermin)){
 			jLabel7.setText("");
 		}
 		if(arg0.getSource().equals(deleteTermin)){
