@@ -79,7 +79,6 @@ public class EditTerminFrame extends javax.swing.JFrame implements java.awt.even
 	private List<GenericDataObject> attachedObjects;
 	private DefaultListModel lm;
 	private JTabbedPane jTabbedPane1;
-	private JButton apply_button;
 	private JLabel jLabel4;
 	private JLabel jLabel3;
 	private JComboBox group_Box;
@@ -714,15 +713,8 @@ public class EditTerminFrame extends javax.swing.JFrame implements java.awt.even
 				abort_button = new JButton();
 				getContentPane().add(abort_button);
 				abort_button.setText("Abbrechen");
-				abort_button.setBounds(161, 301, 105, 21);
+				abort_button.setBounds(280, 301, 105, 21);
 				abort_button.addMouseListener(this);
-			}
-			{
-				apply_button = new JButton();
-				getContentPane().add(apply_button);
-				apply_button.setText("Übernehmen");
-				apply_button.setBounds(273, 301, 112, 21);
-				apply_button.addMouseListener(this);
 			}
 			{
 				ok_button = new JButton();
@@ -745,8 +737,7 @@ public class EditTerminFrame extends javax.swing.JFrame implements java.awt.even
 			this.setPreferredSize(new java.awt.Dimension(456, 387));
 			this.setResizable(false);
 			if(ID!=null && cal==null) {readData(ID);}
-			else
-				apply_button.setVisible(false);
+			
 			pack();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -773,10 +764,7 @@ public class EditTerminFrame extends javax.swing.JFrame implements java.awt.even
 				dispose();
 			
 		}
-		if(arg0.getSource().equals(apply_button)){
-			if(!newTCsender) update();
-			else addToList();
-			}
+		
 		if(arg0.getSource().equals(newTC)){
 			EditTerminContainerFrame frame = new EditTerminContainerFrame(this,-1);
 			frame.setLocation(this.getLocation().x+20,this.getLocation().y+20);
