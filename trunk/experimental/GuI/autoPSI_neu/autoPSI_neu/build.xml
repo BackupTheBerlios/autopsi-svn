@@ -1,0 +1,136 @@
+<project name="autoPSI" default="compile" basedir=".">
+
+	<property name="project_name" value="autoPSI"/>
+	<property name="basedir" value="."/>
+	<property name="build" value="class"/>
+	<property name="src" value="src"/>
+	<property name="dist" value="dist"/>
+	<property name="static" value="static"/>
+	<property name="lib" value="lib"/>
+	<property name="doc" value="doc"/>
+	<property name="hsqldb_data" value="data"/>
+	
+
+	<property name="jdbc.username" value="SA"/>
+	<property name="jdbc.password" value="AB"/>
+	<property name="jdbc.url" value="jdbc:hsqldb:file:${hsqldb_data}/database"/>
+	
+	<path id="classpath">
+		<pathelement location="${build}"/>
+		<fileset dir="${basedir}/${lib}" id="lib">
+			<include name="*.jar"/>
+		</fileset>
+		
+	</path>
+	
+	
+	<target name="distdoc" depends="dist,javadoc"/>
+	
+	<!-- Make Distribution of project  -->
+	<target name="dist" depends="clean,compile"> 
+
+		<!-- Copy Unix, OS X Shellscript to start application to dist -->
+		<copy todir="${dist}/${project_name}/images">
+			<fileset dir="${basedir}/images">
+				<include name="**/*.*"/>
+			</fileset>
+		</copy>
+		<copy todir="${dist}/${project_name}/images/icons">
+			<fileset dir="${basedir}/images/icons">
+				<include name="**/*.*"/>
+			</fileset>
+		</copy>
+		<copy file="${static}/${project_name}.bat" todir="${dist}/${project_name}"/>
+		<copy file="${static}/${project_name}.sh" todir="${dist}/${project_name}" />    
+		<!-- change Unix file permissions for start-shellscript -->
+        <!--chmod file="${dist}/${projname}/${project_name}.sh" perm="550"/-->
+		<!-- copy hsqldb data to distribution -->
+		<copy todir="${dist}/${project_name}/${hsqldb_data}">
+            <fileset dir="${hsqldb_data}">
+                <include name="*.script" />
+            	<include name="*.properties" />
+            </fileset>
+        </copy>
+     	<!-- create jar including project plus libraries -->
+		<jar destfile="${dist}/${project_name}/autoPSI.jar">
+			<fileset dir="${build}" />
+			<!-- 
+                these statements expand the library jars 
+                and include them into the distribution jar
+            -->
+			<zipgroupfileset refid="${lib}"/>
+		</jar>
+ 	   	<!-- create distribution archive -->
+     	<tar destfile="${dist}/${project_name}.tar.gz" basedir="${dist}" compression="gzip"></tar>
+ 
+    </target>
+
+	
+	<target name="javadoc">
+        <javadoc 
+            destdir="${doc}/api"
+            use="true"
+            author="true" version="true"
+            doctitle="${project_name}"
+            classpathref="classpath"
+        >
+            <packageset dir="${src}" defaultexcludes="yes">
+                <include name="autopsi/**"/>
+            </packageset>
+        </javadoc>
+	</target>
+	
+	
+	
+	<target name="clean">
+		<delete dir="${build}"/>
+		<delete dir="${dist}"/>
+		<delete dir="${doc}"/>
+	</target>
+		
+	<target name="init">
+		<mkdir dir="${build}"/>
+	</target>
+	
+	<target name="compile" depends="init">
+		<javac srcdir="${src}" destdir="${build}" classpathref="classpath"/>
+	</target>
+	
+	<target name="run">
+		<java classpathref="classpath" classname="Basis" fork="true"/> 
+	</target>
+	
+
+	
+	<target name="runDBMan">
+        <java 
+            classpathref="classpath"
+            classname="org.hsqldb.util.DatabaseManagerSwing"
+            fork="true"
+        >
+        	<arg line="-url ${jdbc.url}"/>
+            <arg line="-user ${jdbc.username}" />
+            <arg line="-password ${jdbc.password}" />
+        </java>
+	</target>
+		
+	<target name="compile_and_run" depends="compile,run">
+	</target>
+	
+	<target name="Test:GenericEditFrame" depends="init,compile">
+		<javac srcdir="${src}" destdir="${build}" classpathref="classpath"/>
+		<java classpathref="classpath" classname="GenericEditFrameTest" fork="true"/> 
+	</target>
+	
+	<target name="Test:JavaSpace" depends="init,compile">
+		<java classpathref="classpath" classname="autopsi.javaspace.Main" fork="true">
+			<jvmarg value="-Djava.security.policy=policy.all"/>
+		</java>
+	</target>
+	
+	<target name="Test:SearchFrame" depends="init,compile">
+		<javac srcdir="${src}" destdir="${build}" classpathref="classpath"/>
+		<java classpathref="classpath" classname="SearchFrameTest" fork="true"/> 
+	</target>
+	
+</project>
