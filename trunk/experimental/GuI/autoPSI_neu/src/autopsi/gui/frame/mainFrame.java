@@ -253,7 +253,7 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 		table.setShowHorizontalLines(false);
 		table.setBackground(new java.awt.Color(230,230,230));
 		table.setAutoscrolls(false);
-
+		ToolTipManager.sharedInstance().unregisterComponent(table);
 		MonatTM tablemodel = new MonatTM(tsBegin,tsEnd);
 		table.setModel(tablemodel);
 	}
@@ -1045,7 +1045,7 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 				
 				c_marker.set(Integer.parseInt(currentValue[0].getDate().toString().substring(0,4)),Integer.parseInt(currentValue[0].getDate().toString().substring(5,7))-1,Integer.parseInt(currentValue[0].getDate().toString().substring(8,10)));
 			}
-			catch(Exception ex) {JOptionPane.showMessageDialog(null, "Mainframe Error: "+ex.toString(),"Error!",JOptionPane.ERROR_MESSAGE);
+			catch(Exception ex) {System.out.println("Mainframe Error: "+ex.toString());
 			}; 
 			
 				
@@ -1728,8 +1728,7 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 		 try {
 			 formatter = new MaskFormatter(s);
 		} catch (java.text.ParseException exc) {
-			JOptionPane.showMessageDialog(null, "Mainframe Error: "+exc.toString(),"Error!",JOptionPane.ERROR_MESSAGE);
-			
+			System.out.println("Mainframe Error: "+exc.toString());
 		}
 		return formatter;
 	}
@@ -1751,6 +1750,7 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 	
 		if(delete)
 			{
+			clearTerminData();
 			todayListModel.removeAllElements();
 			
 			
@@ -1781,8 +1781,7 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 				query = "delete from termin where termincontainer_id = "+tcID;
 				gdo.unsafeQuery(query,null);
 				}
-				catch(Exception e) {JOptionPane.showMessageDialog(null, "Mainframe Error: "+e.toString(),"Error!",JOptionPane.ERROR_MESSAGE);
-				}
+				catch(Exception e) {System.out.println("Mainframe Error: "+e.toString());}
 			}
 			
 			
@@ -1825,8 +1824,7 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 		try {
 			gdao.unsafeQuery("Shutdown compact", new Notiz());
 		} catch (Exception e){
-			JOptionPane.showMessageDialog(null, "Mainframe Error: "+e.toString(),"Error!",JOptionPane.ERROR_MESSAGE);
-			}
+			System.out.println("Mainframe Error: "+e.toString());}
 		//deleting shared objects from JavaSpace
 		if (this.oss != null)
 			this.oss.unshareObjects();
@@ -1998,8 +1996,7 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 					loadTerminData();
 				}
 			}
-			catch(Exception ex) {JOptionPane.showMessageDialog(null, "Mainframe Error: "+ex.toString(),"Error!",JOptionPane.ERROR_MESSAGE);
-			}
+			catch(Exception ex) {System.out.println("Mainframe Error: "+ex.toString());}
 	}
 	
 	/** reads the data for a selected date which is shown in the infobar
@@ -2052,8 +2049,7 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 					}
 					catch(Exception ex)
 					{
-						JOptionPane.showMessageDialog(null, "Mainframe Error: "+ex.toString(),"Error!",JOptionPane.ERROR_MESSAGE);
-						
+						System.out.println("Mainframe Error: "+ex.toString());
 					}	
 					
 					query = "select * from termin where termincontainer_id="+showTermin.getTerminContainerID()+" order by date";
@@ -2166,8 +2162,7 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 					
 			}
 			}
-			catch(Exception ex) {JOptionPane.showMessageDialog(null, "Mainframe Error: "+ex.toString(),"Error!",JOptionPane.ERROR_MESSAGE);
-			}		
+			catch(Exception ex) {System.out.println("Mainframe Error: "+ex.toString());}		
 		}	
 		else
 		{
