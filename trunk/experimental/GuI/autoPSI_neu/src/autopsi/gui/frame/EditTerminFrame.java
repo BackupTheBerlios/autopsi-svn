@@ -549,6 +549,19 @@ public class EditTerminFrame extends javax.swing.JFrame implements java.awt.even
 						jPanel1.add(duration_field);
 						duration_field.setBounds(371, 77, 42, 21);
 						duration_field.setBorder(new LineBorder(new java.awt.Color(0,0,0), 1, false));
+						duration_field.setDocument(new PlainDocument() {
+					    	private static final long serialVersionUID = 8723098029189851737L;
+							public void insertString(int offset, String str, AttributeSet a)
+									throws BadLocationException {
+								// Eingaben von Buchstaben ist nicht erlaubt...
+								if (!str.matches(".*[[0-9]].*"))
+									return;
+								
+								
+									
+								super.insertString(offset, str, a);
+							}
+						});
 					}
 					{
 						newTC = new JButton();
