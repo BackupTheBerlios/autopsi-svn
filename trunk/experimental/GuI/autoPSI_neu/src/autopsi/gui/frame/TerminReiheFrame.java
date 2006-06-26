@@ -28,7 +28,10 @@ import javax.swing.JTextField;
 
 import javax.swing.WindowConstants;
 import javax.swing.border.LineBorder;
+import javax.swing.text.AttributeSet;
+import javax.swing.text.BadLocationException;
 import javax.swing.text.MaskFormatter;
+import javax.swing.text.PlainDocument;
 
 import autopsi.basis.AutopsiConfigurator;
 import autopsi.database.table.Termin;
@@ -221,11 +224,27 @@ public class TerminReiheFrame extends javax.swing.JFrame implements java.awt.eve
 			{
 				for (int i=0;i<7;i++)
 				{
-					zeit1 = new JFormattedTextField(createFormatter("##:##"));
+					zeit1 = new JFormattedTextField();
 					getContentPane().add(zeit1);
 					zeit1.setBounds(252, 112+i*28, 49, 21);
 					zeit1.setBorder(new LineBorder(new java.awt.Color(0, 0, 0),1,false));
 					zeit1.setEnabled(false);
+					zeit1.setDocument(new PlainDocument() {
+				    	private static final long serialVersionUID = 8723098029189851737L;
+						public void insertString(int offset, String str, AttributeSet a)
+								throws BadLocationException {
+							// Eingaben von Buchstaben ist nicht erlaubt...
+							if (!str.matches(".*[[0-9]].*"))
+								return;
+							//Höchstens 15 Zeichen
+							if (offset>4)
+								return;
+							if (offset==1)
+								super.insertString(offset, ":", a);
+								
+							super.insertString(offset, str, a);
+						}
+					});
 					zeitArray[i]=zeit1;
 				}
 				
