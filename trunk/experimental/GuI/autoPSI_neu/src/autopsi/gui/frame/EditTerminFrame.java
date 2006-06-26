@@ -536,7 +536,7 @@ public class EditTerminFrame extends javax.swing.JFrame implements java.awt.even
 								if (!str.matches(".*[[0-9]].*"))
 									return;
 								//Höchstens 15 Zeichen
-								if (offset>5)
+								if (offset>4)
 									return;
 								if (offset==1)
 									super.insertString(offset, ":", a);
