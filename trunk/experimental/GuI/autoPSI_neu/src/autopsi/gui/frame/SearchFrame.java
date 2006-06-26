@@ -62,8 +62,8 @@ import autopsi.database.table.LvaKategorie;
 import autopsi.gui.component.Dialogs;
 
 /**
- * SearchFrame wird für die Suche verwendet. Man kann nach beliebigen Objekte suchen/editieren/löschen.
- * Falls man was falsches gelöscht hat kann man diese Daten falls gewünscht wiederherstellen.
+ * SearchFrame will be used for searching Objects. You can search/edit/delete objects.
+ * You can .
 * This code was edited or generated using CloudGarden's Jigloo
 * SWT/Swing GUI Builder, which is free for non-commercial
 * use. If Jigloo is being used commercially (ie, by a corporation,
