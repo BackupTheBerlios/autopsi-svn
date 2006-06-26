@@ -283,7 +283,7 @@ public class SearchFrame extends javax.swing.JFrame implements ActionListener, M
 							public void insertString(int offset, String str, AttributeSet a)
 									throws BadLocationException {
 								// Eingaben von Buchstaben ist nicht erlaubt...
-								if (!str.matches(".*[[0-9]|-].*"))
+								if (!str.matches(".*[[0-9]].*"))
 									return;
 								//Höchstens 15 Zeichen
 								if (offset>9)
