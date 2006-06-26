@@ -2391,6 +2391,8 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 		lblTerminContainer.setText("");
 		lblTermin.setText("");
 		listTC2.removeAll();
+		listTC2Model.removeAllElements();
 		objectList.removeAll();
+		objectListModel.removeAllElements();
 	}
 }
