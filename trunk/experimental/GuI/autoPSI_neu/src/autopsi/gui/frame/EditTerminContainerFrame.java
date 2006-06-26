@@ -239,7 +239,7 @@ public class EditTerminContainerFrame extends javax.swing.JFrame implements java
 	 * @param owner the frame from which the EditTerminContainerFrame is launched.
 	 * @param id The id from the date container to be edited
 	 */
-	public EditTerminContainerFrame(JFrame owner, int id) { //Konstruktor für das EditTermin-Frame
+	public EditTerminContainerFrame(JFrame owner, int id) { 
 		super();
 		this.ID = id;
 		this.owner = owner;
@@ -480,6 +480,7 @@ public class EditTerminContainerFrame extends javax.swing.JFrame implements java
 						jPanel2.add(deleteTermin);
 						deleteTermin.setBounds(371, 235, 42, 28);
 						deleteTermin.setIcon(new ImageIcon(AutopsiConfigurator.images+"/deleteTermin.GIF"));
+						deleteTermin.addMouseListener(this);
 					}
 					{
 						editTermin = new JButton();
@@ -571,6 +572,54 @@ public class EditTerminContainerFrame extends javax.swing.JFrame implements java
 	 * @param arg0 The event given by the controls who are added to the MouseListener
 	 */
 	public void mouseClicked(MouseEvent arg0) {
+		if(arg0.getSource().equals(deleteTermin)){
+			if(ID<0)
+			{
+				try
+				{
+					String t = terminModel.getElementAt(terminList.getSelectedIndex()).toString();
+					
+					for (int i = 0;i<container_termine.size();i++)
+					{
+						int day1 = Integer.parseInt(t.substring(0,2));
+						int day2 = Integer.parseInt(container_termine.get(i).getDate().toString().substring(8,10));
+					
+						int month1 = Integer.parseInt(t.substring(3,5));
+						int month2 = Integer.parseInt(container_termine.get(i).getDate().toString().substring(5,7));
+						
+						int year1 = Integer.parseInt(t.substring(6,10));
+						int year2 = Integer.parseInt(container_termine.get(i).getDate().toString().substring(0,4));
+						
+						String time1 = t.substring(14,19);
+						String time2 = container_termine.get(i).getDate().toString().substring(11,16);
+						
+						System.out.println("time1:: "+time1+ "   time2:: " + time2);
+						if(day1==day2 && month1==month2 && year1==year2 && time1.equals(time2))
+						{
+							terminModel.removeElementAt(terminList.getSelectedIndex());
+							System.out.println("before: " + container_termine.size());
+							container_termine.remove(i);
+							System.out.println("then: " + container_termine.size());
+							System.out.println("removed successfully");
+							
+							terminModel.removeAllElements();
+							for (int j = 0;i<container_termine.size();j++)
+							{
+								
+							}	
+						}
+					
+					}
+					
+				}
+				catch(Exception ex)
+				{
+					showErrorDialog("Fehler!","Kein Termin zum Löschen ausgewählt!");
+				}
+			
+			}
+		}
+		
 		if(arg0.getSource().equals(abort_button)){
 			this.dispose();
 		}
@@ -871,7 +920,7 @@ public class EditTerminContainerFrame extends javax.swing.JFrame implements java
 			for(int i = 0; i < termin_list.size();i++){
 				Termin term = (Termin)termin_list.get(i);
 				String datum = term.getDate().toString().substring(8,10)+"-"+term.getDate().toString().substring(5,7)+"-"+
-				term.getDate().toString().substring(0,4);
+				term.getDate().toString().substring(0,4)+" um "+term.getDate().toString().substring(11,16);
 				String termin = datum+": "+((Termin)termin_list.get(i)).getSecondaryTitle() +",     Ort: " +((Termin)termin_list.get(i)).getPlace();
 				
 				terminModel.addElement(termin);
@@ -893,7 +942,7 @@ public class EditTerminContainerFrame extends javax.swing.JFrame implements java
 		for(int i = 0;i<termine.size();i++)
 		{
 			String datum = termine.get(i).getDate().toString().substring(8,10)+"-"+termine.get(i).getDate().toString().substring(5,7)+"-"+
-							termine.get(i).getDate().toString().substring(0,4);
+							termine.get(i).getDate().toString().substring(0,4)+" um "+termine.get(i).getDate().toString().substring(11,16);
 			String termin = datum+": "+termine.get(i).getSecondaryTitle()+",    Ort: "+termine.get(i).getPlace();
 			
 			container_termine.add(termine.get(i));
