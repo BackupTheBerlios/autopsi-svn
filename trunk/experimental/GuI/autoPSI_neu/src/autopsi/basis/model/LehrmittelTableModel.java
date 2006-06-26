@@ -237,7 +237,9 @@ public class LehrmittelTableModel extends AbstractTableModel {
 	public void downloadObject(){
 		if (this.onlinesuche==true && this.objects.size() != 0) {
 			for (int i=0;i<this.objects.size();i++){
-				addLehrmittel(this.objects.get(i));
+				Lehrmittel temp = (Lehrmittel)this.objects.get(i);
+				temp.setLehrmittelKategorieId(0);
+				addLehrmittel(temp);
 			}
 			JOptionPane.showMessageDialog(null, "Das ausgewählte Objekt wurde heruntergeladen." , "Download abgeschlossen." , JOptionPane.INFORMATION_MESSAGE);
 		} else {

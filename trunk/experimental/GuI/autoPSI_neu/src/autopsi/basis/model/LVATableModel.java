@@ -239,6 +239,7 @@ public class LVATableModel extends AbstractTableModel {
 	public void downloadObject(){
 		if (this.onlinesuche==true && this.objects.size() != 0) {
 			for (int i=0;i<this.objects.size();i++){
+				Lva lva;
 				addLVA(this.objects.get(i));
 			}
 			JOptionPane.showMessageDialog(null, "Das ausgewählte Objekt wurde heruntergeladen." , "Download abgeschlossen." , JOptionPane.INFORMATION_MESSAGE);

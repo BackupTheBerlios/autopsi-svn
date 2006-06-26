@@ -233,7 +233,9 @@ public class PruefungTableModel extends AbstractTableModel {
 	public void downloadObject(){
 		if (this.onlinesuche==true && this.objects.size() != 0) {
 			for (int i=0;i<this.objects.size();i++){
-				addPruefung(this.objects.get(i));
+				Pruefung temp = (Pruefung)this.objects.get(i);
+				temp.setLvaId(0);
+				addPruefung(temp);
 			}
 			JOptionPane.showMessageDialog(null, "Das ausgewählte Objekt wurde heruntergeladen." , "Download abgeschlossen." , JOptionPane.INFORMATION_MESSAGE);
 		} else {
