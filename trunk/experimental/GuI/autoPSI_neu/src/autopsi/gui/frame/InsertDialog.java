@@ -110,36 +110,36 @@ public class InsertDialog extends JDialog implements ActionListener {
 
 	public void actionPerformed(ActionEvent arg0) {
 		if (arg0.getSource().equals(okButton)){
-			System.out.println("InsertDialog.actionPerformed(...)::1");
+			
 			if(this.objectList.getSelectedIndex() == -1)
 				this.selectedId = null;
 			else{
-				System.out.println("InsertDialog.actionPerformed(...)::2a");
+				
 				AttachableListModel lm = (AttachableListModel)this.objectList.getModel();
 				GenericDataObject obj = (GenericDataObject)(lm.getObjectAt((objectList.getSelectedIndex())));
-//				System.out.println("InsertDialog.actionPerformed(...)::2b");				
+			
 				if (obj instanceof Kontakt){
-//					System.out.println("InsertDialog.actionPerformed(...)::3Kontakt");
+
 					this.selectedTable = "kontakt";
 					this.selectedId = ((Kontakt)obj).getGlobalId();
 				}
 				if (obj instanceof Notiz){
-//					System.out.println("InsertDialog.actionPerformed(...)::3Notiz");
+
 					this.selectedTable = "notiz";
 					this.selectedId = ((Notiz)obj).getGlobalId();
 				}
 				if (obj instanceof Pruefung){
-//					System.out.println("InsertDialog.actionPerformed(...)::3Pruefung");
+
 					this.selectedTable = "pruefung";
 					this.selectedId = ((Pruefung)obj).getGlobalId();
 				}
 				if (obj instanceof Lva){
-//					System.out.println("InsertDialog.actionPerformed(...)::3Lva");
+
 					this.selectedTable = "lva";
 					this.selectedId = ((Lva)obj).getGlobalId();
 				}
 				if (obj instanceof Lehrmittel){
-//					System.out.println("InsertDialog.actionPerformed(...)::3Lehrmittel");
+
 					this.selectedTable = "lehrmittel";
 					this.selectedId = ((Lehrmittel)obj).getGlobalId();
 				}

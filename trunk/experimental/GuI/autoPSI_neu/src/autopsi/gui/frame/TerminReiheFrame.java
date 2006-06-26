@@ -21,6 +21,7 @@ import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JSeparator;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
@@ -576,7 +577,8 @@ public class TerminReiheFrame extends javax.swing.JFrame implements java.awt.eve
 		catch(Exception ex)
 		{
 			ShowErrorDialog("Ungültige Eingabe!","Felder wurden ungültig oder nicht ausgefüllt.");
-			System.out.println(ex.toString());
+			JOptionPane.showMessageDialog(null, "Error: "+ex.toString(),"Error!",JOptionPane.ERROR_MESSAGE);
+			
 		}
 }
 	private void ShowErrorDialog(String title, String text)
