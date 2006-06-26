@@ -81,7 +81,6 @@ public class EditTerminContainerFrame extends javax.swing.JFrame implements java
 	}
 
 	private JTabbedPane jTabbedPane1;
-	private JButton apply_button;
 	private JList terminList;
 	private JScrollPane jScrollPane1;
 	private JButton newTerminReihe;
@@ -549,15 +548,8 @@ public class EditTerminContainerFrame extends javax.swing.JFrame implements java
 				abort_button = new JButton();
 				getContentPane().add(abort_button);
 				abort_button.setText("Abbrechen");
-				abort_button.setBounds(133, 315, 105, 21);
+				abort_button.setBounds(273, 315, 105, 21);
 				abort_button.addMouseListener(this);
-			}
-			{
-				apply_button = new JButton();
-				getContentPane().add(apply_button);
-				apply_button.setText("Übernehmen");
-				apply_button.setBounds(266, 315, 112, 21);
-				apply_button.addMouseListener(this);
 			}
 			{
 				ok_button = new JButton();
@@ -578,8 +570,7 @@ public class EditTerminContainerFrame extends javax.swing.JFrame implements java
 			
 			
 			if(ID>-1){ readData();}//Wenn der Termincontainer schon existiert, so lade die Daten aus der Datenbank
-			else
-				apply_button.setVisible(false);
+			
 				
 			pack();
 			this.setSize(449, 408);
@@ -673,9 +664,7 @@ public class EditTerminContainerFrame extends javax.swing.JFrame implements java
 			dispose();
 		}
 		
-		if(arg0.getSource().equals(apply_button)){
-			update();
-		}
+		
 		if(arg0.getSource().equals(newTermin)){
 			EditTerminFrame etframe = new EditTerminFrame(this,null,null,false);
 			etframe.setVisible(true);
