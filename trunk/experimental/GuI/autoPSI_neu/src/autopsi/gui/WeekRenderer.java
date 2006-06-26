@@ -15,7 +15,7 @@ public class WeekRenderer extends WeekDayCell implements TableCellRenderer
 	private Termin [] data;
 	private DateConverter converter = new DateConverter();
 	private GregorianCalendar marker=null;;
-	private int var_long =0;
+	private int[] var_long = {0,0,0,0,0,0,0};
 	private int[] termindauer;
 	
 	public WeekRenderer(GregorianCalendar mark) {
@@ -41,10 +41,10 @@ public class WeekRenderer extends WeekDayCell implements TableCellRenderer
     	{
 			WeekDayCell cell = new WeekDayCell();
 			
-			if(var_long>0) 
+			if(var_long[arg5]>0) 
 				{
 				cell.setGray();
-				var_long--;
+				var_long[arg5]--;
 				}
     		data = (Termin[])arg1;
     		
@@ -95,7 +95,7 @@ public class WeekRenderer extends WeekDayCell implements TableCellRenderer
         		for (int i = 0;i<data.length-1;i++)
         		{
         			liste2[i] = data[i+1].getDate().toString().substring(11,16) + " " + data[i+1].getSecondaryTitle();
-        			
+
         			termindauer[i] = Integer.parseInt(data[i+1].getDate().toString().substring(11,13))*60+Integer.parseInt(data[i+1].getDate().toString().substring(14,16))+data[i+1].getDuration();
         			
         		}
@@ -109,16 +109,22 @@ public class WeekRenderer extends WeekDayCell implements TableCellRenderer
         				location = i+1;
         				}
         		}
-        		dauer = dauer - Integer.parseInt(data[location].getDate().toString().substring(11,13))*60-Integer.parseInt(data[location].getDate().toString().substring(14,16));
-        	
+        		System.out.println(data[location].getDate().toString());
+        		dauer = dauer - Integer.parseInt(data[location+1].getDate().toString().substring(11,13))*60-Integer.parseInt(data[location+1].getDate().toString().substring(14,16));
+        		System.out.println(dauer);
+        		dauer = dauer - (var_long[arg5]*60);
+        		System.out.println(dauer);
+        		if(dauer<0) dauer = 0;
+        		System.out.println(var_long[arg5]);
+        		
+        	while(dauer>0)
+        	{
+        		dauer = dauer - 60;
+        		var_long[arg5]++;
+        	}
         		
     		}
-    		
-    	
-    		
-    		                    
-    		              
-    		
+
     		cell.fillList(liste2);    
     		if(liste2.length>0) cell.setGray();
     		cell.setVisible(true);
