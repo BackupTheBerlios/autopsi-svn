@@ -62,6 +62,8 @@ import autopsi.database.table.LvaKategorie;
 import autopsi.gui.component.Dialogs;
 
 /**
+ * SearchFrame wird für die Suche verwendet. Man kann nach beliebigen Objekte suchen/editieren/löschen.
+ * Falls man was falsches gelöscht hat kann man diese Daten falls gewünscht wiederherstellen.
 * This code was edited or generated using CloudGarden's Jigloo
 * SWT/Swing GUI Builder, which is free for non-commercial
 * use. If Jigloo is being used commercially (ie, by a corporation,
@@ -72,6 +74,7 @@ import autopsi.gui.component.Dialogs;
 * A COMMERCIAL LICENSE HAS NOT BEEN PURCHASED FOR
 * THIS MACHINE, SO JIGLOO OR THIS CODE CANNOT BE USED
 * LEGALLY FOR ANY CORPORATE OR COMMERCIAL PURPOSE.
+* @author Alpay Firato
 */
 public class SearchFrame extends javax.swing.JFrame implements ActionListener, MouseListener, KeyListener {
 
@@ -178,7 +181,6 @@ public class SearchFrame extends javax.swing.JFrame implements ActionListener, M
 	
 	/**
 	 * Im Konstruktor wird die GUI erstellt und anschliessend auch angezeigt.
-	 * @author	Alpay Firato
 	 */
 	public SearchFrame() {
 		super();
@@ -205,7 +207,6 @@ public class SearchFrame extends javax.swing.JFrame implements ActionListener, M
 	
 	/**
 	 * Diese Methode initalisiert die GUI. Actionslistener, Keylelistener und/oder MouseListener wird/werden zugewiesen.
-	 * @author	Alpay Firato
 	 */
 	private void initGUI() {
 		try {
@@ -1265,7 +1266,6 @@ public class SearchFrame extends javax.swing.JFrame implements ActionListener, M
 	 * Diese Methode wird bei einer MouseClick ausgeführt.
 	 * Bei einer Doppelklick auf einer Tabelle wird das dazugehörige Editfenster angezeigt.
 	 * @param	MouseEvent	Das ist das MouseEvent, das betätigt wurde.
-	 * @author	Alpay Firato
 	 */
 	public void mouseClicked(MouseEvent arg0) {
 		if (arg0.getClickCount() == 2 && arg0.getButton()==MouseEvent.BUTTON1 && !(arg0.getSource() instanceof JTableHeader)) {
@@ -1412,7 +1412,6 @@ public class SearchFrame extends javax.swing.JFrame implements ActionListener, M
 	 * Diese Methode wird beim drücken auf einem Button ausgeführt.
 	 * Je nach Button wird was anderes aufgerufen.
 	 * @param	ActionEvent	ActionEvent der aufgelöst wurde.
-	 * @author	Alpay Firato
 	 */
 	public void actionPerformed(ActionEvent ae) {
 		Object cmd = ae.getSource();
@@ -1424,7 +1423,6 @@ public class SearchFrame extends javax.swing.JFrame implements ActionListener, M
 	 * Beim drücken auf dem Spaltenkopf (Header) der angegebenen Tabelle wird die Sortierreinfolge ja nach Spalte verändert.
 	 * @param	JTabelle	Die Tabelle bei der die Sortierreinfolge verändert werden soll.
 	 * @param	int	Sortierreinfolge als int-Zahl.
-	 * @author	Alpay Firato
 	 */
 	public void setOrder (JTable table, int order){
 		if (table.equals(jKontaktTable)){
@@ -1435,7 +1433,6 @@ public class SearchFrame extends javax.swing.JFrame implements ActionListener, M
 	/**
 	 * Diese Methode startet je nach cmd eine Suche.
 	 * @param	Object	Das ist der Button, der betätigt wurde.
-	 * @author	Alpay Firato
 	 */
 	public void starteSuche (Object cmd){
 		if (cmd.equals(this.jKontaktSuchenButton)) {
@@ -1511,7 +1508,6 @@ public class SearchFrame extends javax.swing.JFrame implements ActionListener, M
 	 * Diese Methode wird beim Drücken einer Taste aufgerufen.
 	 * Falls die Enter-Taste in einer TextField gedrückt wurde, dann wird die Suche gestartet.
 	 * @param	KeyEvent	Das ist die Taste, die betätigt wurde.
-	 * @author	Alpay Firato
 	 */
 	public void keyPressed(KeyEvent arg0) {
 		if (arg0.getSource() instanceof JTextField || arg0.getSource() instanceof JFormattedTextField) {
@@ -1551,7 +1547,6 @@ public class SearchFrame extends javax.swing.JFrame implements ActionListener, M
 
 	/**
 	 * Diese Methode sucht je nachdem was ausgewählt ist, online oder lokal nach Prüfungen.
-	 * @author	Alpay Firato
 	 */
 	private void startePruefungSuche() {
 		setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
@@ -1583,7 +1578,6 @@ public class SearchFrame extends javax.swing.JFrame implements ActionListener, M
 
 	/**
 	 * Diese Methode sucht je nachdem was ausgewählt ist, online oder lokal nach Notizen.
-	 * @author	Alpay Firato
 	 */
 	private void starteNotizSuche() {
 		setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
@@ -1610,7 +1604,6 @@ public class SearchFrame extends javax.swing.JFrame implements ActionListener, M
 
 	/**
 	 * Diese Methode sucht je nachdem was ausgewählt ist, online oder lokal nach Lehrmittel.
-	 * @author	Alpay Firato
 	 */
 	private void starteLehrmittelSuche() {
 		setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
@@ -1639,7 +1632,6 @@ public class SearchFrame extends javax.swing.JFrame implements ActionListener, M
 
 	/**
 	 * Diese Methode sucht je nachdem was ausgewählt ist, online oder lokal nach TerminContainer.
-	 * @author	Alpay Firato
 	 */
 	private void starteTerminContainerSuche() {
 		setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
@@ -1667,7 +1659,6 @@ public class SearchFrame extends javax.swing.JFrame implements ActionListener, M
 	
 	/**
 	 * Diese Methode sucht je nachdem was ausgewählt ist, online oder lokal nach LVAs.
-	 * @author	Alpay Firato
 	 */
 	private void starteLVASuche() {
 		setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
@@ -1701,7 +1692,6 @@ public class SearchFrame extends javax.swing.JFrame implements ActionListener, M
 
 	/**
 	 * Diese Methode sucht je nachdem was ausgewählt ist, online oder lokal nach Kontakte.
-	 * @author	Alpay Firato
 	 */
 	private void starteKontaktSuche() {
 		setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
@@ -1770,7 +1760,6 @@ public class SearchFrame extends javax.swing.JFrame implements ActionListener, M
 	
 	/**
 	 * Diese Methode sucht je nachdem was ausgewählt ist, online oder lokal nach Termine.
-	 * @author	Alpay Firato
 	 */
 	private void starteTerminSuche(){
 		setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
