@@ -1045,7 +1045,7 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 				
 				c_marker.set(Integer.parseInt(currentValue[0].getDate().toString().substring(0,4)),Integer.parseInt(currentValue[0].getDate().toString().substring(5,7))-1,Integer.parseInt(currentValue[0].getDate().toString().substring(8,10)));
 			}
-			catch(Exception ex) {JOptionPane.showMessageDialog(null, "Error: "+ex.toString(),"Error!",JOptionPane.ERROR_MESSAGE);
+			catch(Exception ex) {JOptionPane.showMessageDialog(null, "Mainframe Error: "+ex.toString(),"Error!",JOptionPane.ERROR_MESSAGE);
 			}; 
 			
 				
@@ -1728,7 +1728,7 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 		 try {
 			 formatter = new MaskFormatter(s);
 		} catch (java.text.ParseException exc) {
-			JOptionPane.showMessageDialog(null, "Error: "+exc.toString(),"Error!",JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(null, "Mainframe Error: "+exc.toString(),"Error!",JOptionPane.ERROR_MESSAGE);
 			
 		}
 		return formatter;
@@ -1781,7 +1781,7 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 				query = "delete from termin where termincontainer_id = "+tcID;
 				gdo.unsafeQuery(query,null);
 				}
-				catch(Exception e) {JOptionPane.showMessageDialog(null, "Error: "+e.toString(),"Error!",JOptionPane.ERROR_MESSAGE);
+				catch(Exception e) {JOptionPane.showMessageDialog(null, "Mainframe Error: "+e.toString(),"Error!",JOptionPane.ERROR_MESSAGE);
 				}
 			}
 			
@@ -1825,7 +1825,7 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 		try {
 			gdao.unsafeQuery("Shutdown compact", new Notiz());
 		} catch (Exception e){
-			JOptionPane.showMessageDialog(null, "Error: "+e.toString(),"Error!",JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(null, "Mainframe Error: "+e.toString(),"Error!",JOptionPane.ERROR_MESSAGE);
 			}
 		//deleting shared objects from JavaSpace
 		if (this.oss != null)
@@ -1998,7 +1998,7 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 					loadTerminData();
 				}
 			}
-			catch(Exception ex) {JOptionPane.showMessageDialog(null, "Error: "+ex.toString(),"Error!",JOptionPane.ERROR_MESSAGE);
+			catch(Exception ex) {JOptionPane.showMessageDialog(null, "Mainframe Error: "+ex.toString(),"Error!",JOptionPane.ERROR_MESSAGE);
 			}
 	}
 	
@@ -2052,7 +2052,7 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 					}
 					catch(Exception ex)
 					{
-						JOptionPane.showMessageDialog(null, "Error: "+ex.toString(),"Error!",JOptionPane.ERROR_MESSAGE);
+						JOptionPane.showMessageDialog(null, "Mainframe Error: "+ex.toString(),"Error!",JOptionPane.ERROR_MESSAGE);
 						
 					}	
 					
@@ -2166,7 +2166,7 @@ public class mainFrame extends javax.swing.JFrame implements java.awt.event.Mous
 					
 			}
 			}
-			catch(Exception ex) {JOptionPane.showMessageDialog(null, "Error: "+ex.toString(),"Error!",JOptionPane.ERROR_MESSAGE);
+			catch(Exception ex) {JOptionPane.showMessageDialog(null, "Mainframe Error: "+ex.toString(),"Error!",JOptionPane.ERROR_MESSAGE);
 			}		
 		}	
 		else
