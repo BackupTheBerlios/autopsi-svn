@@ -1,0 +1,67 @@
+package autopsi.database.table;
+
+import javax.swing.JOptionPane;
+
+import net.jini.core.entry.Entry;
+import autopsi.database.dao.GenericDAO;
+import autopsi.database.dao.GenericDataObject;
+import autopsi.gui.component.GSMethodForeign;
+import autopsi.gui.component.GenericData;
+
+public class Notiz extends GenericData implements Entry,GenericDataObject {
+
+	
+	public Integer global_id;
+	public String title;
+	public String note;
+	
+	
+	public Notiz(){
+		Class cl = this.getClass();
+		try{
+			this.setObjectName("Notiz");
+//			this.addAttribute("GlobalId",cl.getMethod("getGlobalId", new Class[] {}), cl.getMethod("setGlobalId", new Class[] {Integer.class} ));
+			GSMethodForeign meth = new GSMethodForeign();
+			meth.getMethod = cl.getMethod("getGlobalId", new Class[] {});
+			meth.setMethod = cl.getMethod("setGlobalId", new Class[] {Integer.class} );
+			meth.tableName = "attachable_object";
+			meth.attribName = "global_id";
+			meth.objectClass = AttachableObject.class;
+			meth.show = false;
+			this.addAttribute("GlobalId", meth);
+			
+			this.addAttribute("Titel",cl.getMethod("getTitle", new Class[] {}), cl.getMethod("setTitle", new Class[] {String.class} ));
+			this.addAttribute("Notiz",cl.getMethod("getNote", new Class[] {}), cl.getMethod("setNote", new Class[] {String.class} ));
+
+		}
+		catch (Exception e){
+			JOptionPane.showMessageDialog(null, "Error: "+e.toString(),"Error!",JOptionPane.ERROR_MESSAGE);
+			}
+	}
+	
+	public Integer getGlobalId(){
+		return this.global_id;
+	}
+	
+	public void setGlobalId(Integer globalId){
+		this.global_id = globalId;
+	}
+
+	
+	public String getTitle(){
+		return this.title;
+	}
+	
+	public void setTitle(String title){
+		this.title = title;
+	}
+	
+	public String getNote(){
+		return this.note;
+	}
+	
+	public void setNote(String note){
+		this.note = note;
+	}
+	
+}
